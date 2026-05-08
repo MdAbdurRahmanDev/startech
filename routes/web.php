@@ -19,6 +19,10 @@ Route::get('/offers', [OfferController::class, 'index']);
 Route::get('/happy-hour', [HappyHourController::class, 'index']);
 Route::get('/account/login', [AccountController::class, 'login']);
 Route::get('/account/register', [AccountController::class, 'register']);
+Route::get('/account/account', [AccountController::class, 'account']);
+Route::get('/account/edit', [AccountController::class, 'edit']);
+Route::get('/account/order', [AccountController::class, 'order']);
+Route::get('/account/address', [AccountController::class, 'address']);
 
 // Information Pages
 Route::get('/affiliate-program', [InformationController::class, 'affiliate']);

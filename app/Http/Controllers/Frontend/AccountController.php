@@ -16,4 +16,24 @@ class AccountController extends Controller
     {
         return view('frontend.account.register');
     }
+
+    public function account()
+    {
+        return view('frontend.account.account');
+    }
+
+    public function edit()
+    {
+        return view('frontend.account.edit');
+    }
+
+    public function order()
+    {
+        return view('frontend.account.order');
+    }
+
+    public function address()
+    {
+        return view('frontend.account.address');
+    }
 }

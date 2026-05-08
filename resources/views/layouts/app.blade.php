@@ -123,6 +123,32 @@
             background-color: #1e4d8c;
         }
 
+        /* Header Icons & Toggle */
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--white);
+        }
+
+        .header-right-icons {
+            display: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .header-icon {
+            position: relative;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--white);
+        }
+
+        .header-icon .badge {
+            top: -8px;
+            right: -8px;
+        }
+
         /* Nav Styles */
         nav {
             background-color: var(--white);
@@ -368,8 +394,160 @@
         }
 
         @media (max-width: 992px) {
+            header {
+                padding: 10px 0;
+            }
+            .header-top {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 15px;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .header-right-icons {
+                display: flex;
+            }
+            .header-actions, .search-bar.desktop-search {
+                display: none;
+            }
+            .logo img {
+                height: 35px;
+            }
+            .nav-list {
+                display: none;
+            }
             .footer-grid { grid-template-columns: repeat(2, 1fr); }
             .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+        }
+
+        /* Off-canvas Menu */
+        .off-canvas-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 3000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .off-canvas-sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background: var(--white);
+            z-index: 3001;
+            transition: left 0.3s ease-in-out;
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .off-canvas-menu.active .off-canvas-overlay {
+            display: block;
+            opacity: 1;
+        }
+
+        .off-canvas-menu.active .off-canvas-sidebar {
+            left: 0;
+        }
+
+        .off-canvas-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .close-menu {
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+
+        .off-canvas-list {
+            list-style: none;
+        }
+
+        .off-canvas-list li {
+            margin-bottom: 15px;
+        }
+
+        .off-canvas-list li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 15px;
+            font-weight: 500;
+            display: block;
+            padding: 8px 0;
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                padding: 10px 15px;
+            }
+            .logo img {
+                height: 35px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .floating-actions {
+                bottom: 80px; /* Shift up for bottom nav */
+                top: auto;
+            }
+        }
+
+        /* Mobile Bottom Nav */
+        .mobile-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--primary-dark);
+            display: none;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 2000;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 992px) {
+            .mobile-bottom-nav {
+                display: flex;
+            }
+            body {
+                padding-bottom: 70px; /* Space for bottom nav */
+            }
+        }
+
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 10px;
+            gap: 5px;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .mobile-nav-item:hover, .mobile-nav-item.active {
+            opacity: 1;
+            color: var(--accent-orange);
+        }
+
+        .mobile-nav-item i {
+            font-size: 18px;
         }
     </style>
     @yield('styles')
@@ -378,13 +556,26 @@
 
 <header>
     <div class="container header-top">
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
         <div class="logo">
             <a href="{{ url('/') }}"><img src="https://www.startech.com.bd/image/catalog/logo.png" alt="Star Tech"></a>
         </div>
         
-        <div class="search-bar">
+        <div class="search-bar desktop-search">
             <input type="text" placeholder="Search">
             <i class="fas fa-search"></i>
+        </div>
+
+        <div class="header-right-icons">
+            <div class="header-icon mobile-search-toggle">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="header-icon header-cart">
+                <i class="fas fa-shopping-basket"></i>
+                <span class="badge">0</span>
+            </div>
         </div>
 
         <div class="header-actions">
@@ -549,6 +740,71 @@
         <span>Cart</span>
     </div>
 </div>
+
+<div class="mobile-bottom-nav">
+    <a href="{{ url('/') }}" class="mobile-nav-item {{ Request::is('/') ? 'active' : '' }}">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+    <a href="{{ url('/offers') }}" class="mobile-nav-item {{ Request::is('offers') ? 'active' : '' }}">
+        <i class="fas fa-gift"></i>
+        <span>Offers</span>
+    </a>
+    <a href="#" class="mobile-nav-item">
+        <i class="fas fa-tools"></i>
+        <span>PC Builder</span>
+    </a>
+    <a href="#" class="mobile-nav-item">
+        <i class="fas fa-shuffle"></i>
+        <span>Compare (0)</span>
+    </a>
+    <a href="{{ url('/account/account') }}" class="mobile-nav-item {{ Request::is('account/*') ? 'active' : '' }}">
+        <i class="fas fa-user"></i>
+        <span>Account</span>
+    </a>
+</div>
+
+<div class="off-canvas-menu" id="offCanvasMenu">
+    <div class="off-canvas-overlay" id="menuOverlay"></div>
+    <div class="off-canvas-sidebar">
+        <div class="off-canvas-header">
+            <img src="https://www.startech.com.bd/image/catalog/logo.png" alt="Star Tech" style="height: 30px;">
+            <div class="close-menu" id="closeMenu">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <ul class="off-canvas-list">
+            <li><a href="#">Desktop</a></li>
+            <li><a href="#">Laptop</a></li>
+            <li><a href="#">Component</a></li>
+            <li><a href="#">Monitor</a></li>
+            <li><a href="#">Power</a></li>
+            <li><a href="#">Phone</a></li>
+            <li><a href="#">Tablet</a></li>
+            <li><a href="#">Office Equipment</a></li>
+            <li><a href="#">Camera</a></li>
+            <li><a href="#">Security</a></li>
+            <li><a href="#">Networking</a></li>
+            <li><a href="#">Software</a></li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    const menuToggle = document.getElementById('menuToggle');
+    const offCanvasMenu = document.getElementById('offCanvasMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const closeMenu = document.getElementById('closeMenu');
+
+    function toggleMenu() {
+        offCanvasMenu.classList.toggle('active');
+        document.body.style.overflow = offCanvasMenu.classList.contains('active') ? 'hidden' : '';
+    }
+
+    menuToggle.addEventListener('click', toggleMenu);
+    menuOverlay.addEventListener('click', toggleMenu);
+    closeMenu.addEventListener('click', toggleMenu);
+</script>
 
 @yield('scripts')
 

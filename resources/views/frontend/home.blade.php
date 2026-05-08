@@ -21,6 +21,48 @@
         height: 450px;
     }
 
+    .slider-container {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        height: 100%;
+    }
+
+    .slide {
+        min-width: 100%;
+        height: 100%;
+    }
+
+    .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .slider-dots {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+        z-index: 10;
+    }
+
+    .dot {
+        width: 12px;
+        height: 12px;
+        background: #ccc;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .dot.active {
+        background: var(--accent-orange);
+        width: 25px;
+        border-radius: 10px;
+    }
+
     .side-banners {
         display: flex;
         flex-direction: column;
@@ -335,15 +377,23 @@
     }
 
     @media (max-width: 1200px) {
-        .hero-section { grid-template-columns: 1fr; }
-        .category-grid { grid-template-columns: repeat(4, 1fr); }
+        .hero-section { grid-template-columns: 1fr; height: auto; }
+        .main-slider { height: 400px; }
+        .category-grid { grid-template-columns: repeat(6, 1fr); }
         .product-grid { grid-template-columns: repeat(3, 1fr); }
     }
     @media (max-width: 768px) {
-        .category-grid { grid-template-columns: repeat(2, 1fr); }
+        .main-slider { height: 250px; }
+        .side-banners { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .banner-card { height: 120px; }
+        .category-grid { grid-template-columns: repeat(4, 1fr); }
         .product-grid { grid-template-columns: repeat(2, 1fr); }
-        .features-grid { grid-template-columns: repeat(2, 1fr); }
-        .store-banner { flex-direction: column; text-align: center; gap: 20px; }
+        .features-grid { grid-template-columns: repeat(1, 1fr); gap: 10px; }
+        .store-banner { flex-direction: column; text-align: center; gap: 20px; padding: 20px; }
+    }
+    @media (max-width: 480px) {
+        .main-slider { height: 180px; }
+        .category-grid { grid-template-columns: repeat(3, 1fr); }
     }
 </style>
 @endsection
@@ -351,12 +401,22 @@
 @section('content')
 <div class="container">
     <section class="hero-section">
-        <div class="main-slider">
-            <img src="https://www.startech.com.bd/image/cache/catalog/home/banner/freezer-offer-home-banner-982x500.webp" style="width: 100%; height: 100%; object-fit: cover;" alt="Main Banner">
-            <div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px;">
-                <span style="width: 15px; height: 15px; background: var(--accent-orange); border-radius: 50%;"></span>
-                <span style="width: 15px; height: 15px; background: #ccc; border-radius: 50%;"></span>
-                <span style="width: 15px; height: 15px; background: #ccc; border-radius: 50%;"></span>
+        <div class="main-slider" id="hero-slider">
+            <div class="slider-container">
+                <div class="slide">
+                    <img src="https://www.startech.com.bd/image/cache/catalog/home/banner/freezer-offer-home-banner-982x500.webp" alt="Main Banner 1">
+                </div>
+                <div class="slide">
+                    <img src="https://www.startech.com.bd/image/cache/catalog/home/banner/gigabyte-gaming-monitor-home-banner-982x500.webp" alt="Main Banner 2">
+                </div>
+                <div class="slide">
+                    <img src="https://www.startech.com.bd/image/cache/catalog/home/banner/desktop-pc-offer-home-banner-982x500.webp" alt="Main Banner 3">
+                </div>
+            </div>
+            <div class="slider-dots">
+                <span class="dot active" onclick="currentSlide(0)"></span>
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
             </div>
         </div>
 
@@ -552,4 +612,56 @@
         <p><a href="#">Star Tech</a> has the most comprehensive array of <a href="#">Desktop PCs</a>. We offer top-of-the-line Custom PC, <a href="#">Brand PC</a>, All-in-One PC, and <a href="#">Portable Mini PC</a> at Star Tech outlets.</p>
     </section>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    const container = document.querySelector('.slider-container');
+    const totalSlides = slides.length;
+    let slideInterval;
+
+    function showSlide(index) {
+        if (index >= totalSlides) currentIndex = 0;
+        else if (index < 0) currentIndex = totalSlides - 1;
+        else currentIndex = index;
+
+        container.style.transform = `translateX(-${currentIndex * 100}%)`;
+        
+        // Update dots
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentIndex);
+        });
+    }
+
+    function nextSlide() {
+        showSlide(currentIndex + 1);
+    }
+
+    function currentSlide(index) {
+        showSlide(index);
+        resetTimer();
+    }
+
+    function startTimer() {
+        slideInterval = setInterval(nextSlide, 5000);
+    }
+
+    function resetTimer() {
+        clearInterval(slideInterval);
+        startTimer();
+    }
+
+    // Initialize
+    startTimer();
+
+    // Pause on hover
+    const sliderElement = document.getElementById('hero-slider');
+    if (sliderElement) {
+        sliderElement.addEventListener('mouseenter', () => clearInterval(slideInterval));
+        sliderElement.addEventListener('mouseleave', startTimer);
+    }
+</script>
 @endsection
