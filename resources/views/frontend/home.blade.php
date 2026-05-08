@@ -2,616 +2,204 @@
 
 @section('title', 'Star Tech | Leading IT Shop in Bangladesh')
 
-@section('styles')
-<style>
-    /* Hero Section */
-    .hero-section {
-        margin-top: 25px;
-        display: grid;
-        grid-template-columns: 2.2fr 1fr;
-        gap: 20px;
-    }
-
-    .main-slider {
-        background-color: var(--white);
-        border-radius: 8px;
-        overflow: hidden;
-        position: relative;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        height: 450px;
-    }
-
-    .slider-container {
-        display: flex;
-        transition: transform 0.5s ease-in-out;
-        height: 100%;
-    }
-
-    .slide {
-        min-width: 100%;
-        height: 100%;
-    }
-
-    .slide img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .slider-dots {
-        position: absolute;
-        bottom: 15px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 8px;
-        z-index: 10;
-    }
-
-    .dot {
-        width: 12px;
-        height: 12px;
-        background: #ccc;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
-
-    .dot.active {
-        background: var(--accent-orange);
-        width: 25px;
-        border-radius: 10px;
-    }
-
-    .side-banners {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .banner-card {
-        background-color: #fff;
-        border-radius: 8px;
-        height: 215px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 0;
-        text-align: center;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        background-size: cover;
-        background-position: center;
-        position: relative;
-        overflow: hidden;
-    }
-
-    /* Info Bar */
-    .info-bar {
-        background-color: var(--white);
-        margin: 25px 0;
-        padding: 10px 30px;
-        border-radius: 50px;
-        display: block;
-        overflow: hidden;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-
-    /* Feature Icons */
-    .features-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-        margin-bottom: 30px;
-    }
-
-    .feature-card {
-        background-color: var(--white);
-        padding: 20px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        transition: transform 0.2s;
-        cursor: pointer;
-    }
-
-    .feature-card:hover {
-        transform: translateY(-3px);
-    }
-
-    .feature-icon {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 24px;
-        color: var(--white);
-    }
-
-    .icon-orange { background-color: var(--accent-orange); }
-
-    .feature-info h4 {
-        font-size: 16px;
-        font-weight: bold;
-    }
-
-    .feature-info p {
-        font-size: 13px;
-        color: var(--text-muted);
-    }
-
-    /* Category Grid */
-    .category-grid {
-        display: grid;
-        grid-template-columns: repeat(8, 1fr);
-        gap: 15px;
-        margin-top: 20px;
-    }
-
-    .category-item {
-        background-color: var(--white);
-        border-radius: 12px;
-        padding: 20px 10px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-        transition: all 0.3s;
-        cursor: pointer;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-    }
-
-    .category-item:hover {
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        color: var(--accent-orange);
-    }
-
-    .category-item i {
-        font-size: 35px;
-        color: #444;
-    }
-
-    .category-item:hover i {
-        color: var(--accent-orange);
-    }
-
-    .category-item span {
-        font-size: 13px;
-        font-weight: 500;
-    }
-
-    /* Store Banner */
-    .store-banner {
-        background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 50%, #081621 100%);
-        border-radius: 10px;
-        padding: 30px 40px;
-        margin: 50px 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: var(--white);
-    }
-
-    .store-info {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .store-info i.fa-location-dot {
-        font-size: 40px;
-    }
-
-    .store-text h2 {
-        font-size: 24px;
-        margin-bottom: 5px;
-    }
-
-    .store-text p {
-        font-size: 14px;
-        opacity: 0.9;
-    }
-
-    .find-store-btn {
-        background-color: var(--accent-orange);
-        color: var(--white);
-        padding: 12px 30px;
-        border-radius: 30px;
-        text-decoration: none;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        transition: transform 0.2s;
-    }
-
-    .find-store-btn:hover {
-        transform: scale(1.05);
-    }
-
-    /* Product Grid */
-    .product-grid {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 15px;
-        margin-top: 30px;
-    }
-
-    .product-card {
-        background-color: var(--white);
-        border-radius: 8px;
-        padding: 15px;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        transition: box-shadow 0.3s;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        height: 100%;
-    }
-
-    .product-card:hover {
-        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    }
-
-    .product-badge {
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: #6e2594;
-        color: white;
-        padding: 4px 10px;
-        border-radius: 8px 0 8px 0;
-        font-size: 11px;
-        font-weight: bold;
-        z-index: 1;
-    }
-
-    .product-image {
-        width: 100%;
-        height: 200px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 15px;
-        padding: 10px;
-    }
-
-    .product-image img {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-    }
-
-    .product-info h3 {
-        font-size: 14px;
-        font-weight: 500;
-        color: #333;
-        margin-bottom: 15px;
-        line-height: 1.4;
-        height: 40px;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-    }
-
-    .product-info h3:hover {
-        color: var(--accent-orange);
-        text-decoration: underline;
-    }
-
-    .product-price {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .current-price {
-        color: var(--accent-orange);
-        font-size: 18px;
-        font-weight: bold;
-    }
-
-    .old-price {
-        color: #666;
-        font-size: 13px;
-        text-decoration: line-through;
-    }
-
-    .load-more-container {
-        text-align: center;
-        margin: 40px 0 60px;
-    }
-
-    .load-more-btn {
-        background-color: var(--white);
-        color: var(--text-dark);
-        border: 1px solid #ddd;
-        padding: 10px 40px;
-        border-radius: 4px;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 14px;
-        transition: all 0.3s;
-    }
-
-    .load-more-btn:hover {
-        background-color: var(--accent-orange);
-        color: var(--white);
-        border-color: var(--accent-orange);
-    }
-
-    /* SEO Text Section */
-    .seo-section {
-        margin-top: 60px;
-        padding: 40px 0;
-        color: #444;
-    }
-
-    .seo-section h1, .seo-section h2 {
-        font-size: 18px;
-        font-weight: bold;
-        margin: 25px 0 15px;
-        color: #081621;
-    }
-
-    .seo-section p {
-        font-size: 13px;
-        line-height: 1.8;
-        margin-bottom: 15px;
-    }
-
-    .seo-section a {
-        color: var(--accent-orange);
-        text-decoration: none;
-    }
-
-    .seo-section a:hover {
-        text-decoration: underline;
-    }
-
-    @media (max-width: 1200px) {
-        .hero-section { grid-template-columns: 1fr; height: auto; }
-        .main-slider { height: 400px; }
-        .category-grid { grid-template-columns: repeat(6, 1fr); }
-        .product-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-    @media (max-width: 768px) {
-        .main-slider { height: 250px; }
-        .side-banners { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .banner-card { height: 120px; }
-        .category-grid { grid-template-columns: repeat(4, 1fr); }
-        .product-grid { grid-template-columns: repeat(2, 1fr); }
-        .features-grid { grid-template-columns: repeat(1, 1fr); gap: 10px; }
-        .store-banner { flex-direction: column; text-align: center; gap: 20px; padding: 20px; }
-    }
-    @media (max-width: 480px) {
-        .main-slider { height: 180px; }
-        .category-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-</style>
-@endsection
-
 @section('content')
-<div class="container">
-    <section class="hero-section">
-        <div class="main-slider" id="hero-slider">
-            <div class="slider-container">
-                <div class="slide">
-                    <img src="https://www.startech.com.bd/image/cache/catalog/home/banner/freezer-offer-home-banner-982x500.webp" alt="Main Banner 1">
+<div class="container mx-auto px-4">
+    <section class="mt-6 grid grid-cols-1 lg:grid-cols-[2.2fr_1fr] gap-5">
+        <div class="bg-white rounded-lg overflow-hidden relative shadow-sm h-[200px] md:h-[400px] lg:h-[450px]" id="hero-slider">
+            <div class="slider-container flex h-full transition-transform duration-500 ease-in-out">
+                <div class="slide min-w-full h-full">
+                    <img src="https://www.startech.com.bd/image/cache/catalog/home/banner/freezer-offer-home-banner-982x500.webp" alt="Main Banner 1" class="w-full h-full object-cover">
                 </div>
-                <div class="slide">
-                    <img src="https://www.startech.com.bd/image/cache/catalog/home/banner/gigabyte-gaming-monitor-home-banner-982x500.webp" alt="Main Banner 2">
+                <div class="slide min-w-full h-full">
+                    <img src="https://www.startech.com.bd/image/cache/catalog/home/banner/gigabyte-gaming-monitor-home-banner-982x500.webp" alt="Main Banner 2" class="w-full h-full object-cover">
                 </div>
-                <div class="slide">
-                    <img src="https://www.startech.com.bd/image/cache/catalog/home/banner/desktop-pc-offer-home-banner-982x500.webp" alt="Main Banner 3">
+                <div class="slide min-w-full h-full">
+                    <img src="https://www.startech.com.bd/image/cache/catalog/home/banner/desktop-pc-offer-home-banner-982x500.webp" alt="Main Banner 3" class="w-full h-full object-cover">
                 </div>
             </div>
-            <div class="slider-dots">
-                <span class="dot active" onclick="currentSlide(0)"></span>
-                <span class="dot" onclick="currentSlide(1)"></span>
-                <span class="dot" onclick="currentSlide(2)"></span>
+            
+            <div class="absolute top-1/2 -translate-y-1/2 left-4 w-10 h-10 bg-white/70 text-gray-800 rounded-full flex items-center justify-center cursor-pointer z-10 opacity-0 transition-opacity group hover:opacity-100 hover:bg-accent-orange hover:text-white" onclick="prevSlide()">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <div class="absolute top-1/2 -translate-y-1/2 right-4 w-10 h-10 bg-white/70 text-gray-800 rounded-full flex items-center justify-center cursor-pointer z-10 opacity-0 transition-opacity group hover:opacity-100 hover:bg-accent-orange hover:text-white" onclick="nextSlide()">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+
+            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                <span class="dot w-3 h-3 bg-gray-300 rounded-full cursor-pointer transition-all duration-300 active" onclick="currentSlide(0)"></span>
+                <span class="dot w-3 h-3 bg-gray-300 rounded-full cursor-pointer transition-all duration-300" onclick="currentSlide(1)"></span>
+                <span class="dot w-3 h-3 bg-gray-300 rounded-full cursor-pointer transition-all duration-300" onclick="currentSlide(2)"></span>
             </div>
         </div>
 
-        <div class="side-banners">
-            <div class="banner-card">
-                <img src="https://www.startech.com.bd/image/catalog/home/banner/app-home-banner.webp" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;" alt="Mobile App">
+        <div class="flex flex-col gap-5">
+            <div class="bg-white rounded-lg h-[120px] md:h-[215px] overflow-hidden shadow-sm relative">
+                <img src="https://www.startech.com.bd/image/catalog/home/banner/app-home-banner.webp" alt="Mobile App" class="w-full h-full object-cover rounded-lg">
             </div>
-            <div class="banner-card">
-                <img src="https://www.startech.com.bd/image/catalog/home/banner/ac-calculator-home-banner.webp" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;" alt="AC Calculator">
+            <div class="bg-white rounded-lg h-[120px] md:h-[215px] overflow-hidden shadow-sm relative">
+                <img src="https://www.startech.com.bd/image/catalog/home/banner/ac-calculator-home-banner.webp" alt="AC Calculator" class="w-full h-full object-cover rounded-lg">
             </div>
         </div>
     </section>
 
-    <div class="info-bar">
-        <marquee behavior="scroll" direction="left" scrollamount="5" style="font-size: 13px; color: var(--text-muted);">
+    <div class="bg-white my-6 py-2.5 px-8 rounded-full shadow-sm overflow-hidden">
+        <marquee behavior="scroll" direction="left" scrollamount="5" class="text-sm text-gray-600">
             Friday, 08 May, All our branches are open except Narayanganj, Mymensingh, Rajshahi, Chattogram Agrabad, Rangpur & Khulna branch. Additionally, our online activities are open and operational.
         </marquee>
     </div>
 
-    <section class="features-grid">
-        <div class="feature-card">
-            <div class="feature-icon icon-orange">
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+        <div class="bg-white p-5 rounded-lg flex items-center gap-5 shadow-sm transition-transform hover:-translate-y-1 cursor-pointer">
+            <div class="w-12 h-12 rounded-full bg-accent-orange flex items-center justify-center text-2xl text-white">
                 <i class="fas fa-laptop"></i>
             </div>
-            <div class="feature-info">
-                <h4>Laptop Finder</h4>
-                <p>Find Your Laptop Easily</p>
+            <div>
+                <h4 class="text-base font-bold">Laptop Finder</h4>
+                <p class="text-sm text-gray-500">Find Your Laptop Easily</p>
             </div>
         </div>
-        <div class="feature-card">
-            <div class="feature-icon icon-orange">
+        <div class="bg-white p-5 rounded-lg flex items-center gap-5 shadow-sm transition-transform hover:-translate-y-1 cursor-pointer">
+            <div class="w-12 h-12 rounded-full bg-accent-orange flex items-center justify-center text-2xl text-white">
                 <i class="fas fa-comment-dots"></i>
             </div>
-            <div class="feature-info">
-                <h4>Raise a Complain</h4>
-                <p>Share your experience</p>
+            <div>
+                <h4 class="text-base font-bold">Raise a Complain</h4>
+                <p class="text-sm text-gray-500">Share your experience</p>
             </div>
         </div>
-        <div class="feature-card">
-            <div class="feature-icon icon-orange">
+        <div class="bg-white p-5 rounded-lg flex items-center gap-5 shadow-sm transition-transform hover:-translate-y-1 cursor-pointer">
+            <div class="w-12 h-12 rounded-full bg-accent-orange flex items-center justify-center text-2xl text-white">
                 <i class="fas fa-tools"></i>
             </div>
-            <div class="feature-info">
-                <h4>Home Service</h4>
-                <p>Get expert help.</p>
+            <div>
+                <h4 class="text-base font-bold">Home Service</h4>
+                <p class="text-sm text-gray-500">Get expert help.</p>
             </div>
         </div>
-        <div class="feature-card">
-            <div class="feature-icon icon-orange">
+        <div class="bg-white p-5 rounded-lg flex items-center gap-5 shadow-sm transition-transform hover:-translate-y-1 cursor-pointer">
+            <div class="w-12 h-12 rounded-full bg-accent-orange flex items-center justify-center text-2xl text-white">
                 <i class="fas fa-user-gear"></i>
             </div>
-            <div class="feature-info">
-                <h4>Servicing Center</h4>
-                <p>Repair Your Device</p>
+            <div>
+                <h4 class="text-base font-bold">Servicing Center</h4>
+                <p class="text-sm text-gray-500">Repair Your Device</p>
             </div>
         </div>
     </section>
 
-    <div style="text-align: center; margin-top: 50px;">
-        <h2 style="font-size: 22px; font-weight: bold;">Featured Category</h2>
-        <p style="color: #666; font-size: 14px; margin-top: 5px;">Get Your Desired Product from Featured Category!</p>
+    <div class="text-center mt-12 mb-8">
+        <h2 class="text-2xl font-bold">Featured Category</h2>
+        <p class="text-gray-600 text-sm mt-1">Get Your Desired Product from Featured Category!</p>
     </div>
 
-    <section class="category-grid">
-        <div class="category-item">
-            <i class="fas fa-satellite"></i>
-            <span>Starlink</span>
-        </div>
-        <div class="category-item">
-            <i class="fas fa-charging-station"></i>
-            <span>Portable Power Station</span>
-        </div>
-        <div class="category-item">
-            <i class="fas fa-helicopter"></i>
-            <span>Drone</span>
-        </div>
-        <div class="category-item">
-            <i class="fas fa-camera-rotate"></i>
-            <span>Gimbal</span>
-        </div>
-        <div class="category-item">
-            <i class="fas fa-tablet-screen-button"></i>
-            <span>Tablet PC</span>
-        </div>
-        <div class="category-item">
-            <i class="fas fa-tv"></i>
-            <span>TV</span>
-        </div>
-        <div class="category-item">
-            <i class="fas fa-mobile-screen-button"></i>
-            <span>Mobile Phone</span>
-        </div>
-        <div class="category-item">
-            <i class="fas fa-plug-circle-bolt"></i>
-            <span>Mobile Accessories</span>
-        </div>
-        <div class="category-item">
-            <i class="fas fa-hard-drive"></i>
-            <span>Portable SSD</span>
-        </div>
-        <div class="category-item">
-            <i class="fas fa-video"></i>
-            <span>WiFi Camera</span>
-        </div>
-        <div class="category-item">
-            <i class="fas fa-scissors"></i>
-            <span>Trimmer</span>
-        </div>
-        <div class="category-item">
-            <i class="fas fa-clock"></i>
-            <span>Smart Watch</span>
-        </div>
-        <div class="category-item">
-            <i class="fas fa-camera"></i>
-            <span>Action Camera</span>
-        </div>
-        <div class="category-item">
-            <i class="fas fa-ear-listen"></i>
-            <span>Earbuds</span>
-        </div>
-        <div class="category-item">
-            <i class="fas fa-volume-high"></i>
-            <span>Bluetooth Speakers</span>
-        </div>
-        <div class="category-item">
-            <i class="fas fa-gamepad"></i>
-            <span>Gaming Console</span>
-        </div>
+    <section class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4">
+        @php
+            $categories = [
+                ['icon' => 'fa-satellite', 'name' => 'Starlink'],
+                ['icon' => 'fa-charging-station', 'name' => 'Portable Power'],
+                ['icon' => 'fa-helicopter', 'name' => 'Drone'],
+                ['icon' => 'fa-camera-rotate', 'name' => 'Gimbal'],
+                ['icon' => 'fa-tablet-screen-button', 'name' => 'Tablet PC'],
+                ['icon' => 'fa-tv', 'name' => 'TV'],
+                ['icon' => 'fa-mobile-screen-button', 'name' => 'Mobile Phone'],
+                ['icon' => 'fa-plug-circle-bolt', 'name' => 'Accessories'],
+                ['icon' => 'fa-hard-drive', 'name' => 'Portable SSD'],
+                ['icon' => 'fa-video', 'name' => 'WiFi Camera'],
+                ['icon' => 'fa-scissors', 'name' => 'Trimmer'],
+                ['icon' => 'fa-clock', 'name' => 'Smart Watch'],
+                ['icon' => 'fa-camera', 'name' => 'Action Camera'],
+                ['icon' => 'fa-ear-listen', 'name' => 'Earbuds'],
+                ['icon' => 'fa-volume-high', 'name' => 'Speakers'],
+                ['icon' => 'fa-gamepad', 'name' => 'Gaming Console'],
+            ];
+        @endphp
+        @foreach($categories as $cat)
+            <div class="bg-white rounded-xl p-5 text-center flex flex-col items-center gap-4 transition-all hover:shadow-lg hover:text-accent-orange cursor-pointer group">
+                <i class="fas {{ $cat['icon'] }} text-4xl text-gray-700 group-hover:text-accent-orange transition-colors"></i>
+                <span class="text-[13px] font-medium leading-tight">{{ $cat['name'] }}</span>
+            </div>
+        @endforeach
     </section>
 
-    <section class="store-banner">
-        <div class="store-info">
-            <i class="fas fa-location-dot"></i>
-            <div class="store-text">
-                <h2>20+ Physical Stores</h2>
-                <p>Visit Our Store & Get Your Desired IT Product!</p>
+    <section class="bg-gradient-to-r from-[#00d2ff] via-[#3a7bd5] to-primary-dark rounded-xl p-8 lg:p-10 my-12 flex flex-col lg:flex-row justify-between items-center text-white gap-8 lg:gap-0">
+        <div class="flex items-center gap-5 text-center lg:text-left flex-col lg:flex-row">
+            <i class="fas fa-location-dot text-4xl"></i>
+            <div>
+                <h2 class="text-2xl font-bold mb-1">20+ Physical Stores</h2>
+                <p class="text-sm opacity-90">Visit Our Store & Get Your Desired IT Product!</p>
             </div>
         </div>
-        <a href="#" class="find-store-btn">Find Our Store <i class="fas fa-search"></i></a>
-    </section>
-
-    <div style="text-align: center; margin-top: 60px;">
-        <h2 style="font-size: 22px; font-weight: bold;">Featured Products</h2>
-        <p style="color: #666; font-size: 14px; margin-top: 5px;">Check & Get Your Desired Product!</p>
-    </div>
-
-    <section class="product-grid">
-        <!-- Product 1 -->
-        <a href="{{ url('/product/beko-ac') }}" style="text-decoration: none; color: inherit;">
-        <div class="product-card">
-            <div class="product-badge">Save: 21,837৳ (-26%)</div>
-            <div class="product-image">
-                <img src="https://www.startech.com.bd/image/cache/catalog/air-conditioner/beko/bnvha-180-181/bnvha-180-181-01-228x228.webp" alt="Product">
-            </div>
-            <div class="product-info">
-                <h3>Beko 1.5 Ton Inverter AC</h3>
-                <div class="product-price">
-                    <span class="current-price">62,153৳</span>
-                    <span class="old-price">83,990৳</span>
-                </div>
-            </div>
-        </div>
+        <a href="#" class="bg-accent-orange text-white py-3 px-8 rounded-full font-bold flex items-center gap-2.5 transition-transform hover:scale-105">
+            Find Our Store <i class="fas fa-search"></i>
         </a>
-        <!-- More products... (I'll keep them simplified for now) -->
-        @for($i=0; $i<9; $i++)
-        <div class="product-card">
-            <div class="product-badge">Hot Deal</div>
-            <div class="product-image">
-                <img src="https://www.startech.com.bd/image/cache/catalog/ups/ecoflow/river-3/river-3-01-228x228.webp" alt="Product">
-            </div>
-            <div class="product-info">
-                <h3>EcoFlow River 3 UPS & Portable Power Station</h3>
-                <div class="product-price">
-                    <span class="current-price">27,250৳</span>
+    </section>
+
+    <div class="text-center mt-16 mb-8">
+        <h2 class="text-2xl font-bold">Featured Products</h2>
+        <p class="text-gray-600 text-sm mt-1">Check & Get Your Desired Product!</p>
+    </div>
+
+    <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <!-- Product Card -->
+        <a href="{{ url('/product/beko-ac') }}" class="group">
+            <div class="bg-white rounded-lg p-4 relative flex flex-col h-full shadow-sm hover:shadow-xl transition-shadow">
+                <div class="absolute top-0 left-0 bg-[#6e2594] text-white py-1 px-2.5 rounded-tl-lg rounded-br-lg text-[11px] font-bold z-10">Save: 21,837৳ (-26%)</div>
+                <div class="w-full h-48 flex items-center justify-center mb-4 p-2">
+                    <img src="https://www.startech.com.bd/image/cache/catalog/air-conditioner/beko/bnvha-180-181/bnvha-180-181-01-228x228.webp" alt="Product" class="max-w-full max-h-full object-contain">
+                </div>
+                <div class="flex flex-col flex-grow">
+                    <h3 class="text-sm font-medium text-gray-800 mb-4 line-clamp-2 group-hover:text-accent-orange group-hover:underline leading-relaxed h-10">Beko 1.5 Ton Inverter AC</h3>
+                    <div class="flex flex-col gap-1 mt-auto">
+                        <span class="text-accent-orange text-lg font-bold">62,153৳</span>
+                        <span class="text-gray-500 text-xs line-through">83,990৳</span>
+                    </div>
                 </div>
             </div>
-        </div>
+        </a>
+
+        @for($i=0; $i<9; $i++)
+            <div class="bg-white rounded-lg p-4 relative flex flex-col h-full shadow-sm hover:shadow-xl transition-shadow group cursor-pointer">
+                <div class="absolute top-0 left-0 bg-[#6e2594] text-white py-1 px-2.5 rounded-tl-lg rounded-br-lg text-[11px] font-bold z-10">Hot Deal</div>
+                <div class="w-full h-48 flex items-center justify-center mb-4 p-2">
+                    <img src="https://www.startech.com.bd/image/cache/catalog/ups/ecoflow/river-3/river-3-01-228x228.webp" alt="Product" class="max-w-full max-h-full object-contain">
+                </div>
+                <div class="flex flex-col flex-grow">
+                    <h3 class="text-sm font-medium text-gray-800 mb-4 line-clamp-2 group-hover:text-accent-orange group-hover:underline leading-relaxed h-10">EcoFlow River 3 UPS & Portable Power Station</h3>
+                    <div class="mt-auto">
+                        <span class="text-accent-orange text-lg font-bold">27,250৳</span>
+                    </div>
+                </div>
+            </div>
         @endfor
     </section>
 
-    <div class="load-more-container">
-        <a href="#" class="load-more-btn">Load More</a>
+    <div class="text-center my-10 lg:my-16">
+        <a href="#" class="bg-white text-gray-800 border border-gray-300 py-2.5 px-10 rounded font-semibold text-sm transition-all hover:bg-accent-orange hover:text-white hover:border-accent-orange">Load More</a>
     </div>
 
-    <section class="seo-section">
-        <h1>Leading Computer, Laptop & Gaming PC Retail & Online Shop in Bangladesh</h1>
-        <p>Technology has become a part of our daily lives, and we depend on tech products daily for a vast portion of our lives. There is hardly a home in Bangladesh without a tech product. This is where we come in. <a href="#">Star Tech Ltd.</a>, started as a Tech Product Shop in March 2007. We focus on giving the best customer service in Bangladesh, following our motto of <strong>"Customer Comes First."</strong> This is why Star Tech is the most <strong>trusted computer shop in Bangladesh</strong> today, capturing the loyalty of a large customer base.</p>
+    <section class="mt-16 py-10 text-gray-700">
+        <h1 class="text-lg font-bold mb-4 text-primary-dark">Leading Computer, Laptop & Gaming PC Retail & Online Shop in Bangladesh</h1>
+        <p class="text-sm leading-relaxed mb-4">Technology has become a part of our daily lives, and we depend on tech products daily for a vast portion of our lives. There is hardly a home in Bangladesh without a tech product. This is where we come in. <a href="#" class="text-accent-orange hover:underline">Star Tech Ltd.</a>, started as a Tech Product Shop in March 2007. We focus on giving the best customer service in Bangladesh, following our motto of <strong>"Customer Comes First."</strong> This is why Star Tech is the most <strong>trusted computer shop in Bangladesh</strong> today, capturing the loyalty of a large customer base.</p>
 
-        <h2>Best Laptop Shop in Bangladesh</h2>
-        <p>Star Tech is the most popular <a href="#">Laptop Brand Shop in BD</a>. Star Tech <a href="#">Laptop</a> Shop has the perfect device, whether you are a freelancer, officegoer, or student. Gamers love our collection of <a href="#">Gaming Laptops</a> because we always bring the latest laptops in Bangladesh.</p>
+        <h2 class="text-lg font-bold mt-6 mb-4 text-primary-dark">Best Laptop Shop in Bangladesh</h2>
+        <p class="text-sm leading-relaxed mb-4">Star Tech is the most popular <a href="#" class="text-accent-orange hover:underline">Laptop Brand Shop in BD</a>. Star Tech <a href="#" class="text-accent-orange hover:underline">Laptop</a> Shop has the perfect device, whether you are a freelancer, officegoer, or student. Gamers love our collection of <a href="#" class="text-accent-orange hover:underline">Gaming Laptops</a> because we always bring the latest laptops in Bangladesh.</p>
 
-        <h2>Best Desktop PC Shop In Bangladesh</h2>
-        <p><a href="#">Star Tech</a> has the most comprehensive array of <a href="#">Desktop PCs</a>. We offer top-of-the-line Custom PC, <a href="#">Brand PC</a>, All-in-One PC, and <a href="#">Portable Mini PC</a> at Star Tech outlets.</p>
+        <h2 class="text-lg font-bold mt-6 mb-4 text-primary-dark">Best Desktop PC Shop In Bangladesh</h2>
+        <p class="text-sm leading-relaxed mb-4"><a href="#" class="text-accent-orange hover:underline">Star Tech</a> has the most comprehensive array of <a href="#" class="text-accent-orange hover:underline">Desktop PCs</a>. We offer top-of-the-line Custom PC, <a href="#" class="text-accent-orange hover:underline">Brand PC</a>, All-in-One PC, and <a href="#" class="text-accent-orange hover:underline">Portable Mini PC</a> at Star Tech outlets.</p>
     </section>
 </div>
+
+<style>
+    /* Slider active dot state */
+    .dot.active {
+        background-color: var(--color-accent-orange) !important;
+        width: 25px !important;
+        border-radius: 10px !important;
+    }
+    #hero-slider:hover div[onclick] {
+        opacity: 1;
+    }
+</style>
 @endsection
 
 @section('scripts')
@@ -630,7 +218,6 @@
 
         container.style.transform = `translateX(-${currentIndex * 100}%)`;
         
-        // Update dots
         dots.forEach((dot, i) => {
             dot.classList.toggle('active', i === currentIndex);
         });
@@ -638,6 +225,12 @@
 
     function nextSlide() {
         showSlide(currentIndex + 1);
+        resetTimer();
+    }
+
+    function prevSlide() {
+        showSlide(currentIndex - 1);
+        resetTimer();
     }
 
     function currentSlide(index) {
@@ -654,10 +247,8 @@
         startTimer();
     }
 
-    // Initialize
     startTimer();
 
-    // Pause on hover
     const sliderElement = document.getElementById('hero-slider');
     if (sliderElement) {
         sliderElement.addEventListener('mouseenter', () => clearInterval(slideInterval));
