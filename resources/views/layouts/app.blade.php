@@ -261,6 +261,7 @@
                     @foreach($footerPages as $fPage)
                         <li><a href="{{ url('info/' . $fPage->slug) }}" class="text-gray-400 hover:text-accent-orange text-sm transition-colors">{{ $fPage->title }}</a></li>
                     @endforeach
+                    <li><a href="{{ route('order.track') }}" class="text-gray-400 hover:text-accent-orange text-sm transition-colors font-bold">Order Tracking</a></li>
                     <li><a href="{{ route('contact') }}" class="text-gray-400 hover:text-accent-orange text-sm transition-colors">Contact Us</a></li>
                 </ul>
             </div>

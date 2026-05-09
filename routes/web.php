@@ -18,7 +18,7 @@ use App\Http\Controllers\Frontend\ServiceController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-Route::get('/product/{slug}', [ProductController::class, 'show']);
+Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.single');
 Route::get('/offers', [OfferController::class, 'index'])->name('offers.index');
 Route::get('/offer/{slug}', [OfferController::class, 'show'])->name('offers.show');
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
@@ -33,7 +33,7 @@ Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remov
 Route::get('/cart/count', [CartController::class, 'getCount'])->name('cart.count');
 Route::post('/checkout', [CartController::class, 'placeOrder'])->name('order.place');
 Route::get('/order-success/{order_number}', [CartController::class, 'orderSuccess'])->name('order.success');
-Route::get('/category/{slug}', [CategoryController::class, 'show']);
+Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
 Route::get('/search', [SearchController::class, 'index']);
 Route::get('/account/login', [AccountController::class, 'login'])->name('user.login');
 Route::post('/account/login', [AccountController::class, 'storeLogin'])->name('user.login.store');
@@ -58,6 +58,14 @@ Route::get('/quotation', [InformationController::class, 'quotation'])->name('inf
 Route::post('/quotation', [\App\Http\Controllers\Backend\QuotationController::class, 'store'])->name('quotation.store');
 Route::post('/product-question', [\App\Http\Controllers\Backend\ProductQuestionController::class, 'store'])->name('product.question.store');
 Route::post('/product-review', [\App\Http\Controllers\Backend\ProductReviewController::class, 'store'])->name('product.review.store')->middleware('auth');
+
+// Invoice Routes
+Route::get('/order/invoice/{id}', [\App\Http\Controllers\OrderInvoiceController::class, 'show'])->name('order.invoice.show')->middleware('auth');
+Route::get('/order/invoice/{id}/print', [\App\Http\Controllers\OrderInvoiceController::class, 'download'])->name('order.invoice.print')->middleware('auth');
+
+// Order Tracking
+Route::get('/order-tracking', [\App\Http\Controllers\Frontend\OrderTrackingController::class, 'index'])->name('order.track');
+Route::post('/order-tracking', [\App\Http\Controllers\Frontend\OrderTrackingController::class, 'track'])->name('order.track.post');
 
 
 

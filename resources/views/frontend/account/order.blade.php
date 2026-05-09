@@ -74,7 +74,7 @@
                         </td>
                         <td class="px-6 py-4 text-center">
                             <div class="flex items-center justify-center gap-2">
-                                <a href="#" class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-accent-orange group-hover:text-white transition-all shadow-sm" title="View Order">
+                                <a href="{{ route('order.invoice.show', $order->id) }}" class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-accent-orange group-hover:text-white transition-all shadow-sm" title="View Invoice">
                                     <i class="fa fa-eye text-sm"></i>
                                 </a>
                                 @if($order->status == 'delivered')
