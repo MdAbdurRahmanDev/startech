@@ -1,334 +1,191 @@
 @extends('layouts.app')
 
-@section('title', 'CPU Cooler Price in Bangladesh | Star Tech')
-
-@section('styles')
-<style>
-    .category-container {
-        display: grid;
-        grid-template-columns: 280px 1fr;
-        gap: 20px;
-        margin-top: 20px;
-    }
-
-    .filter-sidebar {
-        background-color: transparent;
-    }
-
-    .filter-card {
-        background-color: var(--white);
-        border-radius: 8px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-    }
-
-    .filter-card h3 {
-        font-size: 16px;
-        margin-bottom: 15px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #eee;
-    }
-
-    .filter-list {
-        list-style: none;
-    }
-
-    .filter-list li {
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 14px;
-        color: #444;
-    }
-
-    .price-range-slider {
-        margin-top: 20px;
-    }
-
-    .range-inputs {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 10px;
-    }
-
-    .range-inputs input {
-        width: 80px;
-        padding: 5px;
-        border: 1px solid #ddd;
-        text-align: center;
-        font-size: 13px;
-    }
-
-    .category-content-header {
-        background-color: var(--white);
-        padding: 15px 20px;
-        border-radius: 8px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .brand-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 30px;
-    }
-
-    .brand-tag {
-        background-color: var(--white);
-        border: 1px solid #ddd;
-        padding: 5px 15px;
-        border-radius: 20px;
-        font-size: 13px;
-        cursor: pointer;
-    }
-
-    .brand-tag:hover {
-        border-color: var(--accent-orange);
-        color: var(--accent-orange);
-    }
-
-    .product-list-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 15px;
-    }
-
-    .cat-product-card {
-        background-color: var(--white);
-        border-radius: 8px;
-        padding: 15px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        transition: box-shadow 0.3s;
-    }
-
-    .cat-product-card:hover {
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    .cat-product-card img {
-        width: 100%;
-        height: 180px;
-        object-fit: contain;
-        margin-bottom: 15px;
-    }
-
-    .cat-product-card h3 {
-        font-size: 14px;
-        height: 40px;
-        overflow: hidden;
-        margin-bottom: 10px;
-    }
-
-    .product-features {
-        list-style: none;
-        margin-bottom: 15px;
-    }
-
-    .product-features li {
-        font-size: 12px;
-        color: #666;
-        margin-bottom: 5px;
-        padding-left: 10px;
-        position: relative;
-    }
-
-    .product-features li::before {
-        content: "•";
-        position: absolute;
-        left: 0;
-        color: #ccc;
-    }
-
-    .price-box {
-        border-top: 1px solid #eee;
-        padding-top: 15px;
-        text-align: center;
-    }
-
-    .cat-price {
-        font-size: 18px;
-        font-weight: bold;
-        color: var(--accent-orange);
-        display: block;
-        margin-bottom: 10px;
-    }
-
-    .buy-btn {
-        background: none;
-        border: 1px solid #ddd;
-        padding: 8px;
-        width: 100%;
-        border-radius: 4px;
-        font-size: 13px;
-        font-weight: bold;
-        color: var(--accent-blue);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-        margin-bottom: 8px;
-    }
-
-    .buy-btn:hover {
-        background-color: var(--accent-blue);
-        color: white;
-    }
-
-    .compare-btn {
-        background: none;
-        border: none;
-        color: #666;
-        font-size: 11px;
-        cursor: pointer;
-    }
-
-    @media (max-width: 1200px) {
-        .product-list-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-
-    @media (max-width: 992px) {
-        .category-container { grid-template-columns: 1fr; }
-        .filter-sidebar { display: none; }
-    }
-</style>
-@endsection
+@section('title', $category->name . ' Price in Bangladesh | Star Tech')
 
 @section('content')
-<div class="container">
-    <div class="breadcrumb" style="padding: 15px 0; font-size: 13px;">
-        <a href="#"><i class="fas fa-home"></i></a> / <a href="#">Component</a> / CPU Cooler
+<div class="container mx-auto px-2 md:px-4 mb-10">
+    <!-- Breadcrumb -->
+    <div class="py-4 text-[13px] text-gray-500">
+        <a href="{{ url('/') }}" class="text-gray-700 hover:text-accent-orange transition-colors"><i class="fas fa-home"></i></a> 
+        <span class="mx-1">/</span> <a href="#" class="text-gray-700 hover:text-accent-orange transition-colors">Category</a> 
+        <span class="mx-1">/</span> <span class="text-gray-900">{{ $category->name }}</span>
     </div>
 
-    <div class="category-header">
-        <h1 style="font-size: 22px; margin-bottom: 10px;">CPU Cooler Price in Bangladesh</h1>
-        <p style="font-size: 13px; color: #666; margin-bottom: 25px;">CPU Cooler Price in Bangladesh starts from BDT 300 to BDT 51,500 depending on the brand, model, and features.</p>
+    <!-- Category Header -->
+    <div class="mb-6">
+        <h1 class="text-[22px] font-bold text-primary-dark mb-2">{{ $category->name }} Price in Bangladesh</h1>
+        <p class="text-[13px] text-gray-600 mb-6 max-w-3xl">{{ $category->name }} Price in Bangladesh depends on the brand, model, and features. Find the best deals on Star Tech.</p>
 
-        <div class="brand-tags">
-            <span class="brand-tag">MSI</span>
-            <span class="brand-tag">Antec</span>
-            <span class="brand-tag">Gamdias</span>
-            <span class="brand-tag">ARCTIC</span>
-            <span class="brand-tag">Corsair</span>
-            <span class="brand-tag">DeepCool</span>
-            <span class="brand-tag">NZXT</span>
-            <span class="brand-tag">Cooler Master</span>
+        <div class="flex flex-wrap gap-2.5 mb-4">
+            <!-- Dynamic brand tags can be added here -->
+            <span class="bg-white border border-gray-200 px-4 py-1.5 rounded-full text-[13px] text-gray-700 hover:border-accent-orange hover:text-accent-orange transition-colors cursor-pointer shadow-sm">MSI</span>
+            <span class="bg-white border border-gray-200 px-4 py-1.5 rounded-full text-[13px] text-gray-700 hover:border-accent-orange hover:text-accent-orange transition-colors cursor-pointer shadow-sm">Gamdias</span>
+            <span class="bg-white border border-gray-200 px-4 py-1.5 rounded-full text-[13px] text-gray-700 hover:border-accent-orange hover:text-accent-orange transition-colors cursor-pointer shadow-sm">Corsair</span>
+            <span class="bg-white border border-gray-200 px-4 py-1.5 rounded-full text-[13px] text-gray-700 hover:border-accent-orange hover:text-accent-orange transition-colors cursor-pointer shadow-sm">Cooler Master</span>
         </div>
     </div>
 
-    <div class="category-container">
-        <aside class="filter-sidebar">
-            <div class="filter-card">
-                <h3>Price Range</h3>
-                <div class="price-range-slider">
-                    <input type="range" style="width: 100%; accent-color: var(--accent-orange);">
-                    <div class="range-inputs">
-                        <input type="text" value="0">
-                        <input type="text" value="51,500">
+    <!-- Layout Container -->
+    <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-5">
+        
+        <!-- Sidebar Filters -->
+        <aside class="hidden lg:block space-y-5">
+            <!-- Price Range -->
+            <div class="bg-white rounded-lg p-5 shadow-sm border border-gray-100">
+                <h3 class="text-base font-bold text-gray-800 border-b border-gray-100 pb-3 mb-4">Price Range</h3>
+                <div class="mt-2">
+                    <input type="range" class="w-full accent-accent-orange">
+                    <div class="flex justify-between mt-3">
+                        <input type="text" value="0" class="w-20 p-1.5 border border-gray-300 text-center text-[13px] rounded">
+                        <input type="text" value="51,500" class="w-20 p-1.5 border border-gray-300 text-center text-[13px] rounded">
                     </div>
                 </div>
             </div>
 
-            <div class="filter-card">
-                <h3>Availability</h3>
-                <ul class="filter-list">
-                    <li><input type="checkbox"> In Stock</li>
-                    <li><input type="checkbox"> Pre Order</li>
-                    <li><input type="checkbox"> Up Coming</li>
+            <!-- Availability -->
+            <div class="bg-white rounded-lg p-5 shadow-sm border border-gray-100">
+                <h3 class="text-base font-bold text-gray-800 border-b border-gray-100 pb-3 mb-4">Availability</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer hover:text-accent-orange">
+                        <input type="checkbox" class="rounded border-gray-300 text-accent-orange focus:ring-accent-orange cursor-pointer"> <span>In Stock</span>
+                    </li>
+                    <li class="flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer hover:text-accent-orange">
+                        <input type="checkbox" class="rounded border-gray-300 text-accent-orange focus:ring-accent-orange cursor-pointer"> <span>Pre Order</span>
+                    </li>
+                    <li class="flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer hover:text-accent-orange">
+                        <input type="checkbox" class="rounded border-gray-300 text-accent-orange focus:ring-accent-orange cursor-pointer"> <span>Up Coming</span>
+                    </li>
                 </ul>
             </div>
 
-            <div class="filter-card">
-                <h3>Brand</h3>
-                <ul class="filter-list">
-                    <li><input type="checkbox"> Antec</li>
-                    <li><input type="checkbox"> Gamdias</li>
-                    <li><input type="checkbox"> Corsair</li>
-                    <li><input type="checkbox"> MSI</li>
-                    <li><input type="checkbox"> DeepCool</li>
+            <!-- Brand Filter -->
+            <div class="bg-white rounded-lg p-5 shadow-sm border border-gray-100">
+                <h3 class="text-base font-bold text-gray-800 border-b border-gray-100 pb-3 mb-4">Brand</h3>
+                <ul class="space-y-3 max-h-60 overflow-y-auto pr-2">
+                    <li class="flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer hover:text-accent-orange">
+                        <input type="checkbox" class="rounded border-gray-300 text-accent-orange focus:ring-accent-orange cursor-pointer"> <span>Antec</span>
+                    </li>
+                    <li class="flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer hover:text-accent-orange">
+                        <input type="checkbox" class="rounded border-gray-300 text-accent-orange focus:ring-accent-orange cursor-pointer"> <span>Gamdias</span>
+                    </li>
+                    <li class="flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer hover:text-accent-orange">
+                        <input type="checkbox" class="rounded border-gray-300 text-accent-orange focus:ring-accent-orange cursor-pointer"> <span>Corsair</span>
+                    </li>
+                    <li class="flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer hover:text-accent-orange">
+                        <input type="checkbox" class="rounded border-gray-300 text-accent-orange focus:ring-accent-orange cursor-pointer"> <span>MSI</span>
+                    </li>
+                    <li class="flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer hover:text-accent-orange">
+                        <input type="checkbox" class="rounded border-gray-300 text-accent-orange focus:ring-accent-orange cursor-pointer"> <span>DeepCool</span>
+                    </li>
                 </ul>
             </div>
         </aside>
 
-        <section class="category-content">
-            <div class="category-content-header">
-                <h2 style="font-size: 16px;">CPU Cooler</h2>
-                <div class="sort-options" style="font-size: 13px;">
-                    Show: <select><option>20</option></select>
-                    Sort By: <select><option>Default</option></select>
+        <!-- Main Product Content -->
+        <section>
+            <!-- Content Header -->
+            <div class="bg-white px-5 py-3 rounded-lg shadow-sm border border-gray-50 flex flex-col sm:flex-row justify-between items-center mb-5 gap-3">
+                <h2 class="text-base font-bold text-primary-dark">{{ $category->name }}</h2>
+                <div class="flex items-center gap-4 text-[13px] text-gray-600">
+                    <div class="flex items-center gap-2">
+                        <label>Show:</label>
+                        <select class="border border-gray-200 rounded py-1 px-2 focus:ring-accent-orange focus:border-accent-orange outline-none bg-gray-50">
+                            <option>20</option>
+                            <option>40</option>
+                            <option>60</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label>Sort By:</label>
+                        <select class="border border-gray-200 rounded py-1 px-2 focus:ring-accent-orange focus:border-accent-orange outline-none bg-gray-50">
+                            <option>Default</option>
+                            <option>Price (Low > High)</option>
+                            <option>Price (High > Low)</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
-            <div class="product-list-grid">
-                <!-- Product 1 -->
-                <div class="cat-product-card">
-                    <img src="https://www.startech.com.bd/image/cache/catalog/component/cpu-cooler/deepcool/ck-11509/ck-11509-01-228x228.jpg" alt="Cooler">
-                    <h3>Deepcool CK-11509 CPU Cooler</h3>
-                    <ul class="product-features">
-                        <li>Radial aluminum heatsink</li>
-                        <li>Fan Dimension: 92X25mm</li>
-                        <li>Rated Voltage: 12VDC</li>
-                    </ul>
-                    <div class="price-box">
-                        <span class="cat-price">400৳</span>
-                        <button class="buy-btn"><i class="fas fa-shopping-cart"></i> Buy Now</button>
-                        <button class="compare-btn"><i class="fas fa-plus"></i> Add to Compare</button>
+            <!-- Product Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4">
+                @forelse($products as $product)
+                    <div class="bg-white rounded-lg p-3 md:p-4 flex flex-col shadow-sm border border-gray-50 hover:shadow-lg transition-shadow relative group">
+                        
+                        <!-- Stock Badge -->
+                        @if($product->stock <= 0)
+                            <div class="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">
+                                Out of Stock
+                            </div>
+                        @else
+                            <div class="absolute top-3 left-3 bg-accent-blue text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">
+                                In Stock
+                            </div>
+                        @endif
+
+                        <!-- Product Image -->
+                        <a href="{{ url('product/' . $product->slug) }}" class="block mb-4 h-40 md:h-48 bg-gray-50 rounded flex items-center justify-center p-2 overflow-hidden">
+                            <img src="{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : 'https://placehold.co/228x228/f9fafb/a3a3a3?text=No+Image' }}" 
+                                 alt="{{ $product->name }}" 
+                                 class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500">
+                        </a>
+
+                        <!-- Product Title -->
+                        <a href="{{ url('product/' . $product->slug) }}" class="block mb-3">
+                            <h3 class="text-[13px] md:text-[14px] font-bold text-primary-dark hover:text-accent-orange transition-colors line-clamp-2 leading-snug h-10">{{ $product->name }}</h3>
+                        </a>
+                        
+                        <!-- Specifications -->
+                        <ul class="space-y-1.5 mb-4 flex-grow text-gray-500">
+                            @if($product->specifications && $product->specifications->count() > 0)
+                                @foreach($product->specifications->take(3) as $spec)
+                                    <li class="text-[11px] flex items-start gap-1.5">
+                                        <span class="w-1 h-1 rounded-full bg-gray-300 mt-1.5 shrink-0"></span>
+                                        <span class="line-clamp-1">{{ $spec->value }}</span>
+                                    </li>
+                                @endforeach
+                            @else
+                                <li class="text-[11px] flex items-start gap-1.5">
+                                    <span class="w-1 h-1 rounded-full bg-gray-300 mt-1.5 shrink-0"></span>
+                                    <span>No specifications available</span>
+                                </li>
+                            @endif
+                        </ul>
+                        
+                        <!-- Price and Actions -->
+                        <div class="border-t border-gray-100 pt-4 text-center mt-auto">
+                            <div class="flex items-center justify-center gap-2 mb-3">
+                                @if($product->discount_price && $product->discount_price < $product->price)
+                                    <span class="text-base md:text-lg font-bold text-accent-orange">{{ number_format($product->discount_price, 0) }}৳</span>
+                                    <span class="text-xs text-gray-400 line-through">{{ number_format($product->price, 0) }}৳</span>
+                                @else
+                                    <span class="text-base md:text-lg font-bold text-accent-orange">{{ number_format($product->price, 0) }}৳</span>
+                                @endif
+                            </div>
+                            
+                            <button class="w-full border border-gray-200 bg-gray-50 text-primary-dark font-bold py-2 rounded text-xs md:text-sm hover:bg-accent-blue hover:text-white hover:border-accent-blue transition-colors flex items-center justify-center gap-2 mb-2 disabled:opacity-50 disabled:cursor-not-allowed" {{ $product->stock <= 0 ? 'disabled' : '' }}>
+                                <i class="fas fa-shopping-cart text-[11px]"></i> Buy Now
+                            </button>
+                            
+                            <button class="text-[11px] text-gray-500 hover:text-accent-orange transition-colors flex items-center justify-center gap-1 w-full py-1">
+                                <i class="fas fa-plus"></i> Add to Compare
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <!-- Product 2 -->
-                <div class="cat-product-card">
-                    <img src="https://www.startech.com.bd/image/cache/catalog/component/cpu-cooler/deepcool/alta-9/alta-9-01-228x228.jpg" alt="Cooler">
-                    <h3>DeepCool ALTA 9 Air CPU Cooler</h3>
-                    <ul class="product-features">
-                        <li>Fan Dimension: Ø92X25mm</li>
-                        <li>Fan Speed: 2200±10%RPM</li>
-                        <li>Bearing Type: Hydro Bearing</li>
-                    </ul>
-                    <div class="price-box">
-                        <span class="cat-price">550৳</span>
-                        <button class="buy-btn"><i class="fas fa-shopping-cart"></i> Buy Now</button>
-                        <button class="compare-btn"><i class="fas fa-plus"></i> Add to Compare</button>
+                @empty
+                    <div class="col-span-full py-16 text-center bg-white rounded-lg border border-gray-100">
+                        <i class="fas fa-box-open text-4xl text-gray-300 mb-3"></i>
+                        <h3 class="text-lg text-gray-600 mb-1">No products found</h3>
+                        <p class="text-sm text-gray-400">Try adjusting your filters or check back later.</p>
                     </div>
-                </div>
-                <!-- Product 3 -->
-                <div class="cat-product-card">
-                    <img src="https://www.startech.com.bd/image/cache/catalog/component/cpu-cooler/value-top/glacio-x100/glacio-x100-01-228x228.webp" alt="Cooler">
-                    <h3>Value-Top GLACIO X100 RGB Air CPU Cooler</h3>
-                    <ul class="product-features">
-                        <li>Fan speed: 800-2600 RPM ± 10%</li>
-                        <li>Max Air Flow: 43 CFM ± 10%</li>
-                        <li>Max Noise Level: 31.5 dBA ± 10%</li>
-                    </ul>
-                    <div class="price-box">
-                        <span class="cat-price">800৳</span>
-                        <button class="buy-btn"><i class="fas fa-shopping-cart"></i> Buy Now</button>
-                        <button class="compare-btn"><i class="fas fa-plus"></i> Add to Compare</button>
-                    </div>
-                </div>
-                <!-- Product 4 -->
-                <div class="cat-product-card">
-                    <img src="https://www.startech.com.bd/image/cache/catalog/component/cpu-cooler/deepcool/ice-edge-mini-fs-v2/ice-edge-mini-fs-v2-1-228x228.jpg" alt="Cooler">
-                    <h3>DeepCool ICE EDGE MINI FS V2.0 CPU Air Cooler</h3>
-                    <ul class="product-features">
-                        <li>Fan Speed: 2200 RPM±10%</li>
-                        <li>Fan Connector: 3-pin</li>
-                        <li>Hydro Bearing</li>
-                    </ul>
-                    <div class="price-box">
-                        <span class="cat-price">1,150৳</span>
-                        <button class="buy-btn"><i class="fas fa-shopping-cart"></i> Buy Now</button>
-                        <button class="compare-btn"><i class="fas fa-plus"></i> Add to Compare</button>
-                    </div>
-                </div>
+                @endforelse
             </div>
+
+            <!-- Pagination -->
+            @if($products->hasPages())
+                <div class="mt-8 flex justify-center">
+                    {{ $products->links() }}
+                </div>
+            @endif
         </section>
     </div>
 </div>

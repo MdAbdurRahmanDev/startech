@@ -83,9 +83,15 @@
             </a>
          </li>
          <li>
-            <a href="{{ route('admin.categories.index') }}" class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.categories.index') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+            <a href="{{ route('admin.categories.index') }}" class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.categories.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
                <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10V6a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v4m3-2 .917 11.923A1 1 0 0 1 17.92 21H6.08a1 1 0 0 1-.997-1.077L6 8h12Z"/></svg>
                <span class="flex-1 ms-3 whitespace-nowrap">Categories</span>
+            </a>
+         </li>
+         <li>
+            <a href="{{ route('admin.products.index') }}" class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.products.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+               <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v14M9 5v14M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/></svg>
+               <span class="flex-1 ms-3 whitespace-nowrap">Products</span>
             </a>
          </li>
          <li>

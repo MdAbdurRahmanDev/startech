@@ -104,7 +104,7 @@
             <p class="text-[11px] md:text-sm text-gray-500 mt-1">Get Your Desired Product from Featured Category!</p>
         </div>
         <div class="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-10 gap-2 md:gap-4">
-            @foreach($featuredCategories as $cat)
+            @forelse($featuredCategories as $cat)
                 <a href="{{ url('category/' . $cat->slug) }}" class="bg-white p-3 md:p-5 rounded-lg shadow-sm border border-gray-50 hover:shadow-md hover:text-accent-orange transition-all flex flex-col items-center gap-2 group text-center h-full">
                     <div class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
                         @if($cat->image)
@@ -117,7 +117,9 @@
                     </div>
                     <span class="text-[10px] md:text-xs font-bold text-primary-dark group-hover:text-accent-orange line-clamp-1">{{ $cat->name }}</span>
                 </a>
-            @endforeach
+            @empty
+                <p class="col-span-full text-center text-gray-400 text-sm py-4">No featured categories yet.</p>
+            @endforelse
         </div>
     </section>
 
@@ -131,38 +133,51 @@
             <a href="#" class="hidden md:block text-accent-orange font-bold text-sm hover:underline">View All Products</a>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-5">
-            @for($i = 0; $i < 10; $i++)
+            @forelse($featuredProducts as $product)
                 <div class="bg-white rounded-lg shadow-sm border border-gray-50 overflow-hidden group hover:shadow-xl transition-all flex flex-col h-full relative">
                     <!-- Badge -->
-                    <div class="absolute top-2 left-2 bg-accent-blue text-white text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full z-10">
-                        In Stock
-                    </div>
+                    @if($product->stock > 0)
+                        <div class="absolute top-2 left-2 bg-accent-blue text-white text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full z-10">
+                            In Stock
+                        </div>
+                    @else
+                        <div class="absolute top-2 left-2 bg-red-500 text-white text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full z-10">
+                            Out of Stock
+                        </div>
+                    @endif
                     
-                    <div class="p-2 md:p-4 aspect-square overflow-hidden bg-gray-50 flex items-center justify-center">
-                        <img src="https://www.startech.com.bd/image/cache/catalog/monitor/msi/pro-mp225/pro-mp225-01-228x228.webp" alt="Product" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500">
-                    </div>
+                    <a href="#" class="p-2 md:p-4 aspect-square overflow-hidden bg-gray-50 flex items-center justify-center block">
+                        <img src="{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : 'https://placehold.co/228x228/f9fafb/a3a3a3?text=No+Image' }}" alt="{{ $product->name }}" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500">
+                    </a>
                     <div class="p-3 md:p-5 flex flex-col flex-grow">
-                        <h3 class="text-xs md:text-[13px] font-bold text-primary-dark hover:text-accent-orange cursor-pointer line-clamp-2 leading-snug h-8 md:h-10">
-                            MSI PRO MP225 21.5" 100Hz IPS Full HD Monitor
-                        </h3>
+                        <a href="#">
+                            <h3 class="text-xs md:text-[13px] font-bold text-primary-dark hover:text-accent-orange cursor-pointer line-clamp-2 leading-snug h-8 md:h-10">
+                                {{ $product->name }}
+                            </h3>
+                        </a>
                         <ul class="mt-3 space-y-1.5 md:space-y-2 flex-grow">
-                            <li class="text-[10px] md:text-[11px] text-gray-500 flex items-center gap-2">
-                                <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
-                                21.5" FHD (1920 x 1080)
-                            </li>
-                            <li class="text-[10px] md:text-[11px] text-gray-500 flex items-center gap-2">
-                                <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
-                                100Hz Refresh Rate
-                            </li>
-                            <li class="text-[10px] md:text-[11px] text-gray-500 flex items-center gap-2">
-                                <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
-                                IPS Panel
-                            </li>
+                            @if($product->specifications && $product->specifications->count() > 0)
+                                @foreach($product->specifications->take(3) as $spec)
+                                    <li class="text-[10px] md:text-[11px] text-gray-500 flex items-start gap-2">
+                                        <span class="w-1 h-1 bg-gray-300 rounded-full mt-1.5 shrink-0"></span>
+                                        <span class="line-clamp-1">{{ $spec->value }}</span>
+                                    </li>
+                                @endforeach
+                            @else
+                                <li class="text-[10px] md:text-[11px] text-gray-500 flex items-center gap-2">
+                                    <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+                                    No specifications added
+                                </li>
+                            @endif
                         </ul>
                         <div class="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-3">
                             <div class="flex items-center gap-2 flex-wrap">
-                                <span class="text-accent-orange font-bold text-sm md:text-base">9,500৳</span>
-                                <span class="text-gray-400 line-through text-[10px] md:text-xs">10,200৳</span>
+                                @if($product->discount_price && $product->discount_price < $product->price)
+                                    <span class="text-accent-orange font-bold text-sm md:text-base">{{ number_format($product->discount_price, 0) }}৳</span>
+                                    <span class="text-gray-400 line-through text-[10px] md:text-xs">{{ number_format($product->price, 0) }}৳</span>
+                                @else
+                                    <span class="text-accent-orange font-bold text-sm md:text-base">{{ number_format($product->price, 0) }}৳</span>
+                                @endif
                             </div>
                             <button class="w-full bg-primary-dark text-white text-xs md:text-sm font-bold py-2 md:py-2.5 rounded hover:bg-accent-orange transition-all flex items-center justify-center gap-2">
                                 <i class="fas fa-shopping-cart text-[10px] md:text-xs"></i>
@@ -175,7 +190,40 @@
                         </div>
                     </div>
                 </div>
-            @endfor
+            @empty
+                @for($i = 0; $i < 5; $i++)
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-50 overflow-hidden group hover:shadow-xl transition-all flex flex-col h-full relative opacity-50">
+                        <!-- Badge -->
+                        <div class="absolute top-2 left-2 bg-accent-blue text-white text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full z-10">
+                            Demo
+                        </div>
+                        
+                        <div class="p-2 md:p-4 aspect-square overflow-hidden bg-gray-50 flex items-center justify-center">
+                            <img src="https://www.startech.com.bd/image/cache/catalog/monitor/msi/pro-mp225/pro-mp225-01-228x228.webp" alt="Product" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-3 md:p-5 flex flex-col flex-grow">
+                            <h3 class="text-xs md:text-[13px] font-bold text-primary-dark cursor-pointer line-clamp-2 leading-snug h-8 md:h-10">
+                                Add Featured Products in Admin Panel
+                            </h3>
+                            <ul class="mt-3 space-y-1.5 md:space-y-2 flex-grow">
+                                <li class="text-[10px] md:text-[11px] text-gray-500 flex items-center gap-2">
+                                    <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+                                    Demo Specification 1
+                                </li>
+                            </ul>
+                            <div class="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-3">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <span class="text-accent-orange font-bold text-sm md:text-base">0৳</span>
+                                </div>
+                                <button disabled class="w-full bg-gray-300 text-white text-xs md:text-sm font-bold py-2 md:py-2.5 rounded cursor-not-allowed flex items-center justify-center gap-2">
+                                    <i class="fas fa-shopping-cart text-[10px] md:text-xs"></i>
+                                    Buy Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                @endfor
+            @endforelse
         </div>
         <div class="mt-8 md:hidden text-center">
             <a href="#" class="inline-block bg-white border border-accent-orange text-accent-orange px-8 py-2.5 rounded font-bold text-sm">View All Products</a>

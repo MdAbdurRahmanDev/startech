@@ -1,286 +1,83 @@
 @extends('layouts.app')
 
-@section('styles')
-<style>
-    .account-container {
-        padding: 30px 0;
-    }
-
-    .breadcrumb {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 13px;
-        color: #666;
-        margin-bottom: 25px;
-    }
-
-    .breadcrumb a {
-        text-decoration: none;
-        color: #081621;
-    }
-
-    .breadcrumb i {
-        font-size: 10px;
-        color: #ccc;
-    }
-
-    .profile-card {
-        background: #fff;
-        border-radius: 8px;
-        padding: 30px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .profile-info {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .avatar {
-        width: 80px;
-        height: 80px;
-        background: #e5e7eb;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 40px;
-        color: #9ca3af;
-    }
-
-    .user-text .hello {
-        font-size: 14px;
-        color: #666;
-    }
-
-    .user-text .name {
-        font-size: 22px;
-        font-weight: bold;
-        color: #081621;
-    }
-
-    .profile-stats {
-        display: flex;
-        gap: 40px;
-    }
-
-    .stat-item {
-        text-align: center;
-        position: relative;
-    }
-
-    .stat-item:not(:last-child):after {
-        content: '';
-        position: absolute;
-        right: -20px;
-        top: 10%;
-        height: 80%;
-        width: 1px;
-        background: #eee;
-    }
-
-    .stat-label {
-        font-size: 12px;
-        color: #666;
-        margin-bottom: 5px;
-        display: block;
-    }
-
-    .stat-value {
-        font-size: 24px;
-        font-weight: bold;
-        color: var(--accent-orange);
-    }
-
-    .account-nav {
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        margin-bottom: 30px;
-        overflow-x: auto;
-    }
-
-    .account-nav-list {
-        display: flex;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        white-space: nowrap;
-    }
-
-    .account-nav-list li a {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 15px 20px;
-        text-decoration: none;
-        color: #666;
-        font-size: 14px;
-        font-weight: 500;
-        border-bottom: 2px solid transparent;
-        transition: all 0.3s;
-    }
-
-    .account-nav-list li a i {
-        font-size: 16px;
-    }
-
-    .account-nav-list li a:hover, .account-nav-list li a.active {
-        color: var(--accent-orange);
-        border-bottom-color: var(--accent-orange);
-        background: #fafafa;
-    }
-
-    .account-content {
-        background: #fff;
-        border-radius: 8px;
-        padding: 30px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-
-    .account-content h2 {
-        font-size: 18px;
-        font-weight: bold;
-        color: #3b5998;
-        margin-bottom: 25px;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 15px;
-    }
-
-    /* Form Styles */
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    .form-group label {
-        display: block;
-        font-size: 13px;
-        font-weight: 600;
-        margin-bottom: 8px;
-    }
-
-    .form-group label .required {
-        color: var(--accent-orange);
-    }
-
-    .form-control {
-        width: 100%;
-        padding: 10px 15px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 14px;
-        outline: none;
-        transition: border-color 0.3s;
-    }
-
-    .form-control:focus {
-        border-color: var(--accent-orange);
-    }
-
-    .btn-continue {
-        background: #3b5998;
-        color: #fff;
-        border: none;
-        padding: 10px 30px;
-        border-radius: 4px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
-
-    .btn-continue:hover {
-        background: #2d4373;
-    }
-
-    /* Table Styles */
-    .account-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 14px;
-    }
-
-    .account-table th {
-        text-align: left;
-        background: #f8f9fa;
-        padding: 12px 15px;
-        border-bottom: 2px solid #eee;
-    }
-
-    .account-table td {
-        padding: 15px;
-        border-bottom: 1px solid #eee;
-    }
-
-    @media (max-width: 768px) {
-        .profile-card {
-            flex-direction: column;
-            text-align: center;
-        }
-        .profile-info {
-            flex-direction: column;
-        }
-        .profile-stats {
-            width: 100%;
-            justify-content: space-around;
-        }
-    }
-</style>
-@yield('account_styles')
-@endsection
-
 @section('content')
-<div class="container account-container">
-    <div class="breadcrumb">
-        <a href="{{ url('/') }}"><i class="fas fa-home"></i></a>
-        <i class="fas fa-chevron-right"></i>
-        <a href="{{ url('/account/account') }}">Account</a>
-        @yield('breadcrumb_extra')
-    </div>
+<div class="bg-gray-50 min-h-screen py-8">
+    <div class="max-w-[1320px] mx-auto px-4">
+        <!-- Breadcrumb -->
+        <div class="flex items-center gap-2 text-xs md:text-sm text-gray-500 mb-6">
+            <a href="/" class="hover:text-accent-orange transition-colors"><i class="fas fa-home"></i></a>
+            <i class="fas fa-chevron-right text-[10px] opacity-30"></i>
+            <a href="{{ route('user.account') }}" class="hover:text-accent-orange transition-colors">Account</a>
+            @yield('breadcrumb_extra')
+        </div>
 
-    <div class="profile-card">
-        <div class="profile-info">
-            <div class="avatar">
-                <i class="fas fa-user"></i>
+        <!-- Profile Header Card -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 flex flex-col md:flex-row justify-between items-center gap-6 mb-8 animate-fade-in">
+            <div class="flex items-center gap-5">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-tr from-accent-orange to-orange-400 rounded-full flex items-center justify-center text-white text-2xl md:text-3xl font-bold shadow-lg shadow-orange-100">
+                    {{ strtoupper(substr(Auth::user()->first_name, 0, 1)) }}
+                </div>
+                <div>
+                    <p class="text-sm text-gray-400">Hello,</p>
+                    <h1 class="text-xl md:text-2xl font-bold text-primary-dark">{{ Auth::user()->name }}</h1>
+                </div>
             </div>
-            <div class="user-text">
-                <span class="hello">Hello,</span>
-                <div class="name">Rahman Miah</div>
+            <div class="flex gap-8 md:gap-12 text-center">
+                <div>
+                    <p class="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Star Points</p>
+                    <p class="text-xl md:text-2xl font-black text-accent-orange">0</p>
+                </div>
+                <div class="w-px h-10 bg-gray-100 self-center"></div>
+                <div>
+                    <p class="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Store Credit</p>
+                    <p class="text-xl md:text-2xl font-black text-accent-orange">0৳</p>
+                </div>
             </div>
         </div>
-        <div class="profile-stats">
-            <div class="stat-item">
-                <span class="stat-label">Star Points</span>
-                <span class="stat-value">0</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">Store Credit</span>
-                <span class="stat-value">0</span>
-            </div>
+
+        <!-- Account Navigation -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 mb-8 overflow-x-auto scrollbar-hide sticky top-[72px] z-30">
+            <ul class="flex whitespace-nowrap p-1">
+                @php
+                    $navItems = [
+                        ['route' => 'user.order', 'icon' => 'fas fa-list-alt', 'label' => 'Orders'],
+                        ['route' => 'user.edit', 'icon' => 'fas fa-user-edit', 'label' => 'Edit Profile'],
+                        ['route' => 'user.account', 'icon' => 'fas fa-lock', 'label' => 'Change Password'], // Reuse edit page for now or separate
+                        ['route' => 'user.address', 'icon' => 'fas fa-address-book', 'label' => 'Addresses'],
+                        ['route' => 'user.account', 'icon' => 'fas fa-heart', 'label' => 'Saved List'],
+                        ['route' => 'user.account', 'icon' => 'fas fa-star', 'label' => 'Star Points'],
+                    ];
+                @endphp
+                @foreach($navItems as $item)
+                    <li>
+                        <a href="{{ route($item['route']) }}" class="flex items-center gap-2 px-6 py-4 text-sm font-bold transition-all border-b-2 {{ Request::routeIs($item['route']) ? 'text-accent-orange border-accent-orange bg-orange-50/50' : 'text-gray-500 border-transparent hover:text-accent-orange hover:bg-gray-50' }}">
+                            <i class="{{ $item['icon'] }} {{ Request::routeIs($item['route']) ? 'text-accent-orange' : 'text-gray-300' }}"></i>
+                            {{ $item['label'] }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
         </div>
-    </div>
 
-    <nav class="account-nav">
-        <ul class="account-nav-list">
-            <li><a href="{{ url('/account/order') }}" class="{{ Request::is('account/order') ? 'active' : '' }}"><i class="fas fa-list-alt"></i> Orders</a></li>
-            <li><a href="#"><i class="fas fa-file-invoice"></i> Quotes</a></li>
-            <li><a href="{{ url('/account/edit') }}" class="{{ Request::is('account/edit') ? 'active' : '' }}"><i class="fas fa-user-edit"></i> Edit Account</a></li>
-            <li><a href="#"><i class="fas fa-lock"></i> Password</a></li>
-            <li><a href="{{ url('/account/address') }}" class="{{ Request::is('account/address') ? 'active' : '' }}"><i class="fas fa-address-book"></i> Addresses</a></li>
-            <li><a href="#"><i class="fas fa-heart"></i> Saved List</a></li>
-            <li><a href="#"><i class="fas fa-desktop"></i> Saved PC</a></li>
-            <li><a href="#"><i class="fas fa-star"></i> Star Points</a></li>
-            <li><a href="#"><i class="fas fa-exchange-alt"></i> Store Credit</a></li>
-        </ul>
-    </nav>
-
-    <div class="account-content-wrapper">
-        @yield('account_content')
+        <!-- Page Content -->
+        <div class="animate-fade-in-up">
+            @yield('account_content')
+        </div>
     </div>
 </div>
+
+<style>
+@keyframes fade-in {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: fade-in 0.5s ease-out; }
+.animate-fade-in-up { animation: fade-in-up 0.5s ease-out; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
 @endsection

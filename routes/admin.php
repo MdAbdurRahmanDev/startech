@@ -34,4 +34,13 @@ Route::middleware('auth:admin')->group(function () {
     Route::delete('/admin/categories/{category}', [\App\Http\Controllers\Backend\CategoryController::class, 'destroy'])->name('admin.categories.destroy');
     Route::post('/admin/categories/{category}/toggle', [\App\Http\Controllers\Backend\CategoryController::class, 'toggleStatus'])->name('admin.categories.toggle');
     Route::post('/admin/categories/{category}/featured', [\App\Http\Controllers\Backend\CategoryController::class, 'toggleFeatured'])->name('admin.categories.featured');
+    // Products
+    Route::get('/admin/products', [\App\Http\Controllers\Backend\ProductController::class, 'index'])->name('admin.products.index');
+    Route::get('/admin/products/create', [\App\Http\Controllers\Backend\ProductController::class, 'create'])->name('admin.products.create');
+    Route::post('/admin/products', [\App\Http\Controllers\Backend\ProductController::class, 'store'])->name('admin.products.store');
+    Route::get('/admin/products/{product}/edit', [\App\Http\Controllers\Backend\ProductController::class, 'edit'])->name('admin.products.edit');
+    Route::put('/admin/products/{product}', [\App\Http\Controllers\Backend\ProductController::class, 'update'])->name('admin.products.update');
+    Route::delete('/admin/products/{product}', [\App\Http\Controllers\Backend\ProductController::class, 'destroy'])->name('admin.products.destroy');
+    Route::post('/admin/products/{product}/toggle', [\App\Http\Controllers\Backend\ProductController::class, 'toggleStatus'])->name('admin.products.toggle');
+    Route::post('/admin/products/{product}/featured', [\App\Http\Controllers\Backend\ProductController::class, 'toggleFeatured'])->name('admin.products.featured');
 });

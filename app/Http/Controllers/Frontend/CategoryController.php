@@ -9,6 +9,9 @@ class CategoryController extends Controller
 {
     public function show($slug)
     {
-        return view('frontend.product.category');
+        $category = \App\Models\Category::where('slug', $slug)->firstOrFail();
+        $products = $category->products()->with('specifications')->where('status', 1)->paginate(20);
+        
+        return view('frontend.product.category', compact('category', 'products'));
     }
 }
