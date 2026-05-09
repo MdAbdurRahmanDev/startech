@@ -121,20 +121,20 @@
 
         <!-- Header Actions Desktop -->
         <div class="hidden lg:flex items-center gap-6">
-            <div class="flex items-center gap-2 cursor-pointer group">
+            <a href="{{ route('offers.index') }}" class="flex items-center gap-2 cursor-pointer group">
                 <i class="fas fa-gift text-accent-orange text-xl"></i>
                 <div class="flex flex-col">
                     <span class="text-sm font-bold">Offers</span>
                     <span class="text-[11px] text-gray-400">Latest Offers</span>
                 </div>
-            </div>
-            <div class="flex items-center gap-2 cursor-pointer group">
+            </a>
+            <a href="{{ url('/happy-hour') }}" class="flex items-center gap-2 cursor-pointer group">
                 <i class="fas fa-bolt text-accent-orange text-xl"></i>
                 <div class="flex flex-col">
                     <span class="text-sm font-bold">Happy Hour</span>
                     <span class="text-[11px] text-gray-400">Special Deals</span>
                 </div>
-            </div>
+            </a>
             <div class="relative group cursor-pointer py-4">
                 <div class="flex items-center gap-2">
                     <i class="fas fa-user text-accent-orange text-xl"></i>

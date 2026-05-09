@@ -12,9 +12,13 @@ use App\Http\Controllers\Frontend\AccountController;
 use App\Http\Controllers\Frontend\InformationController;
 use App\Http\Controllers\Frontend\CartController;
 
+
+
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/product/{slug}', [ProductController::class, 'show']);
+Route::get('/offers', [OfferController::class, 'index'])->name('offers.index');
+Route::get('/offer/{slug}', [OfferController::class, 'show'])->name('offers.show');
 
 // Cart Routes
 Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
@@ -27,7 +31,7 @@ Route::post('/checkout', [CartController::class, 'placeOrder'])->name('order.pla
 Route::get('/order-success/{order_number}', [CartController::class, 'orderSuccess'])->name('order.success');
 Route::get('/category/{slug}', [CategoryController::class, 'show']);
 Route::get('/search', [SearchController::class, 'index']);
-Route::get('/offers', [OfferController::class, 'index']);
+
 Route::get('/happy-hour', [HappyHourController::class, 'index']);
 Route::get('/account/login', [AccountController::class, 'login'])->name('user.login');
 Route::post('/account/login', [AccountController::class, 'storeLogin'])->name('user.login.store');

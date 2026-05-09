@@ -68,4 +68,13 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/stock', [\App\Http\Controllers\Backend\StockController::class, 'index'])->name('admin.stock.index');
     Route::get('/admin/stock/create', [\App\Http\Controllers\Backend\StockController::class, 'create'])->name('admin.stock.create');
     Route::post('/admin/stock', [\App\Http\Controllers\Backend\StockController::class, 'store'])->name('admin.stock.store');
+
+    // Offers
+    Route::get('/admin/offers', [\App\Http\Controllers\Backend\OfferController::class, 'index'])->name('admin.offers.index');
+    Route::get('/admin/offers/create', [\App\Http\Controllers\Backend\OfferController::class, 'create'])->name('admin.offers.create');
+    Route::post('/admin/offers', [\App\Http\Controllers\Backend\OfferController::class, 'store'])->name('admin.offers.store');
+    Route::get('/admin/offers/{offer}/edit', [\App\Http\Controllers\Backend\OfferController::class, 'edit'])->name('admin.offers.edit');
+    Route::post('/admin/offers/{offer}', [\App\Http\Controllers\Backend\OfferController::class, 'update'])->name('admin.offers.update');
+    Route::delete('/admin/offers/{offer}', [\App\Http\Controllers\Backend\OfferController::class, 'destroy'])->name('admin.offers.destroy');
+    Route::post('/admin/offers/{offer}/toggle', [\App\Http\Controllers\Backend\OfferController::class, 'toggleStatus'])->name('admin.offers.toggle');
 });
