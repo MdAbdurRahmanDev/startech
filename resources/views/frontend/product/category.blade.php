@@ -26,19 +26,20 @@
     </div>
 
     <!-- Layout Container -->
-    <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-5">
-        
+    <form id="filter-form" action="{{ url()->current() }}" method="GET">
+        <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-5">
         <!-- Sidebar Filters -->
         <aside class="hidden lg:block space-y-5">
             <!-- Price Range -->
             <div class="bg-white rounded-lg p-5 shadow-sm border border-gray-100">
                 <h3 class="text-base font-bold text-gray-800 border-b border-gray-100 pb-3 mb-4">Price Range</h3>
                 <div class="mt-2">
-                    <input type="range" class="w-full accent-accent-orange">
-                    <div class="flex justify-between mt-3">
-                        <input type="text" value="0" class="w-20 p-1.5 border border-gray-300 text-center text-[13px] rounded">
-                        <input type="text" value="51,500" class="w-20 p-1.5 border border-gray-300 text-center text-[13px] rounded">
+                    <div class="flex justify-between items-center gap-2">
+                        <input type="number" name="min_price" value="{{ request('min_price') }}" placeholder="Min" class="w-full p-1.5 border border-gray-300 text-center text-[13px] rounded focus:ring-accent-orange focus:border-accent-orange outline-none">
+                        <span class="text-gray-400">-</span>
+                        <input type="number" name="max_price" value="{{ request('max_price') }}" placeholder="Max" class="w-full p-1.5 border border-gray-300 text-center text-[13px] rounded focus:ring-accent-orange focus:border-accent-orange outline-none">
                     </div>
+                    <button type="submit" class="mt-3 w-full bg-accent-orange text-white py-1.5 rounded text-[13px] font-bold hover:bg-orange-600 transition-colors">Apply Price</button>
                 </div>
             </div>
 
@@ -47,13 +48,7 @@
                 <h3 class="text-base font-bold text-gray-800 border-b border-gray-100 pb-3 mb-4">Availability</h3>
                 <ul class="space-y-3">
                     <li class="flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer hover:text-accent-orange">
-                        <input type="checkbox" class="rounded border-gray-300 text-accent-orange focus:ring-accent-orange cursor-pointer"> <span>In Stock</span>
-                    </li>
-                    <li class="flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer hover:text-accent-orange">
-                        <input type="checkbox" class="rounded border-gray-300 text-accent-orange focus:ring-accent-orange cursor-pointer"> <span>Pre Order</span>
-                    </li>
-                    <li class="flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer hover:text-accent-orange">
-                        <input type="checkbox" class="rounded border-gray-300 text-accent-orange focus:ring-accent-orange cursor-pointer"> <span>Up Coming</span>
+                        <input type="checkbox" name="availability[]" value="in_stock" class="rounded border-gray-300 text-accent-orange focus:ring-accent-orange cursor-pointer" onchange="document.getElementById('filter-form').submit();" {{ in_array('in_stock', request('availability', [])) ? 'checked' : '' }}> <span>In Stock</span>
                     </li>
                 </ul>
             </div>
@@ -62,21 +57,11 @@
             <div class="bg-white rounded-lg p-5 shadow-sm border border-gray-100">
                 <h3 class="text-base font-bold text-gray-800 border-b border-gray-100 pb-3 mb-4">Brand</h3>
                 <ul class="space-y-3 max-h-60 overflow-y-auto pr-2">
+                    @foreach($brands as $brand)
                     <li class="flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer hover:text-accent-orange">
-                        <input type="checkbox" class="rounded border-gray-300 text-accent-orange focus:ring-accent-orange cursor-pointer"> <span>Antec</span>
+                        <input type="checkbox" name="brands[]" value="{{ $brand->id }}" class="rounded border-gray-300 text-accent-orange focus:ring-accent-orange cursor-pointer" onchange="document.getElementById('filter-form').submit();" {{ in_array($brand->id, request('brands', [])) ? 'checked' : '' }}> <span>{{ $brand->name }}</span>
                     </li>
-                    <li class="flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer hover:text-accent-orange">
-                        <input type="checkbox" class="rounded border-gray-300 text-accent-orange focus:ring-accent-orange cursor-pointer"> <span>Gamdias</span>
-                    </li>
-                    <li class="flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer hover:text-accent-orange">
-                        <input type="checkbox" class="rounded border-gray-300 text-accent-orange focus:ring-accent-orange cursor-pointer"> <span>Corsair</span>
-                    </li>
-                    <li class="flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer hover:text-accent-orange">
-                        <input type="checkbox" class="rounded border-gray-300 text-accent-orange focus:ring-accent-orange cursor-pointer"> <span>MSI</span>
-                    </li>
-                    <li class="flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer hover:text-accent-orange">
-                        <input type="checkbox" class="rounded border-gray-300 text-accent-orange focus:ring-accent-orange cursor-pointer"> <span>DeepCool</span>
-                    </li>
+                    @endforeach
                 </ul>
             </div>
         </aside>
@@ -89,18 +74,18 @@
                 <div class="flex items-center gap-4 text-[13px] text-gray-600">
                     <div class="flex items-center gap-2">
                         <label>Show:</label>
-                        <select class="border border-gray-200 rounded py-1 px-2 focus:ring-accent-orange focus:border-accent-orange outline-none bg-gray-50">
-                            <option>20</option>
-                            <option>40</option>
-                            <option>60</option>
+                        <select name="show" class="border border-gray-200 rounded py-1 px-2 focus:ring-accent-orange focus:border-accent-orange outline-none bg-gray-50" onchange="document.getElementById('filter-form').submit();">
+                            <option value="20" {{ request('show') == 20 ? 'selected' : '' }}>20</option>
+                            <option value="40" {{ request('show') == 40 ? 'selected' : '' }}>40</option>
+                            <option value="60" {{ request('show') == 60 ? 'selected' : '' }}>60</option>
                         </select>
                     </div>
                     <div class="flex items-center gap-2">
                         <label>Sort By:</label>
-                        <select class="border border-gray-200 rounded py-1 px-2 focus:ring-accent-orange focus:border-accent-orange outline-none bg-gray-50">
-                            <option>Default</option>
-                            <option>Price (Low > High)</option>
-                            <option>Price (High > Low)</option>
+                        <select name="sort" class="border border-gray-200 rounded py-1 px-2 focus:ring-accent-orange focus:border-accent-orange outline-none bg-gray-50" onchange="document.getElementById('filter-form').submit();">
+                            <option value="default" {{ request('sort') == 'default' ? 'selected' : '' }}>Default</option>
+                            <option value="price_low" {{ request('sort') == 'price_low' ? 'selected' : '' }}>Price (Low > High)</option>
+                            <option value="price_high" {{ request('sort') == 'price_high' ? 'selected' : '' }}>Price (High > Low)</option>
                         </select>
                     </div>
                 </div>
@@ -187,6 +172,7 @@
                 </div>
             @endif
         </section>
-    </div>
+        </div>
+    </form>
 </div>
 @endsection

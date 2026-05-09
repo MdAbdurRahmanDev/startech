@@ -11,16 +11,54 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('categories')->latest()->paginate(10);
-        return view('backend.pages.products.index', compact('products'));
+        $query = Product::with(['categories', 'brand', 'supplier']);
+
+        // Filter by Search Name
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        // Filter by Stock
+        if ($request->filled('stock_status')) {
+            if ($request->stock_status == 'low') {
+                $query->where('stock', '<', 50);
+            }
+        }
+
+        // Filter by Category
+        if ($request->filled('category_id')) {
+            $query->whereHas('categories', function ($q) use ($request) {
+                $q->where('categories.id', $request->category_id);
+            });
+        }
+
+        // Filter by Brand
+        if ($request->filled('brand_id')) {
+            $query->where('brand_id', $request->brand_id);
+        }
+
+        // Filter by Supplier
+        if ($request->filled('supplier_id')) {
+            $query->where('supplier_id', $request->supplier_id);
+        }
+
+        $products = $query->latest()->paginate(10)->appends($request->all());
+
+        $categories = Category::all();
+        $brands = \App\Models\Brand::all();
+        $suppliers = \App\Models\Supplier::all();
+
+        return view('backend.pages.products.index', compact('products', 'categories', 'brands', 'suppliers'));
     }
 
     public function create()
     {
         $categories = Category::all();
-        return view('backend.pages.products.create', compact('categories'));
+        $brands = \App\Models\Brand::where('status', 1)->get();
+        $suppliers = \App\Models\Supplier::where('status', 1)->get();
+        return view('backend.pages.products.create', compact('categories', 'brands', 'suppliers'));
     }
 
     public function store(Request $request)
@@ -29,6 +67,8 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'categories' => 'required|array',
             'categories.*' => 'exists:categories,id',
+            'brand_id' => 'nullable|exists:brands,id',
+            'supplier_id' => 'nullable|exists:suppliers,id',
             'short_description' => 'nullable|string',
             'description' => 'nullable|string',
             'tags' => 'nullable|string',
@@ -89,8 +129,10 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::all();
+        $brands = \App\Models\Brand::where('status', 1)->get();
+        $suppliers = \App\Models\Supplier::where('status', 1)->get();
         $productCategories = $product->categories->pluck('id')->toArray();
-        return view('backend.pages.products.edit', compact('product', 'categories', 'productCategories'));
+        return view('backend.pages.products.edit', compact('product', 'categories', 'productCategories', 'brands', 'suppliers'));
     }
 
     public function update(Request $request, Product $product)
@@ -99,6 +141,8 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'categories' => 'required|array',
             'categories.*' => 'exists:categories,id',
+            'brand_id' => 'nullable|exists:brands,id',
+            'supplier_id' => 'nullable|exists:suppliers,id',
             'short_description' => 'nullable|string',
             'description' => 'nullable|string',
             'tags' => 'nullable|string',

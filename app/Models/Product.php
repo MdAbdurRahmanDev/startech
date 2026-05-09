@@ -23,11 +23,23 @@ class Product extends Model
         'meta_description',
         'meta_keywords',
         'meta_image',
+        'brand_id',
+        'supplier_id',
     ];
 
     public function categories()
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
     }
 
     public function images()

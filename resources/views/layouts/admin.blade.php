@@ -78,25 +78,37 @@
       <ul class="space-y-2 font-medium">
          <li>
             <a href="{{ route('dashboard') }}" class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('dashboard') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-               <svg class="w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6.025A7.5 7.5 0 1 0 17.975 14H10V6.025Z"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 3c-.169 0-.334.014-.5.025V11h7.975c.011-.166.025-.331.025-.5A7.5 7.5 0 0 0 13.5 3Z"/></svg>
+               <i class="fas fa-home w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('dashboard') ? 'text-fg-brand' : '' }}"></i>
                <span class="ms-3">Dashboard</span>
             </a>
          </li>
          <li>
             <a href="{{ route('admin.categories.index') }}" class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.categories.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-               <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10V6a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v4m3-2 .917 11.923A1 1 0 0 1 17.92 21H6.08a1 1 0 0 1-.997-1.077L6 8h12Z"/></svg>
+               <i class="fas fa-sitemap w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.categories.*') ? 'text-fg-brand' : '' }}"></i>
                <span class="flex-1 ms-3 whitespace-nowrap">Categories</span>
             </a>
          </li>
          <li>
+            <a href="{{ route('admin.brands.index') }}" class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.brands.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+               <i class="fas fa-tags w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.brands.*') ? 'text-fg-brand' : '' }}"></i>
+               <span class="flex-1 ms-3 whitespace-nowrap">Brands</span>
+            </a>
+         </li>
+         <li>
+            <a href="{{ route('admin.suppliers.index') }}" class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.suppliers.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+               <i class="fas fa-building w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.suppliers.*') ? 'text-fg-brand' : '' }}"></i>
+               <span class="flex-1 ms-3 whitespace-nowrap">Suppliers</span>
+            </a>
+         </li>
+         <li>
             <a href="{{ route('admin.products.index') }}" class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.products.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-               <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v14M9 5v14M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/></svg>
+               <i class="fas fa-box w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.products.*') ? 'text-fg-brand' : '' }}"></i>
                <span class="flex-1 ms-3 whitespace-nowrap">Products</span>
             </a>
          </li>
          <li>
             <a href="{{ route('admin.banners.index') }}" class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.banners.index') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-               <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v14M9 5v14M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/></svg>
+               <i class="fas fa-image w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.banners.*') ? 'text-fg-brand' : '' }}"></i>
                <span class="flex-1 ms-3 whitespace-nowrap">Banners</span>
             </a>
          </li>
@@ -104,7 +116,7 @@
          <!-- Settings Dropdown -->
          <li>
             <button type="button" class="flex items-center w-full px-2 py-1.5 text-body transition duration-75 rounded-base group hover:bg-neutral-tertiary hover:text-fg-brand" aria-controls="dropdown-settings" data-collapse-toggle="dropdown-settings">
-               <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13v-2a1 1 0 0 0-1-1h-.757l-.707-1.707.535-.535a1 1 0 0 0 0-1.414l-1.414-1.414a1 1 0 0 0-1.414 0l-.535.535L14 4.757V4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v.757l-1.707.707-.535-.535a1 1 0 0 0-1.414 0L4.929 6.343a1 1 0 0 0 0 1.414l.535.535L4.757 10H4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h.757l.707 1.707-.535.535a1 1 0 0 0 0 1.414l1.414 1.414a1 1 0 0 0 1.414 0l.535-.535 1.707.707V20a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.757l1.707-.707.535.535a1 1 0 0 0 1.414 0l1.414-1.414a1 1 0 0 0 0-1.414l-.535-.535.707-1.707H20a1 1 0 0 0 1-1Z"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg>
+               <i class="fas fa-cog w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand"></i>
                <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Settings</span>
                <svg class="w-3 h-3 transition-transform" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -120,13 +132,22 @@
                <li>
                   <a href="{{ route('admin.categories.index') }}" class="flex items-center w-full p-2 text-body transition duration-75 rounded-base pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand">Manage Categories</a>
                </li>
+               <li>
+                  <a href="{{ route('admin.brands.index') }}" class="flex items-center w-full p-2 text-body transition duration-75 rounded-base pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand">Manage Brands</a>
+               </li>
+               <li>
+                  <a href="{{ route('admin.suppliers.index') }}" class="flex items-center w-full p-2 text-body transition duration-75 rounded-base pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand">Manage Suppliers</a>
+               </li>
             </ul>
          </li>
          <li>
-            <a href="#" class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
-               <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2"/></svg>
-               <span class="flex-1 ms-3 whitespace-nowrap">Sign In</span>
-            </a>
+            <form method="POST" action="{{ route('logout') }}">
+               @csrf
+               <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
+                  <i class="fas fa-sign-out-alt w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand"></i>
+                  <span class="flex-1 ms-3 whitespace-nowrap">Sign Out</span>
+               </a>
+            </form>
          </li>
       </ul>
    </div>

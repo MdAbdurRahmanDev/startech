@@ -43,4 +43,10 @@ Route::middleware('auth:admin')->group(function () {
     Route::delete('/admin/products/{product}', [\App\Http\Controllers\Backend\ProductController::class, 'destroy'])->name('admin.products.destroy');
     Route::post('/admin/products/{product}/toggle', [\App\Http\Controllers\Backend\ProductController::class, 'toggleStatus'])->name('admin.products.toggle');
     Route::post('/admin/products/{product}/featured', [\App\Http\Controllers\Backend\ProductController::class, 'toggleFeatured'])->name('admin.products.featured');
+
+    // Brands
+    Route::resource('/admin/brands', \App\Http\Controllers\Backend\BrandController::class)->names('admin.brands');
+
+    // Suppliers
+    Route::resource('/admin/suppliers', \App\Http\Controllers\Backend\SupplierController::class)->names('admin.suppliers');
 });

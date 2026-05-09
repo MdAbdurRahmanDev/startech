@@ -10,48 +10,59 @@
     </div>
 
     <!-- Stats Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
         <!-- Total Users -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-5">
-            <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 text-2xl">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
+            <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 text-xl shrink-0">
                 <i class="fas fa-users"></i>
             </div>
             <div>
-                <p class="text-sm font-medium text-gray-400">Total Users</p>
-                <h3 class="text-2xl font-bold text-gray-800">{{ number_format($totalUsers) }}</h3>
+                <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Users</p>
+                <h3 class="text-xl font-bold text-gray-800">{{ number_format($totalUsers) }}</h3>
             </div>
         </div>
 
         <!-- Total Categories -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-5">
-            <div class="w-14 h-14 bg-orange-50 rounded-xl flex items-center justify-center text-accent-orange text-2xl">
-                <i class="fas fa-th-large"></i>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
+            <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center text-accent-orange text-xl shrink-0">
+                <i class="fas fa-sitemap"></i>
             </div>
             <div>
-                <p class="text-sm font-medium text-gray-400">Total Categories</p>
-                <h3 class="text-2xl font-bold text-gray-800">{{ number_format($totalCategories) }}</h3>
+                <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Categories</p>
+                <h3 class="text-xl font-bold text-gray-800">{{ number_format($totalCategories) }}</h3>
             </div>
         </div>
 
-        <!-- Placeholder for Products (Future) -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-5">
-            <div class="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center text-green-600 text-2xl">
+        <!-- Total Brands -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
+            <div class="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center text-purple-600 text-xl shrink-0">
+                <i class="fas fa-tags"></i>
+            </div>
+            <div>
+                <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Brands</p>
+                <h3 class="text-xl font-bold text-gray-800">{{ number_format($totalBrands) }}</h3>
+            </div>
+        </div>
+
+        <!-- Total Suppliers -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
+            <div class="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center text-teal-600 text-xl shrink-0">
+                <i class="fas fa-building"></i>
+            </div>
+            <div>
+                <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Suppliers</p>
+                <h3 class="text-xl font-bold text-gray-800">{{ number_format($totalSuppliers) }}</h3>
+            </div>
+        </div>
+
+        <!-- Total Products -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
+            <div class="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center text-green-600 text-xl shrink-0">
                 <i class="fas fa-box"></i>
             </div>
             <div>
-                <p class="text-sm font-medium text-gray-400">Total Products</p>
-                <h3 class="text-2xl font-bold text-gray-800">0</h3>
-            </div>
-        </div>
-
-        <!-- Placeholder for Orders (Future) -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-5">
-            <div class="w-14 h-14 bg-purple-50 rounded-xl flex items-center justify-center text-purple-600 text-2xl">
-                <i class="fas fa-shopping-cart"></i>
-            </div>
-            <div>
-                <p class="text-sm font-medium text-gray-400">New Orders</p>
-                <h3 class="text-2xl font-bold text-gray-800">0</h3>
+                <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Products</p>
+                <h3 class="text-xl font-bold text-gray-800">{{ number_format($totalProducts) }}</h3>
             </div>
         </div>
     </div>
