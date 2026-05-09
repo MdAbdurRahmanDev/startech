@@ -44,6 +44,43 @@
 </head>
 <body class="bg-bg-gray text-primary-dark font-sans min-h-screen">
 
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="fixed top-20 right-5 z-[9999] flex flex-col gap-3">
+        @if(session('success'))
+            <div class="toast bg-green-600 text-white px-6 py-3 rounded-lg shadow-2xl flex items-center gap-3 animate-slide-in">
+                <i class="fas fa-check-circle"></i>
+                <span class="text-sm font-bold">{{ session('success') }}</span>
+            </div>
+        @endif
+        @if(session('error'))
+            <div class="toast bg-red-600 text-white px-6 py-3 rounded-lg shadow-2xl flex items-center gap-3 animate-slide-in">
+                <i class="fas fa-exclamation-circle"></i>
+                <span class="text-sm font-bold">{{ session('error') }}</span>
+            </div>
+        @endif
+    </div>
+
+    <style>
+        @keyframes slide-in {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .animate-slide-in { animation: slide-in 0.3s ease-out forwards; }
+        .toast-fade-out { opacity: 0; transform: translateX(100%); transition: all 0.5s ease-in-out; }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toasts = document.querySelectorAll('.toast');
+            toasts.forEach(toast => {
+                setTimeout(() => {
+                    toast.classList.add('toast-fade-out');
+                    setTimeout(() => toast.remove(), 500);
+                }, 4000);
+            });
+        });
+    </script>
+
 <header class="bg-primary-dark py-4 text-white">
     <div class="max-w-[1320px] mx-auto px-1.5 md:px-2 flex items-center justify-between gap-4">
         <!-- Mobile Menu Toggle -->
@@ -95,11 +132,28 @@
                     <span class="text-[11px] text-gray-400">Special Deals</span>
                 </div>
             </div>
-            <div class="flex items-center gap-2 cursor-pointer group">
-                <i class="fas fa-user text-accent-orange text-xl"></i>
-                <div class="flex flex-col">
-                    <span class="text-sm font-bold">Account</span>
-                    <span class="text-[11px] text-gray-400">Register or Login</span>
+            <div class="relative group cursor-pointer py-4">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-user text-accent-orange text-xl"></i>
+                    <div class="flex flex-col">
+                        <span class="text-sm font-bold">@auth {{ Auth::user()->first_name }} @else Account @endauth</span>
+                        <span class="text-[11px] text-gray-400">@auth Dashboard @else Register or Login @endauth</span>
+                    </div>
+                </div>
+                <!-- Account Dropdown -->
+                <div class="absolute top-full right-0 bg-white min-w-[180px] shadow-xl py-2 z-[100] border-t-2 border-accent-orange opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+                    @guest
+                        <a href="{{ route('user.register') }}" class="block px-4 py-2 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">Register</a>
+                        <a href="{{ route('user.login') }}" class="block px-4 py-2 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">Login</a>
+                    @else
+                        <a href="{{ route('user.account') }}" class="block px-4 py-2 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">My Account</a>
+                        <a href="{{ route('user.order') }}" class="block px-4 py-2 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">Orders</a>
+                        <hr class="my-1 border-gray-100">
+                        <form action="{{ route('user.logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-50 transition-colors">Logout</button>
+                        </form>
+                    @endguest
                 </div>
             </div>
             <a href="#" class="bg-accent-blue hover:bg-opacity-90 text-white py-3 px-6 rounded font-bold text-sm transition-all">PC Builder</a>

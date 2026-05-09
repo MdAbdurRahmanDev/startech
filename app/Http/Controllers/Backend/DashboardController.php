@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function dashboard(){
-        return view("backend.dashboard");
+        $totalUsers = \App\Models\User::count();
+        $totalCategories = \App\Models\Category::count();
+        $recentUsers = \App\Models\User::latest()->take(10)->get();
+
+        return view("backend.dashboard", compact('totalUsers', 'totalCategories', 'recentUsers'));
     }
 }

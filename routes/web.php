@@ -17,12 +17,15 @@ Route::get('/category/{slug}', [CategoryController::class, 'show']);
 Route::get('/search', [SearchController::class, 'index']);
 Route::get('/offers', [OfferController::class, 'index']);
 Route::get('/happy-hour', [HappyHourController::class, 'index']);
-Route::get('/account/login', [AccountController::class, 'login']);
-Route::get('/account/register', [AccountController::class, 'register']);
-Route::get('/account/account', [AccountController::class, 'account']);
-Route::get('/account/edit', [AccountController::class, 'edit']);
-Route::get('/account/order', [AccountController::class, 'order']);
-Route::get('/account/address', [AccountController::class, 'address']);
+Route::get('/account/login', [AccountController::class, 'login'])->name('user.login');
+Route::post('/account/login', [AccountController::class, 'storeLogin'])->name('user.login.store');
+Route::get('/account/register', [AccountController::class, 'register'])->name('user.register');
+Route::post('/account/register', [AccountController::class, 'storeRegister'])->name('user.register.store');
+Route::get('/account/account', [AccountController::class, 'account'])->name('user.account');
+Route::post('/account/logout', [AccountController::class, 'logout'])->name('user.logout');
+Route::get('/account/edit', [AccountController::class, 'edit'])->name('user.edit');
+Route::get('/account/order', [AccountController::class, 'order'])->name('user.order');
+Route::get('/account/address', [AccountController::class, 'address'])->name('user.address');
 
 // Information Pages
 Route::get('/affiliate-program', [InformationController::class, 'affiliate']);

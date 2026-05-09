@@ -2,147 +2,96 @@
 
 @section('title', 'Register Account | Star Tech')
 
-@section('styles')
-<style>
-    .auth-container {
-        max-width: 600px;
-        margin: 60px auto;
-        background-color: var(--white);
-        padding: 40px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-
-    .auth-header h1 {
-        font-size: 20px;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 30px;
-        text-align: center;
-    }
-
-    .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    .form-group label {
-        display: block;
-        font-size: 13px;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 8px;
-    }
-
-    .form-group label span {
-        color: var(--accent-orange);
-    }
-
-    .form-group input {
-        width: 100%;
-        padding: 12px 15px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        outline: none;
-        font-size: 14px;
-    }
-
-    .form-group input:focus {
-        border-color: var(--accent-blue);
-    }
-
-    .policy-check {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 13px;
-        margin: 20px 0;
-    }
-
-    .policy-check input {
-        width: 16px;
-        height: 16px;
-    }
-
-    .auth-btn {
-        width: 100%;
-        background-color: var(--accent-blue);
-        color: var(--white);
-        padding: 12px;
-        border: none;
-        border-radius: 4px;
-        font-weight: bold;
-        cursor: pointer;
-        font-size: 15px;
-    }
-
-    .auth-footer {
-        text-align: center;
-        margin-top: 30px;
-        font-size: 13px;
-        color: #666;
-    }
-
-    .auth-footer a {
-        color: var(--accent-orange);
-        text-decoration: none;
-    }
-
-    @media (max-width: 600px) {
-        .form-row { grid-template-columns: 1fr; }
-    }
-</style>
-@endsection
-
 @section('content')
-<div class="container">
-    <div class="breadcrumb" style="padding: 15px 0; font-size: 13px;">
-        <a href="#"><i class="fas fa-home"></i></a> / Account / Register
-    </div>
-
-    <div class="auth-container">
-        <div class="auth-header">
-            <h1>Register Account</h1>
-        </div>
-        
-        <form action="#">
-            <div class="form-row">
-                <div class="form-group">
-                    <label>First Name <span>*</span></label>
-                    <input type="text" placeholder="First Name">
+<div class="bg-gray-50 min-h-[80vh] flex items-center justify-center py-12 px-4">
+    <div class="w-full max-w-[600px]">
+        <!-- Register Card -->
+        <div class="bg-white p-8 md:p-12 rounded-2xl shadow-xl border border-gray-100 animate-fade-in">
+            <div class="text-center mb-10">
+                <h1 class="text-2xl font-bold text-primary-dark">Register Account</h1>
+                <p class="text-sm text-gray-500 mt-2">Create your account to enjoy all our features</p>
+            </div>
+            
+            <form action="{{ route('user.register.store') }}" method="POST" class="space-y-6">
+                @csrf
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">First Name <span class="text-accent-orange">*</span></label>
+                        <input type="text" name="first_name" value="{{ old('first_name') }}" placeholder="First Name" class="w-full bg-gray-50 border @error('first_name') border-red-500 @else border-gray-200 @enderror rounded-xl px-5 py-3.5 outline-none focus:border-accent-orange focus:ring-4 focus:ring-orange-50 transition-all text-sm shadow-sm" required>
+                        @error('first_name')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Last Name <span class="text-accent-orange">*</span></label>
+                        <input type="text" name="last_name" value="{{ old('last_name') }}" placeholder="Last Name" class="w-full bg-gray-50 border @error('last_name') border-red-500 @else border-gray-200 @enderror rounded-xl px-5 py-3.5 outline-none focus:border-accent-orange focus:ring-4 focus:ring-orange-50 transition-all text-sm shadow-sm" required>
+                        @error('last_name')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Last Name <span>*</span></label>
-                    <input type="text" placeholder="Last Name">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">E-Mail <span class="text-accent-orange">*</span></label>
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="E-Mail" class="w-full bg-gray-50 border @error('email') border-red-500 @else border-gray-200 @enderror rounded-xl px-5 py-3.5 outline-none focus:border-accent-orange focus:ring-4 focus:ring-orange-50 transition-all text-sm shadow-sm" required>
+                        @error('email')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Telephone <span class="text-accent-orange">*</span></label>
+                        <input type="text" name="telephone" value="{{ old('telephone') }}" placeholder="Telephone" class="w-full bg-gray-50 border @error('telephone') border-red-500 @else border-gray-200 @enderror rounded-xl px-5 py-3.5 outline-none focus:border-accent-orange focus:ring-4 focus:ring-orange-50 transition-all text-sm shadow-sm" required>
+                        @error('telephone')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Password <span class="text-accent-orange">*</span></label>
+                        <input type="password" name="password" placeholder="Password" class="w-full bg-gray-50 border @error('password') border-red-500 @else border-gray-200 @enderror rounded-xl px-5 py-3.5 outline-none focus:border-accent-orange focus:ring-4 focus:ring-orange-50 transition-all text-sm shadow-sm" required>
+                        @error('password')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Confirm Password <span class="text-accent-orange">*</span></label>
+                        <input type="password" name="password_confirmation" placeholder="Confirm Password" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-5 py-3.5 outline-none focus:border-accent-orange focus:ring-4 focus:ring-orange-50 transition-all text-sm shadow-sm" required>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                    <div class="flex items-start gap-3">
+                        <input type="checkbox" name="policy" id="policy" class="mt-1 w-4 h-4 text-accent-orange border-gray-300 rounded focus:ring-accent-orange" required>
+                        <label for="policy" class="text-xs md:text-sm text-gray-600 leading-relaxed">
+                            I have read and agree to the <a href="#" class="text-accent-orange font-semibold hover:underline">Privacy Policy</a>, <a href="#" class="text-accent-orange font-semibold hover:underline">Terms & Conditions</a> and <a href="#" class="text-accent-orange font-semibold hover:underline">Refund Policy</a>.
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-primary-dark text-white py-4 rounded-xl font-bold hover:bg-opacity-90 transition-all shadow-lg flex items-center justify-center gap-2 group">
+                    <span>Continue</span>
+                    <i class="fas fa-user-plus text-xs group-hover:scale-110 transition-transform"></i>
+                </button>
+            </form>
+
+            <div class="mt-10 pt-8 border-t border-gray-100 text-center">
+                <p class="text-sm text-gray-600 mb-4">Already have an account?</p>
+                <a href="{{ url('/account/login') }}" class="inline-block text-accent-blue font-bold hover:text-primary-dark transition-colors border-b-2 border-accent-blue/30 hover:border-accent-blue pb-0.5">
+                    Login Now
+                </a>
             </div>
-
-            <div class="form-group">
-                <label>E-Mail <span>*</span></label>
-                <input type="email" placeholder="E-Mail">
-            </div>
-
-            <div class="form-group">
-                <label>Telephone <span>*</span></label>
-                <input type="text" placeholder="Telephone">
-            </div>
-
-            <div class="policy-check">
-                <input type="checkbox">
-                <span>I have read and agree to the <a href="#" style="color: var(--accent-orange); text-decoration: none;">Privacy Policy</a></span>
-            </div>
-
-            <button type="submit" class="auth-btn">Continue</button>
-        </form>
-
-        <div class="auth-footer">
-            <p>Already have an account? <a href="{{ url('/account/login') }}">login page</a></p>
         </div>
     </div>
 </div>
+
+<style>
+@keyframes fade-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: fade-in 0.6s ease-out; }
+</style>
 @endsection

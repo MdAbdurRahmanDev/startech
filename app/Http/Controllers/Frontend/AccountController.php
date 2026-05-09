@@ -5,16 +5,78 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 class AccountController extends Controller
 {
     public function login()
     {
+        if (Auth::check()) {
+            return redirect()->route('user.account');
+        }
         return view('frontend.account.login');
+    }
+
+    public function storeLogin(Request $request)
+    {
+        $request->validate([
+            'login_identity' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        $identity = $request->login_identity;
+        $fieldType = filter_var($identity, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+
+        if (Auth::attempt([$fieldType => $identity, 'password' => $request->password], $request->has('remember'))) {
+            $request->session()->regenerate();
+            return redirect()->intended('/account/account')->with('success', 'Logged in successfully.');
+        }
+
+        return back()->withErrors([
+            'login_identity' => 'The provided credentials do not match our records.',
+        ])->onlyInput('login_identity');
     }
 
     public function register()
     {
+        if (Auth::check()) {
+            return redirect()->route('user.account');
+        }
         return view('frontend.account.register');
+    }
+
+    public function storeRegister(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'telephone' => 'required|string|max:20|unique:users,phone',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'name' => $request->first_name . ' ' . $request->last_name,
+            'email' => $request->email,
+            'phone' => $request->telephone,
+            'password' => Hash::make($request->password),
+        ]);
+
+        Auth::login($user);
+
+        return redirect()->route('user.account')->with('success', 'Registration successful!');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/')->with('success', 'Logged out successfully.');
     }
 
     public function account()
