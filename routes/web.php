@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\InformationController;
 use App\Http\Controllers\Frontend\CartController;
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/product/{slug}', [ProductController::class, 'show']);
 
 // Cart Routes

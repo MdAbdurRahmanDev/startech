@@ -101,14 +101,16 @@
         </div>
         
         <!-- Search Bar Desktop -->
-        <div class="hidden lg:flex flex-grow max-w-[700px] relative mx-8">
-            <input type="text" placeholder="Search" class="w-full py-2.5 pr-10 pl-4 rounded text-primary-dark focus:outline-none">
-            <i class="fas fa-search absolute right-3 top-1/2 -translate-y-1/2 text-primary-dark"></i>
-        </div>
+        <form action="{{ url('search') }}" method="GET" class="hidden lg:flex flex-grow max-w-[700px] relative mx-8">
+            <input type="text" name="q" value="{{ request('q') }}" placeholder="Search" class="w-full py-2.5 pr-10 pl-4 rounded text-primary-dark focus:outline-none">
+            <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-primary-dark">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
 
         <!-- Mobile Icons -->
         <div class="lg:hidden flex gap-4 items-center">
-            <div class="cursor-pointer">
+            <div class="cursor-pointer" onclick="toggleMobileSearch()">
                 <i class="fas fa-search text-xl"></i>
             </div>
             <div class="relative cursor-pointer">
@@ -161,6 +163,22 @@
         </div>
     </div>
 </header>
+<!-- Mobile Search Overlay -->
+<div id="mobileSearchOverlay" class="fixed inset-0 bg-primary-dark z-[250] hidden flex-col p-6 animate-fade-in">
+    <div class="flex justify-between items-center mb-8">
+        <span class="text-white font-bold">Search Products</span>
+        <button onclick="toggleMobileSearch()" class="text-white text-2xl">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <form action="{{ url('search') }}" method="GET" class="relative">
+        <input type="text" name="q" placeholder="What are you looking for?" 
+               class="w-full bg-white/10 border border-white/20 rounded-lg py-4 px-6 text-white focus:outline-none focus:border-accent-orange">
+        <button type="submit" class="absolute right-4 top-1/2 -translate-y-1/2 text-accent-orange text-xl">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+</div>
 
 <!-- Main Navigation Desktop -->
 <nav class="bg-white shadow-sm sticky top-0 z-[50] hidden lg:block">
@@ -380,6 +398,19 @@
     if(menuToggle) menuToggle.addEventListener('click', openSidebar);
     if(closeMenu) closeMenu.addEventListener('click', closeSidebar);
     if(menuOverlay) menuOverlay.addEventListener('click', closeSidebar);
+
+    function toggleMobileSearch() {
+        const overlay = document.getElementById('mobileSearchOverlay');
+        if (overlay.classList.contains('hidden')) {
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        } else {
+            overlay.classList.add('hidden');
+            overlay.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+    }
 </script>
 
 <script>

@@ -1,289 +1,158 @@
 @extends('layouts.app')
 
-@section('title', 'Search - ' . $query . ' | Star Tech')
+@section('title', 'Search - ' . ($q ?? '') . ' | Star Tech')
 
 @section('styles')
 <style>
-    .search-header {
-        margin-top: 20px;
-    }
-
-    .search-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 30px;
-    }
-
     .search-tag {
-        background-color: var(--white);
+        background-color: #fff;
         border: 1px solid #ddd;
         padding: 5px 15px;
         border-radius: 20px;
-        font-size: 13px;
-        cursor: pointer;
+        font-size: 12px;
+        color: #333;
+        transition: all 0.2s;
+        white-space: nowrap;
     }
-
     .search-tag:hover {
-        border-color: var(--accent-orange);
-        color: var(--accent-orange);
+        border-color: #ef4a23;
+        color: #ef4a23;
     }
-
-    .search-results-container {
-        background-color: var(--white);
-        padding: 15px 20px;
-        border-radius: 8px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .product-list-grid {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 15px;
-    }
-
-    .cat-product-card {
-        background-color: var(--white);
-        border-radius: 8px;
-        padding: 15px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        transition: box-shadow 0.3s;
-        position: relative;
-    }
-
-    .cat-product-card:hover {
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    .product-badge {
+    .save-badge {
         position: absolute;
         top: 0;
         left: 0;
         background-color: #6e2594;
         color: white;
-        padding: 4px 10px;
-        border-radius: 8px 0 8px 0;
+        padding: 3px 10px;
+        border-radius: 0 0 10px 0;
         font-size: 11px;
         font-weight: bold;
-        z-index: 1;
-    }
-
-    .cat-product-card img {
-        width: 100%;
-        height: 180px;
-        object-fit: contain;
-        margin-bottom: 15px;
-    }
-
-    .cat-product-card h3 {
-        font-size: 14px;
-        height: 40px;
-        overflow: hidden;
-        margin-bottom: 10px;
-        color: #333;
-    }
-
-    .product-features {
-        list-style: none;
-        margin-bottom: 15px;
-    }
-
-    .product-features li {
-        font-size: 12px;
-        color: #666;
-        margin-bottom: 5px;
-        padding-left: 10px;
-        position: relative;
-    }
-
-    .product-features li::before {
-        content: "•";
-        position: absolute;
-        left: 0;
-        color: #ccc;
-    }
-
-    .price-box {
-        border-top: 1px solid #eee;
-        padding-top: 15px;
-        text-align: center;
-    }
-
-    .cat-price {
-        font-size: 16px;
-        font-weight: bold;
-        color: var(--accent-orange);
-        display: block;
-        margin-bottom: 10px;
-    }
-
-    .old-price {
-        font-size: 11px;
-        color: #666;
-        text-decoration: line-through;
-        margin-left: 5px;
-    }
-
-    .buy-btn {
-        background: none;
-        border: 1px solid #ddd;
-        padding: 8px;
-        width: 100%;
-        border-radius: 4px;
-        font-size: 13px;
-        font-weight: bold;
-        color: var(--accent-blue);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-        margin-bottom: 8px;
-    }
-
-    .buy-btn:hover {
-        background-color: var(--accent-blue);
-        color: white;
-    }
-
-    .compare-btn {
-        background: none;
-        border: none;
-        color: #666;
-        font-size: 11px;
-        cursor: pointer;
-    }
-
-    @media (max-width: 1400px) {
-        .product-list-grid { grid-template-columns: repeat(4, 1fr); }
-    }
-    @media (max-width: 1100px) {
-        .product-list-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-    @media (max-width: 768px) {
-        .product-list-grid { grid-template-columns: repeat(2, 1fr); }
+        z-index: 10;
     }
 </style>
 @endsection
 
 @section('content')
-<div class="container">
-    <div class="breadcrumb" style="padding: 15px 0; font-size: 13px;">
-        <a href="#"><i class="fas fa-home"></i></a> / Search
+<div class="container pb-10">
+    <!-- Breadcrumb -->
+    <div class="py-4 text-[13px] text-gray-500">
+        <a href="{{ url('/') }}" class="text-gray-700 hover:text-accent-orange transition-colors"><i class="fas fa-home"></i></a> 
+        <span class="mx-1">/</span> <span class="text-gray-900">Search</span>
     </div>
 
-    <div class="search-header">
-        <div class="search-tags">
-            <span class="search-tag">Google Earbuds</span>
-            <span class="search-tag">Google Tablet</span>
-            <span class="search-tag">Google Pixel Mobile Phone</span>
-            <span class="search-tag">Google Smart Watch</span>
+    <!-- Suggested Tags -->
+    @if(count($suggestedCategories) > 0)
+    <div class="flex flex-wrap gap-2.5 mb-8">
+        @foreach($suggestedCategories as $sCat)
+            <a href="{{ url('category/' . $sCat->slug) }}" class="search-tag shadow-sm hover:shadow-md">
+                {{ $sCat->name }}
+            </a>
+        @endforeach
+    </div>
+    @endif
+
+    <!-- Search Header -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 mb-6 flex justify-between items-center">
+        <h1 class="text-[16px] font-bold text-primary-dark">Search - {{ $q ?? '' }}</h1>
+        <div class="flex items-center gap-3 text-[13px] text-gray-600">
+            <label>Show:</label>
+            <select name="show" class="border border-gray-200 rounded py-1 px-2 focus:outline-none bg-gray-50" onchange="window.location.href = updateQueryStringParameter(window.location.href, 'show', this.value)">
+                <option value="20" {{ request('show') == 20 ? 'selected' : '' }}>20</option>
+                <option value="40" {{ request('show') == 40 ? 'selected' : '' }}>40</option>
+            </select>
         </div>
     </div>
 
-    <div class="search-results-container">
-        <h1 style="font-size: 16px;">Search - {{ $query }}</h1>
-        <div class="sort-options" style="font-size: 13px;">
-            Show: <select><option>20</option></select>
-        </div>
+    <!-- Product Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        @forelse($products as $product)
+            <div class="bg-white rounded-lg p-4 flex flex-col shadow-sm border border-gray-50 hover:shadow-xl transition-all relative group">
+                
+                <!-- Save Badge -->
+                @if($product->discount_price && $product->discount_price < $product->price)
+                    <div class="save-badge">
+                        Save: {{ number_format($product->price - $product->discount_price, 0) }}৳
+                    </div>
+                @endif
+
+                <!-- Product Image -->
+                <a href="{{ url('product/' . $product->slug) }}" class="block mb-4 h-44 bg-gray-50 rounded flex items-center justify-center p-2 overflow-hidden">
+                    <img src="{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : 'https://placehold.co/228x228/f9fafb/a3a3a3?text=No+Image' }}" 
+                         alt="{{ $product->name }}" 
+                         class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500">
+                </a>
+
+                <!-- Product Title -->
+                <a href="{{ url('product/' . $product->slug) }}" class="block mb-4">
+                    <h3 class="text-[14px] font-bold text-primary-dark hover:text-accent-orange transition-colors line-clamp-2 leading-snug h-10">{{ $product->name }}</h3>
+                </a>
+                
+                <!-- Specifications -->
+                <ul class="space-y-1.5 mb-4 flex-grow text-gray-500">
+                    @if($product->specifications && $product->specifications->count() > 0)
+                        @foreach($product->specifications->take(4) as $spec)
+                            <li class="text-[12px] flex items-start gap-1.5">
+                                <span class="w-1 h-1 rounded-full bg-gray-300 mt-1.5 shrink-0"></span>
+                                <span class="line-clamp-1">{{ $spec->name }}: {{ $spec->value }}</span>
+                            </li>
+                        @endforeach
+                    @else
+                        <li class="text-[12px] flex items-start gap-1.5 italic">
+                            No features listed
+                        </li>
+                    @endif
+                </ul>
+                
+                <!-- Price and Actions -->
+                <div class="border-t border-gray-100 pt-4 text-center mt-auto">
+                    <div class="flex items-center justify-center gap-2 mb-3">
+                        @if($product->discount_price && $product->discount_price < $product->price)
+                            <span class="text-[15px] font-bold text-accent-orange">{{ number_format($product->discount_price, 0) }}৳</span>
+                            <span class="text-[12px] text-gray-400 line-through">{{ number_format($product->price, 0) }}৳</span>
+                        @else
+                            <span class="text-[15px] font-bold text-accent-orange">{{ number_format($product->price, 0) }}৳</span>
+                        @endif
+                    </div>
+                    
+                    <button type="button" onclick="buyNow({{ $product->id }})" class="w-full border border-gray-200 bg-gray-50 text-accent-blue font-bold py-2 rounded text-[13px] hover:bg-accent-blue hover:text-white transition-colors flex items-center justify-center gap-2 mb-2">
+                        <i class="fas fa-shopping-cart text-[11px]"></i> Buy Now
+                    </button>
+                    
+                    <button class="text-[11px] font-bold text-gray-500 hover:text-accent-orange transition-colors flex items-center justify-center gap-1.5 w-full py-1">
+                        <i class="fas fa-plus"></i> Add to Compare
+                    </button>
+                </div>
+            </div>
+        @empty
+            <div class="col-span-full py-20 text-center bg-white rounded-lg shadow-sm border border-gray-100">
+                <i class="fas fa-search text-5xl text-gray-200 mb-4"></i>
+                <h3 class="text-xl text-gray-800 mb-2 font-bold">No results found for "{{ $q }}"</h3>
+                <p class="text-gray-500">Try searching with different keywords or browse our categories.</p>
+                <a href="{{ url('/') }}" class="inline-block mt-6 bg-accent-blue text-white px-8 py-2.5 rounded font-bold hover:bg-opacity-90">Back to Home</a>
+            </div>
+        @endforelse
     </div>
 
-    <section class="product-list-grid">
-        <!-- Product 1 -->
-        <div class="cat-product-card">
-            <div class="product-image">
-                <img src="https://www.startech.com.bd/image/cache/catalog/cable/google/google-30w-type-c-to-type-c-cable/google-30w-type-c-to-type-c-cable-01-228x228.webp" alt="Cable">
-            </div>
-            <h3>Google 30W Type C to Type C Cable</h3>
-            <ul class="product-features">
-                <li>Connector: Type-C to Type-C</li>
-                <li>Material: TPE</li>
-                <li>Cable Length: 1.0 meter</li>
-            </ul>
-            <div class="price-box">
-                <span class="cat-price">820৳</span>
-                <button class="buy-btn"><i class="fas fa-shopping-cart"></i> Buy Now</button>
-                <button class="compare-btn"><i class="fas fa-plus"></i> Add to Compare</button>
-            </div>
+    <!-- Pagination -->
+    @if($products->hasPages())
+        <div class="mt-10 flex justify-center">
+            {{ $products->links() }}
         </div>
-        <!-- Product 2 -->
-        <div class="cat-product-card">
-            <div class="product-badge">Save: 200৳</div>
-            <div class="product-image">
-                <img src="https://www.startech.com.bd/image/cache/catalog/adapter/google/30w-usb-c-power-adapter/30w-usb-c-power-adapter-01-228x228.webp" alt="Adapter">
-            </div>
-            <h3>Google 30W Type C Charger Adapter (2 Pin)</h3>
-            <ul class="product-features">
-                <li>Interface: Type-C</li>
-                <li>Input: 100-240V, 50/60 Hz</li>
-                <li>Output: PD: 5V/3A, 15V/3A...</li>
-            </ul>
-            <div class="price-box">
-                <span class="cat-price">2,450৳ <span class="old-price">2,650৳</span></span>
-                <button class="buy-btn"><i class="fas fa-shopping-cart"></i> Buy Now</button>
-                <button class="compare-btn"><i class="fas fa-plus"></i> Add to Compare</button>
-            </div>
-        </div>
-        <!-- Product 3 -->
-        <div class="cat-product-card">
-            <div class="product-badge">Save: 245৳</div>
-            <div class="product-image">
-                <img src="https://www.startech.com.bd/image/cache/catalog/adapter/google/45w-usb-c-power-adapter/45w-usb-c-power-adapter-01-228x228.webp" alt="Adapter">
-            </div>
-            <h3>Google 45W Type C Charger Adapter (2 Pin)</h3>
-            <ul class="product-features">
-                <li>Interface: Type-C</li>
-                <li>Input: 100-240V, 50/60 Hz</li>
-                <li>Output: PD: 5V/3A, 9V/3A...</li>
-            </ul>
-            <div class="price-box">
-                <span class="cat-price">2,550৳ <span class="old-price">2,795৳</span></span>
-                <button class="buy-btn"><i class="fas fa-shopping-cart"></i> Buy Now</button>
-                <button class="compare-btn"><i class="fas fa-plus"></i> Add to Compare</button>
-            </div>
-        </div>
-        <!-- Product 4 -->
-        <div class="cat-product-card">
-            <div class="product-badge">Save: 2,499৳</div>
-            <div class="product-image">
-                <img src="https://www.startech.com.bd/image/cache/catalog/smart-watch/google/pixel-watch-3/pixel-watch-3-matte-black-01-228x228.webp" alt="Watch">
-            </div>
-            <h3>Google Pixel Watch 3</h3>
-            <ul class="product-features">
-                <li>45mm Actua Display (AMOLED)</li>
-                <li>Protection: 3D Gorilla Glass 5</li>
-                <li>5 ATM/IP68 Water Resistance</li>
-            </ul>
-            <div class="price-box">
-                <span class="cat-price">42,500৳ <span class="old-price">44,999৳</span></span>
-                <button class="buy-btn"><i class="fas fa-shopping-cart"></i> Buy Now</button>
-                <button class="compare-btn"><i class="fas fa-plus"></i> Add to Compare</button>
-            </div>
-        </div>
-        <!-- Product 5 -->
-        <div class="cat-product-card">
-            <div class="product-badge">Save: 3,249৳</div>
-            <div class="product-image">
-                <img src="https://www.startech.com.bd/image/cache/catalog/mobile/google/pixel-7-pro/pixel-7-pro-01-228x228.jpg" alt="Phone">
-            </div>
-            <h3>Google Pixel 7 Pro</h3>
-            <ul class="product-features">
-                <li>Display: 6.7-inch QHD+ OLED</li>
-                <li>Processor: Google Tensor G2</li>
-                <li>Camera: Triple 50 + 48 + 12MP</li>
-            </ul>
-            <div class="price-box">
-                <span class="cat-price">56,750৳ <span class="old-price">59,999৳</span></span>
-                <button class="buy-btn"><i class="fas fa-shopping-cart"></i> Buy Now</button>
-                <button class="compare-btn"><i class="fas fa-plus"></i> Add to Compare</button>
-            </div>
-        </div>
-    </section>
+    @endif
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    function updateQueryStringParameter(uri, key, value) {
+        var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+        var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+        if (uri.match(re)) {
+            return uri.replace(re, '$1' + key + "=" + value + '$2');
+        } else {
+            return uri + separator + key + "=" + value;
+        }
+    }
+</script>
 @endsection

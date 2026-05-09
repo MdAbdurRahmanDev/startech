@@ -130,7 +130,7 @@
                 <h2 class="text-xl md:text-2xl font-bold text-primary-dark">Featured Products</h2>
                 <p class="text-[11px] md:text-sm text-gray-500 mt-1">Check & Get Your Desired Product!</p>
             </div>
-            <a href="#" class="hidden md:block text-accent-orange font-bold text-sm hover:underline">View All Products</a>
+            <a href="{{ route('products.index') }}" class="hidden md:block text-accent-orange font-bold text-sm hover:underline">View All Products</a>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-5">
             @forelse($featuredProducts as $product)
@@ -226,7 +226,7 @@
             @endforelse
         </div>
         <div class="mt-8 md:hidden text-center">
-            <a href="#" class="inline-block bg-white border border-accent-orange text-accent-orange px-8 py-2.5 rounded font-bold text-sm">View All Products</a>
+            <a href="{{ route('products.index') }}" class="inline-block bg-white border border-accent-orange text-accent-orange px-8 py-2.5 rounded font-bold text-sm">View All Products</a>
         </div>
     </section>
 </div>
