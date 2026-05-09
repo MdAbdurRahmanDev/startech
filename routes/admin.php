@@ -27,4 +27,11 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/banners', [\App\Http\Controllers\Backend\BannerController::class, 'store'])->name('admin.banners.store');
     Route::delete('/admin/banners/{banner}', [\App\Http\Controllers\Backend\BannerController::class, 'destroy'])->name('admin.banners.destroy');
     Route::post('/admin/banners/{banner}/toggle', [\App\Http\Controllers\Backend\BannerController::class, 'toggleStatus'])->name('admin.banners.toggle');
+
+    // Categories
+    Route::get('/admin/categories', [\App\Http\Controllers\Backend\CategoryController::class, 'index'])->name('admin.categories.index');
+    Route::post('/admin/categories', [\App\Http\Controllers\Backend\CategoryController::class, 'store'])->name('admin.categories.store');
+    Route::delete('/admin/categories/{category}', [\App\Http\Controllers\Backend\CategoryController::class, 'destroy'])->name('admin.categories.destroy');
+    Route::post('/admin/categories/{category}/toggle', [\App\Http\Controllers\Backend\CategoryController::class, 'toggleStatus'])->name('admin.categories.toggle');
+    Route::post('/admin/categories/{category}/featured', [\App\Http\Controllers\Backend\CategoryController::class, 'toggleFeatured'])->name('admin.categories.featured');
 });

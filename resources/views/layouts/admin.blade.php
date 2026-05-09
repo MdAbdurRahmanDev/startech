@@ -121,6 +121,9 @@
                <li>
                   <a href="{{ route('admin.banners.index') }}" class="flex items-center w-full p-2 text-body transition duration-75 rounded-base pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand">Manage Banners</a>
                </li>
+               <li>
+                  <a href="{{ route('admin.categories.index') }}" class="flex items-center w-full p-2 text-body transition duration-75 rounded-base pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand">Manage Categories</a>
+               </li>
             </ul>
          </li>
          <li>

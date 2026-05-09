@@ -22,8 +22,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Share settings globally with all views
+        // Share settings and categories globally with all views
         View::composer('*', function ($view) {
-            $view->with('setting', Setting::first());
+            $view->with('setting', \App\Models\Setting::first());
+            $view->with('headerCategories', \App\Models\Category::with('children.children')
+                ->whereNull('parent_id')
+                ->where('status', true)
+                ->orderBy('order')
+                ->get());
         });
     }
 }

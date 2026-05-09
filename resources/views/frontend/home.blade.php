@@ -104,30 +104,18 @@
             <p class="text-[11px] md:text-sm text-gray-500 mt-1">Get Your Desired Product from Featured Category!</p>
         </div>
         <div class="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-10 gap-2 md:gap-4">
-            @php
-                $categories = [
-                    ['icon' => 'fas fa-desktop', 'name' => 'Desktop'],
-                    ['icon' => 'fas fa-laptop', 'name' => 'Laptop'],
-                    ['icon' => 'fas fa-microchip', 'name' => 'Component'],
-                    ['icon' => 'fas fa-tv', 'name' => 'Monitor'],
-                    ['icon' => 'fas fa-bolt', 'name' => 'UPS'],
-                    ['icon' => 'fas fa-mobile-alt', 'name' => 'Phone'],
-                    ['icon' => 'fas fa-tablet-alt', 'name' => 'Tablet'],
-                    ['icon' => 'fas fa-print', 'name' => 'Office'],
-                    ['icon' => 'fas fa-camera', 'name' => 'Camera'],
-                    ['icon' => 'fas fa-shield-alt', 'name' => 'Security'],
-                    ['icon' => 'fas fa-network-wired', 'name' => 'Networking'],
-                    ['icon' => 'fas fa-hdd', 'name' => 'Storage'],
-                    ['icon' => 'fas fa-headphones', 'name' => 'Accessories'],
-                    ['icon' => 'fas fa-gamepad', 'name' => 'Gaming'],
-                    ['icon' => 'fas fa-tv', 'name' => 'TV'],
-                    ['icon' => 'fas fa-blender', 'name' => 'Appliance']
-                ];
-            @endphp
-            @foreach($categories as $cat)
-                <a href="#" class="bg-white p-3 md:p-5 rounded-lg shadow-sm border border-gray-50 hover:shadow-md hover:text-accent-orange transition-all flex flex-col items-center gap-2 group text-center">
-                    <i class="{{ $cat['icon'] }} text-xl md:text-3xl text-gray-400 group-hover:text-accent-orange transition-colors"></i>
-                    <span class="text-[10px] md:text-xs font-bold text-primary-dark group-hover:text-accent-orange">{{ $cat['name'] }}</span>
+            @foreach($featuredCategories as $cat)
+                <a href="{{ url('category/' . $cat->slug) }}" class="bg-white p-3 md:p-5 rounded-lg shadow-sm border border-gray-50 hover:shadow-md hover:text-accent-orange transition-all flex flex-col items-center gap-2 group text-center h-full">
+                    <div class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+                        @if($cat->image)
+                            <img src="{{ asset('storage/' . $cat->image) }}" alt="{{ $cat->name }}" class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform">
+                        @elseif($cat->icon)
+                            <i class="{{ $cat->icon }} text-xl md:text-3xl text-gray-400 group-hover:text-accent-orange transition-colors"></i>
+                        @else
+                            <i class="fas fa-folder text-xl md:text-3xl text-gray-400 group-hover:text-accent-orange transition-colors"></i>
+                        @endif
+                    </div>
+                    <span class="text-[10px] md:text-xs font-bold text-primary-dark group-hover:text-accent-orange line-clamp-1">{{ $cat->name }}</span>
                 </a>
             @endforeach
         </div>
