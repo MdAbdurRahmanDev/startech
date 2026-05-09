@@ -33,3 +33,7 @@ Route::get('/contact', [InformationController::class, 'contact']);
 Route::get('/about_us', [InformationController::class, 'about']);
 Route::get('/terms', [InformationController::class, 'terms']);
 Route::get('/refund-policy', [InformationController::class, 'refund']);
+
+
+
+include "admin.php";

@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Star Tech | Leading IT Shop in Bangladesh')</title>
+    <title>@yield('title', $setting->app_name ?? 'Star Tech') | Leading IT Shop in Bangladesh</title>
+    
+    @if($setting && $setting->favicon)
+        <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . $setting->favicon) }}">
+    @endif
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('styles')
@@ -40,7 +45,7 @@
 <body class="bg-bg-gray text-primary-dark font-sans min-h-screen">
 
 <header class="bg-primary-dark py-4 text-white">
-    <div class="max-w-[1320px] mx-auto px-4 flex items-center justify-between gap-4">
+    <div class="max-w-[1320px] mx-auto px-1.5 md:px-2 flex items-center justify-between gap-4">
         <!-- Mobile Menu Toggle -->
         <div class="lg:hidden text-2xl cursor-pointer" id="menuToggle">
             <i class="fas fa-bars"></i>
@@ -49,7 +54,11 @@
         <!-- Logo -->
         <div class="flex-shrink-0">
             <a href="{{ url('/') }}">
-                <img src="https://www.startech.com.bd/image/catalog/logo.png" alt="Star Tech" class="h-10 lg:h-12">
+                @if($setting && $setting->logo)
+                    <img src="{{ asset('storage/' . $setting->logo) }}" alt="{{ $setting->app_name }}" class="h-10 lg:h-12">
+                @else
+                    <img src="https://www.startech.com.bd/image/catalog/logo.png" alt="Star Tech" class="h-10 lg:h-12">
+                @endif
             </a>
         </div>
         
@@ -100,7 +109,7 @@
 
 <!-- Main Navigation Desktop -->
 <nav class="bg-white shadow-sm sticky top-0 z-[50] hidden lg:block">
-    <div class="max-w-[1320px] mx-auto px-4">
+    <div class="max-w-[1320px] mx-auto px-1.5 md:px-2">
         <ul class="flex justify-between">
             @php
                 $navItems = [
@@ -174,14 +183,14 @@
     </div>
 </nav>
 
-<main class="py-6">
-    <div class="max-w-[1320px] mx-auto px-4">
+<main class="pt-2 pb-6">
+    <div class="max-w-[1320px] mx-auto px-1.5 md:px-2">
         @yield('content')
     </div>
 </main>
 
 <footer class="bg-primary-dark text-white pt-16 pb-8 mt-12">
-    <div class="max-w-[1320px] mx-auto px-4">
+    <div class="max-w-[1320px] mx-auto px-1.5 md:px-2">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             <div>
                 <h3 class="text-base font-bold uppercase mb-6 tracking-wider">Support</h3>
@@ -189,7 +198,7 @@
                     <i class="fas fa-phone text-accent-orange text-xl"></i>
                     <div>
                         <span class="text-[11px] text-gray-400 block">9 AM - 8 PM</span>
-                        <span class="text-lg font-bold text-accent-orange">16793</span>
+                        <span class="text-lg font-bold text-accent-orange">{{ $setting->phone_number ?? '16793' }}</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-4 bg-[#11212d] py-4 px-6 rounded-full mb-4 border border-[#1e2e3a]">
@@ -214,13 +223,12 @@
             <div>
                 <h3 class="text-base font-bold uppercase mb-6 tracking-wider">Stay Connected</h3>
                 <p class="text-sm text-gray-400 leading-relaxed mb-4">
-                    <strong>Star Tech Ltd</strong><br>
-                    Head Office: 28 Kazi Nazrul Islam<br>
-                    Ave, Navana Zohura Square, Dhaka 1000
+                    <strong>{{ $setting->app_name ?? 'Star Tech Ltd' }}</strong><br>
+                    {!! nl2br(e($setting->address ?? "Head Office: 28 Kazi Nazrul Islam\nAve, Navana Zohura Square, Dhaka 1000")) !!}
                 </p>
                 <p class="text-sm text-gray-400">
                     Email:<br>
-                    <a href="mailto:webteam@startechbd.com" class="text-accent-orange hover:underline">webteam@startechbd.com</a>
+                    <a href="mailto:{{ $setting->contact_email ?? 'webteam@startechbd.com' }}" class="text-accent-orange hover:underline">{{ $setting->contact_email ?? 'webteam@startechbd.com' }}</a>
                 </p>
             </div>
             <div>
@@ -229,16 +237,25 @@
                     <a href="#"><img src="https://www.startech.com.bd/catalog/view/theme/starship/images/app-store.png" alt="App Store" class="h-9"></a>
                 </div>
                 <div class="flex gap-4 mt-8">
-                    <a href="#" class="text-white opacity-70 hover:opacity-100 hover:text-accent-orange transition-all text-xl"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="text-white opacity-70 hover:opacity-100 hover:text-accent-orange transition-all text-xl"><i class="fab fa-youtube"></i></a>
-                    <a href="#" class="text-white opacity-70 hover:opacity-100 hover:text-accent-orange transition-all text-xl"><i class="fab fa-instagram"></i></a>
+                    @if($setting && $setting->facebook_url)
+                        <a href="{{ $setting->facebook_url }}" target="_blank" class="text-white opacity-70 hover:opacity-100 hover:text-accent-orange transition-all text-xl"><i class="fab fa-facebook-f"></i></a>
+                    @endif
+                    @if($setting && $setting->youtube_url)
+                        <a href="{{ $setting->youtube_url }}" target="_blank" class="text-white opacity-70 hover:opacity-100 hover:text-accent-orange transition-all text-xl"><i class="fab fa-youtube"></i></a>
+                    @endif
+                    @if($setting && $setting->instagram_url)
+                        <a href="{{ $setting->instagram_url }}" target="_blank" class="text-white opacity-70 hover:opacity-100 hover:text-accent-orange transition-all text-xl"><i class="fab fa-instagram"></i></a>
+                    @endif
+                    @if($setting && $setting->whatsapp_number)
+                        <a href="https://wa.me/{{ $setting->whatsapp_number }}" target="_blank" class="text-white opacity-70 hover:opacity-100 hover:text-accent-orange transition-all text-xl"><i class="fab fa-whatsapp"></i></a>
+                    @endif
                 </div>
             </div>
         </div>
 
         <div class="mt-16 pt-6 border-t border-[#1e2e3a] flex flex-col md:flex-row justify-between items-center text-gray-400 text-[12px] gap-4">
-            <p>© 2026 Star Tech Ltd | All rights reserved</p>
-            <p>Powered By: Star Tech</p>
+            <p>{{ $setting->footer_text ?? '© 2026 Star Tech Ltd | All rights reserved' }}</p>
+            <p>Powered By: {{ $setting->app_name ?? 'Star Tech' }}</p>
         </div>
     </div>
 </footer>
@@ -281,7 +298,11 @@
 <div class="fixed inset-0 bg-black bg-opacity-0 z-[200] hidden transition-all duration-300 pointer-events-none" id="menuOverlay"></div>
 <div class="fixed top-0 left-0 w-[280px] h-full bg-white z-[201] -translate-x-full transition-transform duration-500 ease-in-out p-6 shadow-2xl overflow-y-auto" id="offCanvasSidebar">
     <div class="flex justify-between items-center mb-8 pb-4 border-b border-gray-100">
-        <img src="https://www.startech.com.bd/image/catalog/logo.png" alt="Star Tech" class="h-8">
+        @if($setting && $setting->logo)
+            <img src="{{ asset('storage/' . $setting->logo) }}" alt="{{ $setting->app_name }}" class="h-8">
+        @else
+            <img src="https://www.startech.com.bd/image/catalog/logo.png" alt="Star Tech" class="h-8">
+        @endif
         <div class="text-2xl cursor-pointer text-primary-dark" id="closeMenu">
             <i class="fas fa-times"></i>
         </div>
