@@ -85,6 +85,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/services', [\App\Http\Controllers\Backend\ServiceController::class, 'store'])->name('admin.services.store');
     Route::get('/admin/services/{service}/edit', [\App\Http\Controllers\Backend\ServiceController::class, 'edit'])->name('admin.services.edit');
     Route::post('/admin/services/{service}', [\App\Http\Controllers\Backend\ServiceController::class, 'update'])->name('admin.services.update');
+    Route::delete('/admin/services/{service}', [\App\Http\Controllers\Backend\ServiceController::class, 'destroy'])->name('admin.services.destroy');
+    Route::post('/admin/services/{service}/toggle', [\App\Http\Controllers\Backend\ServiceController::class, 'toggleStatus'])->name('admin.services.toggle');
     // Contacts
     Route::get('/admin/contacts', [\App\Http\Controllers\Backend\ContactController::class, 'index'])->name('admin.contacts.index');
     Route::get('/admin/contacts/{contact}', [\App\Http\Controllers\Backend\ContactController::class, 'show'])->name('admin.contacts.show');
@@ -95,6 +97,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/cms/create', [\App\Http\Controllers\Backend\PageController::class, 'create'])->name('admin.cms.create');
     Route::post('/admin/cms', [\App\Http\Controllers\Backend\PageController::class, 'store'])->name('admin.cms.store');
     Route::get('/admin/cms/{page}/edit', [\App\Http\Controllers\Backend\PageController::class, 'edit'])->name('admin.cms.edit');
+    Route::put('/admin/cms/{page}', [\App\Http\Controllers\Backend\PageController::class, 'update'])->name('admin.cms.update');
+    Route::delete('/admin/cms/{page}', [\App\Http\Controllers\Backend\PageController::class, 'destroy'])->name('admin.cms.destroy');
     // Quotations
     Route::get('/admin/quotations', [\App\Http\Controllers\Backend\QuotationController::class, 'index'])->name('admin.quotations.index');
     Route::get('/admin/quotations/{quotation}', [\App\Http\Controllers\Backend\QuotationController::class, 'show'])->name('admin.quotations.show');

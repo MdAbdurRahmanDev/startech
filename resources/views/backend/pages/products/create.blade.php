@@ -168,27 +168,12 @@
 
         <!-- Specifications -->
         <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <div class="flex items-center justify-between mb-4 border-b pb-2">
+            <div class="mb-4 border-b pb-2">
                 <h2 class="text-lg font-bold">Product Specifications</h2>
-                <button type="button" id="add-specification" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 flex items-center gap-2">
-                    <i class="fas fa-plus"></i> Add Specification
-                </button>
+                <p class="text-xs text-gray-500 mt-1">Use the editor below to write full product specifications. You can use headings, tables, bold text, and lists.</p>
             </div>
-            
-            <div id="specifications-container" class="space-y-4">
-                <!-- Initial Specification Row -->
-                <div class="flex gap-4 items-start spec-row">
-                    <div class="w-1/3">
-                        <input type="text" name="specifications[0][name]" placeholder="Specification Name (e.g. Processor)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                    </div>
-                    <div class="w-2/3 flex gap-2">
-                        <input type="text" name="specifications[0][value]" placeholder="Value (e.g. Intel Core i5 12th Gen)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                        <button type="button" class="remove-spec text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2.5">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <textarea name="specifications_text" id="spec-editor">{{ old('specifications_text') }}</textarea>
+            @error('specifications_text') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
         </div>
 
         <!-- Description -->
@@ -262,37 +247,18 @@
             width: '100%'
         });
 
-        // Dynamic Specifications
-        let specIndex = 1;
-        $('#add-specification').click(function() {
-            const html = `
-                <div class="flex gap-4 items-start spec-row mt-4">
-                    <div class="w-1/3">
-                        <input type="text" name="specifications[${specIndex}][name]" placeholder="Specification Name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                    </div>
-                    <div class="w-2/3 flex gap-2">
-                        <input type="text" name="specifications[${specIndex}][value]" placeholder="Value" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                        <button type="button" class="remove-spec text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2.5">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            `;
-            $('#specifications-container').append(html);
-            specIndex++;
-        });
-
-        $(document).on('click', '.remove-spec', function() {
-            $(this).closest('.spec-row').remove();
-        });
     });
 
     ClassicEditor
         .create(document.querySelector('#editor'), {
             toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo' ]
         })
-        .catch(error => {
-            console.error(error);
-        });
+        .catch(error => { console.error(error); });
+
+    ClassicEditor
+        .create(document.querySelector('#spec-editor'), {
+            toolbar: [ 'heading', '|', 'bold', 'italic', 'underline', '|', 'bulletedList', 'numberedList', '|', 'insertTable', 'blockQuote', '|', 'undo', 'redo' ]
+        })
+        .catch(error => { console.error(error); });
 </script>
 @endsection

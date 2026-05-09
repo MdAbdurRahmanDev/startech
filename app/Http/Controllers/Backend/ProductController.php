@@ -83,12 +83,10 @@ class ProductController extends Controller
             'meta_keywords' => 'nullable|string|max:255',
             'meta_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'specifications' => 'nullable|array',
-            'specifications.*.name' => 'required_with:specifications|string|max:255',
-            'specifications.*.value' => 'required_with:specifications|string',
+            'specifications_text' => 'nullable|string',
         ]);
 
-        $data = $request->except(['categories', 'thumbnail', 'meta_image', 'gallery', 'specifications']);
+        $data = $request->except(['categories', 'thumbnail', 'meta_image', 'gallery']);
         $data['slug'] = Str::slug($request->name) . '-' . time();
         $data['is_featured'] = $request->has('is_featured');
         $data['status'] = true;
@@ -108,18 +106,6 @@ class ProductController extends Controller
             foreach ($request->file('gallery') as $image) {
                 $path = $image->store('products/gallery', 'public');
                 $product->images()->create(['image' => $path]);
-            }
-        }
-
-        // Handle specifications
-        if ($request->has('specifications')) {
-            foreach ($request->specifications as $spec) {
-                if (!empty($spec['name']) && !empty($spec['value'])) {
-                    $product->specifications()->create([
-                        'name' => $spec['name'],
-                        'value' => $spec['value']
-                    ]);
-                }
             }
         }
 
@@ -157,12 +143,10 @@ class ProductController extends Controller
             'meta_keywords' => 'nullable|string|max:255',
             'meta_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'specifications' => 'nullable|array',
-            'specifications.*.name' => 'required_with:specifications|string|max:255',
-            'specifications.*.value' => 'required_with:specifications|string',
+            'specifications_text' => 'nullable|string',
         ]);
 
-        $data = $request->except(['categories', 'thumbnail', 'meta_image', 'gallery', 'specifications']);
+        $data = $request->except(['categories', 'thumbnail', 'meta_image', 'gallery']);
         if ($request->name !== $product->name) {
             $data['slug'] = Str::slug($request->name) . '-' . time();
         }
@@ -190,21 +174,6 @@ class ProductController extends Controller
                 $path = $image->store('products/gallery', 'public');
                 $product->images()->create(['image' => $path]);
             }
-        }
-
-        // Handle specifications
-        if ($request->has('specifications')) {
-            $product->specifications()->delete(); // Clear existing to prevent duplicates/orphans
-            foreach ($request->specifications as $spec) {
-                if (!empty($spec['name']) && !empty($spec['value'])) {
-                    $product->specifications()->create([
-                        'name' => $spec['name'],
-                        'value' => $spec['value']
-                    ]);
-                }
-            }
-        } else {
-             $product->specifications()->delete(); // Clear if empty
         }
 
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
