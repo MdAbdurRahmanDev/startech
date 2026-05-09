@@ -5,8 +5,8 @@
 @section('content')
 <div class="container mx-auto px-1 md:px-2">
     <!-- Hero Section -->
-    <section class="mt-2 md:mt-2 grid grid-cols-1 lg:grid-cols-[2.2fr_1fr] gap-4 md:gap-5">
-        <div class="bg-white rounded-lg overflow-hidden relative shadow-sm h-[180px] md:h-[400px] lg:h-[450px] group" id="hero-slider">
+    <section class="mt-4 grid grid-cols-1 lg:grid-cols-[2.5fr_1fr] gap-4">
+        <div class="bg-white rounded-lg overflow-hidden relative shadow-sm h-[200px] md:h-[420px] lg:h-[480px] group" id="hero-slider">
             <div class="slider-container flex h-full transition-transform duration-500 ease-in-out">
                 @forelse($sliders as $slider)
                     <div class="slide min-w-full h-full">
