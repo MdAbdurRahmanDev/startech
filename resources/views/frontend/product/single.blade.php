@@ -268,32 +268,34 @@
             </div>
             <div class="p-6">
                 <h3 class="text-[14px] font-bold text-gray-800 mb-4">{{ $product->name }}</h3>
-                <form action="#" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('quotation.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="project_type" value="Product Quotation">
+                    <input type="hidden" name="budget_range" value="N/A">
+                    
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-3 mb-4">
                         <div class="md:col-span-2">
-                            <input type="text" placeholder="Enter your Name" class="border border-gray-200 rounded-sm px-3 py-2 text-[13px] w-full focus:outline-none focus:border-accent-blue placeholder-gray-400">
+                            <input type="text" name="name" required placeholder="Enter your Name" class="border border-gray-200 rounded-sm px-3 py-2 text-[13px] w-full focus:outline-none focus:border-accent-blue placeholder-gray-400">
                         </div>
-                        <input type="text" placeholder="Contact No" class="border border-gray-200 rounded-sm px-3 py-2 text-[13px] w-full focus:outline-none focus:border-accent-blue placeholder-gray-400">
-                        <input type="text" placeholder="Company Name" class="border border-gray-200 rounded-sm px-3 py-2 text-[13px] w-full focus:outline-none focus:border-accent-blue placeholder-gray-400">
-                        <input type="text" placeholder="Address" class="border border-gray-200 rounded-sm px-3 py-2 text-[13px] w-full focus:outline-none focus:border-accent-blue placeholder-gray-400">
-                        <input type="email" placeholder="Enter your E-Mail" class="border border-gray-200 rounded-sm px-3 py-2 text-[13px] w-full focus:outline-none focus:border-accent-blue placeholder-gray-400">
-                        <input type="number" placeholder="Quantity" class="border border-gray-200 rounded-sm px-3 py-2 text-[13px] w-full focus:outline-none focus:border-accent-blue placeholder-gray-400">
-                        <input type="text" placeholder="Subject" class="border border-gray-200 rounded-sm px-3 py-2 text-[13px] w-full focus:outline-none focus:border-accent-blue placeholder-gray-400">
+                        <input type="text" name="phone" required placeholder="Contact No" class="border border-gray-200 rounded-sm px-3 py-2 text-[13px] w-full focus:outline-none focus:border-accent-blue placeholder-gray-400">
+                        <input type="text" name="company_name" placeholder="Company Name" class="border border-gray-200 rounded-sm px-3 py-2 text-[13px] w-full focus:outline-none focus:border-accent-blue placeholder-gray-400">
+                        <div class="md:col-span-2">
+                            <input type="email" name="email" required placeholder="Enter your E-Mail" class="border border-gray-200 rounded-sm px-3 py-2 text-[13px] w-full focus:outline-none focus:border-accent-blue placeholder-gray-400">
+                        </div>
                     </div>
                     
                     <div class="mb-4">
-                        <textarea placeholder="Your Message" rows="4" class="border border-gray-200 rounded-sm px-3 py-2 text-[13px] w-full focus:outline-none focus:border-accent-blue placeholder-gray-400"></textarea>
+                        <textarea name="project_description" required rows="4" class="border border-gray-200 rounded-sm px-3 py-2 text-[13px] w-full focus:outline-none focus:border-accent-blue placeholder-gray-400" placeholder="Product: {{ $product->name }}&#10;Enter your message here...">Product: {{ $product->name }}&#10;</textarea>
                     </div>
                     
                     <div class="mb-6 text-center">
-                        <label class="block text-[12px] text-gray-500 mb-2">Upload Your Design(Optional)</label>
-                        <input type="file" class="text-[13px] text-gray-600 file:mr-2 file:py-1 file:px-2 file:rounded-sm file:border file:border-gray-300 file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 w-full md:w-auto">
+                        <label class="block text-[12px] text-gray-500 mb-2">Upload Your Document (Optional)</label>
+                        <input type="file" name="attachment" class="text-[13px] text-gray-600 file:mr-2 file:py-1 file:px-2 file:rounded-sm file:border file:border-gray-300 file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 w-full md:w-auto">
                     </div>
                     
                     <div class="flex justify-center gap-4 border-t border-gray-100 pt-5">
-                        <button type="submit" class="bg-blue-900 text-white px-8 py-2 rounded-sm text-[13px] font-bold hover:bg-blue-950 transition-colors">Submit</button>
-                        <button type="button" onclick="toggleQuotationModal()" class="bg-blue-900 text-white px-8 py-2 rounded-sm text-[13px] font-bold hover:bg-blue-950 transition-colors">Close</button>
+                        <button type="submit" class="bg-blue-900 text-white px-8 py-2 rounded-sm text-[13px] font-bold hover:bg-blue-950 transition-colors">Submit Request</button>
+                        <button type="button" onclick="toggleQuotationModal()" class="bg-gray-400 text-white px-8 py-2 rounded-sm text-[13px] font-bold hover:bg-gray-500 transition-colors">Close</button>
                     </div>
                 </form>
             </div>

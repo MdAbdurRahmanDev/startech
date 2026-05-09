@@ -54,6 +54,8 @@ Route::post('/account/address/update', [AccountController::class, 'updateAddress
 Route::get('/info/{slug}', [InformationController::class, 'showPageBySlug'])->name('info.show');
 Route::get('/contact', [InformationController::class, 'contact'])->name('contact');
 Route::post('/contact', [\App\Http\Controllers\Backend\ContactController::class, 'store'])->name('contact.store');
+Route::get('/quotation', [InformationController::class, 'quotation'])->name('info.quotation');
+Route::post('/quotation', [\App\Http\Controllers\Backend\QuotationController::class, 'store'])->name('quotation.store');
 
 
 

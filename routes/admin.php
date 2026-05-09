@@ -91,6 +91,9 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/cms/create', [\App\Http\Controllers\Backend\PageController::class, 'create'])->name('admin.cms.create');
     Route::post('/admin/cms', [\App\Http\Controllers\Backend\PageController::class, 'store'])->name('admin.cms.store');
     Route::get('/admin/cms/{page}/edit', [\App\Http\Controllers\Backend\PageController::class, 'edit'])->name('admin.cms.edit');
-    Route::post('/admin/cms/{page}', [\App\Http\Controllers\Backend\PageController::class, 'update'])->name('admin.cms.update');
-    Route::delete('/admin/cms/{page}', [\App\Http\Controllers\Backend\PageController::class, 'destroy'])->name('admin.cms.destroy');
+    // Quotations
+    Route::get('/admin/quotations', [\App\Http\Controllers\Backend\QuotationController::class, 'index'])->name('admin.quotations.index');
+    Route::get('/admin/quotations/{quotation}', [\App\Http\Controllers\Backend\QuotationController::class, 'show'])->name('admin.quotations.show');
+    Route::post('/admin/quotations/{quotation}/status', [\App\Http\Controllers\Backend\QuotationController::class, 'updateStatus'])->name('admin.quotations.update-status');
+    Route::delete('/admin/quotations/{quotation}', [\App\Http\Controllers\Backend\QuotationController::class, 'destroy'])->name('admin.quotations.destroy');
 });
