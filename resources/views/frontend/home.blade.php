@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Star Tech | Leading IT Shop in Bangladesh')
+@section('title', 'Ios BD | Leading IT Shop in Bangladesh')
 
 @section('content')
     <div class="container mx-auto px-1 md:px-2">
