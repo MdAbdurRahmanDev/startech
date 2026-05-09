@@ -86,6 +86,9 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/services/{service}', [\App\Http\Controllers\Backend\ServiceController::class, 'update'])->name('admin.services.update');
     // Contacts
     Route::get('/admin/contacts', [\App\Http\Controllers\Backend\ContactController::class, 'index'])->name('admin.contacts.index');
+    Route::get('/admin/contacts/{contact}', [\App\Http\Controllers\Backend\ContactController::class, 'show'])->name('admin.contacts.show');
+    Route::post('/admin/contacts/{contact}/reply', [\App\Http\Controllers\Backend\ContactController::class, 'reply'])->name('admin.contacts.reply');
+    Route::delete('/admin/contacts/{contact}', [\App\Http\Controllers\Backend\ContactController::class, 'destroy'])->name('admin.contacts.destroy');
     // CMS Pages
     Route::get('/admin/cms', [\App\Http\Controllers\Backend\PageController::class, 'index'])->name('admin.cms.index');
     Route::get('/admin/cms/create', [\App\Http\Controllers\Backend\PageController::class, 'create'])->name('admin.cms.create');
@@ -96,4 +99,13 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/quotations/{quotation}', [\App\Http\Controllers\Backend\QuotationController::class, 'show'])->name('admin.quotations.show');
     Route::post('/admin/quotations/{quotation}/status', [\App\Http\Controllers\Backend\QuotationController::class, 'updateStatus'])->name('admin.quotations.update-status');
     Route::delete('/admin/quotations/{quotation}', [\App\Http\Controllers\Backend\QuotationController::class, 'destroy'])->name('admin.quotations.destroy');
+
+    // Product Questions
+    Route::get('/admin/questions', [\App\Http\Controllers\Backend\ProductQuestionController::class, 'index'])->name('admin.questions.index');
+    Route::post('/admin/questions/{question}', [\App\Http\Controllers\Backend\ProductQuestionController::class, 'update'])->name('admin.questions.update');
+    Route::delete('/admin/questions/{question}', [\App\Http\Controllers\Backend\ProductQuestionController::class, 'destroy'])->name('admin.questions.destroy');
+
+    // Product Reviews
+    Route::get('/admin/reviews', [\App\Http\Controllers\Backend\ProductReviewController::class, 'index'])->name('admin.reviews.index');
+    Route::delete('/admin/reviews/{review}', [\App\Http\Controllers\Backend\ProductReviewController::class, 'destroy'])->name('admin.reviews.destroy');
 });

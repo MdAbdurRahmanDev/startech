@@ -77,6 +77,18 @@
                                 <a href="#" class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-accent-orange group-hover:text-white transition-all shadow-sm" title="View Order">
                                     <i class="fa fa-eye text-sm"></i>
                                 </a>
+                                @if($order->status == 'delivered')
+                                    @php
+                                        // Get the first product of the order to redirect to its page for review
+                                        $firstProduct = $order->items->first()->product ?? null;
+                                    @endphp
+                                    @if($firstProduct)
+                                        <a href="{{ route('product.single', $firstProduct->slug) }}#reviews" 
+                                           class="px-3 py-1 bg-green-50 text-green-600 rounded text-[10px] font-bold border border-green-100 hover:bg-green-600 hover:text-white transition-all">
+                                            Review
+                                        </a>
+                                    @endif
+                                @endif
                                 @if(!$order->refundRequest)
                                     <a href="{{ route('user.order.refund', $order->id) }}" 
                                        class="px-3 py-1 bg-red-50 text-red-600 rounded text-[10px] font-bold border border-red-100 hover:bg-red-600 hover:text-white transition-all">

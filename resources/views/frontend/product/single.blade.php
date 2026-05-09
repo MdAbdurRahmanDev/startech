@@ -191,37 +191,157 @@
                     <div id="questions" class="content-card bg-white rounded-lg shadow-sm p-6 mb-5">
                         <div class="flex flex-col sm:flex-row justify-between items-start border-b border-gray-100 pb-4 mb-4 gap-4">
                             <div>
-                                <h2 class="text-[18px] font-bold text-gray-800 mb-1">Questions (1)</h2>
+                                <h2 class="text-[18px] font-bold text-gray-800 mb-1">Questions ({{ $product->questions->where('status', 1)->count() }})</h2>
                                 <p class="text-[13px] text-gray-500">Have question about this product? Get specific details about this product from expert.</p>
                             </div>
-                            <button class="shrink-0 border border-gray-800 text-gray-800 py-2 px-4 rounded text-[13px] font-semibold transition-colors hover:bg-gray-800 hover:text-white">Ask Question</button>
+                            <button onclick="toggleQuestionModal()" class="shrink-0 border border-gray-800 text-gray-800 py-2 px-4 rounded text-[13px] font-semibold transition-colors hover:bg-gray-800 hover:text-white">Ask Question</button>
                         </div>
-                        <div class="py-4 border-b border-[#f2f4f8] last:border-b-0">
-                            <div class="text-[12px] text-gray-400 mb-2.5">Didar on 25 Jun 2025</div>
-                            <div class="text-[14px] font-bold text-gray-800 mb-1.5">Q: Can I use this with a smart TV?</div>
-                            <div class="text-[14px] text-gray-600">A: Yes, it supports most smart TVs with a USB port.</div>
+                        
+                        @forelse($product->questions->where('status', 1) as $question)
+                            <div class="py-4 border-b border-[#f2f4f8] last:border-b-0">
+                                <div class="text-[12px] text-gray-400 mb-2.5">{{ $question->name }} on {{ $question->created_at->format('d M Y') }}</div>
+                                <div class="text-[14px] font-bold text-gray-800 mb-1.5">Q: {{ $question->question }}</div>
+                                <div class="text-[14px] text-gray-600">A: {{ $question->answer ?? 'Pending expert response...' }}</div>
+                            </div>
+                        @empty
+                            <div class="py-10 text-center text-gray-400 italic">
+                                <i class="far fa-comments text-4xl mb-3 block"></i>
+                                No questions yet. Be the first to ask!
+                            </div>
+                        @endforelse
+                    </div>
+
+                    <!-- Question Submission Modal -->
+                    <div id="questionModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity">
+                        <div class="bg-white rounded-xl shadow-2xl w-full max-w-[500px] overflow-hidden relative mx-4 animate-scale-up">
+                            <button onclick="toggleQuestionModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 focus:outline-none z-10 transition-colors">
+                                <i class="fas fa-times text-xl"></i>
+                            </button>
+                            <div class="bg-primary-dark text-white p-6">
+                                <h3 class="text-xl font-bold">Ask a Question</h3>
+                                <p class="text-xs text-gray-400 mt-1">{{ $product->name }}</p>
+                            </div>
+                            <div class="p-8">
+                                <form action="{{ route('product.question.store') }}" method="POST" class="space-y-6">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    
+                                    @guest
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Your Name</label>
+                                        <input type="text" name="name" required placeholder="John Doe" class="w-full bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 focus:ring-2 focus:ring-accent-blue outline-none transition-all text-sm">
+                                    </div>
+                                    @endguest
+
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Your Question</label>
+                                        <textarea name="question" rows="4" required placeholder="Type your question here..." class="w-full bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 focus:ring-2 focus:ring-accent-blue outline-none transition-all text-sm"></textarea>
+                                    </div>
+
+                                    <button type="submit" class="w-full bg-accent-orange text-white py-3.5 rounded-lg font-bold text-sm hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                                        <i class="fas fa-paper-plane"></i> Submit Question
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Reviews -->
+                    <!-- Reviews -->
                     <div id="reviews" class="content-card bg-white rounded-lg shadow-sm p-6 mb-5">
                         <div class="flex flex-col sm:flex-row justify-between items-start border-b border-gray-100 pb-4 mb-4 gap-4">
                             <div>
-                                <h2 class="text-[18px] font-bold text-gray-800 mb-1">Reviews (1)</h2>
+                                <h2 class="text-[18px] font-bold text-gray-800 mb-1">Reviews ({{ $product->reviews->where('status', 1)->count() }})</h2>
                                 <p class="text-[13px] text-gray-500">Get specific details about this product from customers who own it.</p>
-                                <div class="text-[#f59e0b] text-[14px] mt-2 mb-1 flex items-center gap-1">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                    <span class="text-gray-800 font-bold text-[14px] ml-1.5">5 out of 5</span>
-                                </div>
+                                @if($product->reviews->where('status', 1)->count() > 0)
+                                    @php
+                                        $avgRating = round($product->reviews->where('status', 1)->avg('rating'), 1);
+                                    @endphp
+                                    <div class="text-[#f59e0b] text-[14px] mt-2 mb-1 flex items-center gap-1">
+                                        @for($i=1; $i<=5; $i++)
+                                            <i class="{{ $i <= $avgRating ? 'fas' : 'far' }} fa-star"></i>
+                                        @endfor
+                                        <span class="text-gray-800 font-bold text-[14px] ml-1.5">{{ $avgRating }} out of 5</span>
+                                    </div>
+                                @endif
                             </div>
-                            <button class="shrink-0 border border-gray-800 text-gray-800 py-2 px-4 rounded text-[13px] font-semibold transition-colors hover:bg-gray-800 hover:text-white">Write a Review</button>
+                            @auth
+                                @php
+                                    $hasPurchased = \App\Models\Order::where('user_id', auth()->id())
+                                        ->where('status', 'delivered')
+                                        ->whereHas('items', function($query) use ($product) {
+                                            $query->where('product_id', $product->id);
+                                        })->exists();
+                                    $alreadyReviewed = \App\Models\ProductReview::where('user_id', auth()->id())
+                                        ->where('product_id', $product->id)
+                                        ->exists();
+                                @endphp
+
+                                @if($hasPurchased && !$alreadyReviewed)
+                                    <button onclick="toggleReviewModal()" class="shrink-0 border border-gray-800 text-gray-800 py-2 px-4 rounded text-[13px] font-semibold transition-colors hover:bg-gray-800 hover:text-white">Write a Review</button>
+                                @elseif($alreadyReviewed)
+                                    <span class="text-xs font-bold text-green-600 bg-green-50 px-3 py-1 rounded-full"><i class="fas fa-check-circle mr-1"></i> You reviewed this</span>
+                                @else
+                                    <p class="text-[11px] text-gray-400 italic">Only verified buyers can review</p>
+                                @endif
+                            @else
+                                <a href="{{ route('login') }}" class="shrink-0 border border-gray-800 text-gray-800 py-2 px-4 rounded text-[13px] font-semibold transition-colors hover:bg-gray-800 hover:text-white">Login to Review</a>
+                            @endauth
                         </div>
-                        <div class="py-4 border-b border-[#f2f4f8] last:border-b-0">
-                            <div class="text-[#f59e0b] text-[13px] mb-2.5 flex gap-1">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        
+                        @forelse($product->reviews->where('status', 1) as $review)
+                            <div class="py-4 border-b border-[#f2f4f8] last:border-b-0">
+                                <div class="text-[#f59e0b] text-[13px] mb-2.5 flex gap-1">
+                                    @for($i=1; $i<=5; $i++)
+                                        <i class="{{ $i <= $review->rating ? 'fas' : 'far' }} fa-star"></i>
+                                    @endfor
+                                </div>
+                                <div class="text-[14px] text-gray-700 mb-2.5 leading-relaxed">{{ $review->review }}</div>
+                                <div class="text-[12px] text-gray-400 font-medium">By {{ $review->user->name }} on {{ $review->created_at->format('d M Y') }}</div>
                             </div>
-                            <div class="text-[14px] text-gray-700 mb-2.5 leading-relaxed">I use this every day for office work and backups. The speed is great, and the capacity is more than enough.</div>
-                            <div class="text-[12px] text-gray-400 font-medium">By Azan Islam on 28 Jun 2025</div>
+                        @empty
+                            <div class="py-10 text-center text-gray-400 italic">
+                                <i class="far fa-star text-4xl mb-3 block"></i>
+                                No reviews yet.
+                            </div>
+                        @endforelse
+                    </div>
+
+                    <!-- Review Submission Modal -->
+                    <div id="reviewModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity">
+                        <div class="bg-white rounded-xl shadow-2xl w-full max-w-[500px] overflow-hidden relative mx-4 animate-scale-up">
+                            <button onclick="toggleReviewModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 focus:outline-none z-10 transition-colors">
+                                <i class="fas fa-times text-xl"></i>
+                            </button>
+                            <div class="bg-primary-dark text-white p-6">
+                                <h3 class="text-xl font-bold">Write a Review</h3>
+                                <p class="text-xs text-gray-400 mt-1">{{ $product->name }}</p>
+                            </div>
+                            <div class="p-8">
+                                <form action="{{ route('product.review.store') }}" method="POST" class="space-y-6">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-3 text-center">Your Rating</label>
+                                        <div class="flex justify-center gap-3 text-3xl text-gray-300">
+                                            <input type="hidden" name="rating" id="selectedRating" value="5">
+                                            @for($i=1; $i<=5; $i++)
+                                                <i class="fas fa-star cursor-pointer hover:text-accent-orange transition-colors star-rating-btn text-accent-orange" data-rating="{{ $i }}" onclick="setRating({{ $i }})"></i>
+                                            @endfor
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Your Experience</label>
+                                        <textarea name="review" rows="4" required placeholder="What did you like or dislike? How was the performance?" class="w-full bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 focus:ring-2 focus:ring-accent-blue outline-none transition-all text-sm"></textarea>
+                                    </div>
+
+                                    <button type="submit" class="w-full bg-accent-orange text-white py-3.5 rounded-lg font-bold text-sm hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                                        <i class="fas fa-check-circle"></i> Submit Review
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
 
@@ -389,6 +509,49 @@
             modal.classList.remove('flex');
             document.body.style.overflow = 'auto';
         }
+    }
+
+    // Question Modal Toggle
+    function toggleQuestionModal() {
+        const modal = document.getElementById('questionModal');
+        if (modal.classList.contains('hidden')) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        } else {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    // Review Modal Toggle
+    function toggleReviewModal() {
+        const modal = document.getElementById('reviewModal');
+        if (modal.classList.contains('hidden')) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        } else {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    // Star Rating Logic
+    function setRating(rating) {
+        document.getElementById('selectedRating').value = rating;
+        const stars = document.querySelectorAll('.star-rating-btn');
+        stars.forEach((star, index) => {
+            if (index < rating) {
+                star.classList.add('text-accent-orange');
+                star.classList.remove('text-gray-300');
+            } else {
+                star.classList.remove('text-accent-orange');
+                star.classList.add('text-gray-300');
+            }
+        });
     }
 </script>
 

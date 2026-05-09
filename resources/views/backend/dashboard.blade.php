@@ -183,6 +183,65 @@
         </div>
     </div>
 
+    <!-- CMS & Communication Grid -->
+    <h2 class="text-lg font-bold text-gray-800 mt-8 mb-4">CMS & Communications</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <!-- Total Pages -->
+        <a href="{{ route('admin.cms.index') }}" class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3 hover:shadow-md transition-all group">
+            <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 text-lg shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                <i class="fas fa-file-alt"></i>
+            </div>
+            <div class="flex-1">
+                <p class="text-[10px] font-medium text-gray-500 uppercase tracking-wide">CMS Pages</p>
+                <h3 class="text-lg font-bold text-gray-800">{{ $totalPages }}</h3>
+            </div>
+        </a>
+
+        <!-- Total Messages -->
+        <a href="{{ route('admin.contacts.index') }}" class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3 hover:shadow-md transition-all group">
+            <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 text-lg shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                <i class="fas fa-envelope-open-text"></i>
+            </div>
+            <div class="flex-1">
+                <p class="text-[10px] font-medium text-gray-500 uppercase tracking-wide">Messages</p>
+                <h3 class="text-lg font-bold text-gray-800">{{ $totalMessages }}</h3>
+            </div>
+        </a>
+
+        <!-- Total Quotations -->
+        <a href="{{ route('admin.quotations.index') }}" class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3 hover:shadow-md transition-all group">
+            <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 text-lg shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-all">
+                <i class="fas fa-file-invoice-dollar"></i>
+            </div>
+            <div class="flex-1">
+                <p class="text-[10px] font-medium text-gray-500 uppercase tracking-wide">Quotations</p>
+                <h3 class="text-lg font-bold text-gray-800">{{ $totalQuotations }}</h3>
+            </div>
+        </a>
+
+        <!-- Total Questions -->
+        <a href="{{ route('admin.questions.index') }}" class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3 hover:shadow-md transition-all group">
+            <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center text-orange-600 text-lg shrink-0 group-hover:bg-orange-600 group-hover:text-white transition-all">
+                <i class="fas fa-question-circle"></i>
+            </div>
+            <div class="flex-1">
+                <p class="text-[10px] font-medium text-gray-500 uppercase tracking-wide">Questions</p>
+                <h3 class="text-lg font-bold text-gray-800">{{ $totalQuestions }}</h3>
+            </div>
+        </a>
+
+        <!-- Total Reviews -->
+        <a href="{{ route('admin.reviews.index') }}" class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3 hover:shadow-md transition-all group">
+            <div class="w-10 h-10 bg-yellow-50 rounded-xl flex items-center justify-center text-yellow-600 text-lg shrink-0 group-hover:bg-yellow-600 group-hover:text-white transition-all">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="flex-1">
+                <p class="text-[10px] font-medium text-gray-500 uppercase tracking-wide">Reviews</p>
+                <h3 class="text-lg font-bold text-gray-800">{{ $totalReviews }}</h3>
+            </div>
+        </a>
+    </div>
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Recent Orders Table -->
         <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">

@@ -26,6 +26,20 @@ class ContactController extends Controller
         return back()->with('success', 'Message deleted successfully');
     }
 
+    public function reply(Request $request, ContactMessage $contact)
+    {
+        $request->validate([
+            'reply' => 'required|string',
+        ]);
+
+        $contact->update([
+            'reply' => $request->reply,
+            'is_replied' => true,
+        ]);
+
+        return back()->with('success', 'Reply saved successfully');
+    }
+
     // Frontend Store Method
     public function store(Request $request)
     {

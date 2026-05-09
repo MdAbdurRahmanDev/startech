@@ -56,6 +56,8 @@ Route::get('/contact', [InformationController::class, 'contact'])->name('contact
 Route::post('/contact', [\App\Http\Controllers\Backend\ContactController::class, 'store'])->name('contact.store');
 Route::get('/quotation', [InformationController::class, 'quotation'])->name('info.quotation');
 Route::post('/quotation', [\App\Http\Controllers\Backend\QuotationController::class, 'store'])->name('quotation.store');
+Route::post('/product-question', [\App\Http\Controllers\Backend\ProductQuestionController::class, 'store'])->name('product.question.store');
+Route::post('/product-review', [\App\Http\Controllers\Backend\ProductReviewController::class, 'store'])->name('product.review.store')->middleware('auth');
 
 
 

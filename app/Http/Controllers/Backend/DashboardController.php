@@ -21,6 +21,13 @@ class DashboardController extends Controller
         $rejectedOrders = \App\Models\Order::where('status', 'rejected')->count();
         $totalOrders = \App\Models\Order::count();
 
+        // CMS & Communication Stats
+        $totalPages = \App\Models\Page::count();
+        $totalMessages = \App\Models\ContactMessage::count();
+        $totalQuotations = \App\Models\Quotation::count();
+        $totalQuestions = \App\Models\ProductQuestion::count();
+        $totalReviews = \App\Models\ProductReview::count();
+
         // Order Stats (Amounts)
         $totalSales = \App\Models\Order::where('status', 'delivered')->sum('total');
         $pendingAmount = \App\Models\Order::where('status', 'pending')->sum('total');
@@ -42,7 +49,8 @@ class DashboardController extends Controller
             'pendingOrders', 'onTheWayOrders', 'deliveredOrders', 'rejectedOrders', 'totalOrders',
             'totalSales', 'pendingAmount', 'onTheWayAmount', 'rejectedAmount',
             'recentUsers', 'recentOrders',
-            'approvedRefunds', 'pendingRefunds', 'rejectedRefunds', 'approvedRefundAmount', 'pendingRefundAmount'
+            'approvedRefunds', 'pendingRefunds', 'rejectedRefunds', 'approvedRefundAmount', 'pendingRefundAmount',
+            'totalPages', 'totalMessages', 'totalQuotations', 'totalQuestions', 'totalReviews'
         ));
     }
 }

@@ -29,17 +29,45 @@
                 {{ $contact->message }}
             </div>
 
-            <div class="mt-10 pt-6 border-t border-default flex gap-4">
-                <a href="mailto:{{ $contact->email }}?subject=Re: {{ $contact->subject }}" class="inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white bg-blue-600 rounded-base hover:bg-opacity-90 transition-all gap-2">
-                    <i class="fas fa-reply"></i> Reply via Email
-                </a>
-                <form action="{{ route('admin.contacts.destroy', $contact->id) }}" method="POST" onsubmit="return confirm('Delete this message?')">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-red-600 bg-white border border-red-200 rounded-base hover:bg-red-50 transition-all gap-2">
-                        <i class="fas fa-trash-alt"></i> Delete Message
-                    </button>
-                </form>
+            @if($contact->reply)
+                <div class="mt-8 p-6 bg-green-50 border border-green-100 rounded-lg">
+                    <h3 class="text-xs font-bold text-green-700 uppercase tracking-widest mb-3 flex items-center gap-2">
+                        <i class="fas fa-check-circle"></i> Admin Response
+                    </h3>
+                    <div class="text-sm text-green-800 italic whitespace-pre-wrap">"{{ $contact->reply }}"</div>
+                    <div class="mt-2 text-[10px] text-green-600 font-medium">Replied on {{ $contact->updated_at->format('d M Y, h:i A') }}</div>
+                </div>
+            @endif
+
+            <div class="mt-10 pt-6 border-t border-default flex flex-col gap-6">
+                <div id="replySection" class="{{ $contact->is_replied ? 'hidden' : '' }}">
+                    <h3 class="text-sm font-bold text-heading mb-4">Post a Response</h3>
+                    <form action="{{ route('admin.contacts.reply', $contact->id) }}" method="POST">
+                        @csrf
+                        <textarea name="reply" rows="4" required placeholder="Type your reply here..." class="w-full bg-gray-50 border border-gray-200 rounded-lg p-4 focus:border-fg-brand outline-none transition-all text-sm mb-4">{{ $contact->reply }}</textarea>
+                        <button type="submit" class="bg-fg-brand text-white px-8 py-2.5 rounded-base font-bold text-sm hover:shadow-lg transition-all flex items-center gap-2">
+                            <i class="fas fa-paper-plane"></i> {{ $contact->is_replied ? 'Update Response' : 'Save & Mark as Replied' }}
+                        </button>
+                    </form>
+                </div>
+
+                <div class="flex gap-4">
+                    @if($contact->is_replied)
+                        <button onclick="document.getElementById('replySection').classList.toggle('hidden')" class="inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-fg-brand bg-white border border-default rounded-base hover:bg-neutral-primary-soft transition-all gap-2">
+                            <i class="fas fa-edit"></i> Edit Response
+                        </button>
+                    @endif
+                    <a href="mailto:{{ $contact->email }}?subject=Re: {{ $contact->subject }}" class="inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-blue-600 bg-white border border-default rounded-base hover:bg-blue-50 transition-all gap-2">
+                        <i class="fas fa-envelope"></i> Send External Email
+                    </a>
+                    <form action="{{ route('admin.contacts.destroy', $contact->id) }}" method="POST" onsubmit="return confirm('Delete this message?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-red-600 bg-white border border-red-200 rounded-base hover:bg-red-50 transition-all gap-2">
+                            <i class="fas fa-trash-alt"></i> Delete Message
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
