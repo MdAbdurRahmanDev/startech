@@ -12,14 +12,19 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::with('children.children')
+        $categories = Category::with([
+                'brands',
+                'children.brands',
+                'children.children.brands',
+            ])
             ->whereNull('parent_id')
             ->orderBy('order')
             ->get();
 
         $allCategories = Category::orderBy('name')->get();
+        $brands = \App\Models\Brand::where('status', 1)->orderBy('name')->get();
 
-        return view('backend.pages.categories.index', compact('categories', 'allCategories'));
+        return view('backend.pages.categories.index', compact('categories', 'allCategories', 'brands'));
     }
 
     public function store(Request $request)
@@ -31,6 +36,8 @@ class CategoryController extends Controller
             'image' => 'nullable|image|max:2048',
             'order' => 'nullable|integer',
             'is_featured' => 'nullable|boolean',
+            'brand_ids' => 'nullable|array',
+            'brand_ids.*' => 'exists:brands,id',
         ]);
 
         $imagePath = null;
@@ -38,7 +45,7 @@ class CategoryController extends Controller
             $imagePath = $request->file('image')->store('categories', 'public');
         }
 
-        Category::create([
+        $category = Category::create([
             'name' => $request->name,
             'slug' => Str::slug($request->name) . '-' . rand(1000, 9999),
             'parent_id' => $request->parent_id,
@@ -48,7 +55,45 @@ class CategoryController extends Controller
             'order' => $request->order ?? 0,
         ]);
 
+        if ($request->has('brand_ids')) {
+            $category->brands()->sync($request->brand_ids);
+        }
+
         return back()->with('success', 'Category created successfully.');
+    }
+
+    public function update(Request $request, Category $category)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'parent_id' => 'nullable|exists:categories,id',
+            'icon' => 'nullable|string',
+            'image' => 'nullable|image|max:2048',
+            'order' => 'nullable|integer',
+            'is_featured' => 'nullable|boolean',
+            'brand_ids' => 'nullable|array',
+            'brand_ids.*' => 'exists:brands,id',
+        ]);
+
+        if ($request->hasFile('image')) {
+            if ($category->image) {
+                Storage::disk('public')->delete($category->image);
+            }
+            $category->image = $request->file('image')->store('categories', 'public');
+        }
+
+        $category->update([
+            'name' => $request->name,
+            'parent_id' => $request->parent_id ?: null,
+            'icon' => $request->icon,
+            'is_featured' => $request->has('is_featured'),
+            'order' => $request->order ?? 0,
+            'image' => $category->image,
+        ]);
+
+        $category->brands()->sync($request->brand_ids ?? []);
+
+        return back()->with('success', 'Category updated successfully.');
     }
 
     public function destroy(Category $category)

@@ -30,6 +30,13 @@ class CategoryController extends Controller
             $query->whereIn('brand_id', $request->brands);
         }
 
+        if ($request->filled('brand')) {
+            $brand = \App\Models\Brand::where('slug', $request->brand)->first();
+            if ($brand) {
+                $query->where('brand_id', $brand->id);
+            }
+        }
+
         // Sort By
         if ($request->filled('sort')) {
             switch ($request->sort) {

@@ -11,7 +11,31 @@
     .select2-container--default .select2-selection--multiple {
         border-color: #d1d5db;
         border-radius: 0.5rem;
-        padding: 0.3rem;
+        padding: 0.2rem 0.5rem;
+        background-color: #f9fafb;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: #f3f4f6;
+        border: 1px solid #d1d5db;
+        color: #374151;
+        border-radius: 0.375rem;
+        padding: 2px 8px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-top: 4px;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+        color: #9ca3af;
+        margin-right: 5px;
+        border-right: 1px solid #d1d5db;
+        padding-right: 5px;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+        background-color: transparent;
+        color: #ef4444;
+    }
+    .select2-container--default .select2-search--inline .select2-search__field {
+        margin-top: 7px;
     }
 </style>
 @endsection
@@ -233,7 +257,9 @@
     $(document).ready(function() {
         $('#categories').select2({
             placeholder: "Select categories",
-            allowClear: true
+            allowClear: true,
+            closeOnSelect: false,
+            width: '100%'
         });
 
         // Dynamic Specifications

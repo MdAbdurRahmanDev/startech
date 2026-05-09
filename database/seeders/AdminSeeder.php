@@ -11,11 +11,6 @@ class AdminSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function up(): void
-    {
-        //
-    }
-
     public function run(): void
     {
         Admin::updateOrCreate(

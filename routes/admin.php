@@ -31,6 +31,7 @@ Route::middleware('auth:admin')->group(function () {
     // Categories
     Route::get('/admin/categories', [\App\Http\Controllers\Backend\CategoryController::class, 'index'])->name('admin.categories.index');
     Route::post('/admin/categories', [\App\Http\Controllers\Backend\CategoryController::class, 'store'])->name('admin.categories.store');
+    Route::post('/admin/categories/{category}/update', [\App\Http\Controllers\Backend\CategoryController::class, 'update'])->name('admin.categories.update');
     Route::delete('/admin/categories/{category}', [\App\Http\Controllers\Backend\CategoryController::class, 'destroy'])->name('admin.categories.destroy');
     Route::post('/admin/categories/{category}/toggle', [\App\Http\Controllers\Backend\CategoryController::class, 'toggleStatus'])->name('admin.categories.toggle');
     Route::post('/admin/categories/{category}/featured', [\App\Http\Controllers\Backend\CategoryController::class, 'toggleFeatured'])->name('admin.categories.featured');

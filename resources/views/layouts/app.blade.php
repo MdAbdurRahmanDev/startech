@@ -183,7 +183,7 @@
 <!-- Main Navigation Desktop -->
 <nav class="bg-white shadow-sm sticky top-0 z-[50] hidden lg:block">
     <div class="max-w-[1320px] mx-auto px-1.5 md:px-2">
-        <ul class="flex justify-between">
+        <ul class="flex justify-start gap-8">
             @foreach($headerCategories as $category)
                 <li class="group py-4 relative">
                     <a href="{{ url('category/' . $category->slug) }}" class="text-[13px] font-semibold text-primary-dark hover:text-accent-orange transition-colors flex items-center gap-1.5">
@@ -208,15 +208,19 @@
                                             @endif
                                             {{ $sub->name }}
                                         </div>
-                                        @if($sub->children->count() > 0)
-                                            <i class="fas fa-chevron-right text-[10px] opacity-50"></i>
-                                        @endif
-                                    </a>
-                                    @if($sub->children->count() > 0)
+                                    @if($sub->children->count() > 0 || $sub->brands->count() > 0)
                                         <div class="sub-dropdown bg-white min-w-[200px] shadow-xl py-2 border-l border-gray-100">
                                             @foreach($sub->children as $subSub)
                                                 <a href="{{ url('category/' . $subSub->slug) }}" class="block px-4 py-2 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">{{ $subSub->name }}</a>
                                             @endforeach
+                                            @if($sub->brands->count() > 0)
+                                                <div class="px-4 py-1 text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-2 border-t border-gray-50 pt-2">Brands</div>
+                                                @foreach($sub->brands as $b)
+                                                    <a href="{{ url('category/' . $sub->slug) }}?brand={{ $b->slug }}" class="block px-4 py-2 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">
+                                                        {{ $b->name }}
+                                                    </a>
+                                                @endforeach
+                                            @endif
                                         </div>
                                     @endif
                                 </div>
