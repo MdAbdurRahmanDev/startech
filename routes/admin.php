@@ -86,6 +86,11 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/services/{service}', [\App\Http\Controllers\Backend\ServiceController::class, 'update'])->name('admin.services.update');
     // Contacts
     Route::get('/admin/contacts', [\App\Http\Controllers\Backend\ContactController::class, 'index'])->name('admin.contacts.index');
-    Route::get('/admin/contacts/{contact}', [\App\Http\Controllers\Backend\ContactController::class, 'show'])->name('admin.contacts.show');
-    Route::delete('/admin/contacts/{contact}', [\App\Http\Controllers\Backend\ContactController::class, 'destroy'])->name('admin.contacts.destroy');
+    // CMS Pages
+    Route::get('/admin/cms', [\App\Http\Controllers\Backend\PageController::class, 'index'])->name('admin.cms.index');
+    Route::get('/admin/cms/create', [\App\Http\Controllers\Backend\PageController::class, 'create'])->name('admin.cms.create');
+    Route::post('/admin/cms', [\App\Http\Controllers\Backend\PageController::class, 'store'])->name('admin.cms.store');
+    Route::get('/admin/cms/{page}/edit', [\App\Http\Controllers\Backend\PageController::class, 'edit'])->name('admin.cms.edit');
+    Route::post('/admin/cms/{page}', [\App\Http\Controllers\Backend\PageController::class, 'update'])->name('admin.cms.update');
+    Route::delete('/admin/cms/{page}', [\App\Http\Controllers\Backend\PageController::class, 'destroy'])->name('admin.cms.destroy');
 });

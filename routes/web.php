@@ -50,16 +50,10 @@ Route::post('/account/order/{id}/refund', [AccountController::class, 'storeRefun
 Route::get('/account/address', [AccountController::class, 'address'])->name('user.address');
 Route::post('/account/address/update', [AccountController::class, 'updateAddress'])->name('user.address.update');
 
-// Information Pages
-Route::get('/affiliate-program', [InformationController::class, 'affiliate']);
-Route::get('/emi-terms', [InformationController::class, 'emi']);
-Route::get('/privacy', [InformationController::class, 'privacy']);
-Route::get('/star-point-policy', [InformationController::class, 'starPoint']);
-Route::get('/contact', [InformationController::class, 'contact']);
+// Dynamic CMS Pages
+Route::get('/info/{slug}', [InformationController::class, 'showPageBySlug'])->name('info.show');
+Route::get('/contact', [InformationController::class, 'contact'])->name('contact');
 Route::post('/contact', [\App\Http\Controllers\Backend\ContactController::class, 'store'])->name('contact.store');
-Route::get('/about_us', [InformationController::class, 'about']);
-Route::get('/terms', [InformationController::class, 'terms']);
-Route::get('/refund-policy', [InformationController::class, 'refund']);
 
 
 

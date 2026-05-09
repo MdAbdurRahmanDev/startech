@@ -258,12 +258,10 @@
             <div>
                 <h3 class="text-base font-bold uppercase mb-6 tracking-wider">About Us</h3>
                 <ul class="space-y-3">
-                    <li><a href="#" class="text-gray-400 hover:text-accent-orange text-sm transition-colors">EMI Terms</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-accent-orange text-sm transition-colors">Privacy Policy</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-accent-orange text-sm transition-colors">Star Point Policy</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-accent-orange text-sm transition-colors">Brands</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-accent-orange text-sm transition-colors">About Us</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-accent-orange text-sm transition-colors">Terms and Conditions</a></li>
+                    @foreach($footerPages as $fPage)
+                        <li><a href="{{ url('info/' . $fPage->slug) }}" class="text-gray-400 hover:text-accent-orange text-sm transition-colors">{{ $fPage->title }}</a></li>
+                    @endforeach
+                    <li><a href="{{ route('contact') }}" class="text-gray-400 hover:text-accent-orange text-sm transition-colors">Contact Us</a></li>
                 </ul>
             </div>
             <div>
