@@ -84,6 +84,11 @@
                             <label class="block text-sm font-semibold text-gray-700 mb-2">Office Address</label>
                             <textarea name="address" rows="3" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all">{{ old('address', $setting->address ?? '') }}</textarea>
                         </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Google Maps Embed URL</label>
+                            <textarea name="map_url" rows="3" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all" placeholder="Paste the iframe src URL from Google Maps share...">{{ old('map_url', $setting->map_url ?? '') }}</textarea>
+                            <p class="text-[11px] text-gray-400 mt-2 italic">Go to Google Maps > Share > Embed a map > Copy the URL inside 'src' attribute.</p>
+                        </div>
                     </div>
                 </div>
 

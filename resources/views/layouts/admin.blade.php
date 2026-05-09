@@ -125,6 +125,18 @@
             </a>
          </li>
          <li>
+            <a href="{{ route('admin.services.index') }}" class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.services.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+               <i class="fas fa-tools w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.services.*') ? 'text-fg-brand' : '' }}"></i>
+               <span class="flex-1 ms-3 whitespace-nowrap">Services Management</span>
+            </a>
+         </li>
+         <li>
+            <a href="{{ route('admin.contacts.index') }}" class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.contacts.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+               <i class="fas fa-envelope w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.contacts.*') ? 'text-fg-brand' : '' }}"></i>
+               <span class="flex-1 ms-3 whitespace-nowrap">Messages</span>
+            </a>
+         </li>
+         <li>
             <a href="{{ route('admin.orders.index') }}" class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.orders.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
                <i class="fas fa-shopping-cart w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.orders.*') ? 'text-fg-brand' : '' }}"></i>
                <span class="flex-1 ms-3 whitespace-nowrap">Orders</span>

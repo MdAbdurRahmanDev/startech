@@ -77,4 +77,15 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/offers/{offer}', [\App\Http\Controllers\Backend\OfferController::class, 'update'])->name('admin.offers.update');
     Route::delete('/admin/offers/{offer}', [\App\Http\Controllers\Backend\OfferController::class, 'destroy'])->name('admin.offers.destroy');
     Route::post('/admin/offers/{offer}/toggle', [\App\Http\Controllers\Backend\OfferController::class, 'toggleStatus'])->name('admin.offers.toggle');
+
+    // Services
+    Route::get('/admin/services', [\App\Http\Controllers\Backend\ServiceController::class, 'index'])->name('admin.services.index');
+    Route::get('/admin/services/create', [\App\Http\Controllers\Backend\ServiceController::class, 'create'])->name('admin.services.create');
+    Route::post('/admin/services', [\App\Http\Controllers\Backend\ServiceController::class, 'store'])->name('admin.services.store');
+    Route::get('/admin/services/{service}/edit', [\App\Http\Controllers\Backend\ServiceController::class, 'edit'])->name('admin.services.edit');
+    Route::post('/admin/services/{service}', [\App\Http\Controllers\Backend\ServiceController::class, 'update'])->name('admin.services.update');
+    // Contacts
+    Route::get('/admin/contacts', [\App\Http\Controllers\Backend\ContactController::class, 'index'])->name('admin.contacts.index');
+    Route::get('/admin/contacts/{contact}', [\App\Http\Controllers\Backend\ContactController::class, 'show'])->name('admin.contacts.show');
+    Route::delete('/admin/contacts/{contact}', [\App\Http\Controllers\Backend\ContactController::class, 'destroy'])->name('admin.contacts.destroy');
 });

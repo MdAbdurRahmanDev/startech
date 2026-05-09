@@ -18,5 +18,6 @@ class Setting extends Model
         'whatsapp_number',
         'youtube_url',
         'instagram_url',
+        'map_url',
     ];
 }

@@ -128,11 +128,11 @@
                     <span class="text-[11px] text-gray-400">Latest Offers</span>
                 </div>
             </a>
-            <a href="{{ url('/happy-hour') }}" class="flex items-center gap-2 cursor-pointer group">
-                <i class="fas fa-bolt text-accent-orange text-xl"></i>
+            <a href="{{ route('services.index') }}" class="flex items-center gap-2 cursor-pointer group">
+                <i class="fas fa-tools text-accent-orange text-xl"></i>
                 <div class="flex flex-col">
-                    <span class="text-sm font-bold">Happy Hour</span>
-                    <span class="text-[11px] text-gray-400">Special Deals</span>
+                    <span class="text-sm font-bold">Services</span>
+                    <span class="text-[11px] text-gray-400">Our Services</span>
                 </div>
             </a>
             <div class="relative group cursor-pointer py-4">
