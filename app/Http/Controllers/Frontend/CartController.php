@@ -167,4 +167,43 @@ class CartController extends Controller
         $cartCount = collect($cart)->sum('quantity');
         return response()->json(['success' => true, 'cart_count' => $cartCount]);
     }
+
+    public function buyNow(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|integer|exists:products,id',
+            'quantity'   => 'nullable|integer|min:1',
+        ]);
+
+        $product = Product::findOrFail($request->product_id);
+        if ($product->status != 1) {
+            return back()->with('error', 'Product is not available.');
+        }
+
+        $qty = $request->quantity ?? 1;
+
+        if ($product->stock < $qty) {
+            return back()->with('error', 'Not enough stock available.');
+        }
+
+        $price = $product->discount_price && $product->discount_price < $product->price
+            ? $product->discount_price
+            : $product->price;
+
+        $cart = session()->get('cart', []);
+
+        // Just overwrite or update
+        $cart[$product->id] = [
+            'id'        => $product->id,
+            'name'      => $product->name,
+            'slug'      => $product->slug,
+            'thumbnail' => $product->thumbnail,
+            'price'     => $price,
+            'quantity'  => $qty,
+        ];
+
+        session()->put('cart', $cart);
+
+        return redirect()->route('cart.show');
+    }
 }

@@ -146,11 +146,11 @@
                         </div>
                     @endif
                     
-                    <a href="#" class="p-2 md:p-4 aspect-square overflow-hidden bg-gray-50 flex items-center justify-center block">
+                    <a href="{{ url('product/' . $product->slug) }}" class="p-2 md:p-4 aspect-square overflow-hidden bg-gray-50 flex items-center justify-center block">
                         <img src="{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : 'https://placehold.co/228x228/f9fafb/a3a3a3?text=No+Image' }}" alt="{{ $product->name }}" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500">
                     </a>
                     <div class="p-3 md:p-5 flex flex-col flex-grow">
-                        <a href="#">
+                        <a href="{{ url('product/' . $product->slug) }}">
                             <h3 class="text-xs md:text-[13px] font-bold text-primary-dark hover:text-accent-orange cursor-pointer line-clamp-2 leading-snug h-8 md:h-10">
                                 {{ $product->name }}
                             </h3>
@@ -179,7 +179,7 @@
                                     <span class="text-accent-orange font-bold text-sm md:text-base">{{ number_format($product->price, 0) }}৳</span>
                                 @endif
                             </div>
-                            <button class="w-full bg-primary-dark text-white text-xs md:text-sm font-bold py-2 md:py-2.5 rounded hover:bg-accent-orange transition-all flex items-center justify-center gap-2">
+                            <button onclick="buyNow({{ $product->id }})" class="w-full bg-primary-dark text-white text-xs md:text-sm font-bold py-2 md:py-2.5 rounded hover:bg-accent-orange transition-all flex items-center justify-center gap-2">
                                 <i class="fas fa-shopping-cart text-[10px] md:text-xs"></i>
                                 Buy Now
                             </button>

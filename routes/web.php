@@ -19,6 +19,7 @@ Route::get('/product/{slug}', [ProductController::class, 'show']);
 Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
 Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/buy-now', [CartController::class, 'buyNow'])->name('cart.buy-now');
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 Route::get('/cart/count', [CartController::class, 'getCount'])->name('cart.count');
 Route::post('/checkout', [CartController::class, 'placeOrder'])->name('order.place');
@@ -40,6 +41,7 @@ Route::get('/account/order', [AccountController::class, 'order'])->name('user.or
 Route::get('/account/order/{id}/refund', [AccountController::class, 'showRefundForm'])->name('user.order.refund');
 Route::post('/account/order/{id}/refund', [AccountController::class, 'storeRefund'])->name('user.order.refund.store');
 Route::get('/account/address', [AccountController::class, 'address'])->name('user.address');
+Route::post('/account/address/update', [AccountController::class, 'updateAddress'])->name('user.address.update');
 
 // Information Pages
 Route::get('/affiliate-program', [InformationController::class, 'affiliate']);

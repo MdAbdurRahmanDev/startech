@@ -167,4 +167,27 @@ class AccountController extends Controller
 
         return redirect()->route('user.order')->with('success', 'Refund request submitted successfully!');
     }
+
+    public function address()
+    {
+        $user = Auth::user();
+        return view('frontend.account.address', compact('user'));
+    }
+
+    public function updateAddress(Request $request)
+    {
+        $request->validate([
+            'address' => 'required|string|max:500',
+            'upazila' => 'required|string|max:255',
+            'district' => 'required|string|max:255',
+        ]);
+
+        Auth::user()->update([
+            'address' => $request->address,
+            'upazila' => $request->upazila,
+            'district' => $request->district,
+        ]);
+
+        return back()->with('success', 'Address updated successfully.');
+    }
 }

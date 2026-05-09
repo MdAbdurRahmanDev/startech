@@ -50,32 +50,22 @@
                         </div>
                         <div class="md:col-span-2">
                             <label class="block text-[12px] font-semibold text-gray-600 mb-1.5">Address</label>
-                            <input type="text" name="address" placeholder="Address*" required
+                            <input type="text" name="address" value="{{ auth()->user()->address ?? '' }}" placeholder="Address*" required
                                    class="border border-gray-300 rounded px-3 py-2.5 text-[13px] w-full focus:outline-none focus:border-accent-blue transition-colors placeholder-gray-400">
                         </div>
                         <div>
                             <label class="block text-[12px] font-semibold text-gray-600 mb-1.5">Upazila/Thana</label>
-                            <input type="text" name="upazila" placeholder="Upazila/Thana*"
+                            <input type="text" name="upazila" value="{{ auth()->user()->upazila ?? '' }}" placeholder="Upazila/Thana*"
                                    class="border border-gray-300 rounded px-3 py-2.5 text-[13px] w-full focus:outline-none focus:border-accent-blue transition-colors placeholder-gray-400">
                         </div>
                         <div>
                             <label class="block text-[12px] font-semibold text-gray-600 mb-1.5">District</label>
-                            <select name="district" class="border border-gray-300 rounded px-3 py-2.5 text-[13px] w-full focus:outline-none focus:border-accent-blue transition-colors text-gray-700 bg-white">
-                                <option value="">Select District</option>
-                                <option value="dhaka_city">Dhaka - City</option>
-                                <option value="dhaka">Dhaka</option>
-                                <option value="chattogram">Chattogram</option>
-                                <option value="sylhet">Sylhet</option>
-                                <option value="rajshahi">Rajshahi</option>
-                                <option value="khulna">Khulna</option>
-                                <option value="barishal">Barishal</option>
-                                <option value="rangpur">Rangpur</option>
-                                <option value="mymensingh">Mymensingh</option>
-                            </select>
+                            <input type="text" name="district" value="{{ auth()->user()->district ?? '' }}" placeholder="District*" required
+                                   class="border border-gray-300 rounded px-3 py-2.5 text-[13px] w-full focus:outline-none focus:border-accent-blue transition-colors placeholder-gray-400">
                         </div>
                         <div>
                             <label class="block text-[12px] font-semibold text-gray-600 mb-1.5">Mobile</label>
-                            <input type="tel" name="phone" placeholder="Telephone*" required
+                            <input type="tel" name="phone" value="{{ auth()->user()->phone ?? '' }}" placeholder="Telephone*" required
                                    class="border border-gray-300 rounded px-3 py-2.5 text-[13px] w-full focus:outline-none focus:border-accent-blue transition-colors placeholder-gray-400">
                         </div>
                         <div>

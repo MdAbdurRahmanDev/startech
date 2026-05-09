@@ -382,6 +382,38 @@
     if(menuOverlay) menuOverlay.addEventListener('click', closeSidebar);
 </script>
 
+<script>
+    const CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    function buyNow(productId) {
+        const qty = 1; // Default for home/category pages
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '{{ route("cart.buy-now") }}';
+        
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = '_token';
+        csrfInput.value = CSRF_TOKEN;
+        
+        const idInput = document.createElement('input');
+        idInput.type = 'hidden';
+        idInput.name = 'product_id';
+        idInput.value = productId;
+
+        const qtyInput = document.createElement('input');
+        qtyInput.type = 'hidden';
+        qtyInput.name = 'quantity';
+        qtyInput.value = qty;
+
+        form.appendChild(csrfInput);
+        form.appendChild(idInput);
+        form.appendChild(qtyInput);
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+
 @yield('scripts')
 
 </body>
