@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', $setting->app_name ?? 'Star Tech') | Leading IT Shop in Bangladesh</title>
     
     @if($setting && $setting->favicon)
@@ -112,7 +113,7 @@
             </div>
             <div class="relative cursor-pointer">
                 <i class="fas fa-shopping-basket text-xl"></i>
-                <span class="absolute -top-2 -right-2 bg-accent-orange text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                <span id="cart-count-mobile" class="absolute -top-2 -right-2 bg-accent-orange text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">{{ collect(session('cart', []))->sum('quantity') }}</span>
             </div>
         </div>
 
@@ -294,11 +295,11 @@
         <i class="fas fa-shuffle text-lg"></i>
         <span class="text-[8px] uppercase font-bold mt-1">Compare</span>
     </div>
-    <div class="bg-primary-dark text-white w-14 h-14 flex flex-col items-center justify-center rounded-l-md cursor-pointer relative shadow-lg">
-        <div class="absolute top-1 right-1 bg-accent-orange text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">0</div>
+    <a href="{{ url('/cart') }}" class="bg-primary-dark text-white w-14 h-14 flex flex-col items-center justify-center rounded-l-md cursor-pointer relative shadow-lg hover:bg-accent-orange transition-colors">
+        <div id="cart-count-float" class="absolute top-1 right-1 bg-accent-orange text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">{{ collect(session('cart', []))->sum('quantity') }}</div>
         <i class="fas fa-shopping-basket text-lg"></i>
         <span class="text-[8px] uppercase font-bold mt-1">Cart</span>
-    </div>
+    </a>
 </div>
 
 <!-- Mobile Bottom Nav -->

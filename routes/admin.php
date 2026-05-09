@@ -49,4 +49,18 @@ Route::middleware('auth:admin')->group(function () {
 
     // Suppliers
     Route::resource('/admin/suppliers', \App\Http\Controllers\Backend\SupplierController::class)->names('admin.suppliers');
+
+    // Shipping Methods
+    Route::resource('/admin/shipping', \App\Http\Controllers\Backend\ShippingMethodController::class)->names('admin.shipping');
+
+    // Orders
+    Route::get('/admin/orders', [\App\Http\Controllers\Backend\OrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('/admin/orders/{order}', [\App\Http\Controllers\Backend\OrderController::class, 'show'])->name('admin.orders.show');
+    Route::post('/admin/orders/{order}/status', [\App\Http\Controllers\Backend\OrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
+    Route::delete('/admin/orders/{order}', [\App\Http\Controllers\Backend\OrderController::class, 'destroy'])->name('admin.orders.destroy');
+
+    // Refunds
+    Route::get('/admin/refunds', [\App\Http\Controllers\Backend\RefundController::class, 'index'])->name('admin.refunds.index');
+    Route::get('/admin/refunds/{id}', [\App\Http\Controllers\Backend\RefundController::class, 'show'])->name('admin.refunds.show');
+    Route::post('/admin/refunds/{id}/status', [\App\Http\Controllers\Backend\RefundController::class, 'updateStatus'])->name('admin.refunds.updateStatus');
 });

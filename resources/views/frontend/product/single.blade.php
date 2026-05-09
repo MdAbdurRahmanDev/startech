@@ -113,12 +113,12 @@
                                 <input type="number" id="qty" value="1" min="1" max="{{ $product->stock }}" class="w-[50px] text-center border-x border-gray-300 py-2.5 outline-none text-[15px] font-semibold text-gray-800 appearance-none m-0">
                                 <button type="button" onclick="changeQty(1)" class="px-3.5 py-2 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer text-[18px] leading-none text-gray-700">+</button>
                             </div>
-                            <a href="#" class="bg-accent-blue text-white py-3 px-8 rounded font-bold flex-grow text-center transition-colors hover:bg-accent-orange shadow-sm flex items-center justify-center gap-2">
+                            <button onclick="buyNow({{ $product->id }})" class="bg-accent-blue text-white py-3 px-8 rounded font-bold flex-grow text-center transition-colors hover:bg-accent-orange shadow-sm flex items-center justify-center gap-2">
                                 <i class="fas fa-shopping-cart"></i> Buy Now
-                            </a>
-                            <a href="#" class="bg-gray-800 text-white py-3 px-8 rounded font-bold flex-grow text-center transition-colors hover:bg-accent-orange shadow-sm flex items-center justify-center gap-2">
+                            </button>
+                            <button onclick="addToCart({{ $product->id }})" class="bg-gray-800 text-white py-3 px-8 rounded font-bold flex-grow text-center transition-colors hover:bg-accent-orange shadow-sm flex items-center justify-center gap-2">
                                 <i class="fas fa-cart-plus"></i> Add to Cart
-                            </a>
+                            </button>
                         </div>
                         <a href="#" onclick="toggleQuotationModal(event)" class="bg-white border-2 border-accent-blue text-accent-blue py-3 px-10 rounded font-bold w-full text-center transition-colors hover:bg-accent-orange hover:border-accent-orange hover:text-white shadow-sm flex items-center justify-center gap-2">
                             <i class="fas fa-file-invoice-dollar"></i> Request for Quotation
@@ -386,6 +386,76 @@
             modal.classList.add('hidden');
             modal.classList.remove('flex');
             document.body.style.overflow = 'auto';
+        }
+    }
+</script>
+
+<script>
+    const CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    // Update all cart counter badges on the page
+    function updateCartCounters(count) {
+        document.querySelectorAll('#cart-count-float, #cart-count-mobile').forEach(el => {
+            el.textContent = count;
+        });
+    }
+
+    // Show a toast notification
+    function showToast(message, type = 'success') {
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+        const bgClass = type === 'success' ? 'bg-green-600' : 'bg-red-500';
+        const icon = type === 'success' ? 'fa-check-circle' : 'fa-times-circle';
+        const toast = document.createElement('div');
+        toast.className = `toast ${bgClass} text-white px-6 py-3 rounded-lg shadow-2xl flex items-center gap-3 animate-slide-in`;
+        toast.innerHTML = `<i class="fas ${icon} text-lg"></i><span>${message}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => toast.remove(), 4000);
+    }
+
+    // Core cart fetch function
+    async function cartFetch(productId, quantity) {
+        const response = await fetch('{{ route("cart.add") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': CSRF_TOKEN,
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ product_id: productId, quantity: quantity }),
+        });
+        return response.json();
+    }
+
+    // Add to cart – shows toast and updates counter
+    async function addToCart(productId) {
+        const qty = parseInt(document.getElementById('qty').value) || 1;
+        try {
+            const data = await cartFetch(productId, qty);
+            if (data.success) {
+                showToast(data.message, 'success');
+                updateCartCounters(data.cart_count);
+            } else {
+                showToast(data.message, 'error');
+            }
+        } catch (e) {
+            showToast('Something went wrong. Please try again.', 'error');
+        }
+    }
+
+    // Buy now – adds to cart then redirects (placeholder: cart page)
+    async function buyNow(productId) {
+        const qty = parseInt(document.getElementById('qty').value) || 1;
+        try {
+            const data = await cartFetch(productId, qty);
+            if (data.success) {
+                updateCartCounters(data.cart_count);
+                window.location.href = '/cart';
+            } else {
+                showToast(data.message, 'error');
+            }
+        } catch (e) {
+            showToast('Something went wrong. Please try again.', 'error');
         }
     }
 </script>

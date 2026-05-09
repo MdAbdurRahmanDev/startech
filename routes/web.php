@@ -10,9 +10,19 @@ use App\Http\Controllers\Frontend\OfferController;
 use App\Http\Controllers\Frontend\HappyHourController;
 use App\Http\Controllers\Frontend\AccountController;
 use App\Http\Controllers\Frontend\InformationController;
+use App\Http\Controllers\Frontend\CartController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/product/{slug}', [ProductController::class, 'show']);
+
+// Cart Routes
+Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
+Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::get('/cart/count', [CartController::class, 'getCount'])->name('cart.count');
+Route::post('/checkout', [CartController::class, 'placeOrder'])->name('order.place');
+Route::get('/order-success/{order_number}', [CartController::class, 'orderSuccess'])->name('order.success');
 Route::get('/category/{slug}', [CategoryController::class, 'show']);
 Route::get('/search', [SearchController::class, 'index']);
 Route::get('/offers', [OfferController::class, 'index']);
@@ -27,6 +37,8 @@ Route::get('/account/edit', [AccountController::class, 'edit'])->name('user.edit
 Route::post('/account/profile/update', [AccountController::class, 'updateProfile'])->name('user.profile.update');
 Route::post('/account/password/update', [AccountController::class, 'updatePassword'])->name('user.password.update');
 Route::get('/account/order', [AccountController::class, 'order'])->name('user.order');
+Route::get('/account/order/{id}/refund', [AccountController::class, 'showRefundForm'])->name('user.order.refund');
+Route::post('/account/order/{id}/refund', [AccountController::class, 'storeRefund'])->name('user.order.refund.store');
 Route::get('/account/address', [AccountController::class, 'address'])->name('user.address');
 
 // Information Pages

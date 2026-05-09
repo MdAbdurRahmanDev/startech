@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use App\Models\Order;
+use App\Models\RefundRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -134,11 +136,35 @@ class AccountController extends Controller
 
     public function order()
     {
-        return view('frontend.account.order');
+        $orders = Order::where('user_id', Auth::id())->latest()->paginate(10);
+        return view('frontend.account.order', compact('orders'));
     }
 
-    public function address()
+    public function showRefundForm($order_id)
     {
-        return view('frontend.account.address');
+        $order = Order::where('user_id', Auth::id())->where('id', $order_id)->firstOrFail();
+        if ($order->refundRequest) {
+            return back()->with('error', 'Refund request already submitted for this order.');
+        }
+        return view('frontend.account.refund', compact('order'));
+    }
+
+    public function storeRefund(Request $request, $order_id)
+    {
+        $order = Order::where('user_id', Auth::id())->where('id', $order_id)->firstOrFail();
+        
+        $request->validate([
+            'reason' => 'required|string|min:10',
+        ]);
+
+        RefundRequest::create([
+            'order_id' => $order->id,
+            'user_id' => Auth::id(),
+            'reason' => $request->reason,
+            'amount' => $order->total,
+            'status' => 'pending',
+        ]);
+
+        return redirect()->route('user.order')->with('success', 'Refund request submitted successfully!');
     }
 }

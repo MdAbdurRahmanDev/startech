@@ -112,6 +112,24 @@
                <span class="flex-1 ms-3 whitespace-nowrap">Banners</span>
             </a>
          </li>
+         <li>
+            <a href="{{ route('admin.orders.index') }}" class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.orders.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+               <i class="fas fa-shopping-cart w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.orders.*') ? 'text-fg-brand' : '' }}"></i>
+               <span class="flex-1 ms-3 whitespace-nowrap">Orders</span>
+            </a>
+         </li>
+         <li>
+            <a href="{{ route('admin.refunds.index') }}" class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.refunds.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+               <i class="fas fa-undo w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.refunds.*') ? 'text-fg-brand' : '' }}"></i>
+               <span class="flex-1 ms-3 whitespace-nowrap">Refund Requests</span>
+            </a>
+         </li>
+         <li>
+            <a href="{{ route('admin.shipping.index') }}" class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.shipping.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+               <i class="fas fa-truck w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.shipping.*') ? 'text-fg-brand' : '' }}"></i>
+               <span class="flex-1 ms-3 whitespace-nowrap">Shipping Methods</span>
+            </a>
+         </li>
          
          <!-- Settings Dropdown -->
          <li>
