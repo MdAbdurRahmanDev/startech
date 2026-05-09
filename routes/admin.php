@@ -63,4 +63,9 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/refunds', [\App\Http\Controllers\Backend\RefundController::class, 'index'])->name('admin.refunds.index');
     Route::get('/admin/refunds/{id}', [\App\Http\Controllers\Backend\RefundController::class, 'show'])->name('admin.refunds.show');
     Route::post('/admin/refunds/{id}/status', [\App\Http\Controllers\Backend\RefundController::class, 'updateStatus'])->name('admin.refunds.updateStatus');
+
+    // Stocks
+    Route::get('/admin/stock', [\App\Http\Controllers\Backend\StockController::class, 'index'])->name('admin.stock.index');
+    Route::get('/admin/stock/create', [\App\Http\Controllers\Backend\StockController::class, 'create'])->name('admin.stock.create');
+    Route::post('/admin/stock', [\App\Http\Controllers\Backend\StockController::class, 'store'])->name('admin.stock.store');
 });
