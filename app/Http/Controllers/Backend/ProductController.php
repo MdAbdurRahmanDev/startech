@@ -83,10 +83,11 @@ class ProductController extends Controller
             'meta_keywords' => 'nullable|string|max:255',
             'meta_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'video' => 'nullable|mimes:mp4,mov,ogg,qt|max:20480', // Max 20MB
             'specifications_text' => 'nullable|string',
         ]);
 
-        $data = $request->except(['categories', 'thumbnail', 'meta_image', 'gallery']);
+        $data = $request->except(['categories', 'thumbnail', 'meta_image', 'gallery', 'video']);
         $data['slug'] = Str::slug($request->name) . '-' . time();
         $data['is_featured'] = $request->has('is_featured');
         $data['status'] = true;
@@ -97,6 +98,10 @@ class ProductController extends Controller
 
         if ($request->hasFile('meta_image')) {
             $data['meta_image'] = $request->file('meta_image')->store('products/seo', 'public');
+        }
+
+        if ($request->hasFile('video')) {
+            $data['video'] = $request->file('video')->store('products/videos', 'public');
         }
 
         $product = Product::create($data);
@@ -143,10 +148,11 @@ class ProductController extends Controller
             'meta_keywords' => 'nullable|string|max:255',
             'meta_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'video' => 'nullable|mimes:mp4,mov,ogg,qt|max:20480', // Max 20MB
             'specifications_text' => 'nullable|string',
         ]);
 
-        $data = $request->except(['categories', 'thumbnail', 'meta_image', 'gallery']);
+        $data = $request->except(['categories', 'thumbnail', 'meta_image', 'gallery', 'video']);
         if ($request->name !== $product->name) {
             $data['slug'] = Str::slug($request->name) . '-' . time();
         }
@@ -166,6 +172,13 @@ class ProductController extends Controller
             $data['meta_image'] = $request->file('meta_image')->store('products/seo', 'public');
         }
 
+        if ($request->hasFile('video')) {
+            if ($product->video) {
+                Storage::disk('public')->delete($product->video);
+            }
+            $data['video'] = $request->file('video')->store('products/videos', 'public');
+        }
+
         $product->update($data);
         $product->categories()->sync($request->categories);
 
@@ -183,6 +196,9 @@ class ProductController extends Controller
     {
         if ($product->thumbnail) {
             Storage::disk('public')->delete($product->thumbnail);
+        }
+        if ($product->video) {
+            Storage::disk('public')->delete($product->video);
         }
         $product->delete();
         return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');

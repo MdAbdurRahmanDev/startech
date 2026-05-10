@@ -15,11 +15,11 @@
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 flex flex-col md:flex-row justify-between items-center gap-6 mb-8 animate-fade-in">
             <div class="flex items-center gap-5">
                 <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-tr from-accent-orange to-orange-400 rounded-full flex items-center justify-center text-white text-2xl md:text-3xl font-bold shadow-lg shadow-orange-100">
-                    {{ strtoupper(substr(Auth::user()->first_name, 0, 1)) }}
+                    {{ Auth::check() ? strtoupper(substr(Auth::user()->first_name ?? Auth::user()->name, 0, 1)) : 'U' }}
                 </div>
                 <div>
                     <p class="text-sm text-gray-400">Hello,</p>
-                    <h1 class="text-xl md:text-2xl font-bold text-primary-dark">{{ Auth::user()->name }}</h1>
+                    <h1 class="text-xl md:text-2xl font-bold text-primary-dark">{{ Auth::user()->name ?? 'Guest User' }}</h1>
                 </div>
             </div>
             <div class="flex gap-8 md:gap-12 text-center">

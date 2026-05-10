@@ -124,6 +124,13 @@
                         <input type="file" name="gallery[]" multiple class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
                         @error('gallery.*') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
+                    
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900">Product Video (Optional)</label>
+                        <input type="file" name="video" accept="video/*" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
+                        <p class="text-[10px] text-gray-400 mt-1">Accepted formats: MP4, MOV, QT. Max size: 20MB.</p>
+                        @error('video') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    </div>
 
                     <div class="flex items-center gap-3 pt-4">
                         <label class="relative inline-flex items-center cursor-pointer">

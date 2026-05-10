@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->foreignId('brand_id')->nullable()->constrained()->nullOnDelete();
+            // In Products Migration
+            $table->foreignId('brand_id')->nullable()->constrained('brands')->onDelete('set null');
             $table->foreignId('supplier_id')->nullable()->constrained()->nullOnDelete();
         });
     }

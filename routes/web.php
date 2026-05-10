@@ -39,16 +39,19 @@ Route::get('/account/login', [AccountController::class, 'login'])->name('user.lo
 Route::post('/account/login', [AccountController::class, 'storeLogin'])->name('user.login.store');
 Route::get('/account/register', [AccountController::class, 'register'])->name('user.register');
 Route::post('/account/register', [AccountController::class, 'storeRegister'])->name('user.register.store');
-Route::get('/account/account', [AccountController::class, 'account'])->name('user.account');
-Route::post('/account/logout', [AccountController::class, 'logout'])->name('user.logout');
-Route::get('/account/edit', [AccountController::class, 'edit'])->name('user.edit');
-Route::post('/account/profile/update', [AccountController::class, 'updateProfile'])->name('user.profile.update');
-Route::post('/account/password/update', [AccountController::class, 'updatePassword'])->name('user.password.update');
-Route::get('/account/order', [AccountController::class, 'order'])->name('user.order');
-Route::get('/account/order/{id}/refund', [AccountController::class, 'showRefundForm'])->name('user.order.refund');
-Route::post('/account/order/{id}/refund', [AccountController::class, 'storeRefund'])->name('user.order.refund.store');
-Route::get('/account/address', [AccountController::class, 'address'])->name('user.address');
-Route::post('/account/address/update', [AccountController::class, 'updateAddress'])->name('user.address.update');
+// User Account Routes
+Route::middleware('auth')->group(function () {
+    Route::get('/account/account', [AccountController::class, 'account'])->name('user.account');
+    Route::post('/account/logout', [AccountController::class, 'logout'])->name('user.logout');
+    Route::get('/account/edit', [AccountController::class, 'edit'])->name('user.edit');
+    Route::post('/account/profile/update', [AccountController::class, 'updateProfile'])->name('user.profile.update');
+    Route::post('/account/password/update', [AccountController::class, 'updatePassword'])->name('user.password.update');
+    Route::get('/account/order', [AccountController::class, 'order'])->name('user.order');
+    Route::get('/account/order/{id}/refund', [AccountController::class, 'showRefundForm'])->name('user.order.refund');
+    Route::post('/account/order/{id}/refund', [AccountController::class, 'storeRefund'])->name('user.order.refund.store');
+    Route::get('/account/address', [AccountController::class, 'address'])->name('user.address');
+    Route::post('/account/address/update', [AccountController::class, 'updateAddress'])->name('user.address.update');
+});
 
 // Dynamic CMS Pages
 Route::get('/info/{slug}', [InformationController::class, 'showPageBySlug'])->name('info.show');

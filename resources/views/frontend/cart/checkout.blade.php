@@ -91,11 +91,48 @@
                             Payment Method
                         </h2>
                         <p class="text-[12px] text-gray-500 mb-4">Select a payment method</p>
-                        <div class="space-y-2.5">
-                            <label class="flex items-center gap-2.5 cursor-pointer">
-                                <input type="radio" name="payment_method" value="cash_on_delivery" checked class="accent-accent-blue">
-                                <span class="text-[13px] text-gray-700">Cash on Delivery</span>
+                        <div class="space-y-4">
+                            <label class="flex items-center gap-2.5 cursor-pointer group">
+                                <input type="radio" name="payment_method" value="cash_on_delivery" checked 
+                                       onclick="toggleTrxField(false)" class="accent-accent-blue">
+                                <span class="text-[13px] text-gray-700 group-hover:text-accent-blue transition-colors">Cash on Delivery</span>
                             </label>
+
+                            @foreach($payment_methods as $method)
+                            <div class="payment-option border border-gray-100 rounded-lg p-3 hover:border-accent-blue transition-all">
+                                <label class="flex items-start gap-3 cursor-pointer group">
+                                    <input type="radio" name="payment_method" value="{{ $method->name }}" 
+                                           onclick="toggleTrxField(true, '{{ $method->name }}', '{{ $method->number }}', '{{ $method->type }}')" class="mt-1 accent-accent-blue">
+                                    <div class="flex-1">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-[14px] font-bold text-gray-800 group-hover:text-accent-blue transition-colors">{{ $method->name }}</span>
+                                            @if($method->logo)
+                                                <img src="{{ asset('storage/' . $method->logo) }}" class="h-6 object-contain">
+                                            @endif
+                                        </div>
+                                        <p class="text-[11px] text-gray-500">Number: <span class="font-bold text-accent-orange">{{ $method->number }}</span> ({{ ucfirst($method->type) }})</p>
+                                        @if($method->notes)
+                                            <p class="text-[10px] text-gray-400 mt-1 italic">{{ $method->notes }}</p>
+                                        @endif
+                                    </div>
+                                </label>
+                            </div>
+                            @endforeach
+
+                            {{-- Transaction ID Field (Hidden by default) --}}
+                            <div id="trx-field" class="hidden animate-fade-in mt-4 pt-4 border-t border-dashed border-gray-200">
+                                <div class="bg-blue-50 p-3 rounded-lg mb-3">
+                                    <p class="text-[11px] text-blue-700 leading-relaxed">
+                                        <i class="fas fa-info-circle mr-1"></i>
+                                        Please send the total amount to the <span id="method-name-display" class="font-bold"></span> number above, then enter the Transaction ID below.
+                                    </p>
+                                </div>
+                                <label class="block text-[12px] font-semibold text-gray-700 mb-1.5">Transaction ID <span class="text-red-500">*</span></label>
+                                <input type="text" name="transaction_id" id="transaction_id" 
+                                       placeholder="Enter your Transaction ID here"
+                                       class="border-2 border-accent-blue/30 rounded-lg px-4 py-3 text-[14px] w-full focus:outline-none focus:border-accent-blue transition-all bg-white shadow-sm">
+                                <p class="text-[10px] text-gray-400 mt-1">Found in your payment confirmation SMS.</p>
+                            </div>
                         </div>
                     </div>
 
@@ -228,6 +265,37 @@
             document.getElementById('delivery-charge').textContent = charge === 0 ? 'Free' : charge.toLocaleString('en-BD') + '৳';
             document.getElementById('grand-total').textContent = (subtotal + charge).toLocaleString('en-BD') + '৳';
         });
+    });
+
+    // Toggle Transaction ID Field
+    function toggleTrxField(show, name = '', number = '', type = '') {
+        const field = document.getElementById('trx-field');
+        const input = document.getElementById('transaction_id');
+        const nameDisplay = document.getElementById('method-name-display');
+        
+        if (show) {
+            field.classList.remove('hidden');
+            field.classList.add('block');
+            input.required = true;
+            nameDisplay.textContent = name;
+        } else {
+            field.classList.remove('block');
+            field.classList.add('hidden');
+            input.required = false;
+            input.value = '';
+        }
+    }
+
+    // Form Validation
+    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+        const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+        const trxId = document.getElementById('transaction_id').value;
+        
+        if (paymentMethod !== 'cash_on_delivery' && !trxId) {
+            e.preventDefault();
+            alert('Please enter the Transaction ID for your payment.');
+            document.getElementById('transaction_id').focus();
+        }
     });
 
     // Coupon / Gift tab switcher

@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stock_histories', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('products', function (Blueprint $table) {
+            $table->string('video')->nullable()->after('thumbnail');
         });
     }
 
@@ -22,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stock_histories');
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropColumn('video');
+        });
     }
 };

@@ -140,6 +140,9 @@
                 @if($product->description)
                 <a href="#description" class="bg-white text-gray-800 py-2.5 px-5 rounded text-[14px] font-semibold shadow-[0_1px_3px_rgba(0,0,0,0.05)] transition-colors hover:bg-accent-orange hover:text-white [&.active]:bg-accent-orange [&.active]:text-white">Description</a>
                 @endif
+                @if($product->video)
+                <a href="#video" class="bg-white text-gray-800 py-2.5 px-5 rounded text-[14px] font-semibold shadow-[0_1px_3px_rgba(0,0,0,0.05)] transition-colors hover:bg-accent-orange hover:text-white [&.active]:bg-accent-orange [&.active]:text-white">Product Video</a>
+                @endif
                 <a href="#questions" class="bg-white text-gray-800 py-2.5 px-5 rounded text-[14px] font-semibold shadow-[0_1px_3px_rgba(0,0,0,0.05)] transition-colors hover:bg-accent-orange hover:text-white [&.active]:bg-accent-orange [&.active]:text-white">Questions (1)</a>
                 <a href="#reviews" class="bg-white text-gray-800 py-2.5 px-5 rounded text-[14px] font-semibold shadow-[0_1px_3px_rgba(0,0,0,0.05)] transition-colors hover:bg-accent-orange hover:text-white [&.active]:bg-accent-orange [&.active]:text-white">Reviews (1)</a>
             </nav>
@@ -176,6 +179,19 @@
                         <h2 class="text-[18px] font-bold text-gray-800 mb-4 border-b border-gray-100 pb-3">Description</h2>
                         <h3 class="font-bold">{{ $product->name }}</h3>
                         {!! $product->description !!}
+                    </div>
+                    @endif
+
+                    <!-- Video Section -->
+                    @if($product->video)
+                    <div id="video" class="content-card bg-white rounded-lg shadow-sm p-6 mb-5">
+                        <h2 class="text-[18px] font-bold text-gray-800 mb-4 border-b border-gray-100 pb-3">Product Video</h2>
+                        <div class="aspect-video w-full rounded-lg overflow-hidden bg-black border border-gray-100 shadow-inner">
+                            <video class="w-full h-full" controls preload="metadata">
+                                <source src="{{ asset('storage/' . $product->video) }}" type="video/{{ pathinfo($product->video, PATHINFO_EXTENSION) }}">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
                     </div>
                     @endif
 

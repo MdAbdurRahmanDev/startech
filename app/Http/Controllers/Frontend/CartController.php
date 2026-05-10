@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ShippingMethod;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -27,8 +28,9 @@ class CartController extends Controller
         
         $total = collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']);
         $shipping_methods = ShippingMethod::where('status', 1)->get();
+        $payment_methods = PaymentMethod::where('status', 1)->get();
         
-        return view('frontend.cart.checkout', compact('cart', 'total', 'shipping_methods'));
+        return view('frontend.cart.checkout', compact('cart', 'total', 'shipping_methods', 'payment_methods'));
     }
 
     public function placeOrder(Request $request)
@@ -43,6 +45,8 @@ class CartController extends Controller
             'phone'      => 'required|string|max:20',
             'address'    => 'required|string',
             'delivery_method' => 'required|exists:shipping_methods,id',
+            'payment_method' => 'required|string',
+            'transaction_id' => $request->payment_method != 'cash_on_delivery' ? 'required|string|max:255' : 'nullable',
         ]);
 
         $shipping_method = ShippingMethod::findOrFail($request->delivery_method);
@@ -67,6 +71,9 @@ class CartController extends Controller
                 'shipping_cost'      => $shipping_method->cost,
                 'subtotal'           => $subtotal,
                 'total'              => $total,
+                'payment_method'     => $request->payment_method,
+                'transaction_id'     => $request->transaction_id,
+                'payment_status'     => $request->payment_method == 'cash_on_delivery' ? 'pending' : 'awaiting_confirmation',
                 'status'             => 'pending',
             ]);
 

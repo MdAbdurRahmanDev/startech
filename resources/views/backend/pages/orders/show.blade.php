@@ -114,6 +114,51 @@
                 </div>
             </div>
 
+            {{-- Payment Details --}}
+            <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
+                <h3 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b border-gray-100">Payment Details</h3>
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-gray-500 mb-1 text-xs font-bold uppercase tracking-wider">Payment Method</p>
+                        <div class="flex items-center gap-2">
+                            <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded font-bold text-sm border border-blue-100">
+                                {{ str_replace('_', ' ', $order->payment_method) }}
+                            </span>
+                            @if($order->payment_method == 'cash_on_delivery')
+                                <span class="text-[10px] text-gray-400 font-bold uppercase">Pay on Receipt</span>
+                            @endif
+                        </div>
+                    </div>
+
+                    @if($order->transaction_id)
+                    <div>
+                        <p class="text-gray-500 mb-1 text-xs font-bold uppercase tracking-wider">Transaction ID (TrxID)</p>
+                        <div class="bg-accent-orange/5 border border-accent-orange/20 p-3 rounded-lg flex items-center justify-between">
+                            <code class="text-accent-orange font-bold text-base">{{ $order->transaction_id }}</code>
+                            <button onclick="navigator.clipboard.writeText('{{ $order->transaction_id }}')" class="text-accent-orange hover:text-orange-700 p-1" title="Copy to clipboard">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    @endif
+
+                    <div>
+                        <p class="text-gray-500 mb-1 text-xs font-bold uppercase tracking-wider">Payment Status</p>
+                        @php
+                            $pStatusClasses = [
+                                'pending' => 'bg-gray-100 text-gray-800',
+                                'awaiting_confirmation' => 'bg-purple-100 text-purple-800',
+                                'paid' => 'bg-green-100 text-green-800',
+                                'failed' => 'bg-red-100 text-red-800',
+                            ];
+                        @endphp
+                        <span class="px-3 py-1 rounded-full text-xs font-bold uppercase {{ $pStatusClasses[$order->payment_status] ?? 'bg-gray-100' }}">
+                            {{ str_replace('_', ' ', $order->payment_status) }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
             <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
                 <h3 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b border-gray-100">Delivery Address</h3>
                 <div class="space-y-3 text-sm">

@@ -18,6 +18,7 @@ class Product extends Model
         'discount_price',
         'stock',
         'thumbnail',
+        'video',
         'is_featured',
         'status',
         'meta_title',

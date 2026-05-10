@@ -111,7 +111,6 @@
                                 @foreach($product->images as $img)
                                     <div class="relative group">
                                         <img src="{{ asset('storage/' . $img->image) }}" class="w-16 h-16 object-cover rounded shadow-sm border border-gray-200">
-                                        <!-- Note: Real deletion would require a separate AJAX route or form, just showing them for now -->
                                     </div>
                                 @endforeach
                             </div>
@@ -119,6 +118,22 @@
                         <input type="file" name="gallery[]" multiple class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
                         <p class="text-xs text-gray-500 mt-1">Select additional images to add to the gallery.</p>
                         @error('gallery.*') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    </div>
+
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900">Product Video (Optional)</label>
+                        <div class="space-y-2">
+                            @if($product->video)
+                                <div class="flex items-center gap-3 p-2 bg-gray-50 rounded border border-gray-100">
+                                    <i class="fas fa-video text-blue-500"></i>
+                                    <span class="text-xs text-gray-600 truncate max-w-[200px]">{{ basename($product->video) }}</span>
+                                    <a href="{{ asset('storage/' . $product->video) }}" target="_blank" class="text-[10px] bg-blue-100 text-blue-600 px-2 py-0.5 rounded font-bold hover:bg-blue-200 transition-colors">View Current</a>
+                                </div>
+                            @endif
+                            <input type="file" name="video" accept="video/*" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
+                        </div>
+                        <p class="text-[10px] text-gray-400 mt-1">Accepted formats: MP4, MOV, QT. Max size: 20MB. Leave blank to keep current.</p>
+                        @error('video') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="flex items-center gap-3 pt-4">

@@ -113,4 +113,11 @@ Route::middleware('auth:admin')->group(function () {
     // Product Reviews
     Route::get('/admin/reviews', [\App\Http\Controllers\Backend\ProductReviewController::class, 'index'])->name('admin.reviews.index');
     Route::delete('/admin/reviews/{review}', [\App\Http\Controllers\Backend\ProductReviewController::class, 'destroy'])->name('admin.reviews.destroy');
+
+    // Payment Methods
+    Route::get('/admin/payment-methods', [\App\Http\Controllers\Backend\PaymentMethodController::class, 'index'])->name('admin.payment-methods.index');
+    Route::post('/admin/payment-methods', [\App\Http\Controllers\Backend\PaymentMethodController::class, 'store'])->name('admin.payment-methods.store');
+    Route::post('/admin/payment-methods/{paymentMethod}/update', [\App\Http\Controllers\Backend\PaymentMethodController::class, 'update'])->name('admin.payment-methods.update');
+    Route::delete('/admin/payment-methods/{paymentMethod}', [\App\Http\Controllers\Backend\PaymentMethodController::class, 'destroy'])->name('admin.payment-methods.destroy');
+    Route::post('/admin/payment-methods/{paymentMethod}/toggle', [\App\Http\Controllers\Backend\PaymentMethodController::class, 'toggleStatus'])->name('admin.payment-methods.toggle');
 });

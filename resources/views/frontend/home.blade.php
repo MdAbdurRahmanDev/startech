@@ -2,6 +2,29 @@
 
 @section('title', 'Ios BD | Leading IT Shop in Bangladesh')
 
+@section('styles')
+    <style>
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .animate-marquee {
+            display: inline-block;
+            animation: marquee 40s linear infinite;
+        }
+
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="container mx-auto px-1 md:px-2">
         <!-- Hero Section -->
@@ -73,8 +96,22 @@
             </div>
         </section>
 
-        <!-- Rest of the home page content remains the same... -->
-        <!-- (I'll keep the existing content here) -->
+        <!-- Scrolling Marquee -->
+        <div
+            class="mt-4 bg-white rounded-full h-10 md:h-12 flex items-center overflow-hidden shadow-sm border border-gray-100">
+            <div class="whitespace-nowrap flex items-center animate-marquee px-4 w-full">
+                <span class="text-[12px] md:text-sm text-gray-600 font-medium flex items-center gap-4">
+                    <span class="flex items-center gap-2"><i class="fas fa-bullhorn text-accent-orange"></i>
+                        {{ date('l, d M') }}, All our branches are open. Customer service is available from 10:00 AM to 7:00
+                        PM.</span>
+                    <span class="w-1.5 h-1.5 bg-gray-300 rounded-full"></span>
+                    <span>Free home delivery on selected products.</span>
+                    <span class="w-1.5 h-1.5 bg-gray-300 rounded-full"></span>
+                    <span>New arrivals: 14th Gen Intel Processors are now in stock!</span>
+                </span>
+            </div>
+        </div>
+
 
         <!-- Feature Section -->
         <div class="mt-6 md:mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">

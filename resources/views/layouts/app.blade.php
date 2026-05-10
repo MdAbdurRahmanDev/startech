@@ -117,8 +117,7 @@
                         <img src="{{ asset('storage/' . $setting->logo) }}" alt="{{ $setting->app_name }}"
                             class="h-10 lg:h-12">
                     @else
-                        <img src="https://www.startech.com.bd/image/catalog/logo.png" alt="Iosbd"
-                            class="h-10 lg:h-12">
+                        <img src="{{ asset('storage/' . $setting->logo) }}" alt="Iosbd" class="h-10 lg:h-12">
                     @endif
                 </a>
             </div>
@@ -394,6 +393,17 @@
             <i class="fas fa-shopping-basket text-lg"></i>
             <span class="text-[8px] uppercase font-bold mt-1">Cart</span>
         </a>
+        @if ($setting && $setting->whatsapp_number)
+            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $setting->whatsapp_number) }}" target="_blank"
+                class="bg-[#25D366] text-white w-14 h-14 flex flex-col items-center justify-center rounded-l-md cursor-pointer shadow-xl hover:bg-[#128C7E] transition-all duration-300 transform hover:-translate-x-1 group">
+                <div class="flex flex-col items-center justify-center">
+                    <img src="{{ asset('icon/whatsapp.png') }}"
+                        class="w-7 h-7 object-contain mb-0.5 group-hover:scale-110 transition-transform"
+                        alt="WhatsApp">
+                    <span class="text-[9px] uppercase font-bold">Chat</span>
+                </div>
+            </a>
+        @endif
     </div>
 
     <!-- Mobile Bottom Nav -->
