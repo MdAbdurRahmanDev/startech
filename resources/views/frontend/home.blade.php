@@ -180,6 +180,27 @@
             </div>
         </section>
 
+        <!-- Physical Stores Banner -->
+        <div class="mt-12 bg-gradient-to-r from-[#08acee] via-[#0052d4] to-[#001e54] rounded-lg p-6 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl overflow-hidden relative group">
+            <div class="flex items-center gap-5 md:gap-8 z-10">
+                <div class="w-14 h-14 md:w-16 md:h-16 bg-white/20 rounded-full flex items-center justify-center text-white text-2xl md:text-3xl backdrop-blur-sm shadow-inner group-hover:scale-110 transition-transform duration-500">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl md:text-3xl font-black text-white leading-tight">20+ Physical Stores</h3>
+                    <p class="text-white/90 text-sm md:text-base mt-1 font-medium">Visit Our Store & Get Your Desired IT Product!</p>
+                </div>
+            </div>
+            <a href="{{ route('outlets.index') }}" class="bg-accent-orange hover:bg-[#d83d1b] text-white px-8 py-3.5 rounded-full font-bold text-sm md:text-base transition-all shadow-xl hover:shadow-orange-500/40 flex items-center gap-2 group/btn whitespace-nowrap z-10">
+                Find Our Store
+                <i class="fas fa-search group-hover/btn:scale-110 transition-transform text-xs md:text-sm"></i>
+            </a>
+            
+            <!-- Background Decorations -->
+            <div class="absolute -right-8 -top-8 w-40 h-40 bg-white/5 rounded-full blur-3xl transition-all group-hover:bg-white/10"></div>
+            <div class="absolute -left-12 -bottom-12 w-48 h-48 bg-white/5 rounded-full blur-3xl transition-all group-hover:bg-white/10"></div>
+        </div>
+
         <!-- Product Grid -->
         <section class="mt-12 md:mt-16">
             <div class="flex justify-between items-end mb-6 md:mb-8">

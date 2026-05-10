@@ -11,12 +11,12 @@ use App\Http\Controllers\Frontend\HappyHourController;
 use App\Http\Controllers\Frontend\AccountController;
 use App\Http\Controllers\Frontend\InformationController;
 use App\Http\Controllers\Frontend\CartController;
-
-
+use App\Http\Controllers\Frontend\OutletController;
 
 use App\Http\Controllers\Frontend\ServiceController;
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/outlets', [OutletController::class, 'index'])->name('outlets.index');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.single');
 Route::get('/offers', [OfferController::class, 'index'])->name('offers.index');

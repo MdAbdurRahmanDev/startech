@@ -120,4 +120,13 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/payment-methods/{paymentMethod}/update', [\App\Http\Controllers\Backend\PaymentMethodController::class, 'update'])->name('admin.payment-methods.update');
     Route::delete('/admin/payment-methods/{paymentMethod}', [\App\Http\Controllers\Backend\PaymentMethodController::class, 'destroy'])->name('admin.payment-methods.destroy');
     Route::post('/admin/payment-methods/{paymentMethod}/toggle', [\App\Http\Controllers\Backend\PaymentMethodController::class, 'toggleStatus'])->name('admin.payment-methods.toggle');
+
+    // Outlets
+    Route::get('/admin/outlets', [\App\Http\Controllers\Backend\OutletController::class, 'index'])->name('admin.outlets.index');
+    Route::get('/admin/outlets/create', [\App\Http\Controllers\Backend\OutletController::class, 'create'])->name('admin.outlets.create');
+    Route::post('/admin/outlets', [\App\Http\Controllers\Backend\OutletController::class, 'store'])->name('admin.outlets.store');
+    Route::get('/admin/outlets/{outlet}/edit', [\App\Http\Controllers\Backend\OutletController::class, 'edit'])->name('admin.outlets.edit');
+    Route::put('/admin/outlets/{outlet}', [\App\Http\Controllers\Backend\OutletController::class, 'update'])->name('admin.outlets.update');
+    Route::delete('/admin/outlets/{outlet}', [\App\Http\Controllers\Backend\OutletController::class, 'destroy'])->name('admin.outlets.destroy');
+    Route::post('/admin/outlets/toggle-status/{outlet}', [\App\Http\Controllers\Backend\OutletController::class, 'toggleStatus'])->name('admin.outlets.toggle');
 });

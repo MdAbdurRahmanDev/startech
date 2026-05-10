@@ -246,6 +246,14 @@
                         <span class="flex-1 ms-3 whitespace-nowrap">Payment Methods</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.outlets.index') }}"
+                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.outlets.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                        <i
+                            class="fas fa-store w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.outlets.*') ? 'text-fg-brand' : '' }}"></i>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Manage Outlets</span>
+                    </a>
+                </li>
 
                 <!-- Settings Dropdown -->
                 <li>
