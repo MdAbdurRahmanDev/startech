@@ -8,6 +8,7 @@ class Setting extends Model
 {
     protected $fillable = [
         'app_name',
+        'marquee_text',
         'logo',
         'favicon',
         'contact_email',

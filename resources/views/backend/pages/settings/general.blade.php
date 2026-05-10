@@ -41,6 +41,14 @@
                                     placeholder="Iosbd">
                             </div>
 
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Homepage Marquee Text</label>
+                                <textarea name="marquee_text" rows="3"
+                                    class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all"
+                                    placeholder="Enter the scrolling text for the homepage marquee...">{{ old('marquee_text', $setting->marquee_text ?? '') }}</textarea>
+                                <p class="text-[11px] text-gray-400 mt-1">This text will scroll below the main slider on the homepage.</p>
+                            </div>
+
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Website Logo</label>
                                 <div class="mt-2 flex items-center gap-5">

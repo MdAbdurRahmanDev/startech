@@ -97,20 +97,19 @@
         </section>
 
         <!-- Scrolling Marquee -->
+        @if($setting && $setting->marquee_text)
         <div
             class="mt-4 bg-white rounded-full h-10 md:h-12 flex items-center overflow-hidden shadow-sm border border-gray-100">
             <div class="whitespace-nowrap flex items-center animate-marquee px-4 w-full">
                 <span class="text-[12px] md:text-sm text-gray-600 font-medium flex items-center gap-4">
-                    <span class="flex items-center gap-2"><i class="fas fa-bullhorn text-accent-orange"></i>
-                        {{ date('l, d M') }}, All our branches are open. Customer service is available from 10:00 AM to 7:00
-                        PM.</span>
-                    <span class="w-1.5 h-1.5 bg-gray-300 rounded-full"></span>
-                    <span>Free home delivery on selected products.</span>
-                    <span class="w-1.5 h-1.5 bg-gray-300 rounded-full"></span>
-                    <span>New arrivals: 14th Gen Intel Processors are now in stock!</span>
+                    <span class="flex items-center gap-2">
+                        <i class="fas fa-bullhorn text-accent-orange"></i>
+                        {{ $setting->marquee_text }}
+                    </span>
                 </span>
             </div>
         </div>
+        @endif
 
 
         <!-- Feature Section -->

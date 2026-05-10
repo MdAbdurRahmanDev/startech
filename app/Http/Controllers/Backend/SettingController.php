@@ -21,6 +21,7 @@ class SettingController extends Controller
 
         $request->validate([
             'app_name' => 'nullable|string|max:255',
+            'marquee_text' => 'nullable|string',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:12288',
             'favicon' => 'nullable|image|mimes:png,ico,svg|max:2048',
             'contact_email' => 'nullable|email',
