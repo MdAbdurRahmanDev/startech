@@ -16,6 +16,15 @@ use App\Http\Controllers\Frontend\OutletController;
 use App\Http\Controllers\Frontend\ServiceController;
 
 Route::get('/', [HomeController::class, 'index']);
+
+// Temporary route to clear cache on production
+Route::get('/clear', function() {
+    \Illuminate\Support\Facades\Artisan::call('config:clear');
+    \Illuminate\Support\Facades\Artisan::call('cache:clear');
+    \Illuminate\Support\Facades\Artisan::call('view:clear');
+    \Illuminate\Support\Facades\Artisan::call('route:clear');
+    return "All cache cleared successfully!";
+});
 Route::get('/outlets', [OutletController::class, 'index'])->name('outlets.index');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.single');
