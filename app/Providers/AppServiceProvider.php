@@ -35,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
                 ->orderBy('order')
                 ->get());
             $view->with('footerPages', \App\Models\Page::orderBy('title')->get());
+            $view->with('allServices', \App\Models\Service::where('status', 1)->orderBy('title')->get());
         });
     }
 }

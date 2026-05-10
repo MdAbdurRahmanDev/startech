@@ -240,7 +240,7 @@
                             <div
                                 class="nav-dropdown absolute top-full left-0 bg-white min-w-[220px] shadow-xl py-2 z-[60] border-t-2 border-accent-orange">
                                 @foreach ($category->children as $sub)
-                                    <div class="relative sub-dropdown-trigger">
+                                    <div class="relative sub-dropdown-trigger group/sub">
                                         <a href="{{ url('category/' . $sub->slug) }}"
                                             class="flex justify-between items-center px-4 py-2.5 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">
                                             <div class="flex items-center gap-2">
@@ -251,28 +251,55 @@
                                                 {{ $sub->name }}
                                             </div>
                                             @if ($sub->children->count() > 0 || $sub->brands->count() > 0)
-                                                <div
-                                                    class="sub-dropdown bg-white min-w-[200px] shadow-xl py-2 border-l border-gray-100">
-                                                    @foreach ($sub->children as $subSub)
-                                                        <a href="{{ url('category/' . $subSub->slug) }}"
-                                                            class="block px-4 py-2 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">{{ $subSub->name }}</a>
-                                                    @endforeach
-                                                    @if ($sub->brands->count() > 0)
-                                                        @foreach ($sub->brands as $b)
-                                                            <a href="{{ url('category/' . $sub->slug) }}?brand={{ $b->slug }}"
-                                                                class="block px-4 py-2 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">
-                                                                {{ $b->name }}
-                                                            </a>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
+                                                <i class="fas fa-chevron-right text-[10px] opacity-50"></i>
                                             @endif
+                                        </a>
+                                        @if ($sub->children->count() > 0 || $sub->brands->count() > 0)
+                                            <div
+                                                class="sub-dropdown absolute top-0 left-full bg-white min-w-[200px] shadow-xl py-2 border-l border-gray-100 hidden group-hover/sub:block">
+                                                @foreach ($sub->children as $subSub)
+                                                    <a href="{{ url('category/' . $subSub->slug) }}"
+                                                        class="block px-4 py-2 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">{{ $subSub->name }}</a>
+                                                @endforeach
+                                                @if ($sub->brands->count() > 0)
+                                                    @foreach ($sub->brands as $b)
+                                                        <a href="{{ url('category/' . $sub->slug) }}?brand={{ $b->slug }}"
+                                                            class="block px-4 py-2 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">
+                                                            {{ $b->name }}
+                                                        </a>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        @endif
                                     </div>
                                 @endforeach
                             </div>
                         @endif
                     </li>
                 @endforeach
+
+                <!-- Software Services Menu -->
+                <li class="group py-4 relative">
+                    <a href="{{ route('services.index') }}"
+                        class="text-[13px] font-semibold text-primary-dark hover:text-accent-orange transition-colors flex items-center gap-1.5">
+                        <i class="fas fa-tools text-xs opacity-70"></i>
+                        Software Services
+                        @if ($allServices->count() > 0)
+                            <i class="fas fa-chevron-down text-[10px] opacity-50"></i>
+                        @endif
+                    </a>
+                    @if ($allServices->count() > 0)
+                        <div
+                            class="nav-dropdown absolute top-full left-0 bg-white min-w-[220px] shadow-xl py-2 z-[60] border-t-2 border-accent-orange">
+                            @foreach ($allServices as $service)
+                                <a href="{{ route('services.show', $service->slug) }}"
+                                    class="block px-4 py-2.5 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">
+                                    {{ $service->title }}
+                                </a>
+                            @endforeach
+                        </div>
+                    @endif
+                </li>
             </ul>
         </div>
     </nav>
@@ -359,10 +386,13 @@
                                     class="w-8" src="{{ asset('icon/instagram.png') }}"></a>
                         @endif
                         @if ($setting && $setting->whatsapp_number)
-                            <a href="https://wa.me/{{ $setting->whatsapp_number }}" target="_blank"
+                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $setting->whatsapp_number) }}?text={{ urlencode('Hello Sir, I would like to inquire about your products and services. Page: ' . url()->current()) }}" target="_blank"
                                 class="text-white opacity-70 hover:opacity-100 hover:text-accent-orange transition-all text-xl"><img
                                     class="w-8" src="{{ asset('icon/whatsapp.png') }}"></a>
                         @endif
+                    </div>
+                    <div class="mt-8">
+                        <img src="{{ asset('icon/payment_logo.png') }}" alt="Payment Methods" class="w-full max-w-[300px] opacity-90 hover:opacity-100 transition-opacity">
                     </div>
                 </div>
             </div>
@@ -394,7 +424,7 @@
             <span class="text-[8px] uppercase font-bold mt-1">Cart</span>
         </a>
         @if ($setting && $setting->whatsapp_number)
-            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $setting->whatsapp_number) }}" target="_blank"
+            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $setting->whatsapp_number) }}?text={{ urlencode('Hello Sir, I would like to inquire about your products and services. Page: ' . url()->current()) }}" target="_blank"
                 class="bg-[#25D366] text-white w-14 h-14 flex flex-col items-center justify-center rounded-l-md cursor-pointer shadow-xl hover:bg-[#128C7E] transition-all duration-300 transform hover:-translate-x-1 group">
                 <div class="flex flex-col items-center justify-center">
                     <img src="{{ asset('icon/whatsapp.png') }}"

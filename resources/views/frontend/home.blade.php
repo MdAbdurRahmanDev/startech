@@ -187,7 +187,7 @@
                     <i class="fas fa-map-marker-alt"></i>
                 </div>
                 <div>
-                    <h3 class="text-xl md:text-3xl font-black text-white leading-tight">20+ Physical Stores</h3>
+                    <h3 class="text-xl md:text-3xl font-black text-white leading-tight">{{ $outletCount }}+ Physical Stores</h3>
                     <p class="text-white/90 text-sm md:text-base mt-1 font-medium">Visit Our Store & Get Your Desired IT Product!</p>
                 </div>
             </div>

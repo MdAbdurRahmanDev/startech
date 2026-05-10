@@ -15,21 +15,18 @@
 
         <!-- Category Header -->
         <div class="mb-6">
-            <h1 class="text-[22px] font-bold text-primary-dark mb-2">{{ $category->name }} Price in Bangladesh</h1>
-            <p class="text-[13px] text-gray-600 mb-6 max-w-3xl">{{ $category->name }} Price in Bangladesh depends on the
-                brand, model, and features. Find the best deals on Star Tech.</p>
+            <h1 class="text-[22px] md:text-2xl font-bold text-primary-dark mb-2">{{ $category->name }} Price in Bangladesh</h1>
+            <p class="text-[13px] text-gray-600 mb-6 max-w-3xl">
+                {{ $category->name }} Price in Bangladesh depends on the brand, model, and features. Find the best deals on {{ $setting->app_name ?? 'Star Tech' }}.
+            </p>
 
             <div class="flex flex-wrap gap-2.5 mb-4">
-                <!-- Dynamic brand tags can be added here -->
-                <span
-                    class="bg-white border border-gray-200 px-4 py-1.5 rounded-full text-[13px] text-gray-700 hover:border-accent-orange hover:text-accent-orange transition-colors cursor-pointer shadow-sm">MSI</span>
-                <span
-                    class="bg-white border border-gray-200 px-4 py-1.5 rounded-full text-[13px] text-gray-700 hover:border-accent-orange hover:text-accent-orange transition-colors cursor-pointer shadow-sm">Gamdias</span>
-                <span
-                    class="bg-white border border-gray-200 px-4 py-1.5 rounded-full text-[13px] text-gray-700 hover:border-accent-orange hover:text-accent-orange transition-colors cursor-pointer shadow-sm">Corsair</span>
-                <span
-                    class="bg-white border border-gray-200 px-4 py-1.5 rounded-full text-[13px] text-gray-700 hover:border-accent-orange hover:text-accent-orange transition-colors cursor-pointer shadow-sm">Cooler
-                    Master</span>
+                @foreach($brands as $brand)
+                    <a href="{{ url()->current() }}?brand={{ $brand->slug }}"
+                        class="bg-white border {{ request('brand') == $brand->slug ? 'border-accent-orange text-accent-orange' : 'border-gray-200 text-gray-700' }} px-4 py-1.5 rounded-full text-[13px] hover:border-accent-orange hover:text-accent-orange transition-colors cursor-pointer shadow-sm font-medium">
+                        {{ $brand->name }}
+                    </a>
+                @endforeach
             </div>
         </div>
 

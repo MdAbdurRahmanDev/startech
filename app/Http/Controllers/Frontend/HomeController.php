@@ -14,7 +14,8 @@ class HomeController extends Controller
         $sideBanners = Banner::where('type', 'side')->where('status', 1)->orderBy('order')->take(2)->get();
         $featuredCategories = \App\Models\Category::where('is_featured', 1)->where('status', 1)->orderBy('order')->get();
         $featuredProducts = \App\Models\Product::with(['categories', 'specifications'])->where('is_featured', 1)->where('status', 1)->latest()->take(10)->get();
+        $outletCount = \App\Models\Outlet::where('status', 1)->count();
         
-        return view('frontend.home', compact('sliders', 'sideBanners', 'featuredCategories', 'featuredProducts'));
+        return view('frontend.home', compact('sliders', 'sideBanners', 'featuredCategories', 'featuredProducts', 'outletCount'));
     }
 }

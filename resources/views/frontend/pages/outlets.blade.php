@@ -36,7 +36,7 @@
                     <p class="text-xs text-gray-500 font-bold uppercase tracking-wider">Talk to Experts</p>
                     <h4 class="text-lg font-black text-primary-dark">Get Online Support</h4>
                 </div>
-                <a href="https://wa.me/{{ $setting->whatsapp_number ?? '' }}" class="text-green-600 hover:translate-x-1 transition-transform">
+                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $setting->whatsapp_number) }}?text={{ urlencode('Hello Sir, I would like to inquire about your products and services. Page: ' . url()->current()) }}" class="text-green-600 hover:translate-x-1 transition-transform">
                     <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
