@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $category->name . ' Price in Bangladesh | Star Tech')
+@section('title', $category->name . ' Price in Bangladesh | Iosbd')
 
 @section('content')
     <div class="container mx-auto px-2 md:px-4 mb-10">
@@ -15,13 +15,15 @@
 
         <!-- Category Header -->
         <div class="mb-6">
-            <h1 class="text-[22px] md:text-2xl font-bold text-primary-dark mb-2">{{ $category->name }} Price in Bangladesh</h1>
+            <h1 class="text-[22px] md:text-2xl font-bold text-primary-dark mb-2">{{ $category->name }} Price in Bangladesh
+            </h1>
             <p class="text-[13px] text-gray-600 mb-6 max-w-3xl">
-                {{ $category->name }} Price in Bangladesh depends on the brand, model, and features. Find the best deals on {{ $setting->app_name ?? 'Star Tech' }}.
+                {{ $category->name }} Price in Bangladesh depends on the brand, model, and features. Find the best deals on
+                {{ $setting->app_name ?? 'Iosbd' }}.
             </p>
 
             <div class="flex flex-wrap gap-2.5 mb-4">
-                @foreach($brands as $brand)
+                @foreach ($brands as $brand)
                     <a href="{{ url()->current() }}?brand={{ $brand->slug }}"
                         class="bg-white border {{ request('brand') == $brand->slug ? 'border-accent-orange text-accent-orange' : 'border-gray-200 text-gray-700' }} px-4 py-1.5 rounded-full text-[13px] hover:border-accent-orange hover:text-accent-orange transition-colors cursor-pointer shadow-sm font-medium">
                         {{ $brand->name }}

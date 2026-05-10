@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | Star Tech</title>
+    <title>Admin Login | Iosbd</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -12,14 +12,14 @@
 
     <div class="w-full max-w-sm bg-white p-8 border border-gray-200 rounded-lg shadow-sm">
         <div class="text-center mb-8">
-            <img src="https://www.startech.com.bd/image/catalog/logo.png" alt="Star Tech" class="h-10 mx-auto mb-4">
+            <img src="https://www.startech.com.bd/image/catalog/logo.png" alt="Iosbd" class="h-10 mx-auto mb-4">
             <h5 class="text-xl font-bold text-gray-900">Admin Login</h5>
         </div>
 
         <form action="{{ route('login') }}" method="POST">
             @csrf
-            
-            @if($errors->any())
+
+            @if ($errors->any())
                 <div class="bg-red-50 text-red-600 p-3 rounded-md mb-4 text-sm font-medium">
                     {{ $errors->first() }}
                 </div>
@@ -31,7 +31,7 @@
                     class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-accent-orange focus:border-accent-orange block w-full px-3 py-2.5 outline-none transition-all"
                     placeholder="admin@gmail.com" required />
             </div>
-            
+
             <div class="mb-5">
                 <label for="password" class="block mb-2 text-sm font-semibold text-gray-700">Password</label>
                 <input type="password" id="password" name="password"

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,14 +9,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
         @media print {
-            .no-print { display: none; }
-            body { background: white; }
-            .print-shadow-none { shadow: none; border: none; }
+            .no-print {
+                display: none;
+            }
+
+            body {
+                background: white;
+            }
+
+            .print-shadow-none {
+                shadow: none;
+                border: none;
+            }
         }
     </style>
 </head>
+
 <body class="bg-gray-50 min-h-screen py-10 print:py-0">
 
     <div class="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl overflow-hidden print:shadow-none print:rounded-none">
@@ -28,7 +43,8 @@
                 <span class="text-white font-bold">Invoice #{{ $order->order_number }}</span>
             </div>
             <div class="flex gap-3">
-                <button onclick="window.print()" class="bg-accent-blue hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-bold text-sm transition-all flex items-center gap-2">
+                <button onclick="window.print()"
+                    class="bg-accent-blue hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-bold text-sm transition-all flex items-center gap-2">
                     <i class="fas fa-print"></i> Print Invoice
                 </button>
             </div>
@@ -39,13 +55,14 @@
             <!-- Header -->
             <div class="flex justify-between items-start mb-12">
                 <div>
-                    @if($setting && $setting->logo)
-                        <img src="{{ asset('storage/' . $setting->logo) }}" alt="{{ $setting->site_name }}" class="h-10 mb-4">
+                    @if ($setting && $setting->logo)
+                        <img src="{{ asset('storage/' . $setting->logo) }}" alt="{{ $setting->site_name }}"
+                            class="h-10 mb-4">
                     @else
-                        <img src="{{ asset('frontend/assets/images/logo.png') }}" alt="Star Tech" class="h-10 mb-4">
+                        <img src="{{ asset('frontend/assets/images/logo.png') }}" alt="Iosbd" class="h-10 mb-4">
                     @endif
                     <div class="text-xs text-gray-500 space-y-1">
-                        <p>Star Tech & Engineering Ltd</p>
+                        <p>Iosbd & Engineering Ltd</p>
                         <p>Head Office: 28 Kazi Nazrul Islam Avenue,</p>
                         <p>Shahbagh, Dhaka-1000, Bangladesh</p>
                         <p>Phone: 16793, 09678002003</p>
@@ -64,7 +81,8 @@
                                 'rejected' => 'bg-red-100 text-red-700',
                             ];
                         @endphp
-                        <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase {{ $statusColors[$order->status] ?? 'bg-gray-100' }}">
+                        <span
+                            class="px-3 py-1 rounded-full text-[10px] font-black uppercase {{ $statusColors[$order->status] ?? 'bg-gray-100' }}">
                             {{ str_replace('_', ' ', $order->status) }}
                         </span>
                     </div>
@@ -76,7 +94,8 @@
                 <div>
                     <h4 class="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-4">Bill To</h4>
                     <div class="text-sm">
-                        <p class="font-bold text-gray-800 text-base mb-1">{{ $order->first_name }} {{ $order->last_name }}</p>
+                        <p class="font-bold text-gray-800 text-base mb-1">{{ $order->first_name }}
+                            {{ $order->last_name }}</p>
                         <p class="text-gray-600 mb-1">{{ $order->address }}</p>
                         <p class="text-gray-600 mb-1">{{ $order->upazila }}, {{ $order->district }}</p>
                         <p class="text-gray-600 mb-3">Phone: {{ $order->phone }}</p>
@@ -85,9 +104,11 @@
                 </div>
                 <div class="text-right">
                     <h4 class="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-4">Payment Method</h4>
-                    <p class="text-sm font-bold text-gray-800 uppercase">{{ str_replace('_', ' ', $order->payment_method) }}</p>
-                    
-                    <h4 class="text-[11px] font-bold text-gray-400 uppercase tracking-widest mt-6 mb-2">Shipping Method</h4>
+                    <p class="text-sm font-bold text-gray-800 uppercase">
+                        {{ str_replace('_', ' ', $order->payment_method) }}</p>
+
+                    <h4 class="text-[11px] font-bold text-gray-400 uppercase tracking-widest mt-6 mb-2">Shipping Method
+                    </h4>
                     <p class="text-sm text-gray-600">{{ $order->shippingMethod->name ?? 'Standard Shipping' }}</p>
                 </div>
             </div>
@@ -96,22 +117,29 @@
             <table class="w-full mb-12">
                 <thead>
                     <tr class="border-b-2 border-gray-800">
-                        <th class="py-4 text-left text-[11px] font-bold text-gray-400 uppercase tracking-wider">Item Description</th>
-                        <th class="py-4 text-center text-[11px] font-bold text-gray-400 uppercase tracking-wider">Price</th>
-                        <th class="py-4 text-center text-[11px] font-bold text-gray-400 uppercase tracking-wider">Qty</th>
-                        <th class="py-4 text-right text-[11px] font-bold text-gray-400 uppercase tracking-wider">Total</th>
+                        <th class="py-4 text-left text-[11px] font-bold text-gray-400 uppercase tracking-wider">Item
+                            Description</th>
+                        <th class="py-4 text-center text-[11px] font-bold text-gray-400 uppercase tracking-wider">Price
+                        </th>
+                        <th class="py-4 text-center text-[11px] font-bold text-gray-400 uppercase tracking-wider">Qty
+                        </th>
+                        <th class="py-4 text-right text-[11px] font-bold text-gray-400 uppercase tracking-wider">Total
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
-                    @foreach($order->items as $item)
+                    @foreach ($order->items as $item)
                         <tr>
                             <td class="py-5">
                                 <div class="font-bold text-gray-800">{{ $item->product_name }}</div>
-                                <div class="text-[10px] text-gray-400 mt-0.5">Model: {{ $item->product->model ?? 'N/A' }}</div>
+                                <div class="text-[10px] text-gray-400 mt-0.5">Model:
+                                    {{ $item->product->model ?? 'N/A' }}</div>
                             </td>
-                            <td class="py-5 text-center text-sm text-gray-600">{{ number_format($item->price, 0) }}৳</td>
+                            <td class="py-5 text-center text-sm text-gray-600">{{ number_format($item->price, 0) }}৳
+                            </td>
                             <td class="py-5 text-center text-sm text-gray-600">{{ $item->quantity }}</td>
-                            <td class="py-5 text-right font-bold text-gray-800">{{ number_format($item->price * $item->quantity, 0) }}৳</td>
+                            <td class="py-5 text-right font-bold text-gray-800">
+                                {{ number_format($item->price * $item->quantity, 0) }}৳</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -130,7 +158,8 @@
                     </div>
                     <div class="flex justify-between pt-3 border-t-2 border-gray-800">
                         <span class="text-base font-black text-gray-800 uppercase">Grand Total</span>
-                        <span class="text-xl font-black text-accent-orange">{{ number_format($order->total, 0) }}৳</span>
+                        <span
+                            class="text-xl font-black text-accent-orange">{{ number_format($order->total, 0) }}৳</span>
                     </div>
                 </div>
             </div>
@@ -138,7 +167,8 @@
             <!-- Notes -->
             <div class="mt-20 pt-10 border-t border-gray-100 grid grid-cols-2 gap-10">
                 <div>
-                    <h4 class="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">Terms & Conditions</h4>
+                    <h4 class="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">Terms & Conditions
+                    </h4>
                     <p class="text-[10px] text-gray-400 leading-relaxed">
                         1. This invoice is computer generated and does not require signature.<br>
                         2. Warranty is as per manufacturer's policy.<br>
@@ -147,11 +177,12 @@
                 </div>
                 <div class="text-right flex flex-col justify-end">
                     <p class="text-[10px] text-gray-400">Thank you for choosing</p>
-                    <p class="text-sm font-black text-gray-800 uppercase tracking-tighter">Star Tech & Engineering Ltd</p>
+                    <p class="text-sm font-black text-gray-800 uppercase tracking-tighter">Iosbd & Engineering Ltd</p>
                 </div>
             </div>
         </div>
     </div>
 
 </body>
+
 </html>

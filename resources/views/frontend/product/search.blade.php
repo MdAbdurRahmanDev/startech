@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Search - ' . ($q ?? '') . ' | Star Tech')
+@section('title', 'Search - ' . ($q ?? '') . ' | Iosbd')
 
 @section('styles')
     <style>
