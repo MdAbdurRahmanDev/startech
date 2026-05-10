@@ -1,29 +1,35 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\Frontend\ProductController;
-use App\Http\Controllers\Frontend\CategoryController;
-use App\Http\Controllers\Frontend\SearchController;
-use App\Http\Controllers\Frontend\OfferController;
-use App\Http\Controllers\Frontend\HappyHourController;
+use App\Http\Controllers\Backend\ContactController;
+use App\Http\Controllers\Backend\ProductQuestionController;
+use App\Http\Controllers\Backend\ProductReviewController;
+use App\Http\Controllers\Backend\QuotationController;
 use App\Http\Controllers\Frontend\AccountController;
-use App\Http\Controllers\Frontend\InformationController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CategoryController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\InformationController;
+use App\Http\Controllers\Frontend\OfferController;
+use App\Http\Controllers\Frontend\OrderTrackingController;
 use App\Http\Controllers\Frontend\OutletController;
-
+use App\Http\Controllers\Frontend\ProductController;
+use App\Http\Controllers\Frontend\SearchController;
 use App\Http\Controllers\Frontend\ServiceController;
+use App\Http\Controllers\OrderInvoiceController;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 
 // Temporary route to clear cache on production
-Route::get('/clear', function() {
-    \Illuminate\Support\Facades\Artisan::call('config:clear');
-    \Illuminate\Support\Facades\Artisan::call('cache:clear');
-    \Illuminate\Support\Facades\Artisan::call('view:clear');
-    \Illuminate\Support\Facades\Artisan::call('route:clear');
-    return "All cache cleared successfully!";
+Route::get('/clear', function () {
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('view:clear');
+    Artisan::call('route:clear');
+    Artisan::call('storage:link');
+
+    return 'All cache cleared and storage linked successfully!';
 });
 Route::get('/outlets', [OutletController::class, 'index'])->name('outlets.index');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
@@ -65,20 +71,18 @@ Route::middleware('auth')->group(function () {
 // Dynamic CMS Pages
 Route::get('/info/{slug}', [InformationController::class, 'showPageBySlug'])->name('info.show');
 Route::get('/contact', [InformationController::class, 'contact'])->name('contact');
-Route::post('/contact', [\App\Http\Controllers\Backend\ContactController::class, 'store'])->name('contact.store');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::get('/quotation', [InformationController::class, 'quotation'])->name('info.quotation');
-Route::post('/quotation', [\App\Http\Controllers\Backend\QuotationController::class, 'store'])->name('quotation.store');
-Route::post('/product-question', [\App\Http\Controllers\Backend\ProductQuestionController::class, 'store'])->name('product.question.store');
-Route::post('/product-review', [\App\Http\Controllers\Backend\ProductReviewController::class, 'store'])->name('product.review.store')->middleware('auth');
+Route::post('/quotation', [QuotationController::class, 'store'])->name('quotation.store');
+Route::post('/product-question', [ProductQuestionController::class, 'store'])->name('product.question.store');
+Route::post('/product-review', [ProductReviewController::class, 'store'])->name('product.review.store')->middleware('auth');
 
 // Invoice Routes
-Route::get('/order/invoice/{id}', [\App\Http\Controllers\OrderInvoiceController::class, 'show'])->name('order.invoice.show')->middleware('auth');
-Route::get('/order/invoice/{id}/print', [\App\Http\Controllers\OrderInvoiceController::class, 'download'])->name('order.invoice.print')->middleware('auth');
+Route::get('/order/invoice/{id}', [OrderInvoiceController::class, 'show'])->name('order.invoice.show')->middleware('auth');
+Route::get('/order/invoice/{id}/print', [OrderInvoiceController::class, 'download'])->name('order.invoice.print')->middleware('auth');
 
 // Order Tracking
-Route::get('/order-tracking', [\App\Http\Controllers\Frontend\OrderTrackingController::class, 'index'])->name('order.track');
-Route::post('/order-tracking', [\App\Http\Controllers\Frontend\OrderTrackingController::class, 'track'])->name('order.track.post');
+Route::get('/order-tracking', [OrderTrackingController::class, 'index'])->name('order.track');
+Route::post('/order-tracking', [OrderTrackingController::class, 'track'])->name('order.track.post');
 
-
-
-include "admin.php";
+include 'admin.php';
