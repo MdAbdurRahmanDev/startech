@@ -27,7 +27,13 @@ Route::get('/clear', function () {
     Artisan::call('cache:clear');
     Artisan::call('view:clear');
     Artisan::call('route:clear');
-    Artisan::call('storage:link');
+    
+    // Manual storage link for shared hosting
+    $target = storage_path('app/public');
+    $link = public_path('storage');
+    if (!file_exists($link)) {
+        symlink($target, $link);
+    }
 
     return 'All cache cleared and storage linked successfully!';
 });
