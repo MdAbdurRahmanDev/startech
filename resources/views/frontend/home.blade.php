@@ -281,45 +281,10 @@
                         </div>
                     </div>
                 @empty
-                    @for ($i = 0; $i < 5; $i++)
-                        <div
-                            class="bg-white rounded-lg shadow-sm border border-gray-50 overflow-hidden group hover:shadow-xl transition-all flex flex-col h-full relative opacity-50">
-                            <!-- Badge -->
-                            <div
-                                class="absolute top-2 left-2 bg-accent-blue text-white text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full z-10">
-                                Demo
-                            </div>
-
-                            <div
-                                class="p-2 md:p-4 aspect-square overflow-hidden bg-gray-50 flex items-center justify-center">
-                                <img src="https://placehold.co/228x228/f9fafb/a3a3a3?text=No+Image"
-                                    alt="Product"
-                                    class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500">
-                            </div>
-                            <div class="p-3 md:p-5 flex flex-col flex-grow">
-                                <h3
-                                    class="text-xs md:text-[13px] font-bold text-primary-dark cursor-pointer line-clamp-2 leading-snug h-8 md:h-10">
-                                    Add Featured Products in Admin Panel
-                                </h3>
-                                <ul class="mt-3 space-y-1.5 md:space-y-2 flex-grow">
-                                    <li class="text-[10px] md:text-[11px] text-gray-500 flex items-center gap-2">
-                                        <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
-                                        Demo Specification 1
-                                    </li>
-                                </ul>
-                                <div class="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-3">
-                                    <div class="flex items-center gap-2 flex-wrap">
-                                        <span class="text-accent-orange font-bold text-sm md:text-base">0৳</span>
-                                    </div>
-                                    <button disabled
-                                        class="w-full bg-gray-300 text-white text-xs md:text-sm font-bold py-2 md:py-2.5 rounded cursor-not-allowed flex items-center justify-center gap-2">
-                                        <i class="fas fa-shopping-cart text-[10px] md:text-xs"></i>
-                                        Buy Now
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    @endfor
+                    <div class="col-span-full text-center py-12 bg-white rounded-lg border border-gray-100 shadow-sm">
+                        <i class="fas fa-box-open text-4xl text-gray-200 mb-3"></i>
+                        <p class="text-gray-400 text-sm italic">No featured products available at the moment.</p>
+                    </div>
                 @endforelse
             </div>
             <div class="mt-8 md:hidden text-center">
