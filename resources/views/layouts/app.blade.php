@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', $setting->app_name ?? 'Site') | Leading IT Shop in Bangladesh</title>
+    <title>@yield('title', $setting->app_name ?? 'Site') </title>
 
     @if ($setting && $setting->favicon)
         <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . $setting->favicon) }}">
@@ -397,20 +397,23 @@
                                     class="w-8" src="{{ asset('icon/instagram.png') }}"></a>
                         @endif
                         @if ($setting && $setting->whatsapp_number)
-                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $setting->whatsapp_number) }}?text={{ urlencode('Hello Sir, I would like to inquire about your products and services. Page: ' . url()->current()) }}" target="_blank"
+                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $setting->whatsapp_number) }}?text={{ urlencode('Hello Sir, I would like to inquire about your products and services. Page: ' . url()->current()) }}"
+                                target="_blank"
                                 class="text-white opacity-70 hover:opacity-100 hover:text-accent-orange transition-all text-xl"><img
                                     class="w-8" src="{{ asset('icon/whatsapp.png') }}"></a>
                         @endif
                     </div>
                     <div class="mt-8">
-                        <img src="{{ asset('icon/payment_logo.png') }}" alt="Payment Methods" class="w-full max-w-[300px] opacity-90 hover:opacity-100 transition-opacity">
+                        <img src="{{ asset('icon/payment_logo.png') }}" alt="Payment Methods"
+                            class="w-full max-w-[300px] opacity-90 hover:opacity-100 transition-opacity">
                     </div>
                 </div>
             </div>
 
             <div
                 class="mt-16 pt-6 border-t border-[#1e2e3a] flex flex-col md:flex-row justify-between items-center text-gray-400 text-[12px] gap-4">
-                <p>{{ $setting->footer_text ?? '© 2026 ' . ($setting->app_name ?? 'Site') . ' | All rights reserved' }}</p>
+                <p>{{ $setting->footer_text ?? '© 2026 ' . ($setting->app_name ?? 'Site') . ' | All rights reserved' }}
+                </p>
                 <p>Powered By: {{ $setting->app_name ?? 'Site' }}</p>
             </div>
         </div>
@@ -435,7 +438,8 @@
             <span class="text-[8px] uppercase font-bold mt-1">Cart</span>
         </a>
         @if ($setting && $setting->whatsapp_number)
-            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $setting->whatsapp_number) }}?text={{ urlencode('Hello Sir, I would like to inquire about your products and services. Page: ' . url()->current()) }}" target="_blank"
+            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $setting->whatsapp_number) }}?text={{ urlencode('Hello Sir, I would like to inquire about your products and services. Page: ' . url()->current()) }}"
+                target="_blank"
                 class="bg-[#25D366] text-white w-14 h-14 flex flex-col items-center justify-center rounded-l-md cursor-pointer shadow-xl hover:bg-[#128C7E] transition-all duration-300 transform hover:-translate-x-1 group">
                 <div class="flex flex-col items-center justify-center">
                     <img src="{{ asset('icon/whatsapp.png') }}"
