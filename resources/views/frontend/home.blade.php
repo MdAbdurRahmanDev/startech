@@ -66,7 +66,7 @@
                 <!-- Slider Dots -->
                 <div class="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 md:gap-2 z-10"
                     id="slider-dots">
-                    @php $dotCount = $sliders->count() > 0 ? $sliders->count() : 3; @endphp
+                    @php $dotCount = $sliders->count() > 0 ? $sliders->count() : 2; @endphp
                     @for ($i = 0; $i < $dotCount; $i++)
                         <div class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-white/50 cursor-pointer hover:bg-accent-orange transition-colors"
                             onclick="goToSlide({{ $i }})"></div>
@@ -356,54 +356,60 @@
 
     @section('scripts')
         <script>
-            let currentSlide = 0;
-            const slides = document.querySelectorAll('.slide');
-            const container = document.querySelector('.slider-container');
-            const dots = document.querySelectorAll('#slider-dots > div');
-            const totalSlides = slides.length;
+            document.addEventListener('DOMContentLoaded', function() {
+                let currentSlide = 0;
+                const slider = document.getElementById('hero-slider');
+                const container = slider.querySelector('.slider-container');
+                const slides = container.querySelectorAll('.slide');
+                const dots = document.querySelectorAll('#slider-dots > div');
+                const totalSlides = slides.length;
 
-            function updateSlider() {
-                container.style.transform = `translateX(-${currentSlide * 100}%)`;
-                dots.forEach((dot, index) => {
-                    if (index === currentSlide) {
-                        dot.classList.remove('bg-white/50');
-                        dot.classList.add('bg-accent-orange');
-                    } else {
-                        dot.classList.remove('bg-accent-orange');
-                        dot.classList.add('bg-white/50');
-                    }
+                if (totalSlides <= 1) return;
+
+                function updateSlider() {
+                    container.style.transform = `translateX(-${currentSlide * 100}%)`;
+                    dots.forEach((dot, index) => {
+                        if (index === currentSlide) {
+                            dot.classList.remove('bg-white/50');
+                            dot.classList.add('bg-accent-orange');
+                        } else {
+                            dot.classList.remove('bg-accent-orange');
+                            dot.classList.add('bg-white/50');
+                        }
+                    });
+                }
+
+                window.nextSlide = function() {
+                    currentSlide = (currentSlide + 1) % totalSlides;
+                    updateSlider();
+                }
+
+                window.prevSlide = function() {
+                    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                    updateSlider();
+                }
+
+                window.goToSlide = function(index) {
+                    currentSlide = index;
+                    updateSlider();
+                }
+
+                // Auto-slide interval
+                let autoSlideInterval = setInterval(nextSlide, 5000);
+
+                // Pause auto-slide on hover (Desktop)
+                slider.addEventListener('mouseenter', () => {
+                    clearInterval(autoSlideInterval);
                 });
-            }
 
-            function nextSlide() {
-                currentSlide = (currentSlide + 1) % totalSlides;
+                slider.addEventListener('mouseleave', () => {
+                    clearInterval(autoSlideInterval);
+                    autoSlideInterval = setInterval(nextSlide, 5000);
+                });
+
+                // Initialize
                 updateSlider();
-            }
-
-            function prevSlide() {
-                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-                updateSlider();
-            }
-
-            function goToSlide(index) {
-                currentSlide = index;
-                updateSlider();
-            }
-
-            // Auto-slide every 5 seconds
-            let autoSlideInterval = setInterval(nextSlide, 5000);
-
-            // Pause auto-slide on hover
-            document.getElementById('hero-slider').addEventListener('mouseenter', () => {
-                clearInterval(autoSlideInterval);
             });
-
-            document.getElementById('hero-slider').addEventListener('mouseleave', () => {
-                autoSlideInterval = setInterval(nextSlide, 5000);
-            });
-
-            // Initialize dots
-            updateSlider();
 
             // SEO Read More Toggle
             function toggleSeoContent() {
