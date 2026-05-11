@@ -12,7 +12,7 @@
                     <p class="text-sm text-gray-500 mt-2">Login to your account for better experience</p>
                 </div>
 
-                <form action="{{ route('user.login.store') }}" method="POST" class="space-y-6">
+                <form action="{{ route('login.store') }}" method="POST" class="space-y-6">
                     @csrf
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Phone / E-Mail</label>

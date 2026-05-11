@@ -75,20 +75,20 @@
             </div>
 
             <!-- Side Banners -->
-            <div class="flex flex-col gap-4 md:gap-5">
+            <div class="grid grid-cols-2 lg:flex lg:flex-col gap-2 md:gap-4 lg:gap-5 lg:h-full">
                 @forelse($sideBanners as $banner)
-                    <div class="bg-white rounded-lg overflow-hidden shadow-sm flex-1 h-[120px] md:h-auto">
+                    <div class="bg-white rounded-lg overflow-hidden shadow-sm h-[100px] md:h-auto lg:flex-1">
                         <a href="{{ $banner->link ?? '#' }}">
                             <img src="{{ asset('storage/' . $banner->image) }}" alt="Side Banner"
                                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
                         </a>
                     </div>
                 @empty
-                    <div class="bg-white rounded-lg overflow-hidden shadow-sm flex-1 h-[120px] md:h-auto">
+                    <div class="bg-white rounded-lg overflow-hidden shadow-sm h-[100px] md:h-auto lg:flex-1">
                         <img src="https://placehold.co/400x240/11212d/f97316?text=Side+Banner"
                             alt="Side Banner 1" class="w-full h-full object-cover">
                     </div>
-                    <div class="bg-white rounded-lg overflow-hidden shadow-sm flex-1 h-[120px] md:h-auto">
+                    <div class="bg-white rounded-lg overflow-hidden shadow-sm h-[100px] md:h-auto lg:flex-1">
                         <img src="https://placehold.co/400x240/11212d/f97316?text=Side+Banner"
                             alt="Side Banner 2" class="w-full h-full object-cover">
                     </div>

@@ -5,8 +5,8 @@ use App\Http\Controllers\Backend\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')->group(function () {
-    Route::get('/admin/login', [AdminProfileController::class, 'login'])->name('login');
-    Route::post('/admin/login', [AdminProfileController::class, 'loginPost']);
+    Route::get('/admin/login', [AdminProfileController::class, 'login'])->name('admin.login');
+    Route::post('/admin/login', [AdminProfileController::class, 'loginPost'])->name('admin.login.store');
 });
 
 Route::middleware('auth:admin')->group(function () {

@@ -56,8 +56,8 @@ Route::post('/checkout', [CartController::class, 'placeOrder'])->name('order.pla
 Route::get('/order-success/{order_number}', [CartController::class, 'orderSuccess'])->name('order.success');
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
 Route::get('/search', [SearchController::class, 'index']);
-Route::get('/account/login', [AccountController::class, 'login'])->name('user.login');
-Route::post('/account/login', [AccountController::class, 'storeLogin'])->name('user.login.store');
+Route::get('/account/login', [AccountController::class, 'login'])->name('login');
+Route::post('/account/login', [AccountController::class, 'storeLogin'])->name('login.store');
 Route::get('/account/register', [AccountController::class, 'register'])->name('user.register');
 Route::post('/account/register', [AccountController::class, 'storeRegister'])->name('user.register.store');
 // User Account Routes

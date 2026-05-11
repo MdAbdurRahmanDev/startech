@@ -191,7 +191,7 @@
                         @guest
                             <a href="{{ route('user.register') }}"
                                 class="block px-4 py-2 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">Register</a>
-                            <a href="{{ route('user.login') }}"
+                            <a href="{{ route('login') }}"
                                 class="block px-4 py-2 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">Login</a>
                         @else
                             <a href="{{ route('user.account') }}"

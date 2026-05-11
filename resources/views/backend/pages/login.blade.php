@@ -21,7 +21,7 @@
             <h5 class="text-xl font-bold text-gray-900">Admin Login</h5>
         </div>
 
-        <form action="{{ route('login') }}" method="POST">
+        <form action="{{ route('admin.login.store') }}" method="POST">
             @csrf
 
             @if ($errors->any())
