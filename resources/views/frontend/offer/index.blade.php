@@ -112,7 +112,7 @@
             <!-- Offer 1 -->
             <div class="offer-card">
                 <div class="offer-banner">
-                    <img src="https://www.startech.com.bd/image/catalog/offer/2026/fan-deal/fan-offer-thumb.webp"
+                    <img src="https://placehold.co/400x240/11212d/f97316?text=Fan+Deal"
                         alt="Ceiling Fan Deal">
                 </div>
                 <div class="offer-meta">
@@ -129,7 +129,7 @@
             <!-- Offer 2 -->
             <div class="offer-card">
                 <div class="offer-banner">
-                    <img src="https://www.startech.com.bd/image/catalog/offer/2026/ac-offer/ac-deal-thumb.webp"
+                    <img src="https://placehold.co/400x240/11212d/f97316?text=AC+Deal"
                         alt="AC Deal">
                 </div>
                 <div class="offer-meta">
@@ -146,7 +146,7 @@
             <!-- Offer 3 -->
             <div class="offer-card">
                 <div class="offer-banner">
-                    <img src="https://www.startech.com.bd/image/catalog/offer/2026/home-appliances-deal/home-appliances-deal-thumb.webp"
+                    <img src="https://placehold.co/400x240/11212d/f97316?text=Home+Appliance+Deal"
                         alt="Home Appliances">
                 </div>
                 <div class="offer-meta">
@@ -163,7 +163,7 @@
             <!-- Offer 4 -->
             <div class="offer-card">
                 <div class="offer-banner">
-                    <img src="https://www.startech.com.bd/image/catalog/offer/2026/mobile-offer/mobile-offer-thumb.webp"
+                    <img src="https://placehold.co/400x240/11212d/f97316?text=Mobile+Offer"
                         alt="Mobile Offer">
                 </div>
                 <div class="offer-meta">

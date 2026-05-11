@@ -41,11 +41,11 @@
                         </div>
                     @empty
                         <div class="slide min-w-full h-full">
-                            <img src="https://www.startech.com.bd/image/cache/catalog/home/banner/freezer-offer-home-banner-982x500.webp"
+                            <img src="https://placehold.co/982x500/11212d/f97316?text=Add+Slider+from+Admin"
                                 alt="Main Banner 1" class="w-full h-full object-cover">
                         </div>
                         <div class="slide min-w-full h-full">
-                            <img src="https://www.startech.com.bd/image/cache/catalog/home/banner/gigabyte-gaming-monitor-home-banner-982x500.webp"
+                            <img src="https://placehold.co/982x500/11212d/f97316?text=Add+Slider+from+Admin"
                                 alt="Main Banner 2" class="w-full h-full object-cover">
                         </div>
                     @endforelse
@@ -85,11 +85,11 @@
                     </div>
                 @empty
                     <div class="bg-white rounded-lg overflow-hidden shadow-sm flex-1 h-[120px] md:h-auto">
-                        <img src="https://www.startech.com.bd/image/cache/catalog/home/banner/summer-bonanza-hp-laptop-400x240.webp"
+                        <img src="https://placehold.co/400x240/11212d/f97316?text=Side+Banner"
                             alt="Side Banner 1" class="w-full h-full object-cover">
                     </div>
                     <div class="bg-white rounded-lg overflow-hidden shadow-sm flex-1 h-[120px] md:h-auto">
-                        <img src="https://www.startech.com.bd/image/cache/catalog/home/banner/summer-bonanza-home-banner-400x240.webp"
+                        <img src="https://placehold.co/400x240/11212d/f97316?text=Side+Banner"
                             alt="Side Banner 2" class="w-full h-full object-cover">
                     </div>
                 @endforelse
@@ -292,7 +292,7 @@
 
                             <div
                                 class="p-2 md:p-4 aspect-square overflow-hidden bg-gray-50 flex items-center justify-center">
-                                <img src="https://www.startech.com.bd/image/cache/catalog/monitor/msi/pro-mp225/pro-mp225-01-228x228.webp"
+                                <img src="https://placehold.co/228x228/f9fafb/a3a3a3?text=No+Image"
                                     alt="Product"
                                     class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500">
                             </div>

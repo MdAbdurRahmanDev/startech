@@ -100,8 +100,8 @@
                             </div>
                             <div>
                                 <p class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-1">Email Us</p>
-                                <a href="mailto:{{ $setting->contact_email ?? 'info@startech.com.bd' }}"
-                                    class="text-base font-bold text-primary-dark hover:text-accent-orange transition-colors">{{ $setting->contact_email ?? 'info@startech.com.bd' }}</a>
+                                <a href="mailto:{{ $setting->contact_email ?? 'info@iosbd.com' }}"
+                                    class="text-base font-bold text-primary-dark hover:text-accent-orange transition-colors">{{ $setting->contact_email ?? 'info@iosbd.com' }}</a>
                                 <p class="text-xs text-gray-500 mt-1">Support response within 24h</p>
                             </div>
                         </div>

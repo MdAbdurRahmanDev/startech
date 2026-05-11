@@ -64,43 +64,43 @@
         <div class="info-page-container">
             <h1>{{ $title }}</h1>
 
-            @if ($title == 'Iosbd Ltd. - Affiliate Marketing Program')
-                <p><a href="#">Iosbd Ltd.</a>, the leading E-commerce platform in Bangladesh, now lets users earn
+            @if ($title == 'IOS BD - Affiliate Marketing Program')
+                <p><a href="#">IOS BD</a>, the leading IT & Office Solution platform in Bangladesh, now lets users earn
                     commission on sales from its website. If you're a content producer, tech nerd, freelancer, or influencer
                     in Bangladesh, you can earn a hefty commission from referring products already available on <a
-                        href="#">startech.com.bd</a>. With an amplitude of tech products, gadgets, and lifestyle items
-                    to promote, unlock a limitless earning potential from the most prominent tech retailer in the nation. <a
-                        href="#">Join the affiliate program at Iosbd</a> to get started now!</p>
+                        href="#">iosbd.com</a>. With an amplitude of tech products, gadgets, and office supplies
+                    to promote, unlock a limitless earning potential from the most prominent IT solution provider in the nation. <a
+                        href="#">Join the affiliate program at IOS BD</a> to get started now!</p>
 
-                <h2>What Is Iosbd Affiliate Marketing?</h2>
-                <p><a href="#">Iosbd Affiliate Program</a> is an affiliate marketing initiative designed to promote and
-                    boost sales of products on <a href="#">startech.com.bd</a>. Through this program, individuals can
-                    collaborate with Iosbd and earn commission by referring customers. The program is a simple and effective
-                    way for individuals and businesses to monetize their online presence while helping Iosbd expand its
+                <h2>What Is IOS BD Affiliate Marketing?</h2>
+                <p><a href="#">IOS BD Affiliate Program</a> is an affiliate marketing initiative designed to promote and
+                    boost sales of products on <a href="#">iosbd.com</a>. Through this program, individuals can
+                    collaborate with IOS BD and earn commission by referring customers. The program is a simple and effective
+                    way for individuals and businesses to monetize their online presence while helping IOS BD expand its
                     customer base.</p>
 
                 <h2>How does it work?</h2>
-                <p>Iosbd affiliate marketing in Bangladesh works by rewarding affiliates with a lucrative commission for
-                    each sale from the Iosbd E-Commerce platform. Interested parties can earn by registering with Iosbd and
-                    referring affiliate links to the customer. <strong>As an affiliate of startech.com.bd, you will receive
+                <p>IOS BD affiliate marketing in Bangladesh works by rewarding affiliates with a lucrative commission for
+                    each sale from the IOS BD platform. Interested parties can earn by registering with IOS BD and
+                    referring affiliate links to the customer. <strong>As an affiliate of IOS BD, you will receive
                         a unique tracking link or code to share with your audience</strong> through various channels such as
                     websites, blogs, social media, or email marketing.</p>
 
-                <h2>How To Earn Through Iosbd Affiliate Program?</h2>
-                <p>By completing four (04) simple steps, anyone can become a Iosbd Affiliate and earn through the affiliate
+                <h2>How To Earn Through IOS BD Affiliate Program?</h2>
+                <p>By completing four (04) simple steps, anyone can become an IOS BD Affiliate and earn through the affiliate
                     program. The steps are as follows:</p>
                 <ul>
-                    <li>Registering as a Iosbd Affiliate,</li>
+                    <li>Registering as an IOS BD Affiliate,</li>
                     <li>Generating affiliate tracking links</li>
                     <li>Promoting your affiliate link,</li>
                     <li>Withdrawing payout.</li>
                 </ul>
 
                 <h2>How to Register?</h2>
-                <p>To register as a Iosbd affiliate, follow the link below and fill in the necessary information along with
+                <p>To register as an IOS BD affiliate, follow the link below and fill in the necessary information along with
                     your designated payout method and account password.</p>
-                <p>Iosbd Affiliate registration link -</p>
-                <p><a href="#">https://www.startech.com.bd/affiliate/register</a></p>
+                <p>IOS BD Affiliate registration link -</p>
+                <p><a href="#">https://www.iosbd.com/affiliate/register</a></p>
             @else
                 <p>This is a placeholder for the {{ $title }} content. In a real application, this content would be
                     fetched from a database or a specialized language file to ensure accuracy and easy updates.</p>

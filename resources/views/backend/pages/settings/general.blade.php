@@ -90,7 +90,7 @@
                                 <input type="email" name="contact_email"
                                     value="{{ old('contact_email', $setting->contact_email ?? '') }}"
                                     class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all"
-                                    placeholder="info@startech.com">
+                                    placeholder="info@iosbd.com">
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
