@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Shopping Cart | Iosbd')
+@section('title', 'Shopping Cart | IOS BD')
 
 @section('content')
     <div class="container pb-14">

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Products | Iosbd')
+@section('title', 'Products | IOS BD')
 
 @section('content')
     <div class="p-4 bg-white border-b border-gray-200 lg:mt-1.5">

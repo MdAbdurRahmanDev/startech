@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Our Services | Iosbd')
+@section('title', 'Our Services | IOS BD')
 
 @section('content')
     <div class="container mx-auto px-2 md:px-4 mb-10">

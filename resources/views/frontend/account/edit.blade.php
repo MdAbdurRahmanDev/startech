@@ -1,6 +1,6 @@
 @extends('layouts.account')
 
-@section('title', 'Edit Profile | Iosbd')
+@section('title', 'Edit Profile | IOS BD')
 
 @section('breadcrumb_extra')
     <i class="fas fa-chevron-right text-[10px] opacity-30"></i>

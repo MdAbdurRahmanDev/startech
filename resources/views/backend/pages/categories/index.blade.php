@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Manage Categories | Iosbd')
+@section('title', 'Manage Categories | IOS BD')
 
 @section('content')
     <div class="max-w-6xl mx-auto py-8 px-4">

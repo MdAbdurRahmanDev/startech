@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Order Tracking | Iosbd')
+@section('title', 'Order Tracking | IOS BD')
 
 @section('content')
     <div class="bg-[#f2f4f8] py-12">

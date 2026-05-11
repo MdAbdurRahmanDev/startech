@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ($product->meta_title ?? $product->name) . ' | Iosbd')
+@section('title', ($product->meta_title ?? $product->name) . ' | IOS BD')
 
 @section('content')
     <div class="container pb-14">

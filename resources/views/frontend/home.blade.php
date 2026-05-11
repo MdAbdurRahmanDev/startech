@@ -330,6 +330,65 @@
         </section>
     </div>
 
+    {{-- SEO Content Section --}}
+    <div class="max-w-[1320px] mx-auto px-1.5 md:px-2 mt-12 mb-8">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-10">
+
+            <h1 class="text-xl md:text-2xl font-bold text-primary-dark mb-5">
+                Leading Computer, Laptop &amp; Office Solutions Retail &amp; Online Shop in Bangladesh
+            </h1>
+
+            <div class="text-sm text-gray-600 leading-relaxed space-y-5" id="seo-content">
+                <p>
+                    Technology has become a part of our daily lives, and we depend on tech products daily for a vast portion of our lives.
+                    There is hardly a home in Bangladesh without a tech product. This is where we come in.
+                    <strong>International Office Solution – IOS</strong> started as a Tech &amp; Office Product Shop in Bangladesh.
+                    We focus on giving the best customer service in Bangladesh, following our motto of <strong>"Customer Comes First."</strong>
+                    This is why IOS is the most <strong>trusted computer &amp; office solution shop in Bangladesh</strong> today, capturing the loyalty of a large customer base.
+                </p>
+
+                <div id="seo-extra" class="space-y-5 hidden">
+                    <h2 class="text-lg font-bold text-primary-dark mt-6">Best Laptop Shop in Bangladesh</h2>
+                    <p>
+                        IOS is the most popular Laptop Brand Shop in BD. Our Laptop Shop has the perfect device, whether you are a freelancer,
+                        office-goer, or student. We bring the latest laptops in Bangladesh at the best prices for every customer — from starters to expert users.
+                        IOS lets you buy from top brands like Dell, HP, Asus, Acer, Lenovo, Microsoft Surface, MSI, Gigabyte, Infinix, Walton, Xiaomi, and more.
+                    </p>
+
+                    <h2 class="text-lg font-bold text-primary-dark mt-6">Best Desktop PC Shop In Bangladesh</h2>
+                    <p>
+                        IOS has the most comprehensive array of Desktop PCs. We offer top-of-the-line Custom PC, Brand PC, All-In-One PC,
+                        and Portable Mini PC at our outlets. You can always depend on the IOS PC shop experts to build the best desktop PC
+                        or computer with parts of your choice.
+                    </p>
+
+                    <h2 class="text-lg font-bold text-primary-dark mt-6">Best Office Solutions Shop In Bangladesh</h2>
+                    <p>
+                        <strong>International Office Solution – IOS</strong> provides a complete range of office equipment, stationery, printers, scanners,
+                        projectors, and networking solutions for businesses of all sizes across Bangladesh.
+                        We are committed to delivering high-quality products at competitive prices to keep your workplace running smoothly.
+                    </p>
+
+                    <h2 class="text-lg font-bold text-primary-dark mt-6">Best Gaming PC Shop In Bangladesh</h2>
+                    <p>
+                        At IOS we love gaming. Therefore, we aim to provide a holistic gaming experience with our best gaming PC shop in Bangladesh.
+                        Our gaming setup consists of Gaming PC, Gaming Laptops, Gaming Monitors, Gaming Chairs, Gaming Keyboards, Gaming Mouse, and Gaming Headsets.
+                    </p>
+                </div>
+
+                {{-- Read More Button --}}
+                <div class="pt-2">
+                    <button id="seo-toggle-btn"
+                        onclick="toggleSeoContent()"
+                        class="text-accent-orange font-bold text-sm flex items-center gap-1.5 hover:underline focus:outline-none">
+                        <span id="seo-btn-text">Read More</span>
+                        <i id="seo-btn-icon" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @section('scripts')
         <script>
             let currentSlide = 0;
@@ -380,6 +439,22 @@
 
             // Initialize dots
             updateSlider();
+
+            // SEO Read More Toggle
+            function toggleSeoContent() {
+                const extra = document.getElementById('seo-extra');
+                const btnText = document.getElementById('seo-btn-text');
+                const btnIcon = document.getElementById('seo-btn-icon');
+                if (extra.classList.contains('hidden')) {
+                    extra.classList.remove('hidden');
+                    btnText.textContent = 'Read Less';
+                    btnIcon.style.transform = 'rotate(180deg)';
+                } else {
+                    extra.classList.add('hidden');
+                    btnText.textContent = 'Read More';
+                    btnIcon.style.transform = 'rotate(0deg)';
+                }
+            }
         </script>
     @endsection
 @endsection

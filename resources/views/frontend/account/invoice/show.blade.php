@@ -58,14 +58,11 @@
                     @if ($setting && $setting->logo)
                         <img src="{{ asset('storage/' . $setting->logo) }}" alt="{{ $setting->site_name }}"
                             class="h-10 mb-4">
-                    @else
-                        <img src="{{ asset('frontend/assets/images/logo.png') }}" alt="Iosbd" class="h-10 mb-4">
                     @endif
                     <div class="text-xs text-gray-500 space-y-1">
-                        <p>Iosbd & Engineering Ltd</p>
-                        <p>Head Office: 28 Kazi Nazrul Islam Avenue,</p>
-                        <p>Shahbagh, Dhaka-1000, Bangladesh</p>
-                        <p>Phone: 16793, 09678002003</p>
+                        <p>{{ $setting->app_name ?? 'Iosbd & Engineering Ltd' }}</p>
+                        <p>{{ $setting->address ?? 'Head Office: 28 Kazi Nazrul Islam Avenue,' }}</p>
+                        <p>Phone: {{ $setting->phone_number ?? '16793' }}</p>
                     </div>
                 </div>
                 <div class="text-right">
@@ -177,7 +174,7 @@
                 </div>
                 <div class="text-right flex flex-col justify-end">
                     <p class="text-[10px] text-gray-400">Thank you for choosing</p>
-                    <p class="text-sm font-black text-gray-800 uppercase tracking-tighter">Iosbd & Engineering Ltd</p>
+                    <p class="text-sm font-black text-gray-800 uppercase tracking-tighter">{{ $setting->app_name ?? 'Iosbd & Engineering Ltd' }}</p>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'My Account | Iosbd')
+@section('title', 'My Account | IOS BD')
 
 @section('styles')
     <style>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', $setting->app_name ?? 'Iosbd') | Leading IT Shop in Bangladesh</title>
+    <title>@yield('title', $setting->app_name ?? 'Site') | Leading IT Shop in Bangladesh</title>
 
     @if ($setting && $setting->favicon)
         <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . $setting->favicon) }}">
@@ -103,6 +103,17 @@
         });
     </script>
 
+    {{-- Top Header Bar --}}
+    <div class="bg-[#0a1520] text-white text-xs py-1.5 border-b border-white/10">
+        <div class="max-w-[1320px] mx-auto px-1.5 md:px-2 flex items-center justify-center">
+            <span class="flex items-center gap-2 font-semibold tracking-wide">
+                <i class="fas fa-globe text-accent-orange text-[11px]"></i>
+                International Office Solution
+                <span class="text-accent-orange font-bold">- IOS</span>
+            </span>
+        </div>
+    </div>
+
     <header class="bg-primary-dark py-4 text-white">
         <div class="max-w-[1320px] mx-auto px-1.5 md:px-2 flex items-center justify-between gap-4">
             <!-- Mobile Menu Toggle -->
@@ -117,7 +128,7 @@
                         <img src="{{ asset('storage/' . $setting->logo) }}" alt="{{ $setting->app_name }}"
                             class="h-10 lg:h-12">
                     @else
-                        <img src="{{ asset('storage/' . $setting->logo) }}" alt="Iosbd" class="h-10 lg:h-12">
+                        <span class="text-xl font-bold text-white">{{ $setting->app_name ?? 'Logo' }}</span>
                     @endif
                 </a>
             </div>
@@ -352,7 +363,7 @@
                 <div>
                     <h3 class="text-base font-bold uppercase mb-6 tracking-wider">Stay Connected</h3>
                     <p class="text-sm text-gray-400 leading-relaxed mb-4">
-                        <strong>{{ $setting->app_name ?? 'Iosbd Ltd' }}</strong><br>
+                        <strong>{{ $setting->app_name ?? 'Site Ltd' }}</strong><br>
                         {!! nl2br(e($setting->address ?? "Head Office: 28 Kazi Nazrul Islam\nAve, Navana Zohura Square, Dhaka 1000")) !!}
                     </p>
                     <p class="text-sm text-gray-400">
@@ -399,8 +410,8 @@
 
             <div
                 class="mt-16 pt-6 border-t border-[#1e2e3a] flex flex-col md:flex-row justify-between items-center text-gray-400 text-[12px] gap-4">
-                <p>{{ $setting->footer_text ?? '© 2026 Iosbd Ltd | All rights reserved' }}</p>
-                <p>Powered By: {{ $setting->app_name ?? 'Iosbd' }}</p>
+                <p>{{ $setting->footer_text ?? '© 2026 ' . ($setting->app_name ?? 'Site') . ' | All rights reserved' }}</p>
+                <p>Powered By: {{ $setting->app_name ?? 'Site' }}</p>
             </div>
         </div>
     </footer>
@@ -469,7 +480,7 @@
             @if ($setting && $setting->logo)
                 <img src="{{ asset('storage/' . $setting->logo) }}" alt="{{ $setting->app_name }}" class="h-8">
             @else
-                <img src="" alt="Iosbd" class="h-8">
+                <span class="text-lg font-bold text-primary-dark">{{ $setting->app_name ?? 'Logo' }}</span>
             @endif
             <div class="text-2xl cursor-pointer text-primary-dark" id="closeMenu">
                 <i class="fas fa-times"></i>

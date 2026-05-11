@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Admin Dashboard | Iosbd')
+@section('title', 'Admin Dashboard | IOS BD')
 
 @section('content')
     <div class="p-6 space-y-8">

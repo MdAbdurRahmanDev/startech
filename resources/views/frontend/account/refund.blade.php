@@ -1,6 +1,6 @@
 @extends('layouts.account')
 
-@section('title', 'Request Refund | Iosbd')
+@section('title', 'Request Refund | IOS BD')
 
 @section('breadcrumb_extra')
     <i class="fas fa-chevron-right opacity-30"></i>

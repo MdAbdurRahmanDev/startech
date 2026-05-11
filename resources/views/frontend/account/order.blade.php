@@ -1,6 +1,6 @@
 @extends('layouts.account')
 
-@section('title', 'Order History | Iosbd')
+@section('title', 'Order History | IOS BD')
 
 @section('breadcrumb_extra')
     <i class="fas fa-chevron-right"></i>

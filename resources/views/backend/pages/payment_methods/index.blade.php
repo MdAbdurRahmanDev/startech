@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Manage Payment Methods | Iosbd')
+@section('title', 'Manage Payment Methods | IOS BD')
 
 @section('content')
     <div class="max-w-6xl mx-auto py-8 px-4">

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | {{ $setting->app_name ?? 'Iosbd' }}</title>
+    <title>Admin Login | {{ $setting->app_name ?? 'Admin' }}</title>
     @if($setting && $setting->favicon)
         <link rel="icon" href="{{ asset('storage/' . $setting->favicon) }}" type="image/x-icon">
     @endif
@@ -17,8 +17,6 @@
         <div class="text-center mb-8">
             @if ($setting && $setting->logo)
                 <img src="{{ asset('storage/' . $setting->logo) }}" alt="{{ $setting->app_name }}" class="h-10 mx-auto mb-4">
-            @else
-                <img src="https://www.startech.com.bd/image/catalog/logo.png" alt="Star Tech" class="h-10 mx-auto mb-4">
             @endif
             <h5 class="text-xl font-bold text-gray-900">Admin Login</h5>
         </div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Checkout | Iosbd')
+@section('title', 'Checkout | IOS BD')
 
 @section('styles')
     <style>

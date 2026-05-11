@@ -31,12 +31,9 @@
                     <a href="{{ route('dashboard') }}" class="flex ms-2 md:me-24">
                         @if ($setting && $setting->logo)
                             <img src="{{ asset('storage/' . $setting->logo) }}" class="h-8 me-3" alt="Logo" />
-                        @else
-                            <img src="https://www.startech.com.bd/image/catalog/logo.png" class="h-8 me-3"
-                                alt="Logo" />
                         @endif
                         <span
-                            class="self-center text-lg font-bold whitespace-nowrap text-heading">{{ $setting->app_name ?? 'Iosbd' }}</span>
+                            class="self-center text-lg font-bold whitespace-nowrap text-heading">{{ $setting->app_name ?? 'Admin' }}</span>
                     </a>
                 </div>
                 <div class="flex items-center">
@@ -97,9 +94,11 @@
         class="fixed top-0 left-0 z-40 w-64 h-full transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidebar">
         <div class="h-full px-3 py-4 overflow-y-auto bg-neutral-primary-soft border-e border-default">
-            <a href="https://flowbite.com/" class="flex items-center ps-2.5 mb-5">
-                <img src="https://flowbite.com/docs/images/logo.svg" class="h-6 me-3" alt="Flowbite Logo" />
-                <span class="self-center text-lg text-heading font-semibold whitespace-nowrap">Flowbite</span>
+            <a href="{{ route('dashboard') }}" class="flex items-center ps-2.5 mb-5">
+                @if ($setting && $setting->logo)
+                    <img src="{{ asset('storage/' . $setting->logo) }}" class="h-6 me-3" alt="Logo" />
+                @endif
+                <span class="self-center text-lg text-heading font-semibold whitespace-nowrap">{{ $setting->app_name ?? 'Admin' }}</span>
             </a>
             <ul class="space-y-2 font-medium">
                 <li>

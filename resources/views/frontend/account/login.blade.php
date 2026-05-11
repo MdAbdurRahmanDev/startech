@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Account Login | Iosbd')
+@section('title', 'Account Login | IOS BD')
 
 @section('content')
     <div class="bg-gray-50 min-h-[80vh] flex items-center justify-center py-12 px-4">
