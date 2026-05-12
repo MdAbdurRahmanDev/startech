@@ -15,6 +15,7 @@ use App\Http\Controllers\Frontend\OutletController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\SearchController;
 use App\Http\Controllers\Frontend\ServiceController;
+use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\OrderInvoiceController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -23,19 +24,20 @@ Route::get('/', [HomeController::class, 'index']);
 
 // Temporary route to clear cache on production
 Route::get('/clear', function () {
-    Artisan::call('config:clear');
-    Artisan::call('cache:clear');
-    Artisan::call('view:clear');
-    Artisan::call('route:clear');
-    
-    // Manual storage link for shared hosting
-    $target = storage_path('app/public');
-    $link = public_path('storage');
-    if (!file_exists($link)) {
-        symlink($target, $link);
-    }
+    // Artisan::call('config:clear');
+    // Artisan::call('cache:clear');
+    // Artisan::call('view:clear');
+    // Artisan::call('route:clear');
+    Artisan::call('migrate', ['--force' => true]);
 
-    return 'All cache cleared and storage linked successfully!';
+    // // Manual storage link for shared hosting
+    // $target = storage_path('app/public');
+    // $link = public_path('storage');
+    // if (!file_exists($link)) {
+    //     symlink($target, $link);
+    // }
+
+    return 'All cache cleared, storage linked and migration completed successfully!';
 });
 Route::get('/outlets', [OutletController::class, 'index'])->name('outlets.index');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
@@ -73,6 +75,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/account/order/{id}/refund', [AccountController::class, 'storeRefund'])->name('user.order.refund.store');
     Route::get('/account/address', [AccountController::class, 'address'])->name('user.address');
     Route::post('/account/address/update', [AccountController::class, 'updateAddress'])->name('user.address.update');
+    Route::get('/account/wishlist', [AccountController::class, 'wishlist'])->name('user.wishlist');
 });
 
 // Dynamic CMS Pages
@@ -83,6 +86,7 @@ Route::get('/quotation', [InformationController::class, 'quotation'])->name('inf
 Route::post('/quotation', [QuotationController::class, 'store'])->name('quotation.store');
 Route::post('/product-question', [ProductQuestionController::class, 'store'])->name('product.question.store');
 Route::post('/product-review', [ProductReviewController::class, 'store'])->name('product.review.store')->middleware('auth');
+Route::post('/wishlist/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle')->middleware('auth');
 
 // Invoice Routes
 Route::get('/order/invoice/{id}', [OrderInvoiceController::class, 'show'])->name('order.invoice.show')->middleware('auth');

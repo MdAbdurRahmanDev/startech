@@ -195,4 +195,10 @@ class AccountController extends Controller
 
         return back()->with('success', 'Address updated successfully.');
     }
+
+    public function wishlist()
+    {
+        $wishlists = Auth::user()->wishlists()->with('product')->latest()->get();
+        return view('frontend.account.wishlist', compact('wishlists'));
+    }
 }

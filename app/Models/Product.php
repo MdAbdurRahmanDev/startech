@@ -63,4 +63,10 @@ class Product extends Model
     {
         return $this->hasMany(ProductReview::class);
     }
+
+    public function isWishlisted()
+    {
+        if (!auth()->check()) return false;
+        return Wishlist::where('user_id', auth()->id())->where('product_id', $this->id)->exists();
+    }
 }

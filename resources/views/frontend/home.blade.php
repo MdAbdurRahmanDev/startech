@@ -226,6 +226,12 @@
                                 Out of Stock
                             </div>
                         @endif
+                        
+                        <!-- Wishlist Button -->
+                        <button type="button" onclick="toggleWishlist({{ $product->id }}, this)" 
+                                class="absolute top-2 right-2 w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/80 backdrop-blur-sm shadow-sm flex items-center justify-center text-accent-orange z-20 hover:bg-white hover:scale-110 transition-all border border-gray-100">
+                            <i class="{{ $product->isWishlisted() ? 'fas' : 'far' }} fa-heart text-xs md:text-sm"></i>
+                        </button>
 
                         <a href="{{ url('product/' . $product->slug) }}"
                             class="p-2 md:p-4 aspect-square overflow-hidden bg-gray-50 flex items-center justify-center block">

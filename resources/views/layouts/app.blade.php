@@ -581,6 +581,69 @@
             document.body.appendChild(form);
             form.submit();
         }
+
+        function toggleWishlist(productId, element) {
+            fetch('{{ route('wishlist.toggle') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        product_id: productId
+                    })
+                })
+                .then(response => {
+                    if (response.status === 401) {
+                        showLoginModal();
+                        return;
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data && data.status === 'removed') {
+                        const icon = element.querySelector('i');
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        showToast(data.message, 'success');
+                    } else if (data && data.status === 'added') {
+                        const icon = element.querySelector('i');
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        showToast(data.message, 'success');
+                    }
+                });
+        }
+
+        function showLoginModal() {
+            const modal = document.getElementById('wishlist-login-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeWishlistModal() {
+            const modal = document.getElementById('wishlist-login-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type === 'success' ? 'bg-green-600' : 'bg-red-600'} text-white px-6 py-3 rounded-lg shadow-2xl flex items-center gap-3 animate-slide-in`;
+            toast.innerHTML = `
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                <span class="text-sm font-bold">${message}</span>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('toast-fade-out');
+                setTimeout(() => toast.remove(), 500);
+            }, 4000);
+        }
     </script>
 
     <!-- App Download Popup -->
@@ -645,6 +708,28 @@
         .animate-fade-in {
             animation: fade-in 0.3s ease-out forwards;
         }
+
+        @keyframes slide-in {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .animate-slide-in {
+            animation: slide-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .toast-fade-out {
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.5s ease-out;
+        }
     </style>
 
     <script>
@@ -683,6 +768,32 @@
             }
         });
     </script>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-10 right-10 z-[11000] flex flex-col gap-3"></div>
+
+    <!-- Wishlist Login Prompt Modal -->
+    <div id="wishlist-login-modal" class="fixed inset-0 bg-black/60 z-[10000] hidden items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-[500px] rounded-lg overflow-hidden relative shadow-2xl animate-pop-in">
+            <button onclick="closeWishlistModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            
+            <div class="p-8 text-center">
+                <div class="w-16 h-16 bg-orange-50 text-accent-orange rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-info-circle text-3xl"></i>
+                </div>
+                
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Login Required</h3>
+                <p class="text-gray-600 mb-8">Please login to your account to save products in your Wish List!</p>
+                
+                <div class="flex gap-4 justify-center">
+                    <a href="{{ route('login') }}" class="px-8 py-3 bg-primary-dark text-white rounded-md font-bold hover:bg-opacity-90 transition-all">Login Now</a>
+                    <button onclick="closeWishlistModal()" class="px-8 py-3 border border-gray-200 text-gray-600 rounded-md font-bold hover:bg-gray-50 transition-all">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @yield('scripts')
 

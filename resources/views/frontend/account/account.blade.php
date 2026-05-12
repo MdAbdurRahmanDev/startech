@@ -225,7 +225,7 @@
                 <div class="action-icon"><i class="fas fa-address-book"></i></div>
                 <span class="action-label">Addresses</span>
             </a>
-            <a href="#" class="action-card">
+            <a href="{{ route('user.wishlist') }}" class="action-card">
                 <div class="action-icon"><i class="fas fa-heart"></i></div>
                 <span class="action-label">Wish List</span>
             </a>
