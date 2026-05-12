@@ -578,8 +578,10 @@
     </div>
     </div>
 
-    @section('scripts')
-        <script>
+@endsection
+
+@section('scripts')
+    <script>
             // Image switcher
             function switchImage(el, src) {
                 document.getElementById('main-product-image').src = src;
@@ -713,27 +715,11 @@
         </script>
 
         <script>
-            const CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
             // Update all cart counter badges on the page
             function updateCartCounters(count) {
                 document.querySelectorAll('#cart-count-float, #cart-count-mobile').forEach(el => {
                     el.textContent = count;
                 });
-            }
-
-            // Show a toast notification
-            function showToast(message, type = 'success') {
-                const container = document.getElementById('toast-container');
-                if (!container) return;
-                const bgClass = type === 'success' ? 'bg-green-600' : 'bg-red-500';
-                const icon = type === 'success' ? 'fa-check-circle' : 'fa-times-circle';
-                const toast = document.createElement('div');
-                toast.className =
-                    `toast ${bgClass} text-white px-6 py-3 rounded-lg shadow-2xl flex items-center gap-3 animate-slide-in`;
-                toast.innerHTML = `<i class="fas ${icon} text-lg"></i><span>${message}</span>`;
-                container.appendChild(toast);
-                setTimeout(() => toast.remove(), 4000);
             }
 
             // Core cart fetch function
@@ -834,6 +820,5 @@
                 }
                 document.body.removeChild(textArea);
             }
-        </script>
-    @endsection
+    </script>
 @endsection
