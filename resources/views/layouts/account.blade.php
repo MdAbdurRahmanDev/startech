@@ -19,7 +19,7 @@
                 </div>
                 <div>
                     <p class="text-sm text-gray-400">Hello,</p>
-                    <h1 class="text-xl md:text-2xl font-bold text-primary-dark">{{ Auth::user()->name ?? 'Guest User' }}</h1>
+                    <h1 class="text-xl md:text-2xl font-bold text-primary-dark">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h1>
                 </div>
             </div>
             <div class="flex gap-8 md:gap-12 text-center">
@@ -42,7 +42,7 @@
                     $navItems = [
                         ['route' => 'user.order', 'icon' => 'fas fa-list-alt', 'label' => 'Orders'],
                         ['route' => 'user.edit', 'icon' => 'fas fa-user-edit', 'label' => 'Edit Profile'],
-                        ['route' => 'user.account', 'icon' => 'fas fa-lock', 'label' => 'Change Password'], // Reuse edit page for now or separate
+                        ['route' => 'user.password', 'icon' => 'fas fa-lock', 'label' => 'Change Password'],
                         ['route' => 'user.address', 'icon' => 'fas fa-address-book', 'label' => 'Addresses'],
                         ['route' => 'user.account', 'icon' => 'fas fa-heart', 'label' => 'Saved List'],
                         ['route' => 'user.account', 'icon' => 'fas fa-star', 'label' => 'Star Points'],
@@ -50,7 +50,7 @@
                 @endphp
                 @foreach($navItems as $item)
                     <li>
-                        <a href="{{ route($item['route']) }}" class="flex items-center gap-2 px-6 py-4 text-sm font-bold transition-all border-b-2 {{ Request::routeIs($item['route']) ? 'text-accent-orange border-accent-orange bg-orange-50/50' : 'text-gray-500 border-transparent hover:text-accent-orange hover:bg-gray-50' }}">
+                        <a href="{{ route($item['route']) }}{{ $item['url_params'] ?? '' }}" class="flex items-center gap-2 px-6 py-4 text-sm font-bold transition-all border-b-2 {{ Request::routeIs($item['route']) ? 'text-accent-orange border-accent-orange bg-orange-50/50' : 'text-gray-500 border-transparent hover:text-accent-orange hover:bg-gray-50' }}">
                             <i class="{{ $item['icon'] }} {{ Request::routeIs($item['route']) ? 'text-accent-orange' : 'text-gray-300' }}"></i>
                             {{ $item['label'] }}
                         </a>

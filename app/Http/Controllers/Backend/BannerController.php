@@ -42,9 +42,42 @@ class BannerController extends Controller
         }
     }
 
+    public function update(Request $request, Banner $banner)
+    {
+        $request->validate([
+            'image' => 'nullable|image|max:12288',
+            'type' => 'required|in:slider,side',
+            'link' => 'nullable',
+        ]);
+
+        try {
+            if ($request->hasFile('image')) {
+                // Delete old image
+                if (file_exists(public_path('storage/'.$banner->image))) {
+                    unlink(public_path('storage/'.$banner->image));
+                }
+
+                $file = $request->file('image');
+                $filename = time().'_'.$file->getClientOriginalName();
+                $file->move(public_path('storage/banners'), $filename);
+                $banner->image = 'banners/'.$filename;
+            }
+
+            $banner->type = $request->type;
+            $banner->link = $request->link;
+            $banner->save();
+
+            return back()->with('success', 'Banner updated successfully.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Update failed: '.$e->getMessage()]);
+        }
+    }
+
     public function destroy(Banner $banner)
     {
-        Storage::disk('public')->delete($banner->image);
+        if (file_exists(public_path('storage/'.$banner->image))) {
+            unlink(public_path('storage/'.$banner->image));
+        }
         $banner->delete();
 
         return back()->with('success', 'Banner deleted successfully.');

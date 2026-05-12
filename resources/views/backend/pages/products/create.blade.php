@@ -139,7 +139,15 @@
                     <div class="space-y-6">
                         <div>
                             <label class="block mb-2 text-sm font-medium text-gray-900">Thumbnail Image (Main)</label>
-                            <input type="file" name="thumbnail"
+                            <div class="mb-4">
+                                <div id="thumbnail-preview" class="hidden relative w-32 h-32 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden">
+                                    <img id="thumb-img" src="#" alt="Thumbnail" class="w-full h-full object-cover">
+                                    <button type="button" onclick="removeThumbnail()" class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] hover:bg-red-600">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <input type="file" name="thumbnail" id="thumbnail-input" onchange="previewThumbnail(this)"
                                 class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
                             @error('thumbnail')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -148,7 +156,10 @@
 
                         <div>
                             <label class="block mb-2 text-sm font-medium text-gray-900">Gallery Images (Multiple)</label>
-                            <input type="file" name="gallery[]" multiple
+                            <div id="gallery-preview" class="flex flex-wrap gap-3 mb-4">
+                                <!-- Gallery previews will appear here -->
+                            </div>
+                            <input type="file" name="gallery[]" id="gallery-input" multiple onchange="previewGallery(this)"
                                 class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
                             @error('gallery.*')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -354,5 +365,53 @@
             .catch(error => {
                 console.error(error);
             });
+
+        // Image Preview Functions
+        function previewThumbnail(input) {
+            const preview = document.getElementById('thumbnail-preview');
+            const img = document.getElementById('thumb-img');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    img.src = e.target.result;
+                    preview.classList.remove('hidden');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function removeThumbnail() {
+            const input = document.getElementById('thumbnail-input');
+            const preview = document.getElementById('thumbnail-preview');
+            const img = document.getElementById('thumb-img');
+            
+            input.value = '';
+            img.src = '#';
+            preview.classList.add('hidden');
+        }
+
+        function previewGallery(input) {
+            const preview = document.getElementById('gallery-preview');
+            preview.innerHTML = '';
+            
+            if (input.files) {
+                Array.from(input.files).forEach((file, index) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const div = document.createElement('div');
+                        div.className = 'relative w-24 h-24 rounded-lg border border-gray-200 overflow-hidden group';
+                        div.innerHTML = `
+                            <img src="${e.target.result}" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="text-white text-[10px] font-medium">Image ${index + 1}</span>
+                            </div>
+                        `;
+                        preview.appendChild(div);
+                    }
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
     </script>
 @endsection

@@ -92,6 +92,11 @@ class AccountController extends Controller
         return view('frontend.account.edit', compact('user'));
     }
 
+    public function password()
+    {
+        return view('frontend.account.password');
+    }
+
     public function updateProfile(Request $request)
     {
         $user = Auth::user();

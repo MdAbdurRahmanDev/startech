@@ -25,6 +25,7 @@ Route::middleware('auth:admin')->group(function () {
     // Banners
     Route::get('/admin/banners', [\App\Http\Controllers\Backend\BannerController::class, 'index'])->name('admin.banners.index');
     Route::post('/admin/banners', [\App\Http\Controllers\Backend\BannerController::class, 'store'])->name('admin.banners.store');
+    Route::post('/admin/banners/{banner}/update', [\App\Http\Controllers\Backend\BannerController::class, 'update'])->name('admin.banners.update');
     Route::delete('/admin/banners/{banner}', [\App\Http\Controllers\Backend\BannerController::class, 'destroy'])->name('admin.banners.destroy');
     Route::post('/admin/banners/{banner}/toggle', [\App\Http\Controllers\Backend\BannerController::class, 'toggleStatus'])->name('admin.banners.toggle');
 

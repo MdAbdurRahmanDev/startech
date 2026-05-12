@@ -56,6 +56,12 @@
                             <i class="fas fa-link mr-1"></i> {{ $banner->link ? 'Linked' : 'No link' }}
                         </div>
                         <div class="flex gap-2">
+                            <button type="button"
+                                    onclick="editBanner({{ json_encode($banner) }})"
+                                    class="w-9 h-9 rounded-lg border border-gray-100 flex items-center justify-center hover:bg-gray-50 transition-all shadow-sm"
+                                    title="Edit Banner">
+                                    <i class="fas fa-edit text-sm text-blue-500"></i>
+                                </button>
                             <form action="{{ route('admin.banners.toggle', $banner) }}" method="POST">
                                 @csrf
                                 <button type="submit"
@@ -134,6 +140,53 @@
             </form>
         </div>
     </div>
+    <!-- Edit Banner Modal -->
+    <div id="editBannerModal"
+        class="fixed inset-0 bg-black bg-opacity-50 z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md rounded-xl shadow-2xl overflow-hidden animate-fade-in">
+            <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+                <h3 class="text-lg font-bold text-gray-800">Edit Banner</h3>
+                <button onclick="document.getElementById('editBannerModal').classList.add('hidden')"
+                    class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="editBannerForm" method="POST" enctype="multipart/form-data" class="p-6 space-y-5">
+                @csrf
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Current Image</label>
+                    <img id="editBannerPreview" src="" alt="Preview" class="w-full h-32 object-cover rounded-lg mb-2">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Replace Image (Optional)</label>
+                    <input type="file" name="image"
+                        class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-accent-orange hover:file:bg-orange-100">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Banner Type</label>
+                    <select name="type" id="editBannerType"
+                        class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all">
+                        <option value="slider">Main Hero Slider</option>
+                        <option value="side">Side Promotional Banner</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Target Link (Optional)</label>
+                    <input type="text" name="link" id="editBannerLink"
+                        class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all"
+                        placeholder="https://example.com/product">
+                </div>
+
+                <div class="pt-4 flex gap-3">
+                    <button type="button" onclick="document.getElementById('editBannerModal').classList.add('hidden')"
+                        class="flex-1 px-4 py-2.5 rounded-lg font-bold text-gray-500 border border-gray-200 hover:bg-gray-50 transition-all">Cancel</button>
+                    <button type="submit"
+                        class="flex-1 bg-accent-orange text-white px-4 py-2.5 rounded-lg font-bold hover:bg-opacity-90 shadow-md transition-all">Update
+                        Banner</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <style>
         @keyframes fade-in {
@@ -152,4 +205,21 @@
             animation: fade-in 0.3s ease-out;
         }
     </style>
+
+    <script>
+        function editBanner(banner) {
+            const modal = document.getElementById('editBannerModal');
+            const form = document.getElementById('editBannerForm');
+            const preview = document.getElementById('editBannerPreview');
+            const typeSelect = document.getElementById('editBannerType');
+            const linkInput = document.getElementById('editBannerLink');
+
+            form.action = `/admin/banners/${banner.id}/update`;
+            preview.src = `/storage/${banner.image}`;
+            typeSelect.value = banner.type;
+            linkInput.value = banner.link || '';
+
+            modal.classList.remove('hidden');
+        }
+    </script>
 @endsection

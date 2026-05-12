@@ -47,13 +47,15 @@
         .avatar {
             width: 80px;
             height: 80px;
-            background: #e5e7eb;
+            background: linear-gradient(to top right, var(--accent-orange, #ef4444), #fb923c);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
-            color: #9ca3af;
+            font-size: 32px;
+            font-weight: bold;
+            color: #fff;
+            box-shadow: 0 10px 15px -3px rgba(251, 146, 60, 0.2);
         }
 
         .user-text .hello {
@@ -183,11 +185,11 @@
         <div class="profile-card">
             <div class="profile-info">
                 <div class="avatar">
-                    <i class="fas fa-user"></i>
+                    {{ strtoupper(substr(Auth::user()->first_name ?? Auth::user()->name, 0, 1)) }}
                 </div>
                 <div class="user-text">
                     <span class="hello">Hello,</span>
-                    <div class="name">Rahman Miah</div>
+                    <div class="name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</div>
                 </div>
             </div>
             <div class="profile-stats">
@@ -215,7 +217,7 @@
                 <div class="action-icon"><i class="fas fa-user-edit"></i></div>
                 <span class="action-label">Edit Profile</span>
             </a>
-            <a href="#" class="action-card">
+            <a href="{{ route('user.password') }}" class="action-card">
                 <div class="action-icon"><i class="fas fa-lock"></i></div>
                 <span class="action-label">Change Password</span>
             </a>

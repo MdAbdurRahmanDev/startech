@@ -115,15 +115,22 @@
                     <div class="space-y-6">
                         <div>
                             <label class="block mb-2 text-sm font-medium text-gray-900">Thumbnail Image (Main)</label>
-                            <div class="flex items-center gap-4 mb-2">
-                                @if ($product->thumbnail)
-                                    <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->name }}"
-                                        class="w-16 h-16 object-cover rounded shadow-sm">
-                                @endif
-                                <input type="file" name="thumbnail"
-                                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
+                            <div class="mb-4">
+                                <div id="thumbnail-preview" class="relative w-32 h-32 rounded-lg border border-gray-200 flex items-center justify-center overflow-hidden bg-gray-50">
+                                    @if ($product->thumbnail)
+                                        <img id="thumb-img" src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                                    @else
+                                        <img id="thumb-img" src="#" alt="Thumbnail" class="hidden w-full h-full object-cover">
+                                        <i id="thumb-placeholder" class="fas fa-image text-3xl text-gray-300"></i>
+                                    @endif
+                                    <button type="button" onclick="removeThumbnail()" class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] hover:bg-red-600 shadow-sm">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <p class="text-xs text-gray-500">Leave blank to keep the current image.</p>
+                            <input type="file" name="thumbnail" id="thumbnail-input" onchange="previewThumbnail(this)"
+                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
+                            <p class="text-[10px] text-gray-400 mt-1 italic">Leave blank to keep current thumbnail.</p>
                             @error('thumbnail')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -131,19 +138,30 @@
 
                         <div>
                             <label class="block mb-2 text-sm font-medium text-gray-900">Gallery Images (Multiple)</label>
-                            @if ($product->images && $product->images->count() > 0)
-                                <div class="flex flex-wrap gap-2 mb-3">
-                                    @foreach ($product->images as $img)
-                                        <div class="relative group">
-                                            <img src="{{ asset('storage/' . $img->image) }}"
-                                                class="w-16 h-16 object-cover rounded shadow-sm border border-gray-200">
+                            <div class="space-y-4">
+                                @if ($product->images && $product->images->count() > 0)
+                                    <div>
+                                        <p class="text-[10px] font-bold text-gray-400 uppercase mb-2">Current Gallery</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            @foreach ($product->images as $img)
+                                                <div class="relative group w-16 h-16 rounded border border-gray-200 overflow-hidden shadow-sm">
+                                                    <img src="{{ asset('storage/' . $img->image) }}" class="w-full h-full object-cover">
+                                                </div>
+                                            @endforeach
                                         </div>
-                                    @endforeach
+                                    </div>
+                                @endif
+                                
+                                <div>
+                                    <p class="text-[10px] font-bold text-gray-400 uppercase mb-2">New Images Preview</p>
+                                    <div id="gallery-preview" class="flex flex-wrap gap-3 mb-2">
+                                        <p class="text-xs text-gray-400 italic">No new images selected</p>
+                                    </div>
                                 </div>
-                            @endif
-                            <input type="file" name="gallery[]" multiple
+                            </div>
+                            <input type="file" name="gallery[]" id="gallery-input" multiple onchange="previewGallery(this)"
                                 class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
-                            <p class="text-xs text-gray-500 mt-1">Select additional images to add to the gallery.</p>
+                            <p class="text-[10px] text-gray-400 mt-1 italic">Adding new images will be appended to current gallery.</p>
                             @error('gallery.*')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -359,14 +377,74 @@
                             console.error(error);
                         });
 
-                    ClassicEditor
-                        .create(document.querySelector('#spec-editor'), {
-                            toolbar: ['heading', '|', 'bold', 'italic', 'underline', '|', 'bulletedList',
-                                'numberedList', '|', 'insertTable', 'blockQuote', '|', 'undo', 'redo'
-                            ]
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        });
+                ClassicEditor
+                    .create(document.querySelector('#spec-editor'), {
+                        toolbar: ['heading', '|', 'bold', 'italic', 'underline', '|', 'bulletedList',
+                            'numberedList', '|', 'insertTable', 'blockQuote', '|', 'undo', 'redo'
+                        ]
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            });
+
+        // Image Preview Functions
+        function previewThumbnail(input) {
+            const img = document.getElementById('thumb-img');
+            const placeholder = document.getElementById('thumb-placeholder');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    img.src = e.target.result;
+                    img.classList.remove('hidden');
+                    if(placeholder) placeholder.classList.add('hidden');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function removeThumbnail() {
+            const input = document.getElementById('thumbnail-input');
+            const img = document.getElementById('thumb-img');
+            const placeholder = document.getElementById('thumb-placeholder');
+            const originalThumb = "{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : '#' }}";
+            
+            input.value = '';
+            if (originalThumb !== '#') {
+                img.src = originalThumb;
+                img.classList.remove('hidden');
+                if(placeholder) placeholder.classList.add('hidden');
+            } else {
+                img.src = '#';
+                img.classList.add('hidden');
+                if(placeholder) placeholder.classList.remove('hidden');
+            }
+        }
+
+        function previewGallery(input) {
+            const preview = document.getElementById('gallery-preview');
+            preview.innerHTML = '';
+            
+            if (input.files && input.files.length > 0) {
+                Array.from(input.files).forEach((file, index) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const div = document.createElement('div');
+                        div.className = 'relative w-16 h-16 rounded border border-gray-200 overflow-hidden shadow-sm group';
+                        div.innerHTML = `
+                            <img src="${e.target.result}" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="text-white text-[8px] font-bold">NEW</span>
+                            </div>
+                        `;
+                        preview.appendChild(div);
+                    }
+                    reader.readAsDataURL(file);
+                });
+            } else {
+                preview.innerHTML = '<p class="text-xs text-gray-400 italic">No new images selected</p>';
+            }
+        }
     </script>
 @endsection

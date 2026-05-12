@@ -65,6 +65,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/account/account', [AccountController::class, 'account'])->name('user.account');
     Route::post('/account/logout', [AccountController::class, 'logout'])->name('user.logout');
     Route::get('/account/edit', [AccountController::class, 'edit'])->name('user.edit');
+    Route::get('/account/password', [AccountController::class, 'password'])->name('user.password');
     Route::post('/account/profile/update', [AccountController::class, 'updateProfile'])->name('user.profile.update');
     Route::post('/account/password/update', [AccountController::class, 'updatePassword'])->name('user.password.update');
     Route::get('/account/order', [AccountController::class, 'order'])->name('user.order');
