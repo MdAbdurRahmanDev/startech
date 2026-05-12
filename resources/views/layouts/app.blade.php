@@ -730,6 +730,21 @@
             transform: translateX(20px);
             transition: all 0.5s ease-out;
         }
+
+        .short-description-list ul {
+            list-style-type: disc;
+            margin-left: 15px;
+            margin-bottom: 0;
+        }
+
+        .short-description-list li {
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+
+        .short-description-list p {
+            margin-bottom: 4px;
+        }
     </style>
 
     <script>

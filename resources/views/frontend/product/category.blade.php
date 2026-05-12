@@ -161,21 +161,13 @@
                                 </a>
 
                                 <!-- Specifications -->
-                                <ul class="space-y-1.5 mb-4 flex-grow text-gray-500">
-                                    @if ($product->specifications && $product->specifications->count() > 0)
-                                        @foreach ($product->specifications->take(3) as $spec)
-                                            <li class="text-[11px] flex items-start gap-1.5">
-                                                <span class="w-1 h-1 rounded-full bg-gray-300 mt-1.5 shrink-0"></span>
-                                                <span class="line-clamp-1">{{ $spec->value }}</span>
-                                            </li>
-                                        @endforeach
+                                <div class="mb-4 text-[11px] text-gray-500 flex-grow short-description-list">
+                                    @if ($product->short_description)
+                                        {!! $product->short_description !!}
                                     @else
-                                        <li class="text-[11px] flex items-start gap-1.5">
-                                            <span class="w-1 h-1 rounded-full bg-gray-300 mt-1.5 shrink-0"></span>
-                                            <span>No specifications available</span>
-                                        </li>
+                                        <p>No specifications available</p>
                                     @endif
-                                </ul>
+                                </div>
 
                                 <!-- Price and Actions -->
                                 <div class="border-t border-gray-100 pt-4 text-center mt-auto">

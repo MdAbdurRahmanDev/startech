@@ -246,21 +246,13 @@
                                     {{ $product->name }}
                                 </h3>
                             </a>
-                            <ul class="mt-3 space-y-1.5 md:space-y-2 flex-grow">
-                                @if ($product->specifications && $product->specifications->count() > 0)
-                                    @foreach ($product->specifications->take(3) as $spec)
-                                        <li class="text-[10px] md:text-[11px] text-gray-500 flex items-start gap-2">
-                                            <span class="w-1 h-1 bg-gray-300 rounded-full mt-1.5 shrink-0"></span>
-                                            <span class="line-clamp-1">{{ $spec->value }}</span>
-                                        </li>
-                                    @endforeach
+                            <div class="mt-3 text-[10px] md:text-[11px] text-gray-500 flex-grow short-description-list">
+                                @if ($product->short_description)
+                                    {!! $product->short_description !!}
                                 @else
-                                    <li class="text-[10px] md:text-[11px] text-gray-500 flex items-center gap-2">
-                                        <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
-                                        No specifications added
-                                    </li>
+                                    <p>No specifications added</p>
                                 @endif
-                            </ul>
+                            </div>
                             <div class="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-3">
                                 <div class="flex items-center gap-2 flex-wrap">
                                     @if ($product->discount_price && $product->discount_price < $product->price)
