@@ -15,6 +15,27 @@
             / <span class="text-gray-500">{{ Str::limit($product->name, 40) }}</span>
         </div>
 
+        <!-- Action Header Bar -->
+        <div class="bg-white rounded-full shadow-sm border border-gray-100 px-6 py-2.5 mt-4 flex justify-between items-center flex-wrap gap-4">
+            <div class="flex items-center gap-4">
+                <span class="text-[13px] font-bold text-gray-700">Share:</span>
+                <div class="flex gap-3 text-gray-600">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank" class="hover:text-accent-blue transition-colors"><i class="fab fa-facebook-messenger text-lg"></i></a>
+                    <a href="https://wa.me/?text={{ urlencode($product->name . ' - ' . url()->current()) }}" target="_blank" class="hover:text-green-500 transition-colors"><i class="fab fa-whatsapp text-lg"></i></a>
+                </div>
+            </div>
+            <div class="flex items-center gap-6">
+                <button type="button" onclick="toggleWishlist({{ $product->id }}, this)" class="flex items-center gap-2 text-[13px] font-bold text-gray-700 hover:text-accent-orange transition-colors group">
+                    <i class="{{ $product->isWishlisted() ? 'fas' : 'far' }} fa-bookmark text-md"></i>
+                    <span>Save</span>
+                </button>
+                <button type="button" class="flex items-center gap-2 text-[13px] font-bold text-gray-700 hover:text-accent-orange transition-colors group">
+                    <i class="fas fa-plus-square text-md"></i>
+                    <span>Add to Compare</span>
+                </button>
+            </div>
+        </div>
+
         <section class="bg-white p-5 md:p-[30px] rounded-lg mt-5 shadow-sm">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
                 <!-- Gallery -->
@@ -775,6 +796,43 @@
                 form.appendChild(qtyInput);
                 document.body.appendChild(form);
                 form.submit();
+            }
+
+            function showLinkCopiedModal() {
+                const modal = document.getElementById('link-copied-modal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }, 2000);
+            }
+
+            function copyToClipboard(text) {
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        showLinkCopiedModal();
+                    }).catch(err => {
+                        fallbackCopyTextToClipboard(text);
+                    });
+                } else {
+                    fallbackCopyTextToClipboard(text);
+                }
+            }
+
+            function fallbackCopyTextToClipboard(text) {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showLinkCopiedModal();
+                } catch (err) {
+                    showToast('Failed to copy link', 'error');
+                }
+                document.body.removeChild(textArea);
             }
         </script>
     @endsection

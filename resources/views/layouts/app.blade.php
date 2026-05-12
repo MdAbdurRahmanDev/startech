@@ -798,6 +798,15 @@
             color: #111;
             font-weight: 500;
         }
+
+        @keyframes scale-up {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .animate-scale-up {
+            animation: scale-up 0.2s ease-out forwards;
+        }
     </style>
 
     <script>
@@ -839,6 +848,17 @@
 
     <!-- Toast Container -->
     <div id="toast-container" class="fixed bottom-10 right-10 z-[11000] flex flex-col gap-3"></div>
+
+    <!-- Link Copied Modal -->
+    <div id="link-copied-modal" class="fixed inset-0 bg-black/40 z-[20000] hidden items-center justify-center backdrop-blur-sm">
+        <div class="bg-white rounded-lg p-6 shadow-2xl text-center animate-scale-up">
+            <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-check text-xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-gray-800">Link Copied!</h3>
+            <p class="text-gray-500 text-sm mt-1">The product link has been copied to your clipboard.</p>
+        </div>
+    </div>
 
     <!-- Wishlist Login Prompt Modal -->
     <div id="wishlist-login-modal" class="fixed inset-0 bg-black/60 z-[10000] hidden items-center justify-center p-4 backdrop-blur-sm">
