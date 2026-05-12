@@ -182,34 +182,45 @@
                 <!-- Main Left Column -->
                 <div>
 
-                    <!-- Specification -->
-                    <div id="specification" class="content-card bg-white rounded-lg shadow-sm p-6 mb-5">
-                        <h2 class="text-[18px] font-bold text-gray-800 mb-4">Specification</h2>
-                        @if ($product->specifications->count() > 0)
-                            <table class="w-full border-collapse">
-                                <thead>
-                                    <tr>
-                                        <th colspan="2"
-                                            class="bg-[#f2f4f8] text-accent-orange text-[14px] font-semibold py-3 px-4 text-left rounded-t">
-                                            Key Features</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($product->specifications as $spec)
-                                        <tr class="group hover:bg-[#fcfcfc] transition-colors">
-                                            <td
-                                                class="text-gray-600 w-[30%] py-3 px-4 border-b border-gray-100 text-[14px] align-top">
-                                                {{ $spec->name }}</td>
-                                            <td
-                                                class="py-3 px-4 border-b border-gray-100 text-[14px] align-top text-gray-800">
-                                                {{ $spec->value }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        @else
-                            <p class="text-gray-400 text-[14px] italic">No specifications available for this product.</p>
-                        @endif
+                    <div id="specification" class="content-card bg-white rounded-lg shadow-sm mb-5 overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-50">
+                            <h2 class="text-[18px] font-bold text-gray-800">Specification</h2>
+                        </div>
+                        <div class="p-0">
+                            @if ($product->specifications_text)
+                                <div class="rich-text-content px-[10px]">
+                                    {!! $product->specifications_text !!}
+                                </div>
+                            @elseif ($product->specifications->count() > 0)
+                                <div class="px-6 pb-6">
+                                    <table class="w-full border-collapse">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2"
+                                                    class="bg-[#f2f4f8] text-accent-orange text-[14px] font-semibold py-3 px-4 text-left rounded-t">
+                                                    Key Features</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($product->specifications as $spec)
+                                                <tr class="group hover:bg-[#fcfcfc] transition-colors">
+                                                    <td
+                                                        class="text-gray-600 w-[30%] py-3 px-4 border-b border-gray-100 text-[14px] align-top">
+                                                        {{ $spec->name }}</td>
+                                                    <td
+                                                        class="py-3 px-4 border-b border-gray-100 text-[14px] align-top text-gray-800">
+                                                        {{ $spec->value }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @else
+                                <div class="px-6 py-10 text-center">
+                                    <p class="text-gray-400 text-[14px] italic">No specifications available for this product.</p>
+                                </div>
+                            @endif
+                        </div>
                     </div>
 
                     <!-- Description -->

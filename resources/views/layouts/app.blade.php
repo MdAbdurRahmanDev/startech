@@ -745,6 +745,59 @@
         .short-description-list p {
             margin-bottom: 4px;
         }
+
+        .rich-text-content {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        .rich-text-content table {
+            width: 100% !important;
+            border-collapse: collapse;
+            margin-bottom: 0;
+            border: none !important;
+            table-layout: fixed;
+        }
+
+        .rich-text-content table td,
+        .rich-text-content table th {
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 14px;
+            border-bottom: 1px solid #f2f4f8 !important;
+            border-left: none !important;
+            border-right: none !important;
+            border-top: none !important;
+        }
+
+        /* Styling for header rows (Section titles like General Information) */
+        .rich-text-content table th,
+        .rich-text-content table td[colspan],
+        .rich-text-content table td[style*="background-color"] {
+            background-color: #f8faff !important;
+            color: #3749bb !important;
+            font-weight: bold !important;
+            font-size: 14px !important;
+            width: 100% !important;
+        }
+
+        .rich-text-content table tr:last-child td {
+            border-bottom: none !important;
+        }
+
+        /* Styling for the first column (Labels like Battery Type) */
+        .rich-text-content table td:first-child:not([colspan]) {
+            width: 30%;
+            color: #666;
+            background-color: transparent !important; /* Ensure labels don't get the header background */
+        }
+
+        /* Styling for the second column (Values like LiFePO4) */
+        .rich-text-content table td:last-child:not([colspan]) {
+            color: #111;
+            font-weight: 500;
+        }
     </style>
 
     <script>
