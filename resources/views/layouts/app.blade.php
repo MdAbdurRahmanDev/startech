@@ -583,6 +583,107 @@
         }
     </script>
 
+    <!-- App Download Popup -->
+    <div id="app-popup-overlay" class="fixed inset-0 bg-black/60 z-[9999] hidden items-center justify-center p-4 backdrop-blur-sm animate-fade-in">
+        <div class="bg-white w-full max-w-[400px] rounded-2xl overflow-hidden relative shadow-2xl animate-pop-in">
+            <button onclick="closeAppPopup()" class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 transition-colors z-10">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="bg-gradient-to-br from-primary-dark to-[#1a2b3c] p-8 text-center text-white relative">
+                <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-accent-orange rounded-full blur-3xl"></div>
+                </div>
+                
+                @if ($setting && $setting->logo)
+                    <img src="{{ asset('storage/' . $setting->logo) }}" alt="App Logo"
+                        class="w-16 h-16 mx-auto mb-4 rounded-xl shadow-lg border border-white/20 p-2 bg-white object-contain">
+                @endif
+                <h3 class="text-xl font-bold mb-2">Get the {{ $setting->app_name ?? 'IOS BD' }} App</h3>
+                <p class="text-sm text-gray-300 leading-relaxed">Shop your favorite gadgets faster and easier with our
+                    mobile app.</p>
+            </div>
+            
+            <div class="p-8 bg-white">
+                <div class="flex flex-col gap-4">
+                    <a href="#" class="flex items-center justify-center gap-3 bg-black text-white px-6 py-3 rounded-xl hover:scale-105 transition-transform">
+                        <i class="fab fa-google-play text-2xl"></i>
+                        <div class="text-left">
+                            <p class="text-[10px] uppercase opacity-70 leading-none">Get it on</p>
+                            <p class="text-sm font-bold leading-tight">Google Play</p>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="flex items-center justify-center gap-3 bg-black text-white px-6 py-3 rounded-xl hover:scale-105 transition-transform">
+                        <i class="fab fa-apple text-2xl"></i>
+                        <div class="text-left">
+                            <p class="text-[10px] uppercase opacity-70 leading-none">Download on the</p>
+                            <p class="text-sm font-bold leading-tight">App Store</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="mt-6 text-center">
+                    <button onclick="closeAppPopup()" class="text-sm text-gray-400 hover:text-accent-orange transition-colors">Continue to website</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes pop-in {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .animate-pop-in {
+            animation: pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animate-fade-in {
+            animation: fade-in 0.3s ease-out forwards;
+        }
+    </style>
+
+    <script>
+        function showAppPopup() {
+            const overlay = document.getElementById('app-popup-overlay');
+            const hasShown = localStorage.getItem('app_popup_shown');
+            
+            if (!hasShown) {
+                overlay.classList.remove('hidden');
+                overlay.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeAppPopup() {
+            const overlay = document.getElementById('app-popup-overlay');
+            overlay.classList.add('hidden');
+            overlay.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+            // Set it so it doesn't show again for 24 hours
+            const expiry = new Date().getTime() + (24 * 60 * 60 * 1000);
+            localStorage.setItem('app_popup_shown', expiry);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const hasShown = localStorage.getItem('app_popup_shown');
+            const now = new Date().getTime();
+
+            // If shown more than 24 hours ago, clear it
+            if (hasShown && now > parseInt(hasShown)) {
+                localStorage.removeItem('app_popup_shown');
+            }
+
+            if (!localStorage.getItem('app_popup_shown')) {
+                setTimeout(showAppPopup, 5000);
+            }
+        });
+    </script>
+
     @yield('scripts')
 
 </body>
