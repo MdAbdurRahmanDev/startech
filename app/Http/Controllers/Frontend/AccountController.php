@@ -33,6 +33,10 @@ class AccountController extends Controller
 
         if (Auth::attempt([$fieldType => $identity, 'password' => $request->password], $request->has('remember'))) {
             $request->session()->regenerate();
+
+            // Link any guest orders placed with this email
+            $this->linkGuestOrders(Auth::user());
+
             return redirect()->intended('/account/account')->with('success', 'Logged in successfully.');
         }
 
@@ -69,6 +73,9 @@ class AccountController extends Controller
         ]);
 
         Auth::login($user);
+
+        // Link any guest orders placed with this email
+        $this->linkGuestOrders($user);
 
         return redirect()->route('user.account')->with('success', 'Registration successful!');
     }
@@ -200,5 +207,16 @@ class AccountController extends Controller
     {
         $wishlists = Auth::user()->wishlists()->with('product')->latest()->get();
         return view('frontend.account.wishlist', compact('wishlists'));
+    }
+
+    /**
+     * Link all guest orders (user_id = null) that match the given user's email.
+     * Called after registration and login so past guest orders appear in the account.
+     */
+    private function linkGuestOrders(User $user): void
+    {
+        Order::whereNull('user_id')
+            ->where('email', $user->email)
+            ->update(['user_id' => $user->id]);
     }
 }
