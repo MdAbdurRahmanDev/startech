@@ -63,10 +63,16 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-2">Password <span
-                                    class="text-accent-orange">*</span></label>
-                            <input type="password" name="password" placeholder="Password"
-                                class="w-full bg-gray-50 border @error('password') border-red-500 @else border-gray-200 @enderror rounded-xl px-5 py-3.5 outline-none focus:border-accent-orange focus:ring-4 focus:ring-orange-50 transition-all text-sm shadow-sm"
-                                required>
+                                     class="text-accent-orange">*</span></label>
+                            <div class="relative">
+                                <input type="password" name="password" id="password" placeholder="Password"
+                                    class="w-full bg-gray-50 border @error('password') border-red-500 @else border-gray-200 @enderror rounded-xl px-5 py-3.5 outline-none focus:border-accent-orange focus:ring-4 focus:ring-orange-50 transition-all text-sm shadow-sm"
+                                    required>
+                                <button type="button" onclick="togglePassword('password', 'password-icon')"
+                                    class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-accent-orange transition-colors">
+                                    <i id="password-icon" class="fas fa-eye"></i>
+                                </button>
+                            </div>
                             @error('password')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -74,9 +80,17 @@
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-2">Confirm Password <span
                                     class="text-accent-orange">*</span></label>
-                            <input type="password" name="password_confirmation" placeholder="Confirm Password"
-                                class="w-full bg-gray-50 border border-gray-200 rounded-xl px-5 py-3.5 outline-none focus:border-accent-orange focus:ring-4 focus:ring-orange-50 transition-all text-sm shadow-sm"
-                                required>
+                            <div class="relative">
+                                <input type="password" name="password_confirmation" id="password_confirmation"
+                                    placeholder="Confirm Password"
+                                    class="w-full bg-gray-50 border border-gray-200 rounded-xl px-5 py-3.5 outline-none focus:border-accent-orange focus:ring-4 focus:ring-orange-50 transition-all text-sm shadow-sm"
+                                    required>
+                                <button type="button"
+                                    onclick="togglePassword('password_confirmation', 'password-confirm-icon')"
+                                    class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-accent-orange transition-colors">
+                                    <i id="password-confirm-icon" class="fas fa-eye"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -130,4 +144,22 @@
             animation: fade-in 0.6s ease-out;
         }
     </style>
+@endsection
+
+@section('scripts')
+    <script>
+        function togglePassword(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+    </script>
 @endsection
