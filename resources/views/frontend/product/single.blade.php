@@ -40,25 +40,69 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
                 <!-- Gallery -->
                 <div>
-                    <div class="p-5 md:p-[30px] border border-[#f2f4f8] rounded-lg mb-[15px] text-center">
-                        <img id="main-product-image"
-                            src="{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : 'https://placehold.co/400x400/f9fafb/a3a3a3?text=No+Image' }}"
-                            alt="{{ $product->name }}"
-                            class="max-w-full max-h-[380px] object-contain mx-auto transition-all duration-300">
+                    {{-- Main viewer: shows image or video --}}
+                    <div id="main-viewer-wrapper" class="p-5 md:p-[30px] border border-[#f2f4f8] rounded-lg mb-[15px] text-center relative">
+                        {{-- Image view: hidden by default if video exists --}}
+                        <div id="image-view" {{ $product->video ? 'class=hidden' : '' }}>
+                            <img id="main-product-image"
+                                src="{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : 'https://placehold.co/400x400/f9fafb/a3a3a3?text=No+Image' }}"
+                                alt="{{ $product->name }}"
+                                class="max-w-full max-h-[380px] object-contain mx-auto transition-all duration-300">
+                        </div>
+                        {{-- Video view (hidden until video thumb clicked) --}}
+                        @if ($product->video)
+                            <div id="video-view" class="aspect-video w-full rounded-lg overflow-hidden bg-black">
+                                @if (Str::contains($product->video, ['youtube.com', 'youtu.be']))
+                                    @php
+                                        $videoId = '';
+                                        if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $product->video, $match)) {
+                                            $videoId = $match[1];
+                                        }
+                                    @endphp
+                                    <iframe id="youtube-embed" class="w-full h-full"
+                                        src="https://www.youtube.com/embed/{{ $videoId }}"
+                                        title="YouTube video player" frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowfullscreen></iframe>
+                                @else
+                                    <video id="local-video" class="w-full h-full" controls preload="metadata">
+                                        <source src="{{ asset('storage/' . $product->video) }}"
+                                            type="video/{{ pathinfo($product->video, PATHINFO_EXTENSION) }}">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                @endif
+                            </div>
+                        @endif
                     </div>
+
+                    {{-- Thumbnails row --}}
                     <div class="flex gap-2.5 flex-wrap justify-center thumb-images">
-                        <!-- Thumbnail itself as first thumb -->
+                        {{-- Main thumbnail --}}
                         @if ($product->thumbnail)
                             <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->name }}"
-                                class="w-[70px] h-[70px] border-2 border-gray-200 p-1 rounded cursor-pointer object-contain transition-colors hover:border-accent-orange [&.active]:border-accent-orange active"
+                                class="w-[70px] h-[70px] border-2 border-gray-200 p-1 rounded cursor-pointer object-contain transition-colors hover:border-accent-orange [&.active]:border-accent-orange {{ $product->video ? '' : 'active' }}"
                                 onclick="switchImage(this, '{{ asset('storage/' . $product->thumbnail) }}')">
                         @endif
-                        <!-- Gallery images -->
+                        {{-- Gallery images --}}
                         @foreach ($product->images as $img)
                             <img src="{{ asset('storage/' . $img->image) }}" alt="{{ $product->name }}"
                                 class="w-[70px] h-[70px] border-2 border-gray-200 p-1 rounded cursor-pointer object-contain transition-colors hover:border-accent-orange [&.active]:border-accent-orange"
                                 onclick="switchImage(this, '{{ asset('storage/' . $img->image) }}')">
                         @endforeach
+                        {{-- Video thumbnail --}}
+                        @if ($product->video)
+                            <div id="video-thumb"
+                                class="w-[70px] h-[70px] border-2 border-accent-orange rounded cursor-pointer transition-colors hover:border-accent-orange flex items-center justify-center bg-gray-900 relative overflow-hidden active"
+                                onclick="switchToVideo(this)"
+                                title="Product Video">
+                                @if ($product->thumbnail)
+                                    <img src="{{ asset('storage/' . $product->thumbnail) }}" class="absolute inset-0 w-full h-full object-cover opacity-50">
+                                @endif
+                                <div class="relative z-10 w-7 h-7 bg-white/90 rounded-full flex items-center justify-center shadow">
+                                    <i class="fas fa-play text-accent-orange text-xs ml-0.5"></i>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
@@ -584,9 +628,28 @@
     <script>
             // Image switcher
             function switchImage(el, src) {
+                // Hide video, show image
+                const videoView = document.getElementById('video-view');
+                const imageView = document.getElementById('image-view');
+                if (videoView) videoView.classList.add('hidden');
+                if (imageView) imageView.classList.remove('hidden');
+
                 document.getElementById('main-product-image').src = src;
-                document.querySelectorAll('.thumb-images img').forEach(img => img.classList.remove('active',
-                    'border-accent-orange'));
+
+                // Update active thumb
+                document.querySelectorAll('.thumb-images img, #video-thumb').forEach(t => t.classList.remove('active', 'border-accent-orange'));
+                el.classList.add('active', 'border-accent-orange');
+            }
+
+            // Video switcher
+            function switchToVideo(el) {
+                const videoView = document.getElementById('video-view');
+                const imageView = document.getElementById('image-view');
+                if (imageView) imageView.classList.add('hidden');
+                if (videoView) videoView.classList.remove('hidden');
+
+                // Update active thumb
+                document.querySelectorAll('.thumb-images img, #video-thumb').forEach(t => t.classList.remove('active', 'border-accent-orange'));
                 el.classList.add('active', 'border-accent-orange');
             }
 
