@@ -232,16 +232,11 @@
     <!-- Main Navigation Desktop -->
     <nav class="bg-white shadow-sm sticky top-0 z-[50] hidden lg:block">
         <div class="max-w-[1320px] mx-auto px-1.5 md:px-2">
-            <ul class="flex justify-start gap-8">
+            <ul class="flex justify-start gap-5">
                 @foreach ($headerCategories as $category)
                     <li class="group py-4 relative">
                         <a href="{{ url('category/' . $category->slug) }}"
-                            class="text-[13px] font-semibold text-primary-dark hover:text-accent-orange transition-colors flex items-center gap-1.5">
-                            @if ($category->image)
-                                <img src="{{ asset('storage/' . $category->image) }}" class="w-4 h-4 object-contain">
-                            @elseif($category->icon)
-                                <i class="{{ $category->icon }} text-xs opacity-70"></i>
-                            @endif
+                            class="text-[13px] font-bold text-primary-dark hover:text-accent-orange transition-colors flex items-center gap-1.5">
                             {{ $category->name }}
                             @if ($category->children->count() > 0)
                                 <i class="fas fa-chevron-down text-[10px] opacity-50"></i>
@@ -255,10 +250,6 @@
                                         <a href="{{ url('category/' . $sub->slug) }}"
                                             class="flex justify-between items-center px-4 py-2.5 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">
                                             <div class="flex items-center gap-2">
-                                                @if ($sub->image)
-                                                    <img src="{{ asset('storage/' . $sub->image) }}"
-                                                        class="w-4 h-4 object-contain">
-                                                @endif
                                                 {{ $sub->name }}
                                             </div>
                                             @if ($sub->children->count() > 0 || $sub->brands->count() > 0)
@@ -292,8 +283,7 @@
                 <!-- Software Services Menu -->
                 <li class="group py-4 relative">
                     <a href="{{ route('services.index') }}"
-                        class="text-[13px] font-semibold text-primary-dark hover:text-accent-orange transition-colors flex items-center gap-1.5">
-                        <i class="fas fa-tools text-xs opacity-70"></i>
+                        class="text-[13px] font-bold text-primary-dark hover:text-accent-orange transition-colors flex items-center gap-1.5">
                         Software Services
                         @if ($allServices->count() > 0)
                             <i class="fas fa-chevron-down text-[10px] opacity-50"></i>
@@ -494,12 +484,7 @@
             @foreach ($headerCategories as $category)
                 <li>
                     <a href="{{ url('category/' . $category->slug) }}"
-                        class="flex items-center gap-3 text-primary-dark text-base font-medium py-2 hover:text-accent-orange transition-colors border-b border-gray-50">
-                        @if ($category->image)
-                            <img src="{{ asset('storage/' . $category->image) }}" class="w-5 h-5 object-contain">
-                        @elseif($category->icon)
-                            <i class="{{ $category->icon }} text-sm"></i>
-                        @endif
+                        class="flex items-center gap-3 text-primary-dark text-base font-bold py-2 hover:text-accent-orange transition-colors border-b border-gray-50">
                         {{ $category->name }}
                     </a>
                 </li>
