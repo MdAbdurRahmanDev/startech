@@ -35,8 +35,7 @@
                     @forelse($sliders as $slider)
                         <div class="slide min-w-full h-full">
                             <a href="{{ $slider->link ?? '#' }}">
-                                <img src="{{ asset('storage/' . $slider->image) }}" alt="Slider"
-                                    class="w-full h-full object-cover">
+                                <img src="{{ asset('storage/' . $slider->image) }}" alt="Slider" class="w-full h-full ">
                             </a>
                         </div>
                     @empty
@@ -85,30 +84,30 @@
                     </div>
                 @empty
                     <div class="bg-white rounded-lg overflow-hidden shadow-sm h-[100px] md:h-auto lg:flex-1">
-                        <img src="https://placehold.co/400x240/11212d/f97316?text=Side+Banner"
-                            alt="Side Banner 1" class="w-full h-full object-cover">
+                        <img src="https://placehold.co/400x240/11212d/f97316?text=Side+Banner" alt="Side Banner 1"
+                            class="w-full h-full object-cover">
                     </div>
                     <div class="bg-white rounded-lg overflow-hidden shadow-sm h-[100px] md:h-auto lg:flex-1">
-                        <img src="https://placehold.co/400x240/11212d/f97316?text=Side+Banner"
-                            alt="Side Banner 2" class="w-full h-full object-cover">
+                        <img src="https://placehold.co/400x240/11212d/f97316?text=Side+Banner" alt="Side Banner 2"
+                            class="w-full h-full object-cover">
                     </div>
                 @endforelse
             </div>
         </section>
 
         <!-- Scrolling Marquee -->
-        @if($setting && $setting->marquee_text)
-        <div
-            class="mt-4 bg-white rounded-full h-10 md:h-12 flex items-center overflow-hidden shadow-sm border border-gray-100">
-            <div class="whitespace-nowrap flex items-center animate-marquee px-4 w-full">
-                <span class="text-[12px] md:text-sm text-gray-600 font-medium flex items-center gap-4">
-                    <span class="flex items-center gap-2">
-                        <i class="fas fa-bullhorn text-accent-orange"></i>
-                        {{ $setting->marquee_text }}
+        @if ($setting && $setting->marquee_text)
+            <div
+                class="mt-4 bg-white rounded-full h-10 md:h-12 flex items-center overflow-hidden shadow-sm border border-gray-100">
+                <div class="whitespace-nowrap flex items-center animate-marquee px-4 w-full">
+                    <span class="text-[12px] md:text-sm text-gray-600 font-medium flex items-center gap-4">
+                        <span class="flex items-center gap-2">
+                            <i class="fas fa-bullhorn text-accent-orange"></i>
+                            {{ $setting->marquee_text }}
+                        </span>
                     </span>
-                </span>
+                </div>
             </div>
-        </div>
         @endif
 
 
@@ -180,24 +179,33 @@
         </section>
 
         <!-- Physical Stores Banner -->
-        <div class="mt-12 bg-gradient-to-r from-[#08acee] via-[#0052d4] to-[#001e54] rounded-lg p-6 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl overflow-hidden relative group">
+        <div
+            class="mt-12 bg-gradient-to-r from-[#08acee] via-[#0052d4] to-[#001e54] rounded-lg p-6 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl overflow-hidden relative group">
             <div class="flex items-center gap-5 md:gap-8 z-10">
-                <div class="w-14 h-14 md:w-16 md:h-16 bg-white/20 rounded-full flex items-center justify-center text-white text-2xl md:text-3xl backdrop-blur-sm shadow-inner group-hover:scale-110 transition-transform duration-500">
+                <div
+                    class="w-14 h-14 md:w-16 md:h-16 bg-white/20 rounded-full flex items-center justify-center text-white text-2xl md:text-3xl backdrop-blur-sm shadow-inner group-hover:scale-110 transition-transform duration-500">
                     <i class="fas fa-map-marker-alt"></i>
                 </div>
                 <div>
-                    <h3 class="text-xl md:text-3xl font-black text-white leading-tight">{{ $outletCount }}+ Physical Stores</h3>
-                    <p class="text-white/90 text-sm md:text-base mt-1 font-medium">Visit Our Store & Get Your Desired IT Product!</p>
+                    <h3 class="text-xl md:text-3xl font-black text-white leading-tight">{{ $outletCount }}+ Physical
+                        Stores</h3>
+                    <p class="text-white/90 text-sm md:text-base mt-1 font-medium">Visit Our Store & Get Your Desired IT
+                        Product!</p>
                 </div>
             </div>
-            <a href="{{ route('outlets.index') }}" class="bg-accent-orange hover:bg-[#d83d1b] text-white px-8 py-3.5 rounded-full font-bold text-sm md:text-base transition-all shadow-xl hover:shadow-orange-500/40 flex items-center gap-2 group/btn whitespace-nowrap z-10">
+            <a href="{{ route('outlets.index') }}"
+                class="bg-accent-orange hover:bg-[#d83d1b] text-white px-8 py-3.5 rounded-full font-bold text-sm md:text-base transition-all shadow-xl hover:shadow-orange-500/40 flex items-center gap-2 group/btn whitespace-nowrap z-10">
                 Find Our Store
                 <i class="fas fa-search group-hover/btn:scale-110 transition-transform text-xs md:text-sm"></i>
             </a>
-            
+
             <!-- Background Decorations -->
-            <div class="absolute -right-8 -top-8 w-40 h-40 bg-white/5 rounded-full blur-3xl transition-all group-hover:bg-white/10"></div>
-            <div class="absolute -left-12 -bottom-12 w-48 h-48 bg-white/5 rounded-full blur-3xl transition-all group-hover:bg-white/10"></div>
+            <div
+                class="absolute -right-8 -top-8 w-40 h-40 bg-white/5 rounded-full blur-3xl transition-all group-hover:bg-white/10">
+            </div>
+            <div
+                class="absolute -left-12 -bottom-12 w-48 h-48 bg-white/5 rounded-full blur-3xl transition-all group-hover:bg-white/10">
+            </div>
         </div>
 
         <!-- Product Grid -->
@@ -226,10 +234,10 @@
                                 Out of Stock
                             </div>
                         @endif
-                        
+
                         <!-- Wishlist Button -->
-                        <button type="button" onclick="toggleWishlist({{ $product->id }}, this)" 
-                                class="absolute top-2 right-2 w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/80 backdrop-blur-sm shadow-sm flex items-center justify-center text-accent-orange z-20 hover:bg-white hover:scale-110 transition-all border border-gray-100">
+                        <button type="button" onclick="toggleWishlist({{ $product->id }}, this)"
+                            class="absolute top-2 right-2 w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/80 backdrop-blur-sm shadow-sm flex items-center justify-center text-accent-orange z-20 hover:bg-white hover:scale-110 transition-all border border-gray-100">
                             <i class="{{ $product->isWishlisted() ? 'fas' : 'far' }} fa-heart text-xs md:text-sm"></i>
                         </button>
 
@@ -246,7 +254,8 @@
                                     {{ $product->name }}
                                 </h3>
                             </a>
-                            <div class="mt-3 text-[10px] md:text-[11px] text-gray-500 flex-grow short-description-list line-clamp-4 h-16 md:h-20 overflow-hidden">
+                            <div
+                                class="mt-3 text-[10px] md:text-[11px] text-gray-500 flex-grow short-description-list line-clamp-4 h-16 md:h-20 overflow-hidden">
                                 @if ($product->short_description)
                                     {!! $product->short_description !!}
                                 @else
@@ -303,46 +312,58 @@
 
             <div class="text-sm text-gray-600 leading-relaxed space-y-5" id="seo-content">
                 <p>
-                    Technology has become a part of our daily lives, and we depend on tech products daily for a vast portion of our lives.
+                    Technology has become a part of our daily lives, and we depend on tech products daily for a vast portion
+                    of our lives.
                     There is hardly a home in Bangladesh without a tech product. This is where we come in.
-                    <strong>International Office Solution – IOS</strong> started as a Tech &amp; Office Product Shop in Bangladesh.
-                    We focus on giving the best customer service in Bangladesh, following our motto of <strong>"Customer Comes First."</strong>
-                    This is why IOS is the most <strong>trusted computer &amp; office solution shop in Bangladesh</strong> today, capturing the loyalty of a large customer base.
+                    <strong>International Office Solution – IOS</strong> started as a Tech &amp; Office Product Shop in
+                    Bangladesh.
+                    We focus on giving the best customer service in Bangladesh, following our motto of <strong>"Customer
+                        Comes First."</strong>
+                    This is why IOS is the most <strong>trusted computer &amp; office solution shop in Bangladesh</strong>
+                    today, capturing the loyalty of a large customer base.
                 </p>
 
                 <div id="seo-extra" class="space-y-5 hidden">
                     <h2 class="text-lg font-bold text-primary-dark mt-6">Best Laptop Shop in Bangladesh</h2>
                     <p>
-                        IOS is the most popular Laptop Brand Shop in BD. Our Laptop Shop has the perfect device, whether you are a freelancer,
-                        office-goer, or student. We bring the latest laptops in Bangladesh at the best prices for every customer — from starters to expert users.
-                        IOS lets you buy from top brands like Dell, HP, Asus, Acer, Lenovo, Microsoft Surface, MSI, Gigabyte, Infinix, Walton, Xiaomi, and more.
+                        IOS is the most popular Laptop Brand Shop in BD. Our Laptop Shop has the perfect device, whether you
+                        are a freelancer,
+                        office-goer, or student. We bring the latest laptops in Bangladesh at the best prices for every
+                        customer — from starters to expert users.
+                        IOS lets you buy from top brands like Dell, HP, Asus, Acer, Lenovo, Microsoft Surface, MSI,
+                        Gigabyte, Infinix, Walton, Xiaomi, and more.
                     </p>
 
                     <h2 class="text-lg font-bold text-primary-dark mt-6">Best Desktop PC Shop In Bangladesh</h2>
                     <p>
-                        IOS has the most comprehensive array of Desktop PCs. We offer top-of-the-line Custom PC, Brand PC, All-In-One PC,
-                        and Portable Mini PC at our outlets. You can always depend on the IOS PC shop experts to build the best desktop PC
+                        IOS has the most comprehensive array of Desktop PCs. We offer top-of-the-line Custom PC, Brand PC,
+                        All-In-One PC,
+                        and Portable Mini PC at our outlets. You can always depend on the IOS PC shop experts to build the
+                        best desktop PC
                         or computer with parts of your choice.
                     </p>
 
                     <h2 class="text-lg font-bold text-primary-dark mt-6">Best Office Solutions Shop In Bangladesh</h2>
                     <p>
-                        <strong>International Office Solution – IOS</strong> provides a complete range of office equipment, stationery, printers, scanners,
+                        <strong>International Office Solution – IOS</strong> provides a complete range of office equipment,
+                        stationery, printers, scanners,
                         projectors, and networking solutions for businesses of all sizes across Bangladesh.
-                        We are committed to delivering high-quality products at competitive prices to keep your workplace running smoothly.
+                        We are committed to delivering high-quality products at competitive prices to keep your workplace
+                        running smoothly.
                     </p>
 
                     <h2 class="text-lg font-bold text-primary-dark mt-6">Best Gaming PC Shop In Bangladesh</h2>
                     <p>
-                        At IOS we love gaming. Therefore, we aim to provide a holistic gaming experience with our best gaming PC shop in Bangladesh.
-                        Our gaming setup consists of Gaming PC, Gaming Laptops, Gaming Monitors, Gaming Chairs, Gaming Keyboards, Gaming Mouse, and Gaming Headsets.
+                        At IOS we love gaming. Therefore, we aim to provide a holistic gaming experience with our best
+                        gaming PC shop in Bangladesh.
+                        Our gaming setup consists of Gaming PC, Gaming Laptops, Gaming Monitors, Gaming Chairs, Gaming
+                        Keyboards, Gaming Mouse, and Gaming Headsets.
                     </p>
                 </div>
 
                 {{-- Read More Button --}}
                 <div class="pt-2">
-                    <button id="seo-toggle-btn"
-                        onclick="toggleSeoContent()"
+                    <button id="seo-toggle-btn" onclick="toggleSeoContent()"
                         class="text-accent-orange font-bold text-sm flex items-center gap-1.5 hover:underline focus:outline-none">
                         <span id="seo-btn-text">Read More</span>
                         <i id="seo-btn-icon" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
