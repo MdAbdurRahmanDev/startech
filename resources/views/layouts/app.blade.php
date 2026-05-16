@@ -36,6 +36,14 @@
             visibility: visible;
             transform: translateX(0);
         }
+        
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
 
         .sub-dropdown {
             transform: translateX(10px);
@@ -230,13 +238,13 @@
     </div>
 
     <!-- Main Navigation Desktop -->
-    <nav class="bg-white shadow-sm sticky top-0 z-[50] hidden lg:block">
-        <div class="max-w-[1320px] mx-auto px-1.5 md:px-2">
-            <ul class="flex justify-start gap-5 flex-wrap">
+    <nav class="bg-white shadow-sm sticky top-0 z-[50] hidden lg:block overflow-hidden">
+        <div class="max-w-[1320px] mx-auto px-1">
+            <ul class="flex justify-start gap-[5px] flex-nowrap overflow-x-auto no-scrollbar">
                 @foreach ($headerCategories as $category)
-                    <li class="group py-4 relative">
+                    <li class="group py-4 relative flex-shrink-0">
                         <a href="{{ url('category/' . $category->slug) }}"
-                            class="text-[12px] font-bold text-primary-dark hover:text-accent-orange transition-colors flex items-center">
+                            class="text-[11px] font-bold text-primary-dark hover:text-accent-orange transition-colors flex items-center whitespace-nowrap">
                             {{ $category->name }}
                         </a>
                         @if ($category->children->count() > 0)
@@ -278,9 +286,9 @@
                 @endforeach
 
                 <!-- Software Services Menu -->
-                <li class="group py-4 relative">
+                <li class="group py-4 relative flex-shrink-0">
                     <a href="{{ route('services.index') }}"
-                        class="text-[12px] font-bold text-primary-dark hover:text-accent-orange transition-colors flex items-center">
+                        class="text-[11px] font-bold text-primary-dark hover:text-accent-orange transition-colors flex items-center whitespace-nowrap">
                         Software Services
                     </a>
                     @if ($allServices->count() > 0)
