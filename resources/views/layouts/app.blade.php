@@ -240,7 +240,7 @@
     <!-- Main Navigation Desktop -->
     <nav class="bg-white shadow-sm sticky top-0 z-[50] hidden lg:block overflow-hidden">
         <div class="max-w-[1320px] mx-auto px-1">
-            <ul class="flex justify-start gap-[5px] flex-nowrap overflow-x-auto no-scrollbar">
+            <ul class="flex justify-start gap-[7px] flex-nowrap overflow-x-auto no-scrollbar">
                 @foreach ($headerCategories as $category)
                     <li class="group py-4 relative flex-shrink-0">
                         <a href="{{ url('category/' . $category->slug) }}"
