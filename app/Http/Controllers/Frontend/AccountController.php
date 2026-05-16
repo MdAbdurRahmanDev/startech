@@ -209,6 +209,12 @@ class AccountController extends Controller
         return view('frontend.account.wishlist', compact('wishlists'));
     }
 
+    public function savedPcs()
+    {
+        $savedPcs = \App\Models\SavedPc::where('user_id', Auth::id())->latest()->get();
+        return view('frontend.account.saved_pcs', compact('savedPcs'));
+    }
+
     /**
      * Link all guest orders (user_id = null) that match the given user's email.
      * Called after registration and login so past guest orders appear in the account.

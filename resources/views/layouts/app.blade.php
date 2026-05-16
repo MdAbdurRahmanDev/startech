@@ -216,6 +216,13 @@
                     </div>
                 </div>
 
+                <!-- PC Builder Button -->
+                <a href="{{ url('pc-builder') }}"
+                    class="bg-accent-orange text-white px-5 py-2.5 rounded-lg font-bold text-sm hover:bg-[#d83d1b] transition-all shadow-lg shadow-orange-500/20 flex items-center gap-2">
+                    <i class="fas fa-tools"></i>
+                    PC Builder
+                </a>
+
             </div>
         </div>
     </header>

@@ -49,6 +49,13 @@ Route::get('/service/{slug}', [ServiceController::class, 'show'])->name('service
 Route::get('/services/custom-web-development', [ServiceController::class, 'webDevelopment'])->name('services.web-development');
 Route::get('/services/apps-development', [ServiceController::class, 'appDevelopment'])->name('services.app-development');
 Route::get('/services/ai-automation', [ServiceController::class, 'aiAutomation'])->name('services.ai-automation');
+Route::get('/pc-builder', [HomeController::class, 'pcBuilder'])->name('pc-builder');
+Route::post('/pc-builder/add', [HomeController::class, 'addToBuilder'])->name('pc-builder.add');
+Route::post('/pc-builder/remove', [HomeController::class, 'removeFromBuilder'])->name('pc-builder.remove');
+Route::post('/pc-builder/add-to-cart', [HomeController::class, 'addAllToCart'])->name('pc-builder.add-to-cart');
+Route::post('/pc-builder/save', [HomeController::class, 'savePc'])->name('pc-builder.save');
+Route::get('/pc-builder/load/{id}', [HomeController::class, 'loadSavedPc'])->name('pc-builder.load');
+Route::delete('/pc-builder/delete/{id}', [HomeController::class, 'deleteSavedPc'])->name('pc-builder.delete');
 
 // Cart Routes
 Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
@@ -79,6 +86,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/account/address', [AccountController::class, 'address'])->name('user.address');
     Route::post('/account/address/update', [AccountController::class, 'updateAddress'])->name('user.address.update');
     Route::get('/account/wishlist', [AccountController::class, 'wishlist'])->name('user.wishlist');
+    Route::get('/account/saved-pcs', [AccountController::class, 'savedPcs'])->name('user.saved-pcs');
 });
 
 // Dynamic CMS Pages

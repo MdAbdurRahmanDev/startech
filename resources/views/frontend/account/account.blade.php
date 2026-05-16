@@ -229,7 +229,7 @@
                 <div class="action-icon"><i class="fas fa-heart"></i></div>
                 <span class="action-label">Wish List</span>
             </a>
-            <a href="#" class="action-card">
+            <a href="{{ route('user.saved-pcs') }}" class="action-card">
                 <div class="action-icon"><i class="fas fa-desktop"></i></div>
                 <span class="action-label">Saved PC</span>
             </a>

@@ -34,6 +34,9 @@
 
         <!-- Layout Container -->
         <form id="filter-form" action="{{ url()->current() }}" method="GET">
+            @if (request('builder'))
+                <input type="hidden" name="builder" value="{{ request('builder') }}">
+            @endif
             <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-5">
                 <!-- Sidebar Filters -->
                 <aside class="hidden lg:block space-y-5">
@@ -183,11 +186,19 @@
                                         @endif
                                     </div>
 
-                                    <button type="button" onclick="buyNow({{ $product->id }})"
-                                        class="w-full bg-primary-dark text-white text-xs md:text-sm font-bold py-2 md:py-2.5 rounded hover:bg-accent-orange transition-all flex items-center justify-center gap-2 cursor-pointer"
-                                        {{ $product->stock <= 0 ? 'disabled' : '' }}>
-                                        <i class="fas fa-shopping-cart text-[11px]"></i> Buy Now
-                                    </button>
+                                    @if (request('builder'))
+                                        <button type="button"
+                                            onclick="addToBuilder({{ $product->id }}, '{{ request('builder') }}')"
+                                            class="w-full bg-accent-orange text-white text-xs md:text-sm font-bold py-2 md:py-2.5 rounded hover:bg-primary-dark transition-all flex items-center justify-center gap-2 cursor-pointer">
+                                            Add
+                                        </button>
+                                    @else
+                                        <button type="button" onclick="buyNow({{ $product->id }})"
+                                            class="w-full bg-primary-dark text-white text-xs md:text-sm font-bold py-2 md:py-2.5 rounded hover:bg-accent-orange transition-all flex items-center justify-center gap-2 cursor-pointer"
+                                            {{ $product->stock <= 0 ? 'disabled' : '' }}>
+                                            <i class="fas fa-shopping-cart text-[11px]"></i> Buy Now
+                                        </button>
+                                    @endif
 
                                     <button
                                         class="text-[11px] text-gray-500 hover:text-accent-orange transition-colors flex items-center justify-center gap-1 w-full py-1">
@@ -214,4 +225,19 @@
             </div>
         </form>
     </div>
+
+    <!-- Hidden form for PC Builder Add -->
+    <form id="pc-builder-add-form" action="{{ route('pc-builder.add') }}" method="POST" style="display: none;">
+        @csrf
+        <input type="hidden" name="product_id" id="builder-product-id">
+        <input type="hidden" name="component" id="builder-component">
+    </form>
+
+    <script>
+        function addToBuilder(productId, component) {
+            document.getElementById('builder-product-id').value = productId;
+            document.getElementById('builder-component').value = component;
+            document.getElementById('pc-builder-add-form').submit();
+        }
+    </script>
 @endsection
