@@ -232,11 +232,11 @@
     <!-- Main Navigation Desktop -->
     <nav class="bg-white shadow-sm sticky top-0 z-[50] hidden lg:block">
         <div class="max-w-[1320px] mx-auto px-1.5 md:px-2">
-            <ul class="flex justify-start gap-3.5">
+            <ul class="flex justify-start gap-5 flex-wrap">
                 @foreach ($headerCategories as $category)
                     <li class="group py-4 relative">
                         <a href="{{ url('category/' . $category->slug) }}"
-                            class="text-[13px] font-bold text-primary-dark hover:text-accent-orange transition-colors flex items-center gap-1.5">
+                            class="text-[12px] font-bold text-primary-dark hover:text-accent-orange transition-colors flex items-center">
                             {{ $category->name }}
                         </a>
                         @if ($category->children->count() > 0)
@@ -280,7 +280,7 @@
                 <!-- Software Services Menu -->
                 <li class="group py-4 relative">
                     <a href="{{ route('services.index') }}"
-                        class="text-[13px] font-bold text-primary-dark hover:text-accent-orange transition-colors flex items-center gap-1.5">
+                        class="text-[12px] font-bold text-primary-dark hover:text-accent-orange transition-colors flex items-center">
                         Software Services
                     </a>
                     @if ($allServices->count() > 0)
