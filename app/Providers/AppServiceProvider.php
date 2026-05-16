@@ -29,13 +29,17 @@ class AppServiceProvider extends ServiceProvider
         // Share settings and categories globally with all views
         View::composer('*', function ($view) {
             $view->with('setting', \App\Models\Setting::first());
-            $view->with('headerCategories', \App\Models\Category::with('children.children')
+            $view->with('headerCategories', \App\Models\Category::with(['children' => function($q) {
+                    $q->orderBy('order', 'asc');
+                }, 'children.children' => function($q) {
+                    $q->orderBy('order', 'asc');
+                }])
                 ->whereNull('parent_id')
                 ->where('status', true)
-                ->orderBy('order')
+                ->orderBy('order', 'asc')
                 ->get());
-            $view->with('footerPages', \App\Models\Page::orderBy('title')->get());
-            $view->with('allServices', \App\Models\Service::where('status', 1)->orderBy('title')->get());
+            $view->with('footerPages', \App\Models\Page::all());
+            $view->with('allServices', \App\Models\Service::where('status', 1)->orderBy('order', 'asc')->get());
         });
     }
 }
