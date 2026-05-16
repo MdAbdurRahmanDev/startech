@@ -290,17 +290,21 @@
                         class="text-[12px] font-bold text-primary-dark hover:text-accent-orange transition-colors flex items-center whitespace-nowrap">
                         Software Services
                     </a>
-                    @if ($allServices->count() > 0)
-                        <div
-                            class="nav-dropdown absolute top-full left-0 bg-white min-w-[220px] shadow-xl py-2 z-[60] border-t-2 border-accent-orange">
-                            @foreach ($allServices as $service)
-                                <a href="{{ route('services.show', $service->slug) }}"
-                                    class="block px-4 py-2.5 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">
-                                    {{ $service->title }}
-                                </a>
-                            @endforeach
-                        </div>
-                    @endif
+                    <div
+                        class="nav-dropdown absolute top-full left-0 bg-white min-w-[220px] shadow-xl py-2 z-[60] border-t-2 border-accent-orange">
+                        <a href="{{ url('services/custom-web-development') }}"
+                            class="block px-4 py-2.5 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">
+                            Custom Web Development
+                        </a>
+                        <a href="{{ url('services/apps-development') }}"
+                            class="block px-4 py-2.5 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">
+                            Apps Development
+                        </a>
+                        <a href="{{ url('services/ai-automation') }}"
+                            class="block px-4 py-2.5 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">
+                            AI Automation & Services
+                        </a>
+                    </div>
                 </li>
             </ul>
         </div>

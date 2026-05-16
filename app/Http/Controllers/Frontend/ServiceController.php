@@ -19,4 +19,19 @@ class ServiceController extends Controller
         $service = Service::where('slug', $slug)->firstOrFail();
         return view('frontend.pages.service_details', compact('service'));
     }
+
+    public function webDevelopment()
+    {
+        return view('frontend.pages.web_development');
+    }
+
+    public function appDevelopment()
+    {
+        return view('frontend.pages.app_development');
+    }
+
+    public function aiAutomation()
+    {
+        return view('frontend.pages.ai_automation');
+    }
 }

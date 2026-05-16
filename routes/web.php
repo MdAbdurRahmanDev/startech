@@ -46,6 +46,9 @@ Route::get('/offers', [OfferController::class, 'index'])->name('offers.index');
 Route::get('/offer/{slug}', [OfferController::class, 'show'])->name('offers.show');
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
 Route::get('/service/{slug}', [ServiceController::class, 'show'])->name('services.show');
+Route::get('/services/custom-web-development', [ServiceController::class, 'webDevelopment'])->name('services.web-development');
+Route::get('/services/apps-development', [ServiceController::class, 'appDevelopment'])->name('services.app-development');
+Route::get('/services/ai-automation', [ServiceController::class, 'aiAutomation'])->name('services.ai-automation');
 
 // Cart Routes
 Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
