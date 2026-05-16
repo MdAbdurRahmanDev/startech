@@ -376,7 +376,7 @@
                 </div>
                 <div>
                     <div class="flex gap-4 mt-8">
-                        <a href="#"><img
+                        <a href="{{ asset('apk/iosbd.apk') }}" download><img
                                 src="{{ asset('icon/GetItOnGooglePlay_Badge_Web_color_English.png') }}"
                                 alt="Google Play" class="h-9"></a>
                         <a href="#"><img src="{{ asset('icon/5a902db97f96951c82922874.png') }}"
@@ -671,7 +671,7 @@
 
             <div class="p-8 bg-white">
                 <div class="flex flex-col gap-4">
-                    <a href="#"
+                    <a href="{{ asset('apk/iosbd.apk') }}" download
                         class="flex items-center justify-center gap-3 bg-black text-white px-6 py-3 rounded-xl hover:scale-105 transition-transform">
                         <i class="fab fa-google-play text-2xl"></i>
                         <div class="text-left">
