@@ -239,12 +239,12 @@
 
     <!-- Main Navigation Desktop -->
     <nav class="bg-white shadow-sm sticky top-0 z-[50] hidden lg:block overflow-hidden">
-        <div class="max-w-[1320px] mx-auto px-1">
-            <ul class="flex justify-start flex-nowrap overflow-x-auto no-scrollbar">
+        <div class="max-w-[1320px] mx-auto px-2">
+            <ul class="flex justify-start flex-nowrap overflow-x-auto no-scrollbar gap-3">
                 @foreach ($headerCategories as $category)
-                    <li class="group py-4 relative flex-shrink-0 px-[4px]">
+                    <li class="group py-4 relative flex-shrink-0">
                         <a href="{{ url('category/' . $category->slug) }}"
-                            class="text-[11px] font-bold text-primary-dark hover:text-accent-orange transition-colors flex items-center whitespace-nowrap">
+                            class="text-[12px] font-bold text-primary-dark hover:text-accent-orange transition-colors flex items-center whitespace-nowrap">
                             {{ $category->name }}
                         </a>
                         @if ($category->children->count() > 0)
@@ -286,9 +286,9 @@
                 @endforeach
 
                 <!-- Software Services Menu -->
-                <li class="group py-4 relative flex-shrink-0 px-[4px]">
+                <li class="group py-4 relative flex-shrink-0">
                     <a href="{{ route('services.index') }}"
-                        class="text-[11px] font-bold text-primary-dark hover:text-accent-orange transition-colors flex items-center whitespace-nowrap">
+                        class="text-[12px] font-bold text-primary-dark hover:text-accent-orange transition-colors flex items-center whitespace-nowrap">
                         Software Services
                     </a>
                     @if ($allServices->count() > 0)
