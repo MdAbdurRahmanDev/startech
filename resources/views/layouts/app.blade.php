@@ -36,10 +36,11 @@
             visibility: visible;
             transform: translateX(0);
         }
-        
+
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
+
         .no-scrollbar {
             -ms-overflow-style: none;
             scrollbar-width: none;
@@ -115,9 +116,7 @@
     <div class="bg-[#0a1520] text-white text-xs py-1.5 border-b border-white/10">
         <div class="max-w-[1320px] mx-auto px-1.5 md:px-2 flex items-center justify-center">
             <span class="flex items-center gap-2 font-semibold tracking-wide">
-                <i class="fas fa-globe text-accent-orange text-[11px]"></i>
-                International Office Solution
-                <span class="text-accent-orange font-bold">- IOS</span>
+                INTERNATIONAL OFFICE SOLUTION
             </span>
         </div>
     </div>
@@ -620,7 +619,8 @@
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            toast.className = `toast ${type === 'success' ? 'bg-green-600' : 'bg-red-600'} text-white px-6 py-3 rounded-lg shadow-2xl flex items-center gap-3 animate-slide-in`;
+            toast.className =
+                `toast ${type === 'success' ? 'bg-green-600' : 'bg-red-600'} text-white px-6 py-3 rounded-lg shadow-2xl flex items-center gap-3 animate-slide-in`;
             toast.innerHTML = `
                 <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
                 <span class="text-sm font-bold">${message}</span>
@@ -634,17 +634,21 @@
     </script>
 
     <!-- App Download Popup -->
-    <div id="app-popup-overlay" class="fixed inset-0 bg-black/60 z-[9999] hidden items-center justify-center p-4 backdrop-blur-sm animate-fade-in">
+    <div id="app-popup-overlay"
+        class="fixed inset-0 bg-black/60 z-[9999] hidden items-center justify-center p-4 backdrop-blur-sm animate-fade-in">
         <div class="bg-white w-full max-w-[400px] rounded-2xl overflow-hidden relative shadow-2xl animate-pop-in">
-            <button onclick="closeAppPopup()" class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 transition-colors z-10">
+            <button onclick="closeAppPopup()"
+                class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 transition-colors z-10">
                 <i class="fas fa-times"></i>
             </button>
-            
+
             <div class="bg-gradient-to-br from-primary-dark to-[#1a2b3c] p-8 text-center text-white relative">
                 <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-accent-orange rounded-full blur-3xl"></div>
+                    <div
+                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-accent-orange rounded-full blur-3xl">
+                    </div>
                 </div>
-                
+
                 @if ($setting && $setting->logo)
                     <img src="{{ asset('storage/' . $setting->logo) }}" alt="App Logo"
                         class="w-16 h-16 mx-auto mb-4 rounded-xl shadow-lg border border-white/20 p-2 bg-white object-contain">
@@ -653,18 +657,20 @@
                 <p class="text-sm text-gray-300 leading-relaxed">Shop your favorite gadgets faster and easier with our
                     mobile app.</p>
             </div>
-            
+
             <div class="p-8 bg-white">
                 <div class="flex flex-col gap-4">
-                    <a href="#" class="flex items-center justify-center gap-3 bg-black text-white px-6 py-3 rounded-xl hover:scale-105 transition-transform">
+                    <a href="#"
+                        class="flex items-center justify-center gap-3 bg-black text-white px-6 py-3 rounded-xl hover:scale-105 transition-transform">
                         <i class="fab fa-google-play text-2xl"></i>
                         <div class="text-left">
                             <p class="text-[10px] uppercase opacity-70 leading-none">Get it on</p>
                             <p class="text-sm font-bold leading-tight">Google Play</p>
                         </div>
                     </a>
-                    
-                    <a href="#" class="flex items-center justify-center gap-3 bg-black text-white px-6 py-3 rounded-xl hover:scale-105 transition-transform">
+
+                    <a href="#"
+                        class="flex items-center justify-center gap-3 bg-black text-white px-6 py-3 rounded-xl hover:scale-105 transition-transform">
                         <i class="fab fa-apple text-2xl"></i>
                         <div class="text-left">
                             <p class="text-[10px] uppercase opacity-70 leading-none">Download on the</p>
@@ -672,9 +678,11 @@
                         </div>
                     </a>
                 </div>
-                
+
                 <div class="mt-6 text-center">
-                    <button onclick="closeAppPopup()" class="text-sm text-gray-400 hover:text-accent-orange transition-colors">Continue to website</button>
+                    <button onclick="closeAppPopup()"
+                        class="text-sm text-gray-400 hover:text-accent-orange transition-colors">Continue to
+                        website</button>
                 </div>
             </div>
         </div>
@@ -682,16 +690,31 @@
 
     <style>
         @keyframes pop-in {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
+
         .animate-pop-in {
             animation: pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
+
         @keyframes fade-in {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
+
         .animate-fade-in {
             animation: fade-in 0.3s ease-out forwards;
         }
@@ -777,7 +800,8 @@
         .rich-text-content table td:first-child:not([colspan]) {
             width: 30%;
             color: #666;
-            background-color: transparent !important; /* Ensure labels don't get the header background */
+            background-color: transparent !important;
+            /* Ensure labels don't get the header background */
         }
 
         /* Styling for the second column (Values like LiFePO4) */
@@ -787,8 +811,15 @@
         }
 
         @keyframes scale-up {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .animate-scale-up {
@@ -800,7 +831,7 @@
         function showAppPopup() {
             const overlay = document.getElementById('app-popup-overlay');
             const hasShown = localStorage.getItem('app_popup_shown');
-            
+
             if (!hasShown) {
                 overlay.classList.remove('hidden');
                 overlay.classList.add('flex');
@@ -837,9 +868,11 @@
     <div id="toast-container" class="fixed bottom-10 right-10 z-[11000] flex flex-col gap-3"></div>
 
     <!-- Link Copied Modal -->
-    <div id="link-copied-modal" class="fixed inset-0 bg-black/40 z-[20000] hidden items-center justify-center backdrop-blur-sm">
+    <div id="link-copied-modal"
+        class="fixed inset-0 bg-black/40 z-[20000] hidden items-center justify-center backdrop-blur-sm">
         <div class="bg-white rounded-lg p-6 shadow-2xl text-center animate-scale-up">
-            <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-3">
+            <div
+                class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-3">
                 <i class="fas fa-check text-xl"></i>
             </div>
             <h3 class="text-lg font-bold text-gray-800">Link Copied!</h3>
@@ -848,23 +881,29 @@
     </div>
 
     <!-- Wishlist Login Prompt Modal -->
-    <div id="wishlist-login-modal" class="fixed inset-0 bg-black/60 z-[10000] hidden items-center justify-center p-4 backdrop-blur-sm">
+    <div id="wishlist-login-modal"
+        class="fixed inset-0 bg-black/60 z-[10000] hidden items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white w-full max-w-[500px] rounded-lg overflow-hidden relative shadow-2xl animate-pop-in">
-            <button onclick="closeWishlistModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors">
+            <button onclick="closeWishlistModal()"
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors">
                 <i class="fas fa-times text-xl"></i>
             </button>
-            
+
             <div class="p-8 text-center">
-                <div class="w-16 h-16 bg-orange-50 text-accent-orange rounded-full flex items-center justify-center mx-auto mb-6">
+                <div
+                    class="w-16 h-16 bg-orange-50 text-accent-orange rounded-full flex items-center justify-center mx-auto mb-6">
                     <i class="fas fa-info-circle text-3xl"></i>
                 </div>
-                
+
                 <h3 class="text-xl font-bold text-gray-800 mb-3">Login Required</h3>
                 <p class="text-gray-600 mb-8">Please login to your account to save products in your Wish List!</p>
-                
+
                 <div class="flex gap-4 justify-center">
-                    <a href="{{ route('login') }}" class="px-8 py-3 bg-primary-dark text-white rounded-md font-bold hover:bg-opacity-90 transition-all">Login Now</a>
-                    <button onclick="closeWishlistModal()" class="px-8 py-3 border border-gray-200 text-gray-600 rounded-md font-bold hover:bg-gray-50 transition-all">Continue</button>
+                    <a href="{{ route('login') }}"
+                        class="px-8 py-3 bg-primary-dark text-white rounded-md font-bold hover:bg-opacity-90 transition-all">Login
+                        Now</a>
+                    <button onclick="closeWishlistModal()"
+                        class="px-8 py-3 border border-gray-200 text-gray-600 rounded-md font-bold hover:bg-gray-50 transition-all">Continue</button>
                 </div>
             </div>
         </div>

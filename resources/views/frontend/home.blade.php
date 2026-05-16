@@ -246,7 +246,7 @@
                                     {{ $product->name }}
                                 </h3>
                             </a>
-                            <div class="mt-3 text-[10px] md:text-[11px] text-gray-500 flex-grow short-description-list">
+                            <div class="mt-3 text-[10px] md:text-[11px] text-gray-500 flex-grow short-description-list line-clamp-4 h-16 md:h-20 overflow-hidden">
                                 @if ($product->short_description)
                                     {!! $product->short_description !!}
                                 @else
