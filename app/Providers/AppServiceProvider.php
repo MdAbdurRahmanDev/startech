@@ -30,16 +30,16 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             $view->with('setting', \App\Models\Setting::first());
             $view->with('headerCategories', \App\Models\Category::with(['children' => function($q) {
-                    $q->orderBy('order', 'asc');
+                    $q->orderByRaw('`order` = 0, `order` ASC');
                 }, 'children.children' => function($q) {
-                    $q->orderBy('order', 'asc');
+                    $q->orderByRaw('`order` = 0, `order` ASC');
                 }])
                 ->whereNull('parent_id')
                 ->where('status', true)
-                ->orderBy('order', 'asc')
+                ->orderByRaw('`order` = 0, `order` ASC')
                 ->get());
             $view->with('footerPages', \App\Models\Page::all());
-            $view->with('allServices', \App\Models\Service::where('status', 1)->orderBy('order', 'asc')->get());
+            $view->with('allServices', \App\Models\Service::where('status', 1)->orderByRaw('`order` = 0, `order` ASC')->get());
         });
     }
 }

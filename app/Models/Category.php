@@ -24,7 +24,7 @@ class Category extends Model
 
     public function children()
     {
-        return $this->hasMany(Category::class, 'parent_id')->orderBy('order');
+        return $this->hasMany(Category::class, 'parent_id')->orderByRaw('`order` = 0, `order` ASC');
     }
 
     public function subChildren()

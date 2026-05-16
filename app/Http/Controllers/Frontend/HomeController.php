@@ -12,7 +12,7 @@ class HomeController extends Controller
     {
         $sliders = Banner::where('type', 'slider')->where('status', 1)->orderBy('order')->get();
         $sideBanners = Banner::where('type', 'side')->where('status', 1)->orderBy('order')->take(2)->get();
-        $featuredCategories = \App\Models\Category::where('is_featured', 1)->where('status', 1)->orderBy('order')->get();
+        $featuredCategories = \App\Models\Category::where('is_featured', 1)->where('status', 1)->orderByRaw('`order` = 0, `order` ASC')->get();
         $featuredProducts = \App\Models\Product::with(['categories', 'specifications'])->where('is_featured', 1)->where('status', 1)->latest()->take(10)->get();
         $outletCount = \App\Models\Outlet::where('status', 1)->count();
         
