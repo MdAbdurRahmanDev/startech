@@ -240,9 +240,9 @@
     <!-- Main Navigation Desktop -->
     <nav class="bg-white shadow-sm sticky top-0 z-[50] hidden lg:block overflow-hidden">
         <div class="max-w-[1320px] mx-auto px-1">
-            <ul class="flex justify-start gap-[7px] flex-nowrap overflow-x-auto no-scrollbar">
+            <ul class="flex justify-start flex-nowrap overflow-x-auto no-scrollbar">
                 @foreach ($headerCategories as $category)
-                    <li class="group py-4 relative flex-shrink-0">
+                    <li class="group py-4 relative flex-shrink-0 px-[4px]">
                         <a href="{{ url('category/' . $category->slug) }}"
                             class="text-[11px] font-bold text-primary-dark hover:text-accent-orange transition-colors flex items-center whitespace-nowrap">
                             {{ $category->name }}
@@ -286,7 +286,7 @@
                 @endforeach
 
                 <!-- Software Services Menu -->
-                <li class="group py-4 relative flex-shrink-0">
+                <li class="group py-4 relative flex-shrink-0 px-[4px]">
                     <a href="{{ route('services.index') }}"
                         class="text-[11px] font-bold text-primary-dark hover:text-accent-orange transition-colors flex items-center whitespace-nowrap">
                         Software Services
