@@ -18,5 +18,6 @@ class InformationController extends Controller
     }
 
     public function contact() { return view('frontend.pages.contact'); }
+    public function complain() { return view('frontend.pages.complain'); }
     public function quotation() { return view('frontend.pages.quotation'); }
 }

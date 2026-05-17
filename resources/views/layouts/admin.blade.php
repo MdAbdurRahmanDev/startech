@@ -100,211 +100,259 @@
                 @endif
                 <span class="self-center text-lg text-heading font-semibold whitespace-nowrap">{{ $setting->app_name ?? 'Admin' }}</span>
             </a>
-            <ul class="space-y-2 font-medium">
+            <ul class="space-y-4 font-medium">
+                <!-- Dashboard -->
                 <li>
                     <a href="{{ route('dashboard') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('dashboard') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-home w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('dashboard') ? 'text-fg-brand' : '' }}"></i>
+                        class="flex items-center px-3 py-2 text-sm text-body rounded-lg {{ request()->routeIs('dashboard') ? 'bg-neutral-tertiary text-fg-brand font-bold shadow-sm' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                        <i class="fas fa-home w-5 text-center text-base transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('dashboard') ? 'text-fg-brand' : '' }}"></i>
                         <span class="ms-3">Dashboard</span>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ route('admin.categories.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.categories.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-sitemap w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.categories.*') ? 'text-fg-brand' : '' }}"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Categories</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.brands.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.brands.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-tags w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.brands.*') ? 'text-fg-brand' : '' }}"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Brands</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.suppliers.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.suppliers.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-building w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.suppliers.*') ? 'text-fg-brand' : '' }}"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Suppliers</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.products.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.products.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-box w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.products.*') ? 'text-fg-brand' : '' }}"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Products</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.banners.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.banners.index') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-image w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.banners.*') ? 'text-fg-brand' : '' }}"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Banners</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.stock.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.stock.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-cubes w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.stock.*') ? 'text-fg-brand' : '' }}"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Stock Management</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.offers.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.offers.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-gift w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.offers.*') ? 'text-fg-brand' : '' }}"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Offers Management</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.services.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.services.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-tools w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.services.*') ? 'text-fg-brand' : '' }}"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Services Management</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.contacts.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.contacts.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-envelope w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.contacts.*') ? 'text-fg-brand' : '' }}"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Messages</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.cms.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.cms.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-file-alt w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.cms.*') ? 'text-fg-brand' : '' }}"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">CMS Pages</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.quotations.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.quotations.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-file-invoice-dollar w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.quotations.*') ? 'text-fg-brand' : '' }}"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Project Quotations</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.questions.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.questions.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-question-circle w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.questions.*') ? 'text-fg-brand' : '' }}"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Product Questions</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.reviews.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.reviews.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-star w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.reviews.*') ? 'text-fg-brand' : '' }}"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Product Reviews</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.orders.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.orders.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-shopping-cart w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.orders.*') ? 'text-fg-brand' : '' }}"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Orders</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.refunds.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.refunds.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-undo w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.refunds.*') ? 'text-fg-brand' : '' }}"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Refund Requests</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.shipping.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.shipping.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-truck w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.shipping.*') ? 'text-fg-brand' : '' }}"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Shipping Methods</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.payment-methods.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.payment-methods.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-credit-card w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.payment-methods.*') ? 'text-fg-brand' : '' }}"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Payment Methods</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.outlets.index') }}"
-                        class="flex items-center px-2 py-1.5 text-body rounded-base {{ request()->routeIs('admin.outlets.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
-                        <i
-                            class="fas fa-store w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.outlets.*') ? 'text-fg-brand' : '' }}"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Manage Outlets</span>
-                    </a>
-                </li>
 
-                <!-- Settings Dropdown -->
-                <li>
-                    <button type="button"
-                        class="flex items-center w-full px-2 py-1.5 text-body transition duration-75 rounded-base group hover:bg-neutral-tertiary hover:text-fg-brand"
-                        aria-controls="dropdown-settings" data-collapse-toggle="dropdown-settings">
-                        <i
-                            class="fas fa-cog w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand"></i>
-                        <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Settings</span>
-                        <svg class="w-3 h-3 transition-transform" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="m1 1 4 4 4-4" />
-                        </svg>
-                    </button>
-                    <ul id="dropdown-settings" class="hidden py-2 space-y-2">
+                <!-- SECTION 1: CORE CATALOG -->
+                <li class="pt-2">
+                    <span class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Catalog & Store</span>
+                    <ul class="space-y-1">
                         <li>
-                            <a href="{{ route('admin.settings.general') }}"
-                                class="flex items-center w-full p-2 text-body transition duration-75 rounded-base pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand">General
-                                Settings</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.banners.index') }}"
-                                class="flex items-center w-full p-2 text-body transition duration-75 rounded-base pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand">Manage
-                                Banners</a>
+                            <a href="{{ route('admin.products.index') }}"
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.products.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-box w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.products.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">Products</span>
+                            </a>
                         </li>
                         <li>
                             <a href="{{ route('admin.categories.index') }}"
-                                class="flex items-center w-full p-2 text-body transition duration-75 rounded-base pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand">Manage
-                                Categories</a>
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.categories.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-sitemap w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.categories.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">Categories</span>
+                            </a>
                         </li>
                         <li>
                             <a href="{{ route('admin.brands.index') }}"
-                                class="flex items-center w-full p-2 text-body transition duration-75 rounded-base pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand">Manage
-                                Brands</a>
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.brands.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-tags w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.brands.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">Brands</span>
+                            </a>
                         </li>
                         <li>
                             <a href="{{ route('admin.suppliers.index') }}"
-                                class="flex items-center w-full p-2 text-body transition duration-75 rounded-base pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand">Manage
-                                Suppliers</a>
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.suppliers.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-building w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.suppliers.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">Suppliers</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.stock.index') }}"
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.stock.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-cubes w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.stock.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">Stock Management</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.outlets.index') }}"
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.outlets.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-store w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.outlets.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">Manage Outlets</span>
+                            </a>
                         </li>
                     </ul>
                 </li>
-                <li>
+
+                <!-- SECTION 2: SALES & OPERATIONS -->
+                <li class="pt-2">
+                    <span class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Sales & Operations</span>
+                    <ul class="space-y-1">
+                        <li>
+                            <a href="{{ route('admin.orders.index') }}"
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.orders.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-shopping-cart w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.orders.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">Orders</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.refunds.index') }}"
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.refunds.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-undo w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.refunds.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">Refund Requests</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.quotations.index') }}"
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.quotations.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-file-invoice-dollar w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.quotations.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">Project Quotations</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- SECTION 3: CUSTOMER ENGAGEMENT -->
+                <li class="pt-2">
+                    <span class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Customer Relations</span>
+                    <ul class="space-y-1">
+                        <li>
+                            <a href="{{ route('admin.questions.index') }}"
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.questions.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-question-circle w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.questions.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">Product Questions</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.reviews.index') }}"
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.reviews.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-star w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.reviews.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">Product Reviews</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.contacts.index') }}"
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.contacts.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-envelope w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.contacts.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">Messages</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- SECTION 4: PROMOTIONS & CMS CONTENT -->
+                <li class="pt-2">
+                    <span class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Marketing & Content</span>
+                    <ul class="space-y-1">
+                        <li>
+                            <a href="{{ route('admin.offers.index') }}"
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.offers.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-gift w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.offers.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">Offers Management</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.services.index') }}"
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.services.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-tools w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.services.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">Services Management</span>
+                            </a>
+                        </li>
+                        <!-- Sliders Dropdown -->
+                        <li>
+                            <button type="button"
+                                class="flex items-center w-full px-3 py-1.5 text-xs text-body transition duration-75 rounded-lg group hover:bg-neutral-tertiary hover:text-fg-brand {{ request()->routeIs('admin.banners.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }}"
+                                aria-controls="dropdown-sliders" data-collapse-toggle="dropdown-sliders">
+                                <i class="fas fa-images w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.banners.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Sliders</span>
+                                <svg class="w-3 h-3 transition-transform" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                                </svg>
+                            </button>
+                            <ul id="dropdown-sliders" class="{{ request()->routeIs('admin.banners.*') ? '' : 'hidden' }} py-1.5 space-y-1">
+                                <li>
+                                    <a href="{{ route('admin.banners.index', ['type' => 'slider']) }}"
+                                        class="flex items-center w-full p-1.5 text-xs text-body transition duration-75 rounded-lg pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand {{ (request()->routeIs('admin.banners.index') && request()->query('type', 'slider') === 'slider') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }}">
+                                        Main Slider
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('admin.banners.index', ['type' => 'home_services']) }}"
+                                        class="flex items-center w-full p-1.5 text-xs text-body transition duration-75 rounded-lg pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand {{ (request()->routeIs('admin.banners.index') && request()->query('type') === 'home_services') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }}">
+                                        Home Services Slider
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('admin.banners.index', ['type' => 'service_center']) }}"
+                                        class="flex items-center w-full p-1.5 text-xs text-body transition duration-75 rounded-lg pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand {{ (request()->routeIs('admin.banners.index') && request()->query('type') === 'service_center') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }}">
+                                        Services Center Slider
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.cms.index') }}"
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.cms.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-file-alt w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.cms.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">CMS Pages</span>
+                            </a>
+                        </li>
+                        <!-- Blog Dropdown -->
+                        <li>
+                            <button type="button"
+                                class="flex items-center w-full px-3 py-1.5 text-xs text-body transition duration-75 rounded-lg group hover:bg-neutral-tertiary hover:text-fg-brand {{ request()->routeIs('admin.blogs.*') || request()->routeIs('admin.blog-categories.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }}"
+                                aria-controls="dropdown-blog" data-collapse-toggle="dropdown-blog">
+                                <i class="fas fa-blog w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.blogs.*') || request()->routeIs('admin.blog-categories.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Blog Management</span>
+                                <svg class="w-3 h-3 transition-transform" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                                </svg>
+                            </button>
+                            <ul id="dropdown-blog" class="{{ request()->routeIs('admin.blogs.*') || request()->routeIs('admin.blog-categories.*') ? '' : 'hidden' }} py-1.5 space-y-1">
+                                <li>
+                                    <a href="{{ route('admin.blogs.index') }}"
+                                        class="flex items-center w-full p-1.5 text-xs text-body transition duration-75 rounded-lg pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand {{ request()->routeIs('admin.blogs.index') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }}">
+                                        All Blog Posts
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('admin.blog-categories.index') }}"
+                                        class="flex items-center w-full p-1.5 text-xs text-body transition duration-75 rounded-lg pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand {{ request()->routeIs('admin.blog-categories.index') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }}">
+                                        Blog Categories
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- SECTION 5: CONFIGURATION -->
+                <li class="pt-2">
+                    <span class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Settings & Setup</span>
+                    <ul class="space-y-1">
+                        <li>
+                            <a href="{{ route('admin.shipping.index') }}"
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.shipping.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-truck w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.shipping.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">Shipping Methods</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.payment-methods.index') }}"
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.payment-methods.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-credit-card w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.payment-methods.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">Payment Methods</span>
+                            </a>
+                        </li>
+                        <!-- Settings Dropdown -->
+                        <li>
+                            <button type="button"
+                                class="flex items-center w-full px-3 py-1.5 text-xs text-body transition duration-75 rounded-lg group hover:bg-neutral-tertiary hover:text-fg-brand"
+                                aria-controls="dropdown-settings" data-collapse-toggle="dropdown-settings">
+                                <i class="fas fa-cog w-5 text-center text-gray-500 group-hover:text-fg-brand"></i>
+                                <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">System Settings</span>
+                                <svg class="w-3 h-3 transition-transform" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                                </svg>
+                            </button>
+                            <ul id="dropdown-settings" class="hidden py-1.5 space-y-1">
+                                <li>
+                                    <a href="{{ route('admin.settings.general') }}"
+                                        class="flex items-center w-full p-1.5 text-xs text-body transition duration-75 rounded-lg pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand">General Settings</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('admin.banners.index') }}"
+                                        class="flex items-center w-full p-1.5 text-xs text-body transition duration-75 rounded-lg pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand">Manage Banners</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Log Out -->
+                <li class="pt-4 border-t border-gray-100">
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <a href="{{ route('logout') }}"
                             onclick="event.preventDefault(); this.closest('form').submit();"
-                            class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
-                            <i
-                                class="fas fa-sign-out-alt w-5 text-center text-lg transition duration-75 text-gray-500 group-hover:text-fg-brand"></i>
-                            <span class="flex-1 ms-3 whitespace-nowrap">Sign Out</span>
+                            class="flex items-center px-3 py-2 text-sm text-body rounded-lg hover:bg-red-50 hover:text-red-600 group transition-all">
+                            <i class="fas fa-sign-out-alt w-5 text-center text-base transition duration-75 text-gray-500 group-hover:text-red-600"></i>
+                            <span class="ms-3 font-semibold">Sign Out</span>
                         </a>
                     </form>
                 </li>

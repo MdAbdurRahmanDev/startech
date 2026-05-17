@@ -36,6 +36,7 @@ class CategoryController extends Controller
             'image' => 'nullable|image|max:2048',
             'order' => 'nullable|integer',
             'is_featured' => 'nullable|boolean',
+            'is_header_menu' => 'nullable|boolean',
             'brand_ids' => 'nullable|array',
             'brand_ids.*' => 'exists:brands,id',
         ]);
@@ -52,6 +53,7 @@ class CategoryController extends Controller
             'icon' => $request->icon,
             'image' => $imagePath,
             'is_featured' => $request->has('is_featured'),
+            'is_header_menu' => $request->has('is_header_menu'),
             'order' => $request->order ?? 0,
         ]);
 
@@ -71,6 +73,7 @@ class CategoryController extends Controller
             'image' => 'nullable|image|max:2048',
             'order' => 'nullable|integer',
             'is_featured' => 'nullable|boolean',
+            'is_header_menu' => 'nullable|boolean',
             'brand_ids' => 'nullable|array',
             'brand_ids.*' => 'exists:brands,id',
         ]);
@@ -87,6 +90,7 @@ class CategoryController extends Controller
             'parent_id' => $request->parent_id ?: null,
             'icon' => $request->icon,
             'is_featured' => $request->has('is_featured'),
+            'is_header_menu' => $request->has('is_header_menu'),
             'order' => $request->order ?? 0,
             'image' => $category->image,
         ]);
@@ -115,5 +119,11 @@ class CategoryController extends Controller
     {
         $category->update(['is_featured' => !$category->is_featured]);
         return back()->with('success', 'Featured status updated.');
+    }
+
+    public function toggleHeaderMenu(Category $category)
+    {
+        $category->update(['is_header_menu' => !$category->is_header_menu]);
+        return back()->with('success', 'Header Menu status updated.');
     }
 }

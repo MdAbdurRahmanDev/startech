@@ -11,8 +11,8 @@
 
         .builder-card {
             background: #fff;
-            border-radius: 4px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
             margin-bottom: 20px;
         }
 
@@ -35,22 +35,23 @@
             flex-direction: column;
             align-items: center;
             gap: 5px;
-            color: #666;
+            color: #ef4a23;
             cursor: pointer;
-            transition: color 0.2s;
+            transition: transform 0.2s, opacity 0.2s;
         }
 
         .action-item:hover {
-            color: #ef4a23;
+            transform: translateY(-2px);
+            opacity: 0.9;
         }
 
         .action-item i {
-            font-size: 20px;
+            font-size: 22px;
         }
 
         .action-item span {
             font-size: 11px;
-            font-bold: 600;
+            font-weight: 600;
         }
 
         .builder-title-bar {
@@ -59,7 +60,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
         }
 
         .wattage-box {
@@ -68,6 +70,7 @@
             border-radius: 8px;
             text-align: center;
             position: relative;
+            background: #fff8f6;
         }
 
         .wattage-box .beta-tag {
@@ -88,20 +91,22 @@
             padding: 10px 30px;
             border-radius: 8px;
             text-align: center;
+            min-width: 140px;
         }
 
         .component-group-title {
             background: #666e7a;
             color: #fff;
-            padding: 8px 15px;
+            padding: 10px 20px;
             font-size: 13px;
             font-weight: bold;
+            letter-spacing: 0.5px;
         }
 
         .component-row {
             display: flex;
             align-items: center;
-            padding: 15px;
+            padding: 18px 20px;
             border-bottom: 1px solid #f1f1f1;
             background: #fff;
             transition: background 0.2s;
@@ -112,61 +117,150 @@
         }
 
         .component-icon {
-            width: 50px;
-            height: 50px;
-            background: #f8f9fa;
+            width: 52px;
+            height: 52px;
+            background: #eff4fc;
             border-radius: 8px;
             display: flex;
-            items-center: center;
+            align-items: center;
             justify-content: center;
             color: #3749bb;
             font-size: 24px;
             margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .component-thumbnail {
+            width: 52px;
+            height: 52px;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            flex-shrink: 0;
+            padding: 4px;
         }
 
         .component-info {
             flex: 1;
+            min-width: 0; /* Prevents overflow */
         }
 
         .component-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
+            font-size: 13px;
+            font-weight: 700;
+            color: #3749bb;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
+        .component-name.selected {
+            color: #3749bb;
+        }
+
         .required-tag {
             background: #666e7a;
             color: #fff;
-            font-size: 10px;
+            font-size: 9px;
             padding: 2px 6px;
             border-radius: 3px;
-            font-weight: normal;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .product-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #111827;
+            margin-top: 4px;
+            line-height: 1.4;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding-right: 15px;
+        }
+
+        .wattage-spec {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            color: #ef4a23;
+            font-weight: 600;
+            margin-top: 6px;
         }
 
         .skeleton-line {
-            height: 8px;
-            background: #f0f0f0;
-            width: 60%;
-            margin-top: 10px;
-            border-radius: 4px;
+            height: 6px;
+            background: #f3f4f6;
+            width: 65%;
+            margin-top: 12px;
+            border-radius: 3px;
+        }
+
+        .component-price {
+            min-width: 120px;
+            text-align: right;
+            font-weight: 700;
+            font-size: 15px;
+            color: #111827;
+            padding-right: 25px;
         }
 
         .btn-choose {
             border: 2px solid #3749bb;
             color: #3749bb;
-            padding: 8px 25px;
-            border-radius: 4px;
+            padding: 7px 22px;
+            border-radius: 6px;
             font-weight: bold;
             font-size: 13px;
             transition: all 0.2s;
+            text-align: center;
+            min-width: 90px;
         }
 
         .btn-choose:hover {
             background: #3749bb;
             color: #fff;
+        }
+
+        .action-buttons-cell {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-remove-item {
+            color: #9ca3af;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: color 0.2s;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-remove-item:hover {
+            color: #ef4a23;
+        }
+
+        .btn-swap-item {
+            color: #9ca3af;
+            font-size: 18px;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-swap-item:hover {
+            color: #3749bb;
         }
 
         .bottom-banner {
@@ -183,45 +277,50 @@
         .custom-checkbox {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             font-size: 13px;
-            color: #666;
-            margin-top: 10px;
+            color: #4b5563;
+            margin-top: 8px;
+        }
+
+        .custom-checkbox input {
+            cursor: pointer;
+            accent-color: #ef4a23;
         }
     </style>
 @endsection
 
 @section('content')
     <div class="pc-builder-container">
-        <div class="max-w-[1100px] mx-auto pt-8">
+        <div class="max-w-[1100px] mx-auto pt-8 px-4">
             
             <!-- Top Actions -->
             <div class="builder-card builder-header">
-                <div class="logo">
+                <div class="logo bg-white p-1.5 shadow-sm border border-gray-100 flex items-center justify-center" style="border-radius: 10px;">
                     <!-- Brand Logo -->
-                    <img src="{{ $setting && $setting->logo ? asset('storage/' . $setting->logo) : asset('frontend/images/logo.png') }}" class="h-12">
+                    <img src="{{ $setting && $setting->logo ? asset('storage/' . $setting->logo) : asset('frontend/images/logo.png') }}" class="h-9 object-contain" style="border-radius: 8px;">
                 </div>
                 <div class="builder-actions">
-                    <form action="{{ route('pc-builder.add-to-cart') }}" method="POST">
+                    <form action="{{ route('pc-builder.add-to-cart') }}" method="POST" class="inline">
                         @csrf
                         <button type="submit" class="action-item bg-transparent border-none p-0 outline-none">
-                            <i class="fas fa-cart-plus"></i>
+                            <i class="fas fa-shopping-basket"></i>
                             <span>Add to Cart</span>
                         </button>
                     </form>
-                    <form action="{{ route('pc-builder.save') }}" method="POST">
+                    <form action="{{ route('pc-builder.save') }}" method="POST" class="inline">
                         @csrf
                         <button type="submit" class="action-item bg-transparent border-none p-0 outline-none">
                             <i class="fas fa-save"></i>
                             <span>Save PC</span>
                         </button>
                     </form>
-                    <div class="action-item">
+                    <button onclick="window.print()" class="action-item bg-transparent border-none p-0 outline-none">
                         <i class="fas fa-print"></i>
                         <span>Print</span>
-                    </div>
-                    <div class="action-item">
-                        <i class="fas fa-camera"></i>
+                    </button>
+                    <div class="action-item" onclick="alert('Screenshot functionality is ready. Press Ctrl+P or print to save as PDF.')">
+                        <i class="fas fa-images"></i>
                         <span>Screenshot</span>
                     </div>
                 </div>
@@ -229,30 +328,64 @@
 
             @php
                 $totalPrice = 0;
+                $totalWattage = 0;
                 $itemCount = count($selectedProducts);
-                foreach($selectedProducts as $prod) {
+                
+                // Smart Wattage Extractor helper
+                $getWattage = function($product, $componentKey) {
+                    $name = strtolower($product->name);
+                    
+                    // Fallback baseline wattages
+                    $fallbacks = [
+                        'cpu' => 65,
+                        'cpu-cooler' => 15,
+                        'motherboard' => 45,
+                        'ram' => 5,
+                        'storage' => 5,
+                        'graphics-card' => 120,
+                        'power-supply' => 0,
+                        'casing' => 0,
+                        'monitor' => 25,
+                        'casing-cooler' => 3,
+                        'keyboard' => 2,
+                        'mouse' => 2
+                    ];
+                    $baseWatt = $fallbacks[$componentKey] ?? 10;
+                    
+                    // Try extracting from product name (e.g. 35W, 65W)
+                    if (preg_match('/(\d+)\s*(W|w)(att)?\b/', $name, $matches)) {
+                        $val = (int)$matches[1];
+                        if ($val > 0 && $val < 1500) {
+                            return $val;
+                        }
+                    }
+                    return $baseWatt;
+                };
+
+                foreach($selectedProducts as $key => $prod) {
                     $totalPrice += ($prod->discount_price && $prod->discount_price < $prod->price) ? $prod->discount_price : $prod->price;
+                    $totalWattage += $getWattage($prod, $key);
                 }
             @endphp
 
             <!-- Title and Stats -->
             <div class="builder-card builder-title-bar">
                 <div>
-                    <h1 class="text-[#3749bb] font-bold text-[15px]">PC Builder - Build Your Own Computer - Star Tech</h1>
+                    <h1 class="text-[#3749bb] font-extrabold text-[16px] md:text-[18px]">PC Builder - Build Your Own Computer - IOS BD</h1>
                     <div class="custom-checkbox">
                         <input type="checkbox" id="hide-unconfigured">
-                        <label for="hide-unconfigured">Hide Unconfigured Components</label>
+                        <label for="hide-unconfigured" class="cursor-pointer font-medium select-none">Hide Unconfigured Components</label>
                     </div>
                 </div>
                 <div class="flex gap-4">
                     <div class="wattage-box">
                         <span class="beta-tag">BETA</span>
-                        <div class="text-[18px] font-bold text-gray-800">0W</div>
-                        <div class="text-[10px] text-gray-500 uppercase font-bold">Estimated Wattage</div>
+                        <div class="text-[18px] font-extrabold text-gray-800">{{ $totalWattage }}W</div>
+                        <div class="text-[9px] text-gray-500 uppercase font-bold tracking-wider">Estimated Wattage</div>
                     </div>
-                    <div class="price-box">
-                        <div class="text-[18px] font-bold">{{ number_format($totalPrice, 0) }}৳</div>
-                        <div class="text-[10px] uppercase font-bold">{{ $itemCount }} Items</div>
+                    <div class="price-box flex flex-col justify-center">
+                        <div class="text-[18px] font-extrabold">{{ number_format($totalPrice, 0) }}৳</div>
+                        <div class="text-[9px] uppercase font-bold tracking-wider">{{ $itemCount }} {{ $itemCount == 1 ? 'Item' : 'Items' }}</div>
                     </div>
                 </div>
             </div>
@@ -261,462 +394,228 @@
             <div class="builder-card overflow-hidden">
                 <div class="component-group-title uppercase">Core Components</div>
                 
-                <!-- CPU -->
-                <div class="component-row">
-                    <div class="component-icon">
-                        <i class="fas fa-microchip"></i>
-                    </div>
-                    <div class="component-info">
-                        <div class="component-name">
-                            CPU <span class="required-tag">Required</span>
+                @php
+                    $components = [
+                        [
+                            'key' => 'cpu',
+                            'label' => 'CPU',
+                            'required' => true,
+                            'icon' => 'fas fa-microchip',
+                            'route' => 'processor',
+                        ],
+                        [
+                            'key' => 'cpu-cooler',
+                            'label' => 'CPU Cooler',
+                            'required' => false,
+                            'icon' => 'fas fa-fan',
+                            'route' => 'cpu cooler',
+                        ],
+                        [
+                            'key' => 'motherboard',
+                            'label' => 'Motherboard',
+                            'required' => true,
+                            'icon' => 'fas fa-memory',
+                            'route' => 'motherboard',
+                        ],
+                        [
+                            'key' => 'ram',
+                            'label' => 'RAM',
+                            'required' => true,
+                            'icon' => 'fas fa-sim-card',
+                            'route' => 'ram',
+                        ],
+                        [
+                            'key' => 'storage',
+                            'label' => 'Storage',
+                            'required' => true,
+                            'icon' => 'fas fa-hdd',
+                            'route' => 'ssd',
+                        ],
+                        [
+                            'key' => 'graphics-card',
+                            'label' => 'Graphics Card',
+                            'required' => false,
+                            'icon' => 'fas fa-video',
+                            'route' => 'graphics card',
+                        ],
+                        [
+                            'key' => 'power-supply',
+                            'label' => 'Power Supply',
+                            'required' => false,
+                            'icon' => 'fas fa-plug',
+                            'route' => 'power supply',
+                        ],
+                        [
+                            'key' => 'casing',
+                            'label' => 'Casing',
+                            'required' => false,
+                            'icon' => 'fas fa-desktop',
+                            'route' => 'casing',
+                        ],
+                    ];
+                @endphp
+
+                @foreach($components as $comp)
+                    @php
+                        $isSelected = isset($selectedProducts[$comp['key']]);
+                        $product = $isSelected ? $selectedProducts[$comp['key']] : null;
+                    @endphp
+                    <div class="component-row" data-component="{{ $comp['key'] }}">
+                        @if($isSelected)
+                            <div class="component-thumbnail">
+                                <img src="{{ asset('storage/' . $product->thumbnail) }}" class="h-full w-full object-contain">
+                            </div>
+                        @else
+                            <div class="component-icon">
+                                <i class="{{ $comp['icon'] }}"></i>
+                            </div>
+                        @endif
+
+                        <div class="component-info">
+                            <div class="component-name {{ $isSelected ? 'selected' : '' }}">
+                                {{ $comp['label'] }}
+                                @if($comp['required'])
+                                    <span class="required-tag">Required</span>
+                                @endif
+                            </div>
+                            
+                            @if($isSelected)
+                                <div class="product-title font-semibold">{{ $product->name }}</div>
+                                <div class="wattage-spec">
+                                    <i class="fas fa-bolt"></i>
+                                    <span>{{ $getWattage($product, $comp['key']) }}W</span>
+                                </div>
+                            @else
+                                <div class="skeleton-line"></div>
+                            @endif
                         </div>
-                        @if(isset($selectedProducts['cpu']))
-                            <div class="selected-product flex items-center gap-4 mt-2">
-                                <img src="{{ asset('storage/' . $selectedProducts['cpu']->thumbnail) }}" class="h-10 w-10 object-contain">
-                                <div class="text-sm font-bold text-gray-700">{{ $selectedProducts['cpu']->name }}</div>
-                            </div>
-                        @else
-                            <div class="skeleton-line"></div>
-                        @endif
-                    </div>
-                    <div class="component-price px-10 font-bold text-[#3749bb]">
-                        @if(isset($selectedProducts['cpu']))
-                            {{ number_format(($selectedProducts['cpu']->discount_price && $selectedProducts['cpu']->discount_price < $selectedProducts['cpu']->price) ? $selectedProducts['cpu']->discount_price : $selectedProducts['cpu']->price, 0) }}৳
-                        @endif
-                    </div>
-                    <div class="flex items-center gap-3">
-                        @if(isset($selectedProducts['cpu']))
-                            <form action="{{ route('pc-builder.remove') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="component" value="cpu">
-                                <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors">
-                                    <i class="fas fa-times-circle text-xl"></i>
-                                </button>
-                            </form>
-                        @endif
-                        <a href="{{ url('category/' . ($categories['processor'] ?? 'processor')) }}?builder=cpu" class="btn-choose">
-                            {{ isset($selectedProducts['cpu']) ? 'Change' : 'Choose' }}
-                        </a>
-                    </div>
-                </div>
 
-                <!-- CPU Cooler -->
-                <div class="component-row">
-                    <div class="component-icon">
-                        <i class="fas fa-fan"></i>
-                    </div>
-                    <div class="component-info">
-                        <div class="component-name">CPU Cooler</div>
-                        @if(isset($selectedProducts['cpu-cooler']))
-                            <div class="selected-product flex items-center gap-4 mt-2">
-                                <img src="{{ asset('storage/' . $selectedProducts['cpu-cooler']->thumbnail) }}" class="h-10 w-10 object-contain">
-                                <div class="text-sm font-bold text-gray-700">{{ $selectedProducts['cpu-cooler']->name }}</div>
-                            </div>
-                        @else
-                            <div class="skeleton-line"></div>
-                        @endif
-                    </div>
-                    <div class="component-price px-10 font-bold text-[#3749bb]">
-                        @if(isset($selectedProducts['cpu-cooler']))
-                            {{ number_format(($selectedProducts['cpu-cooler']->discount_price && $selectedProducts['cpu-cooler']->discount_price < $selectedProducts['cpu-cooler']->price) ? $selectedProducts['cpu-cooler']->discount_price : $selectedProducts['cpu-cooler']->price, 0) }}৳
-                        @endif
-                    </div>
-                    <div class="flex items-center gap-3">
-                        @if(isset($selectedProducts['cpu-cooler']))
-                            <form action="{{ route('pc-builder.remove') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="component" value="cpu-cooler">
-                                <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors">
-                                    <i class="fas fa-times-circle text-xl"></i>
-                                </button>
-                            </form>
-                        @endif
-                        <a href="{{ url('category/' . ($categories['cpu cooler'] ?? 'cpu-cooler')) }}?builder=cpu-cooler" class="btn-choose">
-                            {{ isset($selectedProducts['cpu-cooler']) ? 'Change' : 'Choose' }}
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Motherboard -->
-                <div class="component-row">
-                    <div class="component-icon">
-                        <i class="fas fa-memory"></i>
-                    </div>
-                    <div class="component-info">
-                        <div class="component-name">
-                            Motherboard <span class="required-tag">Required</span>
+                        <div class="component-price">
+                            @if($isSelected)
+                                {{ number_format(($product->discount_price && $product->discount_price < $product->price) ? $product->discount_price : $product->price, 0) }}৳
+                            @endif
                         </div>
-                        @if(isset($selectedProducts['motherboard']))
-                            <div class="selected-product flex items-center gap-4 mt-2">
-                                <img src="{{ asset('storage/' . $selectedProducts['motherboard']->thumbnail) }}" class="h-10 w-10 object-contain">
-                                <div class="text-sm font-bold text-gray-700">{{ $selectedProducts['motherboard']->name }}</div>
-                            </div>
-                        @else
-                            <div class="skeleton-line"></div>
-                        @endif
-                    </div>
-                    <div class="component-price px-10 font-bold text-[#3749bb]">
-                        @if(isset($selectedProducts['motherboard']))
-                            {{ number_format(($selectedProducts['motherboard']->discount_price && $selectedProducts['motherboard']->discount_price < $selectedProducts['motherboard']->price) ? $selectedProducts['motherboard']->discount_price : $selectedProducts['motherboard']->price, 0) }}৳
-                        @endif
-                    </div>
-                    <div class="flex items-center gap-3">
-                        @if(isset($selectedProducts['motherboard']))
-                            <form action="{{ route('pc-builder.remove') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="component" value="motherboard">
-                                <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors">
-                                    <i class="fas fa-times-circle text-xl"></i>
-                                </button>
-                            </form>
-                        @endif
-                        <a href="{{ url('category/' . ($categories['motherboard'] ?? 'motherboard')) }}?builder=motherboard" class="btn-choose">
-                            {{ isset($selectedProducts['motherboard']) ? 'Change' : 'Choose' }}
-                        </a>
-                    </div>
-                </div>
 
-                <!-- RAM -->
-                <div class="component-row">
-                    <div class="component-icon">
-                        <i class="fas fa-sim-card"></i>
-                    </div>
-                    <div class="component-info">
-                        <div class="component-name">
-                            RAM <span class="required-tag">Required</span>
+                        <div class="action-buttons-cell">
+                            @if($isSelected)
+                                <form action="{{ route('pc-builder.remove') }}" method="POST" class="inline">
+                                    @csrf
+                                    <input type="hidden" name="component" value="{{ $comp['key'] }}">
+                                    <button type="submit" class="btn-remove-item" title="Remove Component">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </form>
+                                <a href="{{ url('category/' . ($categories[$comp['route']] ?? str_replace(' ', '-', $comp['route']))) }}?builder={{ $comp['key'] }}" class="btn-swap-item" title="Change Component">
+                                    <i class="fas fa-sync-alt"></i>
+                                </a>
+                            @else
+                                <a href="{{ url('category/' . ($categories[$comp['route']] ?? str_replace(' ', '-', $comp['route']))) }}?builder={{ $comp['key'] }}" class="btn-choose">
+                                    Choose
+                                </a>
+                            @endif
                         </div>
-                        @if(isset($selectedProducts['ram']))
-                            <div class="selected-product flex items-center gap-4 mt-2">
-                                <img src="{{ asset('storage/' . $selectedProducts['ram']->thumbnail) }}" class="h-10 w-10 object-contain">
-                                <div class="text-sm font-bold text-gray-700">{{ $selectedProducts['ram']->name }}</div>
-                            </div>
-                        @else
-                            <div class="skeleton-line"></div>
-                        @endif
                     </div>
-                    <div class="component-price px-10 font-bold text-[#3749bb]">
-                        @if(isset($selectedProducts['ram']))
-                            {{ number_format(($selectedProducts['ram']->discount_price && $selectedProducts['ram']->discount_price < $selectedProducts['ram']->price) ? $selectedProducts['ram']->discount_price : $selectedProducts['ram']->price, 0) }}৳
-                        @endif
-                    </div>
-                    <div class="flex items-center gap-3">
-                        @if(isset($selectedProducts['ram']))
-                            <form action="{{ route('pc-builder.remove') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="component" value="ram">
-                                <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors">
-                                    <i class="fas fa-times-circle text-xl"></i>
-                                </button>
-                            </form>
-                        @endif
-                        <a href="{{ url('category/' . ($categories['ram'] ?? 'ram')) }}?builder=ram" class="btn-choose">
-                            {{ isset($selectedProducts['ram']) ? 'Change' : 'Choose' }}
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Storage -->
-                <div class="component-row">
-                    <div class="component-icon">
-                        <i class="fas fa-hdd"></i>
-                    </div>
-                    <div class="component-info">
-                        <div class="component-name">
-                            Storage <span class="required-tag">Required</span>
-                        </div>
-                        @if(isset($selectedProducts['storage']))
-                            <div class="selected-product flex items-center gap-4 mt-2">
-                                <img src="{{ asset('storage/' . $selectedProducts['storage']->thumbnail) }}" class="h-10 w-10 object-contain">
-                                <div class="text-sm font-bold text-gray-700">{{ $selectedProducts['storage']->name }}</div>
-                            </div>
-                        @else
-                            <div class="skeleton-line"></div>
-                        @endif
-                    </div>
-                    <div class="component-price px-10 font-bold text-[#3749bb]">
-                        @if(isset($selectedProducts['storage']))
-                            {{ number_format(($selectedProducts['storage']->discount_price && $selectedProducts['storage']->discount_price < $selectedProducts['storage']->price) ? $selectedProducts['storage']->discount_price : $selectedProducts['storage']->price, 0) }}৳
-                        @endif
-                    </div>
-                    <div class="flex items-center gap-3">
-                        @if(isset($selectedProducts['storage']))
-                            <form action="{{ route('pc-builder.remove') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="component" value="storage">
-                                <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors">
-                                    <i class="fas fa-times-circle text-xl"></i>
-                                </button>
-                            </form>
-                        @endif
-                        <a href="{{ url('category/' . ($categories['ssd'] ?? 'ssd')) }}?builder=storage" class="btn-choose">
-                            {{ isset($selectedProducts['storage']) ? 'Change' : 'Choose' }}
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Graphics Card -->
-                <div class="component-row">
-                    <div class="component-icon">
-                        <i class="fas fa-video"></i>
-                    </div>
-                    <div class="component-info">
-                        <div class="component-name">Graphics Card</div>
-                        @if(isset($selectedProducts['graphics-card']))
-                            <div class="selected-product flex items-center gap-4 mt-2">
-                                <img src="{{ asset('storage/' . $selectedProducts['graphics-card']->thumbnail) }}" class="h-10 w-10 object-contain">
-                                <div class="text-sm font-bold text-gray-700">{{ $selectedProducts['graphics-card']->name }}</div>
-                            </div>
-                        @else
-                            <div class="skeleton-line"></div>
-                        @endif
-                    </div>
-                    <div class="component-price px-10 font-bold text-[#3749bb]">
-                        @if(isset($selectedProducts['graphics-card']))
-                            {{ number_format(($selectedProducts['graphics-card']->discount_price && $selectedProducts['graphics-card']->discount_price < $selectedProducts['graphics-card']->price) ? $selectedProducts['graphics-card']->discount_price : $selectedProducts['graphics-card']->price, 0) }}৳
-                        @endif
-                    </div>
-                    <div class="flex items-center gap-3">
-                        @if(isset($selectedProducts['graphics-card']))
-                            <form action="{{ route('pc-builder.remove') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="component" value="graphics-card">
-                                <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors">
-                                    <i class="fas fa-times-circle text-xl"></i>
-                                </button>
-                            </form>
-                        @endif
-                        <a href="{{ url('category/' . ($categories['graphics card'] ?? 'graphics-card')) }}?builder=graphics-card" class="btn-choose">
-                            {{ isset($selectedProducts['graphics-card']) ? 'Change' : 'Choose' }}
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Power Supply -->
-                <div class="component-row">
-                    <div class="component-icon">
-                        <i class="fas fa-plug"></i>
-                    </div>
-                    <div class="component-info">
-                        <div class="component-name">Power Supply</div>
-                        @if(isset($selectedProducts['power-supply']))
-                            <div class="selected-product flex items-center gap-4 mt-2">
-                                <img src="{{ asset('storage/' . $selectedProducts['power-supply']->thumbnail) }}" class="h-10 w-10 object-contain">
-                                <div class="text-sm font-bold text-gray-700">{{ $selectedProducts['power-supply']->name }}</div>
-                            </div>
-                        @else
-                            <div class="skeleton-line"></div>
-                        @endif
-                    </div>
-                    <div class="component-price px-10 font-bold text-[#3749bb]">
-                        @if(isset($selectedProducts['power-supply']))
-                            {{ number_format(($selectedProducts['power-supply']->discount_price && $selectedProducts['power-supply']->discount_price < $selectedProducts['power-supply']->price) ? $selectedProducts['power-supply']->discount_price : $selectedProducts['power-supply']->price, 0) }}৳
-                        @endif
-                    </div>
-                    <div class="flex items-center gap-3">
-                        @if(isset($selectedProducts['power-supply']))
-                            <form action="{{ route('pc-builder.remove') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="component" value="power-supply">
-                                <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors">
-                                    <i class="fas fa-times-circle text-xl"></i>
-                                </button>
-                            </form>
-                        @endif
-                        <a href="{{ url('category/' . ($categories['power supply'] ?? 'power-supply')) }}?builder=power-supply" class="btn-choose">
-                            {{ isset($selectedProducts['power-supply']) ? 'Change' : 'Choose' }}
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Casing -->
-                <div class="component-row">
-                    <div class="component-icon">
-                        <i class="fas fa-desktop"></i>
-                    </div>
-                    <div class="component-info">
-                        <div class="component-name">Casing</div>
-                        @if(isset($selectedProducts['casing']))
-                            <div class="selected-product flex items-center gap-4 mt-2">
-                                <img src="{{ asset('storage/' . $selectedProducts['casing']->thumbnail) }}" class="h-10 w-10 object-contain">
-                                <div class="text-sm font-bold text-gray-700">{{ $selectedProducts['casing']->name }}</div>
-                            </div>
-                        @else
-                            <div class="skeleton-line"></div>
-                        @endif
-                    </div>
-                    <div class="component-price px-10 font-bold text-[#3749bb]">
-                        @if(isset($selectedProducts['casing']))
-                            {{ number_format(($selectedProducts['casing']->discount_price && $selectedProducts['casing']->discount_price < $selectedProducts['casing']->price) ? $selectedProducts['casing']->discount_price : $selectedProducts['casing']->price, 0) }}৳
-                        @endif
-                    </div>
-                    <div class="flex items-center gap-3">
-                        @if(isset($selectedProducts['casing']))
-                            <form action="{{ route('pc-builder.remove') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="component" value="casing">
-                                <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors">
-                                    <i class="fas fa-times-circle text-xl"></i>
-                                </button>
-                            </form>
-                        @endif
-                        <a href="{{ url('category/' . ($categories['casing'] ?? 'casing')) }}?builder=casing" class="btn-choose">
-                            {{ isset($selectedProducts['casing']) ? 'Change' : 'Choose' }}
-                        </a>
-                    </div>
-                </div>
+                @endforeach
             </div>
 
             <!-- Peripherals & Others -->
             <div class="builder-card overflow-hidden">
                 <div class="component-group-title uppercase">Peripherals & Others</div>
                 
-                <!-- Monitor -->
-                <div class="component-row">
-                    <div class="component-icon">
-                        <i class="fas fa-tv"></i>
-                    </div>
-                    <div class="component-info">
-                        <div class="component-name">Monitor</div>
-                        @if(isset($selectedProducts['monitor']))
-                            <div class="selected-product flex items-center gap-4 mt-2">
-                                <img src="{{ asset('storage/' . $selectedProducts['monitor']->thumbnail) }}" class="h-10 w-10 object-contain">
-                                <div class="text-sm font-bold text-gray-700">{{ $selectedProducts['monitor']->name }}</div>
-                            </div>
-                        @else
-                            <div class="skeleton-line"></div>
-                        @endif
-                    </div>
-                    <div class="component-price px-10 font-bold text-[#3749bb]">
-                        @if(isset($selectedProducts['monitor']))
-                            {{ number_format(($selectedProducts['monitor']->discount_price && $selectedProducts['monitor']->discount_price < $selectedProducts['monitor']->price) ? $selectedProducts['monitor']->discount_price : $selectedProducts['monitor']->price, 0) }}৳
-                        @endif
-                    </div>
-                    <div class="flex items-center gap-3">
-                        @if(isset($selectedProducts['monitor']))
-                            <form action="{{ route('pc-builder.remove') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="component" value="monitor">
-                                <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors">
-                                    <i class="fas fa-times-circle text-xl"></i>
-                                </button>
-                            </form>
-                        @endif
-                        <a href="{{ url('category/' . ($categories['monitor'] ?? 'monitor')) }}?builder=monitor" class="btn-choose">
-                            {{ isset($selectedProducts['monitor']) ? 'Change' : 'Choose' }}
-                        </a>
-                    </div>
-                </div>
+                @php
+                    $peripherals = [
+                        [
+                            'key' => 'monitor',
+                            'label' => 'Monitor',
+                            'required' => false,
+                            'icon' => 'fas fa-tv',
+                            'route' => 'monitor',
+                        ],
+                        [
+                            'key' => 'casing-cooler',
+                            'label' => 'Casing Cooler',
+                            'required' => false,
+                            'icon' => 'fas fa-wind',
+                            'route' => 'casing cooler',
+                        ],
+                        [
+                            'key' => 'keyboard',
+                            'label' => 'Keyboard',
+                            'required' => false,
+                            'icon' => 'fas fa-keyboard',
+                            'route' => 'keyboard',
+                        ],
+                        [
+                            'key' => 'mouse',
+                            'label' => 'Mouse',
+                            'required' => false,
+                            'icon' => 'fas fa-mouse',
+                            'route' => 'mouse',
+                        ],
+                    ];
+                @endphp
 
-                <!-- Casing Cooler -->
-                <div class="component-row">
-                    <div class="component-icon">
-                        <i class="fas fa-wind"></i>
-                    </div>
-                    <div class="component-info">
-                        <div class="component-name">Casing Cooler</div>
-                        @if(isset($selectedProducts['casing-cooler']))
-                            <div class="selected-product flex items-center gap-4 mt-2">
-                                <img src="{{ asset('storage/' . $selectedProducts['casing-cooler']->thumbnail) }}" class="h-10 w-10 object-contain">
-                                <div class="text-sm font-bold text-gray-700">{{ $selectedProducts['casing-cooler']->name }}</div>
+                @foreach($peripherals as $comp)
+                    @php
+                        $isSelected = isset($selectedProducts[$comp['key']]);
+                        $product = $isSelected ? $selectedProducts[$comp['key']] : null;
+                    @endphp
+                    <div class="component-row" data-component="{{ $comp['key'] }}">
+                        @if($isSelected)
+                            <div class="component-thumbnail">
+                                <img src="{{ asset('storage/' . $product->thumbnail) }}" class="h-full w-full object-contain">
                             </div>
                         @else
-                            <div class="skeleton-line"></div>
+                            <div class="component-icon">
+                                <i class="{{ $comp['icon'] }}"></i>
+                            </div>
                         @endif
-                    </div>
-                    <div class="component-price px-10 font-bold text-[#3749bb]">
-                        @if(isset($selectedProducts['casing-cooler']))
-                            {{ number_format(($selectedProducts['casing-cooler']->discount_price && $selectedProducts['casing-cooler']->discount_price < $selectedProducts['casing-cooler']->price) ? $selectedProducts['casing-cooler']->discount_price : $selectedProducts['casing-cooler']->price, 0) }}৳
-                        @endif
-                    </div>
-                    <div class="flex items-center gap-3">
-                        @if(isset($selectedProducts['casing-cooler']))
-                            <form action="{{ route('pc-builder.remove') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="component" value="casing-cooler">
-                                <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors">
-                                    <i class="fas fa-times-circle text-xl"></i>
-                                </button>
-                            </form>
-                        @endif
-                        <a href="{{ url('category/' . ($categories['casing cooler'] ?? 'casing-cooler')) }}?builder=casing-cooler" class="btn-choose">
-                            {{ isset($selectedProducts['casing-cooler']) ? 'Change' : 'Choose' }}
-                        </a>
-                    </div>
-                </div>
 
-                <!-- Keyboard -->
-                <div class="component-row">
-                    <div class="component-icon">
-                        <i class="fas fa-keyboard"></i>
-                    </div>
-                    <div class="component-info">
-                        <div class="component-name">Keyboard</div>
-                        @if(isset($selectedProducts['keyboard']))
-                            <div class="selected-product flex items-center gap-4 mt-2">
-                                <img src="{{ asset('storage/' . $selectedProducts['keyboard']->thumbnail) }}" class="h-10 w-10 object-contain">
-                                <div class="text-sm font-bold text-gray-700">{{ $selectedProducts['keyboard']->name }}</div>
+                        <div class="component-info">
+                            <div class="component-name {{ $isSelected ? 'selected' : '' }}">
+                                {{ $comp['label'] }}
+                                @if($comp['required'])
+                                    <span class="required-tag">Required</span>
+                                @endif
                             </div>
-                        @else
-                            <div class="skeleton-line"></div>
-                        @endif
-                    </div>
-                    <div class="component-price px-10 font-bold text-[#3749bb]">
-                        @if(isset($selectedProducts['keyboard']))
-                            {{ number_format(($selectedProducts['keyboard']->discount_price && $selectedProducts['keyboard']->discount_price < $selectedProducts['keyboard']->price) ? $selectedProducts['keyboard']->discount_price : $selectedProducts['keyboard']->price, 0) }}৳
-                        @endif
-                    </div>
-                    <div class="flex items-center gap-3">
-                        @if(isset($selectedProducts['keyboard']))
-                            <form action="{{ route('pc-builder.remove') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="component" value="keyboard">
-                                <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors">
-                                    <i class="fas fa-times-circle text-xl"></i>
-                                </button>
-                            </form>
-                        @endif
-                        <a href="{{ url('category/' . ($categories['keyboard'] ?? 'keyboard')) }}?builder=keyboard" class="btn-choose">
-                            {{ isset($selectedProducts['keyboard']) ? 'Change' : 'Choose' }}
-                        </a>
-                    </div>
-                </div>
+                            
+                            @if($isSelected)
+                                <div class="product-title font-semibold">{{ $product->name }}</div>
+                                <div class="wattage-spec">
+                                    <i class="fas fa-bolt"></i>
+                                    <span>{{ $getWattage($product, $comp['key']) }}W</span>
+                                </div>
+                            @else
+                                <div class="skeleton-line"></div>
+                            @endif
+                        </div>
 
-                <!-- Mouse -->
-                <div class="component-row">
-                    <div class="component-icon">
-                        <i class="fas fa-mouse"></i>
+                        <div class="component-price">
+                            @if($isSelected)
+                                {{ number_format(($product->discount_price && $product->discount_price < $product->price) ? $product->discount_price : $product->price, 0) }}৳
+                            @endif
+                        </div>
+
+                        <div class="action-buttons-cell">
+                            @if($isSelected)
+                                <form action="{{ route('pc-builder.remove') }}" method="POST" class="inline">
+                                    @csrf
+                                    <input type="hidden" name="component" value="{{ $comp['key'] }}">
+                                    <button type="submit" class="btn-remove-item" title="Remove Component">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </form>
+                                <a href="{{ url('category/' . ($categories[$comp['route']] ?? str_replace(' ', '-', $comp['route']))) }}?builder={{ $comp['key'] }}" class="btn-swap-item" title="Change Component">
+                                    <i class="fas fa-sync-alt"></i>
+                                </a>
+                            @else
+                                <a href="{{ url('category/' . ($categories[$comp['route']] ?? str_replace(' ', '-', $comp['route']))) }}?builder={{ $comp['key'] }}" class="btn-choose">
+                                    Choose
+                                </a>
+                            @endif
+                        </div>
                     </div>
-                    <div class="component-info">
-                        <div class="component-name">Mouse</div>
-                        @if(isset($selectedProducts['mouse']))
-                            <div class="selected-product flex items-center gap-4 mt-2">
-                                <img src="{{ asset('storage/' . $selectedProducts['mouse']->thumbnail) }}" class="h-10 w-10 object-contain">
-                                <div class="text-sm font-bold text-gray-700">{{ $selectedProducts['mouse']->name }}</div>
-                            </div>
-                        @else
-                            <div class="skeleton-line"></div>
-                        @endif
-                    </div>
-                    <div class="component-price px-10 font-bold text-[#3749bb]">
-                        @if(isset($selectedProducts['mouse']))
-                            {{ number_format(($selectedProducts['mouse']->discount_price && $selectedProducts['mouse']->discount_price < $selectedProducts['mouse']->price) ? $selectedProducts['mouse']->discount_price : $selectedProducts['mouse']->price, 0) }}৳
-                        @endif
-                    </div>
-                    <div class="flex items-center gap-3">
-                        @if(isset($selectedProducts['mouse']))
-                            <form action="{{ route('pc-builder.remove') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="component" value="mouse">
-                                <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors">
-                                    <i class="fas fa-times-circle text-xl"></i>
-                                </button>
-                            </form>
-                        @endif
-                        <a href="{{ url('category/' . ($categories['mouse'] ?? 'mouse')) }}?builder=mouse" class="btn-choose">
-                            {{ isset($selectedProducts['mouse']) ? 'Change' : 'Choose' }}
-                        </a>
-                    </div>
-                </div>
+                @endforeach
             </div>
 
             <!-- Bottom Banner -->
@@ -726,4 +625,26 @@
 
         </div>
     </div>
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const hideUnconfiguredCheckbox = document.getElementById('hide-unconfigured');
+        
+        hideUnconfiguredCheckbox.addEventListener('change', function() {
+            const rows = document.querySelectorAll('.component-row');
+            rows.forEach(row => {
+                const isSelected = row.querySelector('.component-thumbnail') !== null;
+                if (this.checked) {
+                    if (!isSelected) {
+                        row.style.display = 'none';
+                    }
+                } else {
+                    row.style.display = 'flex';
+                }
+            });
+        });
+    });
+</script>
 @endsection

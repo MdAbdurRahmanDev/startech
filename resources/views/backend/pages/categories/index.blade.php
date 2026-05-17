@@ -33,6 +33,7 @@
                             <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Level</th>
                             <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
                             <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Featured</th>
+                            <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Header Menu</th>
                             <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Order</th>
                             <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
@@ -71,12 +72,22 @@
                                                 class="text-xs font-medium">{{ $category->is_featured ? 'Yes' : 'No' }}</span>
                                         </button>
                                     </form>
+                                <td class="px-6 py-4">
+                                    <form action="{{ route('admin.categories.header-menu', $category) }}" method="POST">
+                                        @csrf
+                                        <button type="submit"
+                                            class="flex items-center gap-1 {{ $category->is_header_menu ? 'text-blue-500' : 'text-gray-300' }}">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span
+                                                class="text-xs font-medium">{{ $category->is_header_menu ? 'Yes' : 'No' }}</span>
+                                        </button>
+                                    </form>
                                 </td>
                                 <td class="px-6 py-4 text-sm text-gray-500">{{ $category->order }}</td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
                                         <button
-                                            onclick="openEditModal({{ $category->id }}, '{{ addslashes($category->name) }}', '{{ $category->parent_id }}', '{{ addslashes($category->icon ?? '') }}', {{ $category->order }}, {{ $category->is_featured ? 'true' : 'false' }}, [{{ $category->brands->pluck('id')->join(',') }}])"
+                                            onclick="openEditModal({{ $category->id }}, '{{ addslashes($category->name) }}', '{{ $category->parent_id }}', '{{ addslashes($category->icon ?? '') }}', {{ $category->order }}, {{ $category->is_featured ? 'true' : 'false' }}, {{ $category->is_header_menu ? 'true' : 'false' }}, [{{ $category->brands->pluck('id')->join(',') }}])"
                                             class="text-blue-400 hover:text-blue-600 transition-colors"><i
                                                 class="fas fa-edit"></i></button>
                                         <form action="{{ route('admin.categories.destroy', $category) }}" method="POST"
@@ -132,12 +143,22 @@
                                                     class="text-[10px] font-medium">{{ $sub->is_featured ? 'Yes' : 'No' }}</span>
                                             </button>
                                         </form>
+                                    <td class="px-6 py-3">
+                                        <form action="{{ route('admin.categories.header-menu', $sub) }}" method="POST">
+                                            @csrf
+                                            <button type="submit"
+                                                class="flex items-center gap-1 {{ $sub->is_header_menu ? 'text-blue-500' : 'text-gray-300' }}">
+                                                <i class="fas fa-check-circle text-[10px]"></i>
+                                                <span
+                                                    class="text-[10px] font-medium">{{ $sub->is_header_menu ? 'Yes' : 'No' }}</span>
+                                            </button>
+                                        </form>
                                     </td>
                                     <td class="px-6 py-3 text-sm text-gray-500">{{ $sub->order }}</td>
                                     <td class="px-6 py-3">
                                         <div class="flex items-center gap-3">
                                             <button
-                                                onclick="openEditModal({{ $sub->id }}, '{{ addslashes($sub->name) }}', '{{ $sub->parent_id }}', '{{ addslashes($sub->icon ?? '') }}', {{ $sub->order }}, {{ $sub->is_featured ? 'true' : 'false' }}, [{{ $sub->brands->pluck('id')->join(',') }}])"
+                                                onclick="openEditModal({{ $sub->id }}, '{{ addslashes($sub->name) }}', '{{ $sub->parent_id }}', '{{ addslashes($sub->icon ?? '') }}', {{ $sub->order }}, {{ $sub->is_featured ? 'true' : 'false' }}, {{ $sub->is_header_menu ? 'true' : 'false' }}, [{{ $sub->brands->pluck('id')->join(',') }}])"
                                                 class="text-blue-400 hover:text-blue-600 transition-colors"><i
                                                     class="fas fa-edit"></i></button>
                                             <form action="{{ route('admin.categories.destroy', $sub) }}" method="POST"
@@ -186,11 +207,21 @@
                                                 </button>
                                             </form>
                                         </td>
+                                        <td class="px-6 py-2">
+                                            <form action="{{ route('admin.categories.header-menu', $subSub) }}"
+                                                method="POST">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="flex items-center gap-1 {{ $subSub->is_header_menu ? 'text-blue-500' : 'text-gray-300' }}">
+                                                    <i class="fas fa-check-circle text-[10px]"></i>
+                                                </button>
+                                            </form>
+                                        </td>
                                         <td class="px-6 py-2 text-xs text-gray-400">{{ $subSub->order }}</td>
                                         <td class="px-6 py-2">
                                             <div class="flex items-center gap-3">
                                                 <button
-                                                    onclick="openEditModal({{ $subSub->id }}, '{{ addslashes($subSub->name) }}', '{{ $subSub->parent_id }}', '{{ addslashes($subSub->icon ?? '') }}', {{ $subSub->order }}, {{ $subSub->is_featured ? 'true' : 'false' }}, [{{ $subSub->brands->pluck('id')->join(',') }}])"
+                                                    onclick="openEditModal({{ $subSub->id }}, '{{ addslashes($subSub->name) }}', '{{ $subSub->parent_id }}', '{{ addslashes($subSub->icon ?? '') }}', {{ $subSub->order }}, {{ $subSub->is_featured ? 'true' : 'false' }}, {{ $subSub->is_header_menu ? 'true' : 'false' }}, [{{ $subSub->brands->pluck('id')->join(',') }}])"
                                                     class="text-blue-400 hover:text-blue-600 transition-colors"><i
                                                         class="fas fa-edit"></i></button>
                                                 <form action="{{ route('admin.categories.destroy', $subSub) }}"
@@ -275,11 +306,17 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="flex items-center gap-2">
-                    <input type="checkbox" name="is_featured" id="edit_is_featured" value="1"
-                        class="w-4 h-4 text-accent-orange border-gray-300 rounded">
-                    <label for="edit_is_featured" class="text-sm font-semibold text-gray-700">Feature this category on
-                        home page</label>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" name="is_featured" id="edit_is_featured" value="1"
+                            class="w-4 h-4 text-accent-orange border-gray-300 rounded">
+                        <label for="edit_is_featured" class="text-sm font-semibold text-gray-700">Featured</label>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" name="is_header_menu" id="edit_is_header_menu" value="1"
+                            class="w-4 h-4 text-accent-orange border-gray-300 rounded">
+                        <label for="edit_is_header_menu" class="text-sm font-semibold text-gray-700">Show in Header</label>
+                    </div>
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Replace Icon Image (Optional)</label>
@@ -368,11 +405,17 @@
                     </p>
                 </div>
 
-                <div class="flex items-center gap-2">
-                    <input type="checkbox" name="is_featured" id="is_featured" value="1"
-                        class="w-4 h-4 text-accent-orange border-gray-300 rounded focus:ring-accent-orange">
-                    <label for="is_featured" class="text-sm font-semibold text-gray-700">Feature this category on home
-                        page</label>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" name="is_featured" id="is_featured" value="1"
+                            class="w-4 h-4 text-accent-orange border-gray-300 rounded focus:ring-accent-orange">
+                        <label for="is_featured" class="text-sm font-semibold text-gray-700">Featured</label>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" name="is_header_menu" id="is_header_menu" value="1"
+                            class="w-4 h-4 text-accent-orange border-gray-300 rounded focus:ring-accent-orange">
+                        <label for="is_header_menu" class="text-sm font-semibold text-gray-700">Show in Header</label>
+                    </div>
                 </div>
 
                 <div>
@@ -457,7 +500,7 @@
                 });
             });
 
-            function openEditModal(id, name, parentId, icon, order, isFeatured, brandIds) {
+            function openEditModal(id, name, parentId, icon, order, isFeatured, isHeaderMenu, brandIds) {
                 // Set form action
                 document.getElementById('editCategoryForm').action = '/admin/categories/' + id + '/update';
 
@@ -466,6 +509,7 @@
                 document.getElementById('edit_icon').value = icon;
                 document.getElementById('edit_order').value = order;
                 document.getElementById('edit_is_featured').checked = isFeatured;
+                document.getElementById('edit_is_header_menu').checked = isHeaderMenu;
 
                 // Set parent
                 var parentSelect = document.getElementById('edit_parent_id');

@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\OrderTrackingController;
 use App\Http\Controllers\Frontend\OutletController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\SearchController;
+use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\ServiceController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\OrderInvoiceController;
@@ -45,10 +46,13 @@ Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product
 Route::get('/offers', [OfferController::class, 'index'])->name('offers.index');
 Route::get('/offer/{slug}', [OfferController::class, 'show'])->name('offers.show');
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
+Route::get('/home-services', [ServiceController::class, 'homeServices'])->name('home-services');
+Route::get('/service-center', [ServiceController::class, 'serviceCenter'])->name('service-center');
 Route::get('/service/{slug}', [ServiceController::class, 'show'])->name('services.show');
 Route::get('/services/custom-web-development', [ServiceController::class, 'webDevelopment'])->name('services.web-development');
 Route::get('/services/apps-development', [ServiceController::class, 'appDevelopment'])->name('services.app-development');
 Route::get('/services/ai-automation', [ServiceController::class, 'aiAutomation'])->name('services.ai-automation');
+Route::get('/ac-calculator', [HomeController::class, 'acCalculator'])->name('ac-calculator');
 Route::get('/pc-builder', [HomeController::class, 'pcBuilder'])->name('pc-builder');
 Route::post('/pc-builder/add', [HomeController::class, 'addToBuilder'])->name('pc-builder.add');
 Route::post('/pc-builder/remove', [HomeController::class, 'removeFromBuilder'])->name('pc-builder.remove');
@@ -89,10 +93,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/account/saved-pcs', [AccountController::class, 'savedPcs'])->name('user.saved-pcs');
 });
 
+// Blog Routes
+Route::get('/blog', [BlogController::class, 'index'])->name('blogs.index');
+Route::get('/blog/category/{slug}', [BlogController::class, 'category'])->name('blogs.category');
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blogs.show');
+
 // Dynamic CMS Pages
 Route::get('/info/{slug}', [InformationController::class, 'showPageBySlug'])->name('info.show');
 Route::get('/contact', [InformationController::class, 'contact'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+Route::get('/complain', [InformationController::class, 'complain'])->name('complain');
+Route::post('/complain', [ContactController::class, 'store'])->name('complain.store');
 Route::get('/quotation', [InformationController::class, 'quotation'])->name('info.quotation');
 Route::post('/quotation', [QuotationController::class, 'store'])->name('quotation.store');
 Route::post('/product-question', [ProductQuestionController::class, 'store'])->name('product.question.store');

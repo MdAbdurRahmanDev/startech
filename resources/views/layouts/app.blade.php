@@ -130,12 +130,12 @@
 
             <!-- Logo -->
             <div class="flex-shrink-0">
-                <a href="{{ url('/') }}">
+                <a href="{{ url('/') }}" class="inline-block bg-white p-1.5 shadow-sm hover:opacity-90 transition-opacity" style="border-radius: 10px;">
                     @if ($setting && $setting->logo)
                         <img src="{{ asset('storage/' . $setting->logo) }}" alt="{{ $setting->app_name }}"
-                            class="h-10 lg:h-12">
+                            class="h-10 lg:h-11 object-contain block" style="border-radius: 8px;">
                     @else
-                        <span class="text-xl font-bold text-white">{{ $setting->app_name ?? 'Logo' }}</span>
+                        <span class="text-xl font-bold text-gray-800 px-2">{{ $setting->app_name ?? 'Logo' }}</span>
                     @endif
                 </a>
             </div>
@@ -215,6 +215,13 @@
                         @endguest
                     </div>
                 </div>
+
+                <!-- AC Calculator Button -->
+                <a href="{{ route('ac-calculator') }}"
+                    class="border-2 border-accent-orange text-accent-orange hover:bg-accent-orange hover:text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all flex items-center gap-2 group shadow-sm hover:shadow-orange-500/10">
+                    <i class="fas fa-calculator text-accent-orange group-hover:text-white transition-colors"></i>
+                    AC Calculator
+                </a>
 
                 <!-- PC Builder Button -->
                 <a href="{{ url('pc-builder') }}"
@@ -357,6 +364,8 @@
                         <li><a href="{{ route('order.track') }}"
                                 class="text-gray-400 hover:text-accent-orange text-sm transition-colors font-bold">Order
                                 Tracking</a></li>
+                        <li><a href="{{ route('blogs.index') }}"
+                                class="text-gray-400 hover:text-accent-orange text-sm transition-colors">Blog & Tips</a></li>
                         <li><a href="{{ route('contact') }}"
                                 class="text-gray-400 hover:text-accent-orange text-sm transition-colors">Contact Us</a>
                         </li>

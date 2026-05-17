@@ -108,45 +108,52 @@
                     </span>
                 </div>
             </div>
-        @endif
-
-
-        <!-- Feature Section -->
+        @endif        <!-- New Feature Section -->
         <div class="mt-6 md:mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-            <div
-                class="bg-white p-2 md:p-4 rounded-lg shadow-sm flex items-center gap-2 md:gap-3 border border-gray-50 hover:shadow-md transition-shadow">
-                <i class="fas fa-shipping-fast text-accent-orange text-lg md:text-2xl"></i>
-                <div>
-                    <h4 class="text-[11px] md:text-sm font-bold text-primary-dark">Fast Delivery</h4>
-                    <p class="text-[9px] md:text-xs text-gray-400">All over Bangladesh</p>
+            <!-- Laptop Finder -->
+            <a href="#" class="bg-white p-3 md:p-4 rounded-lg shadow-sm flex items-center gap-3 border border-gray-100 hover:shadow-md transition-shadow">
+                <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#ef4a23] flex items-center justify-center text-white text-lg md:text-xl flex-shrink-0">
+                    <i class="fas fa-laptop"></i>
                 </div>
-            </div>
-            <div
-                class="bg-white p-2 md:p-4 rounded-lg shadow-sm flex items-center gap-2 md:gap-3 border border-gray-50 hover:shadow-md transition-shadow">
-                <i class="fas fa-shield-alt text-accent-orange text-lg md:text-2xl"></i>
                 <div>
-                    <h4 class="text-[11px] md:text-sm font-bold text-primary-dark">Secure Payment</h4>
-                    <p class="text-[9px] md:text-xs text-gray-400">100% secure payment</p>
+                    <h4 class="text-xs md:text-sm font-bold text-gray-800">Laptop Finder</h4>
+                    <p class="text-[10px] md:text-xs text-gray-400">Find Your Laptop Easily</p>
                 </div>
-            </div>
-            <div
-                class="bg-white p-2 md:p-4 rounded-lg shadow-sm flex items-center gap-2 md:gap-3 border border-gray-50 hover:shadow-md transition-shadow">
-                <i class="fas fa-headset text-accent-orange text-lg md:text-2xl"></i>
-                <div>
-                    <h4 class="text-[11px] md:text-sm font-bold text-primary-dark">24/7 Support</h4>
-                    <p class="text-[9px] md:text-xs text-gray-400">Dedicated support</p>
-                </div>
-            </div>
-            <div
-                class="bg-white p-2 md:p-4 rounded-lg shadow-sm flex items-center gap-2 md:gap-3 border border-gray-50 hover:shadow-md transition-shadow">
-                <i class="fas fa-undo text-accent-orange text-lg md:text-2xl"></i>
-                <div>
-                    <h4 class="text-[11px] md:text-sm font-bold text-primary-dark">Easy Return</h4>
-                    <p class="text-[9px] md:text-xs text-gray-400">7 days return policy</p>
-                </div>
-            </div>
-        </div>
+            </a>
 
+            <!-- Raise a Complain -->
+            <a href="{{ route('complain') }}" class="bg-white p-3 md:p-4 rounded-lg shadow-sm flex items-center gap-3 border border-gray-100 hover:shadow-md transition-shadow">
+                <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#ef4a23] flex items-center justify-center text-white text-lg md:text-xl flex-shrink-0">
+                    <i class="fas fa-comment-alt"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs md:text-sm font-bold text-gray-800">Raise a Complain</h4>
+                    <p class="text-[10px] md:text-xs text-gray-400">Share your experience</p>
+                </div>
+            </a>
+
+            <!-- Home Services -->
+            <a href="{{ route('home-services') }}" class="bg-white p-3 md:p-4 rounded-lg shadow-sm flex items-center gap-3 border border-gray-100 hover:shadow-md transition-shadow">
+                <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#ef4a23] flex items-center justify-center text-white text-lg md:text-xl flex-shrink-0">
+                    <i class="fas fa-house-user"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs md:text-sm font-bold text-gray-800">Home Services</h4>
+                    <p class="text-[10px] md:text-xs text-gray-400">Services at Doorstep</p>
+                </div>
+            </a>
+
+            <!-- Servicing Center -->
+            <a href="{{ route('service-center') }}" class="bg-white p-3 md:p-4 rounded-lg shadow-sm flex items-center gap-3 border border-gray-100 hover:shadow-md transition-shadow">
+                <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#ef4a23] flex items-center justify-center text-white text-lg md:text-xl flex-shrink-0">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs md:text-sm font-bold text-gray-800">Servicing Center</h4>
+                    <p class="text-[10px] md:text-xs text-gray-400">Repair Your Device</p>
+                </div>
+            </a>
+        </div>
         <!-- Category Section -->
         <section class="mt-8 md:mt-12">
             <div class="text-center mb-6 md:mb-8">

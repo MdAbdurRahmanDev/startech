@@ -36,6 +36,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::delete('/admin/categories/{category}', [\App\Http\Controllers\Backend\CategoryController::class, 'destroy'])->name('admin.categories.destroy');
     Route::post('/admin/categories/{category}/toggle', [\App\Http\Controllers\Backend\CategoryController::class, 'toggleStatus'])->name('admin.categories.toggle');
     Route::post('/admin/categories/{category}/featured', [\App\Http\Controllers\Backend\CategoryController::class, 'toggleFeatured'])->name('admin.categories.featured');
+    Route::post('/admin/categories/{category}/header-menu', [\App\Http\Controllers\Backend\CategoryController::class, 'toggleHeaderMenu'])->name('admin.categories.header-menu');
     // Products
     Route::get('/admin/products', [\App\Http\Controllers\Backend\ProductController::class, 'index'])->name('admin.products.index');
     Route::get('/admin/products/create', [\App\Http\Controllers\Backend\ProductController::class, 'create'])->name('admin.products.create');
@@ -130,4 +131,22 @@ Route::middleware('auth:admin')->group(function () {
     Route::put('/admin/outlets/{outlet}', [\App\Http\Controllers\Backend\OutletController::class, 'update'])->name('admin.outlets.update');
     Route::delete('/admin/outlets/{outlet}', [\App\Http\Controllers\Backend\OutletController::class, 'destroy'])->name('admin.outlets.destroy');
     Route::post('/admin/outlets/toggle-status/{outlet}', [\App\Http\Controllers\Backend\OutletController::class, 'toggleStatus'])->name('admin.outlets.toggle');
+
+    // Blog Categories
+    Route::get('/admin/blog-categories', [\App\Http\Controllers\Backend\BlogCategoryController::class, 'index'])->name('admin.blog-categories.index');
+    Route::get('/admin/blog-categories/create', [\App\Http\Controllers\Backend\BlogCategoryController::class, 'create'])->name('admin.blog-categories.create');
+    Route::post('/admin/blog-categories', [\App\Http\Controllers\Backend\BlogCategoryController::class, 'store'])->name('admin.blog-categories.store');
+    Route::get('/admin/blog-categories/{blogCategory}/edit', [\App\Http\Controllers\Backend\BlogCategoryController::class, 'edit'])->name('admin.blog-categories.edit');
+    Route::put('/admin/blog-categories/{blogCategory}', [\App\Http\Controllers\Backend\BlogCategoryController::class, 'update'])->name('admin.blog-categories.update');
+    Route::delete('/admin/blog-categories/{blogCategory}', [\App\Http\Controllers\Backend\BlogCategoryController::class, 'destroy'])->name('admin.blog-categories.destroy');
+
+    // Blog Posts
+    Route::get('/admin/blogs', [\App\Http\Controllers\Backend\BlogController::class, 'index'])->name('admin.blogs.index');
+    Route::get('/admin/blogs/create', [\App\Http\Controllers\Backend\BlogController::class, 'create'])->name('admin.blogs.create');
+    Route::post('/admin/blogs', [\App\Http\Controllers\Backend\BlogController::class, 'store'])->name('admin.blogs.store');
+    Route::get('/admin/blogs/{blog}/edit', [\App\Http\Controllers\Backend\BlogController::class, 'edit'])->name('admin.blogs.edit');
+    Route::put('/admin/blogs/{blog}', [\App\Http\Controllers\Backend\BlogController::class, 'update'])->name('admin.blogs.update');
+    Route::delete('/admin/blogs/{blog}', [\App\Http\Controllers\Backend\BlogController::class, 'destroy'])->name('admin.blogs.destroy');
+    Route::post('/admin/blogs/{blog}/toggle-status', [\App\Http\Controllers\Backend\BlogController::class, 'toggleStatus'])->name('admin.blogs.toggle-status');
+    Route::post('/admin/blogs/{blog}/toggle-featured', [\App\Http\Controllers\Backend\BlogController::class, 'toggleFeatured'])->name('admin.blogs.toggle-featured');
 });

@@ -174,4 +174,9 @@ class HomeController extends Controller
         
         return redirect()->route('user.saved-pcs')->with('success', 'Build deleted successfully!');
     }
+
+    public function acCalculator()
+    {
+        return view('frontend.pages.ac_calculator');
+    }
 }

@@ -14,6 +14,7 @@ class Category extends Model
         'image',
         'status',
         'is_featured',
+        'is_header_menu',
         'order',
     ];
 

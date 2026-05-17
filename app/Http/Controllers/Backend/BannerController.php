@@ -9,19 +9,24 @@ use Illuminate\Support\Facades\Storage;
 
 class BannerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $banners = Banner::orderBy('order')->get();
+        $type = $request->query('type', 'slider');
+        $banners = Banner::where('type', $type)->orderBy('order')->get();
 
-        return view('backend.pages.banners.index', compact('banners'));
+        return view('backend.pages.banners.index', compact('banners', 'type'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'image' => 'required|image|max:12288',
-            'type' => 'required|in:slider,side',
+            'type' => 'required|in:slider,side,service_center,home_services',
             'link' => 'nullable',
+            'title' => 'nullable|string|max:255',
+            'subtitle' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'button_text' => 'nullable|string|max:50',
         ]);
 
         try {
@@ -34,6 +39,10 @@ class BannerController extends Controller
                 'image' => $imagePath,
                 'type' => $request->type,
                 'link' => $request->link,
+                'title' => $request->title,
+                'subtitle' => $request->subtitle,
+                'description' => $request->description,
+                'button_text' => $request->button_text,
             ]);
 
             return back()->with('success', 'Banner added successfully.');
@@ -46,8 +55,12 @@ class BannerController extends Controller
     {
         $request->validate([
             'image' => 'nullable|image|max:12288',
-            'type' => 'required|in:slider,side',
+            'type' => 'required|in:slider,side,service_center,home_services',
             'link' => 'nullable',
+            'title' => 'nullable|string|max:255',
+            'subtitle' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'button_text' => 'nullable|string|max:50',
         ]);
 
         try {
@@ -65,6 +78,10 @@ class BannerController extends Controller
 
             $banner->type = $request->type;
             $banner->link = $request->link;
+            $banner->title = $request->title;
+            $banner->subtitle = $request->subtitle;
+            $banner->description = $request->description;
+            $banner->button_text = $request->button_text;
             $banner->save();
 
             return back()->with('success', 'Banner updated successfully.');

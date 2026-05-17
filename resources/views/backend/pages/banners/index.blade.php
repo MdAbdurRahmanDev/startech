@@ -3,16 +3,40 @@
 @section('title', 'Manage Banners | IOS BD')
 
 @section('content')
+    @php
+        $pageTitle = 'Banner Management';
+        $pageDesc = 'Add, delete, or manage your sliders and promotional banners.';
+        $bannerLabel = 'Banner';
+        if(isset($type)) {
+            if($type === 'slider') {
+                $pageTitle = 'Main Hero Slider Management';
+                $pageDesc = 'Manage the sliding banners at the top of your homepage.';
+                $bannerLabel = 'Hero Slide';
+            } elseif($type === 'service_center') {
+                $pageTitle = 'Home Services Slider Management';
+                $pageDesc = 'Manage the slider images for your Home Services page.';
+                $bannerLabel = 'Services Slide';
+            } elseif($type === 'side') {
+                $pageTitle = 'Side Banner Management';
+                $pageDesc = 'Manage side promotional banners next to the hero slider.';
+                $bannerLabel = 'Side Banner';
+            } elseif($type === 'home_services') {
+                $pageTitle = 'Home Services Dynamic Banners';
+                $pageDesc = 'Manage the text and images for the Home Services carousel.';
+                $bannerLabel = 'Home Services Banner';
+            }
+        }
+    @endphp
     <div class="max-w-6xl mx-auto py-8">
         <div class="mb-8 flex justify-between items-center">
             <div>
-                <h1 class="text-2xl font-bold text-gray-800">Banner Management</h1>
-                <p class="text-gray-600">Add, delete, or manage your sliders and promotional banners.</p>
+                <h1 class="text-2xl font-bold text-gray-800">{{ $pageTitle }}</h1>
+                <p class="text-gray-600">{{ $pageDesc }}</p>
             </div>
             <button onclick="document.getElementById('addBannerModal').classList.remove('hidden')"
                 class="bg-primary-dark text-white px-6 py-2.5 rounded-lg font-bold hover:bg-opacity-90 transition-all flex items-center gap-2 shadow-sm">
                 <i class="fas fa-plus"></i>
-                Add New Banner
+                Add New {{ $bannerLabel }}
             </button>
         </div>
 
@@ -42,8 +66,8 @@
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute top-2 right-2 flex gap-2">
                             <span
-                                class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider {{ $banner->type == 'slider' ? 'bg-blue-100 text-blue-600' : 'bg-purple-100 text-purple-600' }}">
-                                {{ $banner->type }}
+                                class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider {{ $banner->type == 'slider' ? 'bg-blue-100 text-blue-600' : ($banner->type == 'service_center' ? 'bg-orange-100 text-orange-600' : ($banner->type == 'home_services' ? 'bg-teal-100 text-teal-600' : 'bg-purple-100 text-purple-600')) }}">
+                                {{ $banner->type === 'slider' ? 'Main' : ($banner->type === 'service_center' ? 'Services Center' : ($banner->type === 'home_services' ? 'Home Services' : 'Side')) }}
                             </span>
                             <span
                                 class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider {{ $banner->status ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600' }}">
@@ -118,10 +142,39 @@
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Banner Type</label>
                     <select name="type"
                         class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all">
-                        <option value="slider">Main Hero Slider</option>
-                        <option value="side">Side Promotional Banner</option>
+                        <option value="slider" {{ (isset($type) && $type === 'slider') ? 'selected' : '' }}>Main Hero Slider</option>
+                        <option value="side" {{ (isset($type) && $type === 'side') ? 'selected' : '' }}>Side Promotional Banner</option>
+                        <option value="service_center" {{ (isset($type) && $type === 'service_center') ? 'selected' : '' }}>Service Center Slider</option>
+                        <option value="home_services" {{ (isset($type) && $type === 'home_services') ? 'selected' : '' }}>Home Services Banner</option>
                     </select>
                 </div>
+
+                @if(isset($type) && $type === 'home_services')
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Title</label>
+                    <input type="text" name="title"
+                        class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all"
+                        placeholder="e.g. প্রিন্টারের সব সমস্যার সমাধান">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Subtitle</label>
+                    <input type="text" name="subtitle"
+                        class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all"
+                        placeholder="e.g. আমাদের সার্টিফাইড টেকনিশিয়ান">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+                    <textarea name="description" rows="2"
+                        class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all"
+                        placeholder="Short description..."></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Button Text</label>
+                    <input type="text" name="button_text"
+                        class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all"
+                        placeholder="e.g. Request Repair">
+                </div>
+                @endif
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Target Link (Optional)</label>
@@ -167,8 +220,33 @@
                         class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all">
                         <option value="slider">Main Hero Slider</option>
                         <option value="side">Side Promotional Banner</option>
+                        <option value="service_center">Service Center Slider</option>
+                        <option value="home_services">Home Services Banner</option>
                     </select>
                 </div>
+
+                @if(isset($type) && $type === 'home_services')
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Title</label>
+                    <input type="text" name="title" id="editBannerTitle"
+                        class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Subtitle</label>
+                    <input type="text" name="subtitle" id="editBannerSubtitle"
+                        class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+                    <textarea name="description" id="editBannerDesc" rows="2"
+                        class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Button Text</label>
+                    <input type="text" name="button_text" id="editBannerBtn"
+                        class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all">
+                </div>
+                @endif
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Target Link (Optional)</label>
@@ -218,6 +296,13 @@
             preview.src = `/storage/${banner.image}`;
             typeSelect.value = banner.type;
             linkInput.value = banner.link || '';
+            
+            if (document.getElementById('editBannerTitle')) {
+                document.getElementById('editBannerTitle').value = banner.title || '';
+                document.getElementById('editBannerSubtitle').value = banner.subtitle || '';
+                document.getElementById('editBannerDesc').value = banner.description || '';
+                document.getElementById('editBannerBtn').value = banner.button_text || '';
+            }
 
             modal.classList.remove('hidden');
         }
