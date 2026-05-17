@@ -110,14 +110,14 @@
             </div>
         @endif        <!-- New Feature Section -->
         <div class="mt-6 md:mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-            <!-- Laptop Finder -->
+            <!-- Secure Payment -->
             <a href="#" class="bg-white p-3 md:p-4 rounded-lg shadow-sm flex items-center gap-3 border border-gray-100 hover:shadow-md transition-shadow">
                 <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#ef4a23] flex items-center justify-center text-white text-lg md:text-xl flex-shrink-0">
-                    <i class="fas fa-laptop"></i>
+                    <i class="fas fa-shield-alt"></i>
                 </div>
                 <div>
-                    <h4 class="text-xs md:text-sm font-bold text-gray-800">Laptop Finder</h4>
-                    <p class="text-[10px] md:text-xs text-gray-400">Find Your Laptop Easily</p>
+                    <h4 class="text-xs md:text-sm font-bold text-gray-800">Secure Payment</h4>
+                    <p class="text-[10px] md:text-xs text-gray-400">100% Safe Checkout</p>
                 </div>
             </a>
 
