@@ -475,7 +475,8 @@
             <i class="fas fa-gift text-lg"></i>
             <span>Offers</span>
         </a>
-        <a href="#" class="flex flex-col items-center text-white text-[10px] gap-1 opacity-80">
+        <a href="{{ url('pc-builder') }}"
+            class="flex flex-col items-center text-white text-[10px] gap-1 opacity-80 hover:opacity-100 hover:text-accent-orange {{ Request::is('pc-builder') ? 'text-accent-orange opacity-100' : '' }}">
             <i class="fas fa-tools text-lg"></i>
             <span>PC Builder</span>
         </a>
