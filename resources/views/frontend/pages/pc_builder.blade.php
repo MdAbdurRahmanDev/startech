@@ -287,6 +287,93 @@
             cursor: pointer;
             accent-color: #ef4a23;
         }
+
+        @media (max-width: 767px) {
+            .builder-header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+                text-align: center;
+            }
+
+            .builder-actions {
+                width: 100%;
+                justify-content: space-around;
+                gap: 10px;
+            }
+
+            .builder-title-bar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .builder-title-bar > div {
+                text-align: center;
+            }
+
+            .builder-title-bar .flex.gap-4 {
+                justify-content: center;
+            }
+
+            .component-row {
+                padding: 15px;
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                grid-template-rows: auto auto;
+                align-items: center;
+                gap: 8px 12px;
+            }
+
+            .component-icon, .component-thumbnail {
+                grid-column: 1;
+                grid-row: 1;
+                margin-right: 0;
+                width: 44px;
+                height: 44px;
+            }
+
+            .component-info {
+                grid-column: 2;
+                grid-row: 1;
+            }
+
+            .product-title {
+                white-space: normal;
+                padding-right: 0;
+                font-size: 13px;
+            }
+
+            .component-price {
+                grid-column: 2;
+                grid-row: 2;
+                text-align: left;
+                min-width: 0;
+                padding-right: 0;
+                font-size: 14px;
+            }
+
+            .action-buttons-cell {
+                grid-column: 3;
+                grid-row: 1 / span 2;
+                justify-self: end;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .builder-actions {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px 20px;
+            }
+
+            .wattage-box, .price-box {
+                flex: 1;
+                min-width: 0;
+                padding: 10px 15px;
+            }
+        }
     </style>
 @endsection
 
