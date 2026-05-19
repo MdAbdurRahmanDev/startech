@@ -127,6 +127,54 @@
                                 class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all">{{ old('footer_text', $setting->footer_text ?? '') }}</textarea>
                         </div>
                     </div>
+
+                    <!-- First-Time Visit Promotion Popup -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <h3 class="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
+                            <i class="fas fa-bullhorn text-accent-orange"></i>
+                            First-Time Visit Promotion Popup
+                        </h3>
+
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between pb-4 border-b border-gray-100">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700">Enable Promotion Popup</label>
+                                    <p class="text-xs text-gray-400">Toggle whether to show the popup to first-time visitors.</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" name="popup_enabled" value="1" class="sr-only peer"
+                                        {{ old('popup_enabled', $setting->popup_enabled ?? true) ? 'checked' : '' }}>
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-accent-orange"></div>
+                                </label>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Popup Image</label>
+                                <div class="mt-2 flex flex-col md:flex-row md:items-center gap-5">
+                                    @if ($setting && $setting->popup_image)
+                                        <div class="relative group w-full md:w-48 h-32 border rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center p-2">
+                                            <img src="{{ asset('storage/' . $setting->popup_image) }}" alt="Popup Image"
+                                                class="w-full h-full object-contain">
+                                        </div>
+                                    @endif
+                                    <div class="flex-1">
+                                        <input type="file" name="popup_image"
+                                            class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-accent-orange hover:file:bg-orange-100">
+                                        <p class="text-[11px] text-gray-400 mt-2 italic">Recommended: square or vertical aspect ratio flyer. Max 12MB.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Redirect Link (Optional)</label>
+                                <input type="text" name="popup_link"
+                                    value="{{ old('popup_link', $setting->popup_link ?? '') }}"
+                                    class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all"
+                                    placeholder="e.g. /offers or https://example.com/promo">
+                                <p class="text-[11px] text-gray-400 mt-1">If a link is set, clicking the popup image will redirect users to this URL.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Right Column: Social Links -->

@@ -32,10 +32,14 @@ class SettingController extends Controller
             'whatsapp_number' => 'nullable|string',
             'youtube_url' => 'nullable|url',
             'instagram_url' => 'nullable|url',
+            'popup_enabled' => 'nullable',
+            'popup_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:12288',
+            'popup_link' => 'nullable|string|max:255',
         ]);
 
         try {
-            $data = $request->except(['logo', 'favicon']);
+            $data = $request->except(['logo', 'favicon', 'popup_image']);
+            $data['popup_enabled'] = $request->has('popup_enabled');
 
             if ($request->hasFile('logo')) {
                 if ($setting->logo) {
@@ -49,6 +53,13 @@ class SettingController extends Controller
                     Storage::disk('public')->delete($setting->favicon);
                 }
                 $data['favicon'] = $request->file('favicon')->store('settings', 'public');
+            }
+
+            if ($request->hasFile('popup_image')) {
+                if ($setting->popup_image) {
+                    Storage::disk('public')->delete($setting->popup_image);
+                }
+                $data['popup_image'] = $request->file('popup_image')->store('settings', 'public');
             }
 
             if ($setting->exists) {

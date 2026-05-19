@@ -20,5 +20,12 @@ class Setting extends Model
         'youtube_url',
         'instagram_url',
         'map_url',
+        'popup_enabled',
+        'popup_title',
+        'popup_description',
+        'popup_google_play_url',
+        'popup_app_store_url',
+        'popup_image',
+        'popup_link',
     ];
 }

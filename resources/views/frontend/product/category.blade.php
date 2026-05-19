@@ -98,9 +98,9 @@
                         <h2 class="text-base font-bold text-primary-dark">{{ $category->name }}</h2>
                         <div class="flex items-center gap-4 text-[13px] text-gray-600">
                             <div class="flex items-center gap-2">
-                                <label>Show:</label>
+                                <label class="whitespace-nowrap">Show:</label>
                                 <select name="show"
-                                    class="border border-gray-200 rounded py-1 px-2 focus:ring-accent-orange focus:border-accent-orange outline-none bg-gray-50"
+                                    class="border border-gray-200 rounded py-1 pl-2 pr-8 focus:ring-accent-orange focus:border-accent-orange outline-none bg-gray-50"
                                     onchange="document.getElementById('filter-form').submit();">
                                     <option value="20" {{ request('show') == 20 ? 'selected' : '' }}>20</option>
                                     <option value="40" {{ request('show') == 40 ? 'selected' : '' }}>40</option>
@@ -108,9 +108,9 @@
                                 </select>
                             </div>
                             <div class="flex items-center gap-2">
-                                <label>Sort By:</label>
+                                <label class="whitespace-nowrap">Sort By:</label>
                                 <select name="sort"
-                                    class="border border-gray-200 rounded py-1 px-2 focus:ring-accent-orange focus:border-accent-orange outline-none bg-gray-50"
+                                    class="border border-gray-200 rounded py-1 pl-2 pr-8 focus:ring-accent-orange focus:border-accent-orange outline-none bg-gray-50"
                                     onchange="document.getElementById('filter-form').submit();">
                                     <option value="default" {{ request('sort') == 'default' ? 'selected' : '' }}>Default
                                     </option>

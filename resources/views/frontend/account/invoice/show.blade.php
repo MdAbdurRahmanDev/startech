@@ -6,6 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice #{{ $order->order_number }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#011627',
+                        'accent-orange': '#ef4a23',
+                        'accent-blue': '#2E3192',
+                        'bg-gray': '#f2f4f8',
+                    }
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -24,8 +38,8 @@
             }
 
             .print-shadow-none {
-                shadow: none;
-                border: none;
+                box-shadow: none !important;
+                border: none !important;
             }
         }
     </style>
@@ -56,7 +70,7 @@
             <div class="flex justify-between items-start mb-12">
                 <div>
                     @if ($setting && $setting->logo)
-                        <img src="{{ asset('storage/' . $setting->logo) }}" alt="{{ $setting->site_name }}"
+                        <img src="{{ asset('storage/' . $setting->logo) }}" alt="{{ $setting->app_name ?? 'Iosbd & Engineering Ltd' }}"
                             class="h-10 mb-4">
                     @endif
                     <div class="text-xs text-gray-500 space-y-1">

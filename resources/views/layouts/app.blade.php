@@ -431,7 +431,7 @@
     </footer>
 
     <!-- Floating Actions -->
-    <div class="fixed right-0 top-1/2 -translate-y-1/2 flex flex-col gap-1 z-[60]">
+    <div class="fixed right-0 bottom-[64px] lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 flex flex-col gap-1 z-[60]">
         <div
             class="bg-primary-dark text-white w-14 h-14 flex flex-col items-center justify-center rounded-l-md cursor-pointer relative shadow-lg">
             <div
@@ -504,12 +504,99 @@
         <ul class="space-y-4">
             @foreach ($headerCategories as $category)
                 <li>
-                    <a href="{{ url('category/' . $category->slug) }}"
-                        class="flex items-center gap-3 text-primary-dark text-base font-bold py-2 hover:text-accent-orange transition-colors border-b border-gray-50">
-                        {{ $category->name }}
-                    </a>
+                    @if ($category->children->count() > 0)
+                        <div class="flex items-center justify-between border-b border-gray-50 py-2">
+                            <a href="{{ url('category/' . $category->slug) }}"
+                                class="text-primary-dark text-base font-bold hover:text-accent-orange transition-colors">
+                                {{ $category->name }}
+                            </a>
+                            <button class="mobile-toggle-btn text-gray-500 hover:text-accent-orange p-1 focus:outline-none transition-transform duration-300" data-target="submenu-{{ $category->id }}">
+                                <i class="fas fa-chevron-down text-sm"></i>
+                            </button>
+                        </div>
+                        <ul id="submenu-{{ $category->id }}" class="hidden pl-4 mt-2 space-y-3 border-l-2 border-gray-100">
+                            @foreach ($category->children as $sub)
+                                <li>
+                                    @if ($sub->children->count() > 0 || $sub->brands->count() > 0)
+                                        <div class="flex items-center justify-between py-1">
+                                            <a href="{{ url('category/' . $sub->slug) }}"
+                                                class="text-gray-700 text-sm font-semibold hover:text-accent-orange transition-colors">
+                                                {{ $sub->name }}
+                                            </a>
+                                            <button class="mobile-toggle-btn text-gray-400 hover:text-accent-orange p-1 focus:outline-none transition-transform duration-300" data-target="subsubmenu-{{ $sub->id }}">
+                                                <i class="fas fa-chevron-down text-xs"></i>
+                                            </button>
+                                        </div>
+                                        <ul id="subsubmenu-{{ $sub->id }}" class="hidden pl-4 mt-1 space-y-2 border-l border-gray-100">
+                                            @foreach ($sub->children as $subSub)
+                                                <li>
+                                                    <a href="{{ url('category/' . $subSub->slug) }}"
+                                                        class="block py-1 text-xs text-gray-500 hover:text-accent-orange transition-colors">
+                                                        {{ $subSub->name }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                            @if ($sub->brands->count() > 0)
+                                                @foreach ($sub->brands as $b)
+                                                    <li>
+                                                        <a href="{{ url('category/' . $sub->slug) }}?brand={{ $b->slug }}"
+                                                            class="block py-1 text-xs text-gray-500 hover:text-accent-orange transition-colors">
+                                                            {{ $b->name }}
+                                                        </a>
+                                                    </li>
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                    @else
+                                        <a href="{{ url('category/' . $sub->slug) }}"
+                                            class="block py-1 text-gray-700 text-sm font-semibold hover:text-accent-orange transition-colors">
+                                            {{ $sub->name }}
+                                        </a>
+                                    @endif
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <a href="{{ url('category/' . $category->slug) }}"
+                            class="block text-primary-dark text-base font-bold py-2 hover:text-accent-orange transition-colors border-b border-gray-50">
+                            {{ $category->name }}
+                        </a>
+                    @endif
                 </li>
             @endforeach
+
+            <!-- Software Services Mobile -->
+            <li>
+                <div class="flex items-center justify-between border-b border-gray-50 py-2">
+                    <a href="{{ route('services.index') }}"
+                        class="text-primary-dark text-base font-bold hover:text-accent-orange transition-colors">
+                        Software Services
+                    </a>
+                    <button class="mobile-toggle-btn text-gray-500 hover:text-accent-orange p-1 focus:outline-none transition-transform duration-300" data-target="submenu-software-services">
+                        <i class="fas fa-chevron-down text-sm"></i>
+                    </button>
+                </div>
+                <ul id="submenu-software-services" class="hidden pl-4 mt-2 space-y-3 border-l-2 border-gray-100">
+                    <li>
+                        <a href="{{ url('services/custom-web-development') }}"
+                            class="block py-1 text-gray-700 text-sm font-semibold hover:text-accent-orange transition-colors">
+                            Custom Web Development
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('services/apps-development') }}"
+                            class="block py-1 text-gray-700 text-sm font-semibold hover:text-accent-orange transition-colors">
+                            Apps Development
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('services/ai-automation') }}"
+                            class="block py-1 text-gray-700 text-sm font-semibold hover:text-accent-orange transition-colors">
+                            AI Automation & Services
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
 
@@ -555,6 +642,26 @@
                 document.body.style.overflow = 'auto';
             }
         }
+
+        // Mobile Sidebar Dropdown Toggle
+        document.querySelectorAll('.mobile-toggle-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const targetId = this.getAttribute('data-target');
+                const targetEl = document.getElementById(targetId);
+                
+                if (targetEl) {
+                    if (targetEl.classList.contains('hidden')) {
+                        targetEl.classList.remove('hidden');
+                        this.classList.add('rotate-180');
+                    } else {
+                        targetEl.classList.add('hidden');
+                        this.classList.remove('rotate-180');
+                    }
+                }
+            });
+        });
     </script>
 
     <script>
@@ -653,58 +760,27 @@
         }
     </script>
 
-    <!-- App Download Popup -->
+    <!-- Promotional Image Popup -->
     <div id="app-popup-overlay"
         class="fixed inset-0 bg-black/60 z-[9999] hidden items-center justify-center p-4 backdrop-blur-sm animate-fade-in">
-        <div class="bg-white w-full max-w-[400px] rounded-2xl overflow-hidden relative shadow-2xl animate-pop-in">
+        <div class="w-full max-w-[500px] relative shadow-2xl animate-pop-in">
+            <!-- Close Button (rendered on the top-right corner of the image) -->
             <button onclick="closeAppPopup()"
-                class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 transition-colors z-10">
-                <i class="fas fa-times"></i>
+                class="absolute -top-3 -right-3 w-8 h-8 flex items-center justify-center rounded-full bg-white text-gray-800 shadow-md hover:bg-gray-100 transition-colors z-20 font-bold border border-gray-100">
+                <i class="fas fa-times text-sm"></i>
             </button>
 
-            <div class="bg-gradient-to-br from-primary-dark to-[#1a2b3c] p-8 text-center text-white relative">
-                <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-                    <div
-                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-accent-orange rounded-full blur-3xl">
+            @if ($setting && $setting->popup_image)
+                @if ($setting->popup_link)
+                    <a href="{{ $setting->popup_link }}" class="block rounded-lg overflow-hidden border border-gray-100 bg-white">
+                        <img src="{{ asset('storage/' . $setting->popup_image) }}" alt="Promotion" class="w-full h-auto object-cover max-h-[85vh]">
+                    </a>
+                @else
+                    <div class="rounded-lg overflow-hidden border border-gray-100 bg-white">
+                        <img src="{{ asset('storage/' . $setting->popup_image) }}" alt="Promotion" class="w-full h-auto object-cover max-h-[85vh]">
                     </div>
-                </div>
-
-                @if ($setting && $setting->logo)
-                    <img src="{{ asset('storage/' . $setting->logo) }}" alt="App Logo"
-                        class="w-16 h-16 mx-auto mb-4 rounded-xl shadow-lg border border-white/20 p-2 bg-white object-contain">
                 @endif
-                <h3 class="text-xl font-bold mb-2">Get the {{ $setting->app_name ?? 'IOS BD' }} App</h3>
-                <p class="text-sm text-gray-300 leading-relaxed">Shop your favorite gadgets faster and easier with our
-                    mobile app.</p>
-            </div>
-
-            <div class="p-8 bg-white">
-                <div class="flex flex-col gap-4">
-                    <a href="{{ asset('apk/iosbd.apk') }}" download
-                        class="flex items-center justify-center gap-3 bg-black text-white px-6 py-3 rounded-xl hover:scale-105 transition-transform">
-                        <i class="fab fa-google-play text-2xl"></i>
-                        <div class="text-left">
-                            <p class="text-[10px] uppercase opacity-70 leading-none">Get it on</p>
-                            <p class="text-sm font-bold leading-tight">Google Play</p>
-                        </div>
-                    </a>
-
-                    <a href="#"
-                        class="flex items-center justify-center gap-3 bg-black text-white px-6 py-3 rounded-xl hover:scale-105 transition-transform">
-                        <i class="fab fa-apple text-2xl"></i>
-                        <div class="text-left">
-                            <p class="text-[10px] uppercase opacity-70 leading-none">Download on the</p>
-                            <p class="text-sm font-bold leading-tight">App Store</p>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="mt-6 text-center">
-                    <button onclick="closeAppPopup()"
-                        class="text-sm text-gray-400 hover:text-accent-orange transition-colors">Continue to
-                        website</button>
-                </div>
-            </div>
+            @endif
         </div>
     </div>
 
@@ -878,9 +954,11 @@
                 localStorage.removeItem('app_popup_shown');
             }
 
+            @if ((!isset($setting->popup_enabled) || $setting->popup_enabled) && ($setting && $setting->popup_image))
             if (!localStorage.getItem('app_popup_shown')) {
-                setTimeout(showAppPopup, 5000);
+                setTimeout(showAppPopup, 3000);
             }
+            @endif
         });
     </script>
 

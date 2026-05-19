@@ -59,8 +59,8 @@
         <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 mb-6 flex justify-between items-center">
             <h1 class="text-[16px] font-bold text-primary-dark">Search - {{ $q ?? '' }}</h1>
             <div class="flex items-center gap-3 text-[13px] text-gray-600">
-                <label>Show:</label>
-                <select name="show" class="border border-gray-200 rounded py-1 px-2 focus:outline-none bg-gray-50"
+                <label class="whitespace-nowrap">Show:</label>
+                <select name="show" class="border border-gray-200 rounded py-1 pl-2 pr-8 focus:outline-none bg-gray-50"
                     onchange="window.location.href = updateQueryStringParameter(window.location.href, 'show', this.value)">
                     <option value="20" {{ request('show') == 20 ? 'selected' : '' }}>20</option>
                     <option value="40" {{ request('show') == 40 ? 'selected' : '' }}>40</option>
