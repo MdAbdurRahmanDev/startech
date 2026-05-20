@@ -1035,37 +1035,19 @@
 
                 // When user hovers (mouseenter)
                 trigger.addEventListener('mouseenter', function() {
-                    // Reset position and max-height so we can measure the natural height
-                    submenu.style.top = '0px';
-                    submenu.style.bottom = 'auto';
-                    submenu.style.maxHeight = '';
-                    submenu.style.overflowY = '';
-
-                    // Get dimensions
-                    const rect = submenu.getBoundingClientRect();
+                    const triggerRect = trigger.getBoundingClientRect();
                     const viewportHeight = window.innerHeight;
                     
-                    // If bottom edge of submenu goes below viewport height
-                    if (rect.bottom > viewportHeight - 10) {
-                        const overflow = rect.bottom - (viewportHeight - 10);
-                        const triggerRect = trigger.getBoundingClientRect();
-                        const newTop = -overflow;
-
-                        // If shifting it up would push it above the top of the viewport (with 10px margin)
-                        if (triggerRect.top + newTop < 10) {
-                            submenu.style.top = `-${triggerRect.top - 10}px`;
-                            submenu.style.maxHeight = `${viewportHeight - 20}px`;
-                            submenu.style.overflowY = 'auto';
-                        } else {
-                            submenu.style.top = `${newTop}px`;
-                        }
-                    }
+                    // Calculate remaining vertical space from the trigger's top to the bottom of viewport
+                    const availableHeight = viewportHeight - triggerRect.top - 15;
+                    
+                    // Set max-height to the available height and enable scrolling
+                    submenu.style.maxHeight = `${availableHeight}px`;
+                    submenu.style.overflowY = 'auto';
                 });
 
                 // Clean up styles when hover leaves (mouseleave)
                 trigger.addEventListener('mouseleave', function() {
-                    submenu.style.top = '';
-                    submenu.style.bottom = '';
                     submenu.style.maxHeight = '';
                     submenu.style.overflowY = '';
                 });
