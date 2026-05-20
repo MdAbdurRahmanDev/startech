@@ -53,6 +53,22 @@
             top: 0;
             left: 100%;
         }
+
+        /* Custom scrollbar for sub-dropdowns to maintain premium appearance */
+        .sub-dropdown::-webkit-scrollbar {
+            width: 5px;
+        }
+        .sub-dropdown::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        .sub-dropdown::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 4px;
+        }
+        .sub-dropdown::-webkit-scrollbar-thumb:hover {
+            background: #ef4a23;
+        }
     </style>
 </head>
 
@@ -1007,6 +1023,55 @@
             </div>
         </div>
     </div>
+
+    <!-- Dynamic positioning script for sub-dropdown menus to prevent screen overflow -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const subDropdownTriggers = document.querySelectorAll('.sub-dropdown-trigger');
+            
+            subDropdownTriggers.forEach(trigger => {
+                const submenu = trigger.querySelector('.sub-dropdown');
+                if (!submenu) return;
+
+                // When user hovers (mouseenter)
+                trigger.addEventListener('mouseenter', function() {
+                    // Reset position and max-height so we can measure the natural height
+                    submenu.style.top = '0px';
+                    submenu.style.bottom = 'auto';
+                    submenu.style.maxHeight = '';
+                    submenu.style.overflowY = '';
+
+                    // Get dimensions
+                    const rect = submenu.getBoundingClientRect();
+                    const viewportHeight = window.innerHeight;
+                    
+                    // If bottom edge of submenu goes below viewport height
+                    if (rect.bottom > viewportHeight - 10) {
+                        const overflow = rect.bottom - (viewportHeight - 10);
+                        const triggerRect = trigger.getBoundingClientRect();
+                        const newTop = -overflow;
+
+                        // If shifting it up would push it above the top of the viewport (with 10px margin)
+                        if (triggerRect.top + newTop < 10) {
+                            submenu.style.top = `-${triggerRect.top - 10}px`;
+                            submenu.style.maxHeight = `${viewportHeight - 20}px`;
+                            submenu.style.overflowY = 'auto';
+                        } else {
+                            submenu.style.top = `${newTop}px`;
+                        }
+                    }
+                });
+
+                // Clean up styles when hover leaves (mouseleave)
+                trigger.addEventListener('mouseleave', function() {
+                    submenu.style.top = '';
+                    submenu.style.bottom = '';
+                    submenu.style.maxHeight = '';
+                    submenu.style.overflowY = '';
+                });
+            });
+        });
+    </script>
 
     @yield('scripts')
 
