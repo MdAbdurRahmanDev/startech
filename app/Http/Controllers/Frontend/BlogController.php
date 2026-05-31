@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\BlogCategory;
+use App\Models\BlogComment;
 
 class BlogController extends Controller
 {
     public function index()
+
     {
         $categories   = BlogCategory::where('status', 1)->withCount(['blogs' => fn($q) => $q->where('status', 1)])->orderBy('sort_order')->get();
         $blogs        = Blog::with('category')->active()->orderBy('sort_order')->orderBy('published_at', 'desc')->paginate(12);
@@ -30,6 +32,14 @@ class BlogController extends Controller
         $related        = Blog::with('category')->active()->where('blog_category_id', $blog->blog_category_id)->where('id', '!=', $blog->id)->latest('published_at')->take(3)->get();
         $latestArticles = Blog::with('category')->active()->latest('published_at')->take(5)->get();
         $categories     = BlogCategory::where('status', 1)->withCount(['blogs' => fn($q) => $q->where('status', 1)])->orderBy('sort_order')->get();
-        return view('frontend.pages.blog.show', compact('blog', 'related', 'categories', 'latestArticles'));
+
+        $comments = BlogComment::with('user')
+            ->where('blog_id', $blog->id)
+            ->where('status', 1)
+            ->latest()
+            ->get();
+
+        return view('frontend.pages.blog.show', compact('blog', 'related', 'categories', 'latestArticles', 'comments'));
     }
+
 }

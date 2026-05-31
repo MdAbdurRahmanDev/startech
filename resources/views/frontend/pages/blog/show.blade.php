@@ -72,8 +72,77 @@
             @endif
         </div>
 
+        <!-- Comments -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-10 mb-10">
+            <h2 class="text-xl font-extrabold text-gray-900 mb-6">Comments</h2>
+
+            @if(session('success'))
+                <div class="mb-4 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg text-sm font-bold">{{ session('success') }}</div>
+            @endif
+            @if($errors->any())
+                <div class="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm font-bold">
+                    <ul class="list-disc list-inside">
+                        @foreach($errors->all() as $err)
+                            <li>{{ $err }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form action="{{ route('blogs.comment.store', $blog->slug) }}" method="POST" class="space-y-4">
+                @csrf
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="">
+                        <label class="block text-xs font-bold text-gray-600 mb-1">Your Name</label>
+                        <input type="text" name="name" value="{{ old('name', auth()->check() ? (auth()->user()->name ?? auth()->user()->first_name ?? '') : '') }}" required
+                               class="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#ef4a23] text-sm">
+                    </div>
+                    <div class="flex items-end">
+                        <p class="text-[11px] text-gray-500 font-semibold">
+                            Submissions go to admin approval.
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 mb-1">Comment</label>
+                    <textarea name="comment" rows="4" required
+                              class="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#ef4a23] text-sm">{{ old('comment') }}</textarea>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <button type="submit" class="bg-[#ef4a23] hover:bg-[#d93c19] text-white font-extrabold py-2.5 px-5 rounded-xl transition-colors">
+                        Submit Comment
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-10">
+                <h3 class="text-lg font-extrabold text-gray-900 mb-4">Approved Comments</h3>
+
+                @if($comments->count() > 0)
+                    <div class="space-y-4">
+                        @foreach($comments as $c)
+                            <div class="border border-gray-100 rounded-xl p-4 bg-gray-50">
+                                <div class="flex items-start justify-between gap-4">
+                                    <div>
+                                        <div class="text-sm font-extrabold text-gray-900">{{ $c->user->name ?? $c->name }}</div>
+                                        <div class="text-[11px] text-gray-500 mt-0.5">{{ $c->created_at->format('d M Y') }}</div>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-sm text-gray-700 leading-relaxed">{{ $c->comment }}</div>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="text-sm font-bold text-gray-500">No approved comments yet.</div>
+                @endif
+            </div>
+        </div>
+
         <!-- Related Posts -->
         @if($related->count() > 0)
+
         <div>
             <h2 class="text-xl font-extrabold text-gray-900 mb-5">Related Posts</h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">

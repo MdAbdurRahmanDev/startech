@@ -98,6 +98,10 @@ Route::get('/blog', [BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blog/category/{slug}', [BlogController::class, 'category'])->name('blogs.category');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blogs.show');
 
+Route::post('/blog/{slug}/comment', [\App\Http\Controllers\Frontend\BlogCommentController::class, 'store'])
+    ->name('blogs.comment.store');
+
+
 // Dynamic CMS Pages
 Route::get('/info/{slug}', [InformationController::class, 'showPageBySlug'])->name('info.show');
 Route::get('/contact', [InformationController::class, 'contact'])->name('contact');

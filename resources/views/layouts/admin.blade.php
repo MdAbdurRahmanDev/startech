@@ -275,10 +275,11 @@
                         <!-- Blog Dropdown -->
                         <li>
                             <button type="button"
-                                class="flex items-center w-full px-3 py-1.5 text-xs text-body transition duration-75 rounded-lg group hover:bg-neutral-tertiary hover:text-fg-brand {{ request()->routeIs('admin.blogs.*') || request()->routeIs('admin.blog-categories.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }}"
+                                class="flex items-center w-full px-3 py-1.5 text-xs text-body transition duration-75 rounded-lg group hover:bg-neutral-tertiary hover:text-fg-brand {{ request()->routeIs('admin.blogs.*') || request()->routeIs('admin.blog-categories.*') || request()->routeIs('admin.blog-comments.*') ? 'bg-neutral-tertiary text-fg-brand' : '' }}"
                                 aria-controls="dropdown-blog" data-collapse-toggle="dropdown-blog">
-                                <i class="fas fa-blog w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.blogs.*') || request()->routeIs('admin.blog-categories.*') ? 'text-fg-brand' : '' }}"></i>
+                                <i class="fas fa-blog w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.blogs.*') || request()->routeIs('admin.blog-categories.*') || request()->routeIs('admin.blog-comments.*') ? 'text-fg-brand' : '' }}"></i>
                                 <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Blog Management</span>
+
                                 <svg class="w-3 h-3 transition-transform" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
                                 </svg>
@@ -296,8 +297,15 @@
                                         Blog Categories
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="{{ route('admin.blog-comments.index') }}"
+                                        class="flex items-center w-full p-1.5 text-xs text-body transition duration-75 rounded-lg pl-11 group hover:bg-neutral-tertiary hover:text-fg-brand {{ request()->routeIs('admin.blog-comments.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }}">
+                                        Blog Comments (Pending)
+                                    </a>
+                                </li>
                             </ul>
                         </li>
+
                     </ul>
                 </li>
 

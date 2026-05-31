@@ -149,4 +149,11 @@ Route::middleware('auth:admin')->group(function () {
     Route::delete('/admin/blogs/{blog}', [\App\Http\Controllers\Backend\BlogController::class, 'destroy'])->name('admin.blogs.destroy');
     Route::post('/admin/blogs/{blog}/toggle-status', [\App\Http\Controllers\Backend\BlogController::class, 'toggleStatus'])->name('admin.blogs.toggle-status');
     Route::post('/admin/blogs/{blog}/toggle-featured', [\App\Http\Controllers\Backend\BlogController::class, 'toggleFeatured'])->name('admin.blogs.toggle-featured');
+
+    // Blog Comments (Admin approval)
+    Route::get('/admin/blog-comments', [\App\Http\Controllers\Backend\BlogCommentController::class, 'index'])->name('admin.blog-comments.index');
+    Route::post('/admin/blog-comments/{blogComment}/approve', [\App\Http\Controllers\Backend\BlogCommentController::class, 'approve'])->name('admin.blog-comments.approve');
+    Route::post('/admin/blog-comments/{blogComment}/reject', [\App\Http\Controllers\Backend\BlogCommentController::class, 'reject'])->name('admin.blog-comments.reject');
+    Route::delete('/admin/blog-comments/{blogComment}', [\App\Http\Controllers\Backend\BlogCommentController::class, 'destroy'])->name('admin.blog-comments.destroy');
 });
+

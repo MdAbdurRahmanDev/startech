@@ -52,4 +52,16 @@ class Blog extends Model
         $minutes = ceil($words / 200);
         return max(1, $minutes) . ' min read';
     }
+
+    // Used in frontend: $blog->thumbnail_url
+    public function getThumbnailUrlAttribute()
+    {
+        if (empty($this->thumbnail)) {
+            return null;
+        }
+
+        // `thumbnail` is stored like: blogs/<file>.jpg on the `public` disk
+        return asset('storage/' . $this->thumbnail);
+    }
 }
+
