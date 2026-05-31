@@ -88,7 +88,7 @@
                 <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-5">
                     <h3 class="font-bold text-gray-700 text-sm uppercase tracking-wide border-b pb-2 mb-3">Thumbnail</h3>
                     @if($blog->thumbnail)
-                    <img src="{{ asset('storage/' . $blog->thumbnail) }}" class="w-full rounded-lg border border-gray-100 object-cover max-h-40 mb-3">
+                    <img src="{{ $blog->thumbnail_url }}" class="w-full rounded-lg border border-gray-100 object-cover max-h-40 mb-3">
                     @endif
                     <input type="file" name="thumbnail" accept="image/*" id="thumbnail_input"
                            class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">

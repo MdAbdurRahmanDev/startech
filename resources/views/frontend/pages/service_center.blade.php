@@ -275,7 +275,7 @@
                 <a href="{{ route('blogs.show', $blog->slug) }}" class="article-card bg-white rounded-xl border border-gray-100 overflow-hidden shadow-sm flex flex-col justify-between group">
                     <div class="relative h-44 bg-gradient-to-br from-blue-900 to-indigo-800 overflow-hidden">
                         @if($blog->thumbnail)
-                            <img src="{{ asset('storage/' . $blog->thumbnail) }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-400" alt="{{ $blog->title }}">
+                            <img src="{{ $blog->thumbnail_url }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-400" alt="{{ $blog->title }}">
                         @else
                             <div class="w-full h-full flex items-center justify-center flex-col text-white/20 p-4 text-center">
                                 <i class="fas fa-file-alt text-4xl mb-2 opacity-30"></i>

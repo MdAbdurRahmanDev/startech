@@ -51,7 +51,7 @@
         <!-- Thumbnail -->
         @if($blog->thumbnail)
         <div class="mb-8 rounded-2xl overflow-hidden shadow-md border border-gray-100">
-            <img src="{{ asset('storage/' . $blog->thumbnail) }}" class="w-full object-cover max-h-96" alt="{{ $blog->title }}">
+            <img src="{{ $blog->thumbnail_url }}" class="w-full object-cover max-h-96" alt="{{ $blog->title }}">
         </div>
         @endif
 
@@ -98,6 +98,87 @@
             </div>
         </div>
         @endif
+
+        <!-- Comments Section -->
+        <div class="mt-12 pt-8 border-t border-gray-100">
+            <h2 class="text-xl font-extrabold text-gray-900 mb-6">Comments</h2>
+
+            @if(session('success'))
+            <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
+                <i class="fas fa-check-circle"></i> {{ session('success') }}
+            </div>
+            @endif
+
+            <!-- Display Comments -->
+            @if($blog->comments()->count() > 0)
+            <div class="space-y-4 mb-8">
+                @foreach($blog->comments as $comment)
+                <div class="bg-white border border-gray-100 rounded-lg p-5 shadow-sm">
+                    <div class="flex items-start justify-between mb-3">
+                        <div>
+                            <h4 class="font-bold text-gray-900">{{ $comment->name }}</h4>
+                            <p class="text-xs text-gray-400">{{ $comment->created_at?->format('d M Y, h:i A') }}</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">{{ $comment->comment }}</p>
+
+                    <!-- Nested Replies -->
+                    @if($comment->replies()->count() > 0)
+                    <div class="mt-4 pl-4 border-l-2 border-gray-200 space-y-3">
+                        @foreach($comment->replies as $reply)
+                        <div class="bg-gray-50 rounded p-4">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <h5 class="font-bold text-gray-800 text-sm">{{ $reply->name }}</h5>
+                                    <p class="text-xs text-gray-400">{{ $reply->created_at?->format('d M Y, h:i A') }}</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm">{{ $reply->comment }}</p>
+                        </div>
+                        @endforeach
+                    </div>
+                    @endif
+                </div>
+                @endforeach
+            </div>
+            @else
+            <p class="text-gray-500 text-center py-8">There are no comments for this article.</p>
+            @endif
+
+            <!-- Comment Form -->
+            <div class="bg-white border border-gray-100 rounded-lg p-6 shadow-sm mt-8">
+                <h3 class="text-lg font-bold text-gray-900 mb-4">Write a comment</h3>
+                <form action="{{ route('blogs.comment.store', $blog->id) }}" method="POST">
+                    @csrf
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label for="name" class="block text-sm font-bold text-gray-700 mb-2">Name <span class="text-red-500">*</span></label>
+                            <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#ef4a23] focus:ring-1 focus:ring-[#ef4a23]" placeholder="Your Name" value="{{ old('name') }}">
+                            @error('name')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-bold text-gray-700 mb-2">Email <span class="text-red-500">*</span></label>
+                            <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#ef4a23] focus:ring-1 focus:ring-[#ef4a23]" placeholder="your@email.com" value="{{ old('email') }}">
+                            @error('email')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="comment" class="block text-sm font-bold text-gray-700 mb-2">Comment <span class="text-red-500">*</span></label>
+                        <textarea id="comment" name="comment" required rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#ef4a23] focus:ring-1 focus:ring-[#ef4a23]" placeholder="Share your thoughts...">{{ old('comment') }}</textarea>
+                        @error('comment')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <button type="submit" class="bg-[#ef4a23] text-white font-bold py-3 px-6 rounded-lg hover:bg-orange-600 transition-colors flex items-center gap-2">
+                        <i class="fas fa-paper-plane"></i> Submit
+                    </button>
+                </form>
+            </div>
+        </div>
 
         <!-- Back Link -->
         <div class="mt-10 text-center">

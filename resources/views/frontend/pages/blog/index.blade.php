@@ -53,7 +53,7 @@
             <div class="relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-white flex flex-col md:flex-row">
                 <div class="md:w-1/2 relative overflow-hidden h-52 md:h-auto">
                     @if($featuredBlog->thumbnail)
-                    <img src="{{ asset('storage/' . $featuredBlog->thumbnail) }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="{{ $featuredBlog->title }}">
+                    <img src="{{ $featuredBlog->thumbnail_url }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="{{ $featuredBlog->title }}">
                     @else
                     <div class="w-full h-full bg-gradient-to-br from-blue-900 to-indigo-700 flex items-center justify-center min-h-52">
                         <i class="fas fa-newspaper text-white/30 text-6xl"></i>
@@ -83,7 +83,7 @@
         <a href="{{ route('blogs.show', $blog->slug) }}" class="blog-card bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
             <div class="relative overflow-hidden h-44 bg-gradient-to-br from-blue-900 to-indigo-700">
                 @if($blog->thumbnail)
-                <img src="{{ asset('storage/' . $blog->thumbnail) }}" class="blog-thumb w-full h-full object-cover" alt="{{ $blog->title }}">
+                <img src="{{ $blog->thumbnail_url }}" class="blog-thumb w-full h-full object-cover" alt="{{ $blog->title }}">
                 @else
                 <div class="w-full h-full flex items-center justify-center">
                     <i class="fas fa-file-alt text-white/20 text-4xl"></i>

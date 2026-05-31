@@ -8,6 +8,7 @@ use App\Models\BlogCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class BlogController extends Controller
 {
@@ -40,7 +41,10 @@ class BlogController extends Controller
 
         $thumbnailPath = null;
         if ($request->hasFile('thumbnail')) {
-            $thumbnailPath = $request->file('thumbnail')->store('blogs', 'public');
+            $file = $request->file('thumbnail');
+            $filename = time() . '_' . Str::slug($request->title) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('blogs'), $filename);
+            $thumbnailPath = 'blogs/' . $filename;
         }
 
         Blog::create([
@@ -75,10 +79,15 @@ class BlogController extends Controller
 
         $thumbnailPath = $blog->thumbnail;
         if ($request->hasFile('thumbnail')) {
-            if ($thumbnailPath) {
-                Storage::disk('public')->delete($thumbnailPath);
+            // Delete old file from public folder if exists
+            if ($thumbnailPath && File::exists(public_path($thumbnailPath))) {
+                File::delete(public_path($thumbnailPath));
             }
-            $thumbnailPath = $request->file('thumbnail')->store('blogs', 'public');
+            // Save new file to public/blogs/
+            $file = $request->file('thumbnail');
+            $filename = time() . '_' . Str::slug($request->title) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('blogs'), $filename);
+            $thumbnailPath = 'blogs/' . $filename;
         }
 
         $blog->update([
@@ -99,8 +108,9 @@ class BlogController extends Controller
 
     public function destroy(Blog $blog)
     {
-        if ($blog->thumbnail) {
-            Storage::disk('public')->delete($blog->thumbnail);
+        // Delete thumbnail from public folder if exists
+        if ($blog->thumbnail && File::exists(public_path($blog->thumbnail))) {
+            File::delete(public_path($blog->thumbnail));
         }
         $blog->delete();
         return redirect()->route('admin.blogs.index')->with('success', 'Blog post deleted!');

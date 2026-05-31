@@ -43,7 +43,7 @@
                 <tr class="hover:bg-gray-50 transition-colors">
                     <td class="px-4 py-3">
                         @if($blog->thumbnail)
-                        <img src="{{ asset('storage/' . $blog->thumbnail) }}" class="w-12 h-10 object-cover rounded-lg border border-gray-100">
+                        <img src="{{ $blog->thumbnail_url }}" class="w-12 h-10 object-cover rounded-lg border border-gray-100">
                         @else
                         <div class="w-12 h-10 bg-gradient-to-br from-blue-800 to-indigo-700 rounded-lg flex items-center justify-center">
                             <i class="fas fa-file-alt text-white text-xs"></i>

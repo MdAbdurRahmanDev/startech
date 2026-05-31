@@ -97,6 +97,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/blog', [BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blog/category/{slug}', [BlogController::class, 'category'])->name('blogs.category');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blogs.show');
+Route::post('/blog/{blog}/comment', [BlogController::class, 'storeComment'])->name('blogs.comment.store');
 
 // Dynamic CMS Pages
 Route::get('/info/{slug}', [InformationController::class, 'showPageBySlug'])->name('info.show');

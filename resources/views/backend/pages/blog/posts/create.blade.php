@@ -86,8 +86,7 @@
 
                 <!-- Thumbnail -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-5">
-                    <h3 class="font-bold text-gray-700 text-sm uppercase tracking-wide border-b pb-2 mb-3">Thumbnail Image</h3>
-                    <input type="file" name="thumbnail" accept="image/*" id="thumbnail_input"
+                    <h3 class="font-bold text-gray-700 text-sm uppercase tracking-wide border-b pb-2 mb-3">Thumbnail Image</h3>                    <p class="text-xs text-gray-500 mb-3">Select a blog post thumbnail image</p>                    <input type="file" name="thumbnail" accept="image/*" id="thumbnail_input"
                            class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     <div id="thumb_preview" class="mt-3 hidden">
                         <img id="thumb_img" class="w-full rounded-lg border border-gray-100 object-cover max-h-40">
