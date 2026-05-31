@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $search = trim($request->query('q', ''));
+
         $categories = Category::with([
                 'brands',
                 'children.brands',
@@ -21,10 +23,22 @@ class CategoryController extends Controller
             ->orderBy('order')
             ->get();
 
+        if ($search !== '') {
+            $categories = $this->filterCategories($categories, $search);
+        }
+
         $allCategories = Category::orderBy('name')->get();
         $brands = \App\Models\Brand::where('status', 1)->orderBy('name')->get();
 
         return view('backend.pages.categories.index', compact('categories', 'allCategories', 'brands'));
+    }
+
+    private function filterCategories($categories, string $search)
+    {
+        return $categories->filter(function ($category) use ($search) {
+            $category->children = $this->filterCategories($category->children, $search);
+            return Str::contains(Str::lower($category->name), Str::lower($search)) || $category->children->isNotEmpty();
+        })->values();
     }
 
     public function store(Request $request)

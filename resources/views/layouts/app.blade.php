@@ -418,6 +418,11 @@
                                 class="text-white opacity-70 hover:opacity-100 hover:text-accent-orange transition-all text-xl"><img
                                     class="w-8" src="{{ asset('icon/youtube.png') }}"></a>
                         @endif
+                        @if ($setting && $setting->linkedin_url)
+                            <a href="{{ $setting->linkedin_url }}" target="_blank"
+                                class="text-white opacity-70 hover:opacity-100 hover:text-accent-orange transition-all text-xl"><img
+                                    class="w-8" src="{{ asset('icon/linkedin.png') }}"></a>
+                        @endif
                         @if ($setting && $setting->instagram_url)
                             <a href="{{ $setting->instagram_url }}" target="_blank"
                                 class="text-white opacity-70 hover:opacity-100 hover:text-accent-orange transition-all text-xl"><img

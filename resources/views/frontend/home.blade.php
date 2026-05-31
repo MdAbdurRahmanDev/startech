@@ -78,7 +78,7 @@
                 @forelse($sideBanners as $banner)
                     <div class="bg-white rounded-lg overflow-hidden shadow-sm h-[100px] md:h-auto lg:flex-1">
                         <a href="{{ $banner->link ?? '#' }}">
-                            <img src="{{ asset('storage/' . $banner->image) }}" alt="Side Banner"
+                            <img src="{{ $banner->image_url }}" alt="Side Banner"
                                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
                         </a>
                     </div>

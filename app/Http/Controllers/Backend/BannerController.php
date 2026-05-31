@@ -11,8 +11,15 @@ class BannerController extends Controller
 {
     public function index(Request $request)
     {
-        $type = $request->query('type', 'slider');
-        $banners = Banner::where('type', $type)->orderBy('order')->get();
+        $type = $request->query('type');
+        $allowedTypes = ['slider', 'side', 'service_center', 'home_services'];
+
+        if ($type && in_array($type, $allowedTypes)) {
+            $banners = Banner::where('type', $type)->orderBy('order')->get();
+        } else {
+            $type = 'all';
+            $banners = Banner::orderBy('type')->orderBy('order')->get();
+        }
 
         return view('backend.pages.banners.index', compact('banners', 'type'));
     }

@@ -24,14 +24,40 @@
                 $pageTitle = 'Home Services Dynamic Banners';
                 $pageDesc = 'Manage the text and images for the Home Services carousel.';
                 $bannerLabel = 'Home Services Banner';
+            } elseif($type === 'all') {
+                $pageTitle = 'All Banners';
+                $pageDesc = 'View and manage all banner types in one place.';
+                $bannerLabel = 'Banner';
             }
         }
     @endphp
     <div class="max-w-6xl mx-auto py-8">
-        <div class="mb-8 flex justify-between items-center">
+        <div class="mb-8 flex flex-col gap-4 lg:gap-0 lg:flex-row lg:justify-between lg:items-center">
             <div>
                 <h1 class="text-2xl font-bold text-gray-800">{{ $pageTitle }}</h1>
                 <p class="text-gray-600">{{ $pageDesc }}</p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                    <a href="{{ route('admin.banners.index') }}"
+                        class="px-4 py-2 rounded-full text-sm font-semibold border transition {{ $type === 'all' ? 'bg-primary-dark text-white border-primary-dark' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50' }}">
+                        All Banners
+                    </a>
+                    <a href="{{ route('admin.banners.index', ['type' => 'slider']) }}"
+                        class="px-4 py-2 rounded-full text-sm font-semibold border transition {{ $type === 'slider' ? 'bg-primary-dark text-white border-primary-dark' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50' }}">
+                        Main Slider
+                    </a>
+                    <a href="{{ route('admin.banners.index', ['type' => 'side']) }}"
+                        class="px-4 py-2 rounded-full text-sm font-semibold border transition {{ $type === 'side' ? 'bg-primary-dark text-white border-primary-dark' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50' }}">
+                        Side Banners
+                    </a>
+                    <a href="{{ route('admin.banners.index', ['type' => 'service_center']) }}"
+                        class="px-4 py-2 rounded-full text-sm font-semibold border transition {{ $type === 'service_center' ? 'bg-primary-dark text-white border-primary-dark' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50' }}">
+                        Service Center
+                    </a>
+                    <a href="{{ route('admin.banners.index', ['type' => 'home_services']) }}"
+                        class="px-4 py-2 rounded-full text-sm font-semibold border transition {{ $type === 'home_services' ? 'bg-primary-dark text-white border-primary-dark' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50' }}">
+                        Home Services
+                    </a>
+                </div>
             </div>
             <button onclick="document.getElementById('addBannerModal').classList.remove('hidden')"
                 class="bg-primary-dark text-white px-6 py-2.5 rounded-lg font-bold hover:bg-opacity-90 transition-all flex items-center gap-2 shadow-sm">
@@ -293,7 +319,7 @@
             const linkInput = document.getElementById('editBannerLink');
 
             form.action = `/admin/banners/${banner.id}/update`;
-            preview.src = `/storage/${banner.image}`;
+            preview.src = banner.image_url || `/storage/${banner.image}`;
             typeSelect.value = banner.type;
             linkInput.value = banner.link || '';
             

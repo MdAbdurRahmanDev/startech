@@ -16,6 +16,7 @@ class Setting extends Model
         'address',
         'footer_text',
         'facebook_url',
+        'linkedin_url',
         'whatsapp_number',
         'youtube_url',
         'instagram_url',

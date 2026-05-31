@@ -223,6 +223,15 @@
                                         class="w-full bg-gray-50 border border-gray-200 rounded-lg pl-10 pr-4 py-2 text-sm outline-none focus:border-accent-orange transition-all">
                                 </div>
                             </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-2">LinkedIn Profile</label>
+                                <div class="relative">
+                                    <i class="fab fa-linkedin absolute left-4 top-1/2 -translate-y-1/2 text-blue-700"></i>
+                                    <input type="url" name="linkedin_url"
+                                        value="{{ old('linkedin_url', $setting->linkedin_url ?? '') }}"
+                                        class="w-full bg-gray-50 border border-gray-200 rounded-lg pl-10 pr-4 py-2 text-sm outline-none focus:border-accent-orange transition-all">
+                                </div>
+                            </div>
                         </div>
                     </div>
 

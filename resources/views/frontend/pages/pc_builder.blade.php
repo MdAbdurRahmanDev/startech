@@ -86,7 +86,7 @@
         }
 
         .price-box {
-            background: #3749bb;
+            background: #f97316;
             color: #fff;
             padding: 10px 30px;
             border-radius: 8px;
@@ -119,12 +119,12 @@
         .component-icon {
             width: 52px;
             height: 52px;
-            background: #eff4fc;
+            background: #fff5ed;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #3749bb;
+            color: #f97316;
             font-size: 24px;
             margin-right: 20px;
             flex-shrink: 0;
@@ -152,14 +152,14 @@
         .component-name {
             font-size: 13px;
             font-weight: 700;
-            color: #3749bb;
+            color: #f97316;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
         .component-name.selected {
-            color: #3749bb;
+            color: #f97316;
         }
 
         .required-tag {
@@ -212,8 +212,8 @@
         }
 
         .btn-choose {
-            border: 2px solid #3749bb;
-            color: #3749bb;
+            border: 2px solid #f97316;
+            color: #f97316;
             padding: 7px 22px;
             border-radius: 6px;
             font-weight: bold;
@@ -224,7 +224,7 @@
         }
 
         .btn-choose:hover {
-            background: #3749bb;
+            background: #f97316;
             color: #fff;
         }
 
@@ -260,7 +260,7 @@
         }
 
         .btn-swap-item:hover {
-            color: #3749bb;
+            color: #f97316;
         }
 
         .bottom-banner {

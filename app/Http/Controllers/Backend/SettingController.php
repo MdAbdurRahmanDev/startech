@@ -29,6 +29,7 @@ class SettingController extends Controller
             'address' => 'nullable|string',
             'footer_text' => 'nullable|string',
             'facebook_url' => 'nullable|url',
+            'linkedin_url' => 'nullable|url',
             'whatsapp_number' => 'nullable|string',
             'youtube_url' => 'nullable|url',
             'instagram_url' => 'nullable|url',

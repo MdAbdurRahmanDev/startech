@@ -134,6 +134,11 @@
                                 class="w-10 h-10 bg-white bg-opacity-10 rounded-lg flex items-center justify-center hover:bg-red-600 transition-all"><i
                                     class="fab fa-youtube"></i></a>
                         @endif
+                        @if ($setting && $setting->linkedin_url)
+                            <a href="{{ $setting->linkedin_url }}"
+                                class="w-10 h-10 bg-white bg-opacity-10 rounded-lg flex items-center justify-center hover:bg-blue-700 transition-all"><img
+                                    class="w-5 h-5" src="{{ asset('icon/linkedin.png') }}" alt="LinkedIn"></a>
+                        @endif
                         @if ($setting && $setting->instagram_url)
                             <a href="{{ $setting->instagram_url }}"
                                 class="w-10 h-10 bg-white bg-opacity-10 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-all"><i

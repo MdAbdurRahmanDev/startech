@@ -16,6 +16,22 @@
             </button>
         </div>
 
+        <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <form action="{{ route('admin.categories.index') }}" method="GET" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full max-w-2xl">
+                <input type="text" name="q" value="{{ request('q') }}" placeholder="Search categories..."
+                    class="w-full sm:flex-1 bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 outline-none focus:border-accent-orange transition-all">
+                <button type="submit"
+                    class="bg-accent-blue text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition-all">Search</button>
+                @if(request('q'))
+                    <a href="{{ route('admin.categories.index') }}"
+                        class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition-all">Clear</a>
+                @endif
+            </form>
+            @if(request('q'))
+                <div class="text-sm text-gray-600">Showing results for "{{ request('q') }}".</div>
+            @endif
+        </div>
+
         @if (session('success'))
             <div
                 class="bg-green-50 text-green-700 p-4 rounded-lg mb-6 flex items-center gap-3 border border-green-100 shadow-sm">
