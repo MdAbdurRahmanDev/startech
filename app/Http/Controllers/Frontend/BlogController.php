@@ -26,9 +26,10 @@ class BlogController extends Controller
 
     public function show($slug)
     {
-        $blog       = Blog::with('category')->active()->where('slug', $slug)->firstOrFail();
-        $related    = Blog::with('category')->active()->where('blog_category_id', $blog->blog_category_id)->where('id', '!=', $blog->id)->latest('published_at')->take(3)->get();
-        $categories = BlogCategory::where('status', 1)->withCount(['blogs' => fn($q) => $q->where('status', 1)])->orderBy('sort_order')->get();
-        return view('frontend.pages.blog.show', compact('blog', 'related', 'categories'));
+        $blog           = Blog::with('category')->active()->where('slug', $slug)->firstOrFail();
+        $related        = Blog::with('category')->active()->where('blog_category_id', $blog->blog_category_id)->where('id', '!=', $blog->id)->latest('published_at')->take(3)->get();
+        $latestArticles = Blog::with('category')->active()->latest('published_at')->take(5)->get();
+        $categories     = BlogCategory::where('status', 1)->withCount(['blogs' => fn($q) => $q->where('status', 1)])->orderBy('sort_order')->get();
+        return view('frontend.pages.blog.show', compact('blog', 'related', 'categories', 'latestArticles'));
     }
 }

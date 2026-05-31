@@ -19,18 +19,18 @@
 
 @section('content')
 <div class="container mx-auto px-4 py-8 mb-12">
-    <div class="max-w-4xl mx-auto">
-
-        <!-- Breadcrumb -->
-        <div class="flex items-center gap-2 text-xs text-gray-400 mb-6">
-            <a href="{{ route('blogs.index') }}" class="hover:text-[#ef4a23] transition-colors">Blog</a>
-            <i class="fas fa-chevron-right text-[8px]"></i>
-            @if($blog->category)
-            <a href="{{ route('blogs.category', $blog->category->slug) }}" class="hover:text-[#ef4a23] transition-colors">{{ $blog->category->name }}</a>
-            <i class="fas fa-chevron-right text-[8px]"></i>
-            @endif
-            <span class="text-gray-600 font-semibold">{{ Str::limit($blog->title, 40) }}</span>
-        </div>
+    <div class="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_340px] gap-10 mx-auto max-w-screen-xl">
+        <div>
+            <!-- Breadcrumb -->
+            <div class="flex items-center gap-2 text-xs text-gray-400 mb-6">
+                <a href="{{ route('blogs.index') }}" class="hover:text-[#ef4a23] transition-colors">Blog</a>
+                <i class="fas fa-chevron-right text-[8px]"></i>
+                @if($blog->category)
+                <a href="{{ route('blogs.category', $blog->category->slug) }}" class="hover:text-[#ef4a23] transition-colors">{{ $blog->category->name }}</a>
+                <i class="fas fa-chevron-right text-[8px]"></i>
+                @endif
+                <span class="text-gray-600 font-semibold">{{ Str::limit($blog->title, 40) }}</span>
+            </div>
 
         <!-- Post Header -->
         <div class="mb-8">
@@ -51,7 +51,7 @@
         <!-- Thumbnail -->
         @if($blog->thumbnail)
         <div class="mb-8 rounded-2xl overflow-hidden shadow-md border border-gray-100">
-            <img src="{{ asset('storage/' . $blog->thumbnail) }}" class="w-full object-cover max-h-96" alt="{{ $blog->title }}">
+            <img src="{{ $blog->thumbnail_url }}" class="w-full object-cover max-h-96" alt="{{ $blog->title }}">
         </div>
         @endif
 
@@ -81,7 +81,7 @@
                 <a href="{{ route('blogs.show', $rel->slug) }}" class="related-card bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
                     <div class="h-36 overflow-hidden bg-gradient-to-br from-blue-900 to-indigo-700">
                         @if($rel->thumbnail)
-                        <img src="{{ asset('storage/' . $rel->thumbnail) }}" class="w-full h-full object-cover" alt="{{ $rel->title }}">
+                        <img src="{{ $rel->thumbnail_url }}" class="w-full h-full object-cover" alt="{{ $rel->title }}">
                         @else
                         <div class="w-full h-full flex items-center justify-center"><i class="fas fa-file-alt text-white/20 text-3xl"></i></div>
                         @endif
@@ -105,6 +105,42 @@
                 <i class="fas fa-arrow-left text-xs"></i> Back to All Posts
             </a>
         </div>
+        </div>
+
+        <aside class="space-y-6">
+            <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6">
+                <h2 class="text-xl font-extrabold text-gray-900 mb-4">Latest Articles</h2>
+                <div class="space-y-4">
+                    @foreach($latestArticles as $latest)
+                    <a href="{{ route('blogs.show', $latest->slug) }}" class="block transition hover:bg-gray-50 rounded-lg p-3">
+                        <div class="text-xs uppercase tracking-[0.2em] font-bold text-[#ef4a23] mb-1">{{ $latest->category->name ?? 'Article' }}</div>
+                        <h3 class="text-sm font-semibold text-gray-900 leading-tight line-clamp-2">{{ $latest->title }}</h3>
+                        <p class="text-[11px] text-gray-500 mt-2">{{ $latest->published_at?->format('d M Y') }}</p>
+                    </a>
+                    @endforeach
+                </div>
+            </div>
+            <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6">
+                <h3 class="text-lg font-bold text-gray-900 mb-3">Related Posts</h3>
+                <div class="space-y-3">
+                    @foreach($related as $rel)
+                    <a href="{{ route('blogs.show', $rel->slug) }}" class="flex items-start gap-3 p-3 rounded-lg border border-gray-100 hover:border-[#ef4a23] transition-colors">
+                        <div class="w-16 h-16 rounded-xl overflow-hidden bg-gray-100">
+                            @if($rel->thumbnail)
+                            <img src="{{ $rel->thumbnail_url }}" class="w-full h-full object-cover" alt="{{ $rel->title }}">
+                            @else
+                            <div class="w-full h-full flex items-center justify-center text-gray-400"><i class="fas fa-file-alt"></i></div>
+                            @endif
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-sm font-semibold text-gray-900 line-clamp-2">{{ $rel->title }}</h4>
+                            <p class="text-[11px] text-gray-400 mt-1">{{ $rel->published_at?->format('d M Y') }}</p>
+                        </div>
+                    </a>
+                    @endforeach
+                </div>
+            </div>
+        </aside>
     </div>
 </div>
 @endsection
