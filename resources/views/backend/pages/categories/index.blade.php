@@ -250,6 +250,70 @@
                                             </div>
                                         </td>
                                     </tr>
+
+                                    <!-- Sub-Sub-Sub Categories -->
+                                    @foreach ($subSub->children as $subSubSub)
+                                        <tr class="hover:bg-gray-50 transition-colors bg-white">
+                                            <td class="px-6 py-2 pl-32">
+                                                <div class="flex items-center gap-3">
+                                                    <i class="fas fa-chevron-right text-[10px] text-gray-200"></i>
+                                                    @if ($subSubSub->image)
+                                                        <img src="{{ asset('storage/' . $subSubSub->image) }}"
+                                                            class="w-4 h-4 object-cover rounded-sm">
+                                                    @endif
+                                                    <span class="text-gray-500 text-sm">{{ $subSubSub->name }}</span>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-2"><span
+                                                    class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-gray-50 text-gray-400">Level 4</span>
+                                            </td>
+                                            <td class="px-6 py-2">
+                                                <form action="{{ route('admin.categories.toggle', $subSubSub) }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit"
+                                                        class="flex items-center gap-1 {{ $subSubSub->status ? 'text-green-600' : 'text-red-400' }}">
+                                                        <i class="fas fa-toggle-{{ $subSubSub->status ? 'on' : 'off' }}"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            <td class="px-6 py-2">
+                                                <form action="{{ route('admin.categories.featured', $subSubSub) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <button type="submit"
+                                                        class="flex items-center gap-1 {{ $subSubSub->is_featured ? 'text-orange-500' : 'text-gray-300' }}">
+                                                        <i class="fas fa-star text-[10px]"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            <td class="px-6 py-2">
+                                                <form action="{{ route('admin.categories.header-menu', $subSubSub) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <button type="submit"
+                                                        class="flex items-center gap-1 {{ $subSubSub->is_header_menu ? 'text-blue-500' : 'text-gray-300' }}">
+                                                        <i class="fas fa-check-circle text-[10px]"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            <td class="px-6 py-2 text-xs text-gray-400">{{ $subSubSub->order }}</td>
+                                            <td class="px-6 py-2">
+                                                <div class="flex items-center gap-3">
+                                                    <button
+                                                        onclick="openEditModal({{ $subSubSub->id }}, '{{ addslashes($subSubSub->name) }}', '{{ $subSubSub->parent_id }}', '{{ addslashes($subSubSub->icon ?? '') }}', {{ $subSubSub->order }}, {{ $subSubSub->is_featured ? 'true' : 'false' }}, {{ $subSubSub->is_header_menu ? 'true' : 'false' }}, [{{ $subSubSub->brands->pluck('id')->join(',') }}])"
+                                                        class="text-blue-400 hover:text-blue-600 transition-colors"><i
+                                                            class="fas fa-edit"></i></button>
+                                                    <form action="{{ route('admin.categories.destroy', $subSubSub) }}"
+                                                        method="POST">
+                                                        @csrf @method('DELETE')
+                                                        <button type="submit"
+                                                            class="text-gray-300 hover:text-red-500 transition-colors"><i
+                                                                class="fas fa-trash-alt"></i></button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 @endforeach
                             @endforeach
                         @empty

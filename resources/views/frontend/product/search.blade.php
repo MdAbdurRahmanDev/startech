@@ -81,6 +81,29 @@
                         </div>
                     @endif
 
+                    <!-- Stock Badge -->
+                    @if ($product->is_tba)
+                        <div
+                            class="absolute top-3 right-3 bg-purple-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">
+                            TBA
+                        </div>
+                    @elseif ($product->is_coming_soon)
+                        <div
+                            class="absolute top-3 right-3 bg-blue-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">
+                            Coming Soon
+                        </div>
+                    @elseif ($product->stock <= 0)
+                        <div
+                            class="absolute top-3 right-3 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">
+                            Out of Stock
+                        </div>
+                    @else
+                        <div
+                            class="absolute top-3 right-3 bg-accent-blue text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">
+                            In Stock
+                        </div>
+                    @endif
+
                     <!-- Product Image -->
                     <a href="{{ url('product/' . $product->slug) }}"
                         class="block mb-4 h-44 bg-gray-50 rounded flex items-center justify-center p-2 overflow-hidden">
@@ -107,7 +130,9 @@
                     <!-- Price and Actions -->
                     <div class="border-t border-gray-100 pt-4 text-center mt-auto">
                         <div class="flex items-center justify-center gap-2 mb-3">
-                            @if ($product->discount_price && $product->discount_price < $product->price)
+                            @if ($product->is_call_for_price)
+                                <span class="text-[15px] font-bold text-accent-orange">Call for Price</span>
+                            @elseif ($product->discount_price && $product->discount_price < $product->price)
                                 <span
                                     class="text-[15px] font-bold text-accent-orange">{{ number_format($product->discount_price, 0) }}৳</span>
                                 <span
@@ -118,10 +143,32 @@
                             @endif
                         </div>
 
-                        <button type="button" onclick="buyNow({{ $product->id }})"
-                            class="w-full bg-primary-dark text-white text-xs md:text-sm font-bold py-2 md:py-2.5 rounded hover:bg-accent-orange transition-all flex items-center justify-center gap-2 cursor-pointer">
-                            <i class="fas fa-shopping-cart text-[11px]"></i> Buy Now
-                        </button>
+                        @if ($product->is_call_for_price)
+                            <a href="tel:{{ $setting->phone ?? '01XXXXXXXXX' }}"
+                                class="w-full bg-primary-dark text-white text-xs md:text-sm font-bold py-2 md:py-2.5 rounded hover:bg-accent-orange transition-all flex items-center justify-center gap-2">
+                                <i class="fas fa-phone-alt text-[11px]"></i> Call Now
+                            </a>
+                        @elseif ($product->is_tba)
+                            <button disabled
+                                class="w-full bg-primary-dark text-white text-xs md:text-sm font-bold py-2 md:py-2.5 rounded opacity-50 cursor-not-allowed flex items-center justify-center gap-2">
+                                <i class="fas fa-bullhorn text-[11px]"></i> TBA
+                            </button>
+                        @elseif ($product->is_coming_soon)
+                            <button disabled
+                                class="w-full bg-primary-dark text-white text-xs md:text-sm font-bold py-2 md:py-2.5 rounded opacity-50 cursor-not-allowed flex items-center justify-center gap-2">
+                                <i class="fas fa-clock text-[11px]"></i> Coming Soon
+                            </button>
+                        @elseif ($product->stock <= 0)
+                            <button disabled
+                                class="w-full bg-primary-dark text-white text-xs md:text-sm font-bold py-2 md:py-2.5 rounded opacity-50 cursor-not-allowed flex items-center justify-center gap-2">
+                                <i class="fas fa-times-circle text-[11px]"></i> Out of Stock
+                            </button>
+                        @else
+                            <button type="button" onclick="buyNow({{ $product->id }})"
+                                class="w-full bg-primary-dark text-white text-xs md:text-sm font-bold py-2 md:py-2.5 rounded hover:bg-accent-orange transition-all flex items-center justify-center gap-2 cursor-pointer">
+                                <i class="fas fa-shopping-cart text-[11px]"></i> Buy Now
+                            </button>
+                        @endif
 
                         <button
                             class="text-[11px] font-bold text-gray-500 hover:text-accent-orange transition-colors flex items-center justify-center gap-1.5 w-full py-1">

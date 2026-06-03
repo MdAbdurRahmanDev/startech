@@ -228,11 +228,15 @@
                                 </button>
                             </div>
                             <div class="flex gap-2">
-                                <input type="text" id="coupon-input" placeholder="Promo / Coupon Code"
-                                    class="border border-gray-300 rounded px-3 py-2 text-[12px] flex-1 focus:outline-none focus:border-accent-blue placeholder-gray-400">
-                                <button type="button"
-                                    class="text-accent-blue text-[12px] font-bold hover:text-accent-orange transition-colors px-1">Apply</button>
+                                <input type="text" id="coupon-input" placeholder="Promo / Coupon Code" value="{{ $coupon['code'] ?? '' }}" {{ isset($coupon) ? 'readonly' : '' }}
+                                    class="border border-gray-300 rounded px-3 py-2 text-[12px] flex-1 focus:outline-none focus:border-accent-blue placeholder-gray-400 {{ isset($coupon) ? 'bg-gray-100 text-gray-500' : '' }}">
+                                @if(isset($coupon))
+                                <button type="button" onclick="removeCoupon()" class="text-red-500 text-[12px] font-bold hover:text-red-700 transition-colors px-1">Remove</button>
+                                @else
+                                <button type="button" id="apply-coupon-btn" onclick="applyCoupon()" class="text-accent-blue text-[12px] font-bold hover:text-accent-orange transition-colors px-1">Apply</button>
+                                @endif
                             </div>
+                            <p id="coupon-message" class="text-[11px] mt-1 hidden"></p>
                         </div>
 
                         {{-- Totals --}}
@@ -246,11 +250,20 @@
                                 <span id="delivery-charge"
                                     class="font-bold text-gray-800">{{ number_format($shipping_methods->first()->cost ?? 0, 0) }}৳</span>
                             </div>
+                            <div id="discount-row" class="flex justify-between text-green-600 {{ isset($coupon) ? '' : 'hidden' }}">
+                                <span>Discount (<span id="discount-code">{{ $coupon['code'] ?? '' }}</span>):</span>
+                                <span id="discount-amount" class="font-bold">-{{ number_format($coupon['discount'] ?? 0, 0) }}৳</span>
+                            </div>
                             <div
                                 class="border-t border-gray-100 pt-2.5 flex justify-between text-[14px] font-bold text-gray-800">
                                 <span>Total:</span>
+                                @php
+                                    $shipping_cost = $shipping_methods->first()->cost ?? 0;
+                                    $discount = $coupon['discount'] ?? 0;
+                                    $grandTotal = $total + $shipping_cost - $discount;
+                                @endphp
                                 <span id="grand-total"
-                                    class="text-accent-orange text-[15px] font-bold">{{ number_format($total + ($shipping_methods->first()->cost ?? 0), 0) }}৳</span>
+                                    class="text-accent-orange text-[15px] font-bold">{{ number_format(max(0, $grandTotal), 0) }}৳</span>
                             </div>
                         </div>
 
@@ -288,6 +301,16 @@
 @section('scripts')
     <script>
         const subtotal = {{ $total }};
+        let currentDiscount = {{ isset($coupon) ? $coupon['discount'] : 0 }};
+
+        function calculateGrandTotal() {
+            let charge = 0;
+            const checkedRadio = document.querySelector('input[name="delivery_method"]:checked');
+            if(checkedRadio) charge = parseFloat(checkedRadio.getAttribute('data-charge')) || 0;
+            let final = subtotal + charge - currentDiscount;
+            if(final < 0) final = 0;
+            document.getElementById('grand-total').textContent = final.toLocaleString('en-BD') + '৳';
+        }
 
         // Delivery charge update
         document.querySelectorAll('input[name="delivery_method"]').forEach(radio => {
@@ -297,10 +320,67 @@
                 document.getElementById('delivery-label').textContent = name + ':';
                 document.getElementById('delivery-charge').textContent = charge === 0 ? 'Free' : charge
                     .toLocaleString('en-BD') + '৳';
-                document.getElementById('grand-total').textContent = (subtotal + charge).toLocaleString(
-                    'en-BD') + '৳';
+                calculateGrandTotal();
             });
         });
+
+        // Coupon Logic
+        function applyCoupon() {
+            const code = document.getElementById('coupon-input').value.trim();
+            const msg = document.getElementById('coupon-message');
+            const btn = document.getElementById('apply-coupon-btn');
+
+            if(!code) {
+                msg.textContent = 'Please enter a code.';
+                msg.className = 'text-[11px] mt-1 text-red-500 block';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+            fetch('{{ route('coupon.apply') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ code: code })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    window.location.reload(); // Reload to show applied state nicely
+                } else {
+                    msg.textContent = data.message;
+                    msg.className = 'text-[11px] mt-1 text-red-500 block';
+                    btn.disabled = false;
+                    btn.innerHTML = 'Apply';
+                }
+            })
+            .catch(() => {
+                msg.textContent = 'Something went wrong.';
+                msg.className = 'text-[11px] mt-1 text-red-500 block';
+                btn.disabled = false;
+                btn.innerHTML = 'Apply';
+            });
+        }
+
+        function removeCoupon() {
+            fetch('{{ route('coupon.remove') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    window.location.reload();
+                }
+            });
+        }
 
         // Toggle Transaction ID Field
         function toggleTrxField(show, name = '', number = '', type = '') {

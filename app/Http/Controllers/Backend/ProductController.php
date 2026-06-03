@@ -90,6 +90,9 @@ class ProductController extends Controller
         $data = $request->except(['categories', 'thumbnail', 'meta_image', 'gallery', 'video']);
         $data['slug'] = Str::slug($request->name) . '-' . time();
         $data['is_featured'] = $request->has('is_featured');
+        $data['is_coming_soon'] = $request->has('is_coming_soon');
+        $data['is_tba'] = $request->has('is_tba');
+        $data['is_call_for_price'] = $request->has('is_call_for_price');
         $data['status'] = true;
 
         if ($request->hasFile('thumbnail')) {
@@ -157,6 +160,9 @@ class ProductController extends Controller
             $data['slug'] = Str::slug($request->name) . '-' . time();
         }
         $data['is_featured'] = $request->has('is_featured');
+        $data['is_coming_soon'] = $request->has('is_coming_soon');
+        $data['is_tba'] = $request->has('is_tba');
+        $data['is_call_for_price'] = $request->has('is_call_for_price');
 
         if ($request->hasFile('thumbnail')) {
             if ($product->thumbnail) {

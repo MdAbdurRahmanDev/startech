@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\ShippingMethod;
 use App\Models\Order;
@@ -25,12 +26,59 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
         if (empty($cart)) return redirect()->route('cart.show')->with('error', 'Your cart is empty.');
-        
+
         $total = collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']);
         $shipping_methods = ShippingMethod::where('status', 1)->get();
         $payment_methods = PaymentMethod::where('status', 1)->get();
-        
-        return view('frontend.cart.checkout', compact('cart', 'total', 'shipping_methods', 'payment_methods'));
+        $coupon = session()->get('coupon');
+
+        return view('frontend.cart.checkout', compact('cart', 'total', 'shipping_methods', 'payment_methods', 'coupon'));
+    }
+
+    public function applyCoupon(Request $request)
+    {
+        $request->validate(['code' => 'required|string']);
+
+        $cart = session()->get('cart', []);
+        if (empty($cart)) {
+            return response()->json(['success' => false, 'message' => 'Your cart is empty.']);
+        }
+
+        $subtotal = collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']);
+        $coupon = Coupon::where('code', strtoupper(trim($request->code)))->first();
+
+        if (!$coupon) {
+            return response()->json(['success' => false, 'message' => 'Invalid coupon code.']);
+        }
+
+        $check = $coupon->isValid($subtotal);
+        if (!$check['valid']) {
+            return response()->json(['success' => false, 'message' => $check['message']]);
+        }
+
+        $discount = $coupon->calculateDiscount($subtotal);
+
+        session()->put('coupon', [
+            'id'       => $coupon->id,
+            'code'     => $coupon->code,
+            'type'     => $coupon->type,
+            'value'    => $coupon->value,
+            'discount' => $discount,
+        ]);
+
+        return response()->json([
+            'success'  => true,
+            'message'  => 'Coupon applied successfully!',
+            'code'     => $coupon->code,
+            'discount' => $discount,
+            'discount_formatted' => number_format($discount, 0),
+        ]);
+    }
+
+    public function removeCoupon()
+    {
+        session()->forget('coupon');
+        return response()->json(['success' => true]);
     }
 
     public function placeOrder(Request $request)
@@ -39,19 +87,37 @@ class CartController extends Controller
         if (empty($cart)) return redirect()->route('cart.show')->with('error', 'Your cart is empty.');
 
         $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name'  => 'required|string|max:255',
-            'email'      => 'required|email|max:255',
-            'phone'      => 'required|string|max:20',
-            'address'    => 'required|string',
+            'first_name'      => 'required|string|max:255',
+            'last_name'       => 'required|string|max:255',
+            'email'           => 'required|email|max:255',
+            'phone'           => 'required|string|max:20',
+            'address'         => 'required|string',
             'delivery_method' => 'required|exists:shipping_methods,id',
-            'payment_method' => 'required|string',
-            'transaction_id' => $request->payment_method != 'cash_on_delivery' ? 'required|string|max:255' : 'nullable',
+            'payment_method'  => 'required|string',
+            'transaction_id'  => $request->payment_method != 'cash_on_delivery' ? 'required|string|max:255' : 'nullable',
         ]);
 
         $shipping_method = ShippingMethod::findOrFail($request->delivery_method);
         $subtotal = collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']);
-        $total = $subtotal + $shipping_method->cost;
+
+        // Apply coupon discount
+        $couponSession = session()->get('coupon');
+        $discountAmount = 0;
+        $couponCode = null;
+        if ($couponSession) {
+            $coupon = Coupon::find($couponSession['id']);
+            if ($coupon) {
+                $check = $coupon->isValid($subtotal);
+                if ($check['valid']) {
+                    $discountAmount = $coupon->calculateDiscount($subtotal);
+                    $couponCode = $coupon->code;
+                    $coupon->increment('used_count');
+                }
+            }
+        }
+
+        $total = $subtotal + $shipping_method->cost - $discountAmount;
+        if ($total < 0) $total = 0;
 
         try {
             DB::beginTransaction();
@@ -70,6 +136,8 @@ class CartController extends Controller
                 'shipping_method_id' => $shipping_method->id,
                 'shipping_cost'      => $shipping_method->cost,
                 'subtotal'           => $subtotal,
+                'discount_amount'    => $discountAmount,
+                'coupon_code'        => $couponCode,
                 'total'              => $total,
                 'payment_method'     => $request->payment_method,
                 'transaction_id'     => $request->transaction_id,
@@ -89,6 +157,7 @@ class CartController extends Controller
 
             DB::commit();
             session()->forget('cart');
+            session()->forget('coupon');
 
             return redirect()->route('order.success', $order->order_number)->with('success', 'Your order has been placed successfully!');
 
@@ -147,7 +216,6 @@ class CartController extends Controller
         }
 
         session()->put('cart', $cart);
-
         $cartCount = collect($cart)->sum('quantity');
 
         return response()->json([
@@ -199,7 +267,6 @@ class CartController extends Controller
 
         $cart = session()->get('cart', []);
 
-        // Just overwrite or update
         $cart[$product->id] = [
             'id'        => $product->id,
             'name'      => $product->name,

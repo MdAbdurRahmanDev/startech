@@ -171,6 +171,13 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{ route('admin.coupons.index') }}"
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.coupons.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-ticket-alt w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.coupons.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">Coupons</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ route('admin.refunds.index') }}"
                                 class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.refunds.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
                                 <i class="fas fa-undo w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.refunds.*') ? 'text-fg-brand' : '' }}"></i>

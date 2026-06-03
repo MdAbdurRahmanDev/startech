@@ -69,6 +69,8 @@ Route::post('/cart/buy-now', [CartController::class, 'buyNow'])->name('cart.buy-
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 Route::get('/cart/count', [CartController::class, 'getCount'])->name('cart.count');
 Route::post('/checkout', [CartController::class, 'placeOrder'])->name('order.place');
+Route::post('/coupon/apply', [CartController::class, 'applyCoupon'])->name('coupon.apply');
+Route::post('/coupon/remove', [CartController::class, 'removeCoupon'])->name('coupon.remove');
 Route::get('/order-success/{order_number}', [CartController::class, 'orderSuccess'])->name('order.success');
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
 Route::get('/search', [SearchController::class, 'index']);

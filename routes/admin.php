@@ -150,6 +150,15 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/blogs/{blog}/toggle-status', [\App\Http\Controllers\Backend\BlogController::class, 'toggleStatus'])->name('admin.blogs.toggle-status');
     Route::post('/admin/blogs/{blog}/toggle-featured', [\App\Http\Controllers\Backend\BlogController::class, 'toggleFeatured'])->name('admin.blogs.toggle-featured');
 
+    // Coupons
+    Route::get('/admin/coupons', [\App\Http\Controllers\Backend\CouponController::class, 'index'])->name('admin.coupons.index');
+    Route::get('/admin/coupons/create', [\App\Http\Controllers\Backend\CouponController::class, 'create'])->name('admin.coupons.create');
+    Route::post('/admin/coupons', [\App\Http\Controllers\Backend\CouponController::class, 'store'])->name('admin.coupons.store');
+    Route::get('/admin/coupons/{coupon}/edit', [\App\Http\Controllers\Backend\CouponController::class, 'edit'])->name('admin.coupons.edit');
+    Route::put('/admin/coupons/{coupon}', [\App\Http\Controllers\Backend\CouponController::class, 'update'])->name('admin.coupons.update');
+    Route::post('/admin/coupons/{coupon}/toggle', [\App\Http\Controllers\Backend\CouponController::class, 'toggleStatus'])->name('admin.coupons.toggle');
+    Route::delete('/admin/coupons/{coupon}', [\App\Http\Controllers\Backend\CouponController::class, 'destroy'])->name('admin.coupons.destroy');
+
     // Blog Comments (Admin approval)
     Route::get('/admin/blog-comments', [\App\Http\Controllers\Backend\BlogCommentController::class, 'index'])->name('admin.blog-comments.index');
     Route::post('/admin/blog-comments/{blogComment}/approve', [\App\Http\Controllers\Backend\BlogCommentController::class, 'approve'])->name('admin.blog-comments.approve');

@@ -113,7 +113,9 @@
                     <div class="flex flex-wrap gap-2.5 mb-5">
                         <span class="bg-[#f2f4f8] py-1 px-3.5 rounded-full text-[13px] text-gray-800 inline-block">
                             Price:
-                            @if ($product->discount_price && $product->discount_price < $product->price)
+                            @if ($product->is_call_for_price)
+                                <strong class="text-accent-orange">Call for Price</strong>
+                            @elseif ($product->discount_price && $product->discount_price < $product->price)
                                 <strong
                                     class="text-accent-orange">{{ number_format($product->discount_price, 0) }}৳</strong>
                                 <span
@@ -124,7 +126,7 @@
                         </span>
                         <span class="bg-[#f2f4f8] py-1 px-3.5 rounded-full text-[13px] text-gray-800 inline-block">
                             Status: <strong
-                                class="{{ $product->stock > 0 ? 'text-green-600' : 'text-red-500' }}">{{ $product->stock > 0 ? 'In Stock' : 'Out of Stock' }}</strong>
+                                class="{{ $product->is_tba ? 'text-purple-500' : ($product->is_coming_soon ? 'text-blue-500' : ($product->stock > 0 ? 'text-green-600' : 'text-red-500')) }}">{{ $product->is_tba ? 'TBA' : ($product->is_coming_soon ? 'Coming Soon' : ($product->stock > 0 ? 'In Stock' : 'Out of Stock')) }}</strong>
                         </span>
                         <span class="bg-[#f2f4f8] py-1 px-3.5 rounded-full text-[13px] text-gray-800 inline-block">Product
                             Code: <strong>#{{ $product->id }}</strong></span>
@@ -162,31 +164,48 @@
                         </div>
                     @endif
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                        <div
-                            class="payment-card active border-2 border-accent-blue bg-[#f0f4f9] p-4 rounded-lg flex items-start gap-3 cursor-pointer transition-colors">
-                            <input type="radio" checked name="payment" id="cash-payment" class="mt-1 accent-accent-blue">
-                            <div>
-                                <h4 class="text-[18px] text-gray-800 mb-1 font-bold">
-                                    {{ number_format($product->discount_price ?? $product->price, 0) }}৳</h4>
-                                <p class="text-[12px] text-gray-600 leading-relaxed">Cash / Online Price</p>
-                                <p class="text-[12px] text-gray-600 leading-relaxed">Online / Cash Payment</p>
+                    @if (!$product->is_call_for_price)
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                            <div
+                                class="payment-card active border-2 border-accent-blue bg-[#f0f4f9] p-4 rounded-lg flex items-start gap-3 cursor-pointer transition-colors">
+                                <input type="radio" checked name="payment" id="cash-payment" class="mt-1 accent-accent-blue">
+                                <div>
+                                    <h4 class="text-[18px] text-gray-800 mb-1 font-bold">
+                                        {{ number_format($product->discount_price ?? $product->price, 0) }}৳</h4>
+                                    <p class="text-[12px] text-gray-600 leading-relaxed">Cash / Online Price</p>
+                                    <p class="text-[12px] text-gray-600 leading-relaxed">Online / Cash Payment</p>
+                                </div>
+                            </div>
+                            <div
+                                class="payment-card border-2 border-gray-200 p-4 rounded-lg flex items-start gap-3 cursor-pointer transition-colors hover:border-accent-blue">
+                                <input type="radio" name="payment" id="emi-payment" class="mt-1 accent-accent-blue">
+                                <div>
+                                    <h4 class="text-[18px] text-gray-800 mb-1 font-bold">
+                                        {{ number_format($product->price / 12, 0) }}৳/month</h4>
+                                    <p class="text-[12px] text-gray-600 leading-relaxed">Regular Price:
+                                        {{ number_format($product->price, 0) }}৳</p>
+                                    <p class="text-[12px] text-gray-600 leading-relaxed">0% EMI up to 12 Months</p>
+                                </div>
                             </div>
                         </div>
-                        <div
-                            class="payment-card border-2 border-gray-200 p-4 rounded-lg flex items-start gap-3 cursor-pointer transition-colors hover:border-accent-blue">
-                            <input type="radio" name="payment" id="emi-payment" class="mt-1 accent-accent-blue">
-                            <div>
-                                <h4 class="text-[18px] text-gray-800 mb-1 font-bold">
-                                    {{ number_format($product->price / 12, 0) }}৳/month</h4>
-                                <p class="text-[12px] text-gray-600 leading-relaxed">Regular Price:
-                                    {{ number_format($product->price, 0) }}৳</p>
-                                <p class="text-[12px] text-gray-600 leading-relaxed">0% EMI up to 12 Months</p>
-                            </div>
-                        </div>
-                    </div>
+                    @endif
 
-                    @if ($product->stock > 0)
+                    @if ($product->is_call_for_price)
+                        <div class="mt-6 flex flex-col gap-4">
+                            <a href="tel:{{ $setting->phone ?? '01XXXXXXXXX' }}"
+                                class="bg-accent-blue text-white py-3 px-10 rounded font-bold w-full text-center transition-colors hover:bg-accent-orange shadow-sm flex items-center justify-center gap-2">
+                                <i class="fas fa-phone-alt"></i> Call Now
+                            </a>
+                        </div>
+                    @elseif ($product->is_tba)
+                        <div class="mt-6 p-4 bg-purple-50 rounded-lg text-purple-600 font-bold text-center border border-purple-100">
+                            <i class="fas fa-bullhorn mr-1.5"></i> This product will be announced soon.
+                        </div>
+                    @elseif ($product->is_coming_soon)
+                        <div class="mt-6 p-4 bg-blue-50 rounded-lg text-blue-600 font-bold text-center border border-blue-100">
+                            <i class="fas fa-clock mr-1.5"></i> This product is coming soon.
+                        </div>
+                    @elseif ($product->stock > 0)
                         <div class="mt-6 flex flex-col gap-4">
                             <div class="flex flex-wrap items-center gap-4">
                                 <div class="flex items-center border border-gray-300 rounded overflow-hidden">

@@ -27,6 +27,9 @@ class Product extends Model
         'meta_image',
         'brand_id',
         'supplier_id',
+        'is_coming_soon',
+        'is_tba',
+        'is_call_for_price',
     ];
 
     public function categories()

@@ -18,6 +18,7 @@ class CategoryController extends Controller
                 'brands',
                 'children.brands',
                 'children.children.brands',
+                'children.children.children.brands',
             ])
             ->whereNull('parent_id')
             ->orderBy('order')
