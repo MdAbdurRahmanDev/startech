@@ -319,7 +319,7 @@
                                         <i class="fas fa-shopping-cart text-[10px] md:text-xs"></i> Buy Now
                                     </button>
                                 @endif
-                                <button
+                                <button type="button" onclick="addToCompare({{ $product->id }})"
                                     class="w-full border border-gray-100 text-gray-500 text-xs md:text-sm font-bold py-1.5 md:py-2 rounded hover:bg-gray-50 transition-all flex items-center justify-center gap-2">
                                     <i class="fas fa-plus text-[10px]"></i>
                                     Add to Compare

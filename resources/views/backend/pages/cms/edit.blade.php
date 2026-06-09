@@ -29,6 +29,7 @@
 
 <form action="{{ route('admin.cms.update', $page->id) }}" method="POST">
     @csrf
+    @method('PUT')
     <div class="bg-white border border-default rounded-lg p-6 shadow-sm space-y-6">
         <div>
             <label class="block mb-2 text-sm font-bold text-heading">Page Title</label>

@@ -170,7 +170,7 @@
                             </button>
                         @endif
 
-                        <button
+                        <button type="button" onclick="addToCompare({{ $product->id }})"
                             class="text-[11px] font-bold text-gray-500 hover:text-accent-orange transition-colors flex items-center justify-center gap-1.5 w-full py-1">
                             <i class="fas fa-plus"></i> Add to Compare
                         </button>

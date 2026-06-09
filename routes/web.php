@@ -17,6 +17,7 @@ use App\Http\Controllers\Frontend\SearchController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\ServiceController;
 use App\Http\Controllers\Frontend\WishlistController;
+use App\Http\Controllers\Frontend\CompareController;
 use App\Http\Controllers\OrderInvoiceController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -60,6 +61,12 @@ Route::post('/pc-builder/add-to-cart', [HomeController::class, 'addAllToCart'])-
 Route::post('/pc-builder/save', [HomeController::class, 'savePc'])->name('pc-builder.save');
 Route::get('/pc-builder/load/{id}', [HomeController::class, 'loadSavedPc'])->name('pc-builder.load');
 Route::delete('/pc-builder/delete/{id}', [HomeController::class, 'deleteSavedPc'])->name('pc-builder.delete');
+
+// Compare Routes
+Route::get('/compare', [CompareController::class, 'index'])->name('compare.index');
+Route::post('/compare/add', [CompareController::class, 'add'])->name('compare.add');
+Route::post('/compare/remove', [CompareController::class, 'remove'])->name('compare.remove');
+Route::get('/compare/search', [CompareController::class, 'search'])->name('compare.search');
 
 // Cart Routes
 Route::get('/cart', [CartController::class, 'show'])->name('cart.show');

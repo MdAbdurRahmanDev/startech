@@ -29,7 +29,7 @@
                     <i class="{{ $product->isWishlisted() ? 'fas' : 'far' }} fa-bookmark text-md"></i>
                     <span>Save</span>
                 </button>
-                <button type="button" class="flex items-center gap-2 text-[13px] font-bold text-gray-700 hover:text-accent-orange transition-colors group">
+                <button type="button" onclick="addToCompare({{ $product->id }})" class="flex items-center gap-2 text-[13px] font-bold text-gray-700 hover:text-accent-orange transition-colors group">
                     <i class="fas fa-plus-square text-md"></i>
                     <span>Add to Compare</span>
                 </button>
@@ -569,7 +569,7 @@
                                                     {{ number_format($related->price, 0) }}৳
                                                 @endif
                                             </div>
-                                            <a href="#"
+                                            <a href="#" onclick="event.preventDefault(); addToCompare({{ $related->id }})"
                                                 class="text-[12px] text-gray-500 no-underline inline-flex items-center gap-1.5 transition-colors hover:text-accent-orange"><i
                                                     class="fas fa-plus-square"></i> Add to Compare</a>
                                         </div>

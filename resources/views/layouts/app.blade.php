@@ -453,14 +453,14 @@
 
     <!-- Floating Actions -->
     <div class="fixed right-0 bottom-[64px] lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 flex flex-col gap-1 z-[60]">
-        <div
-            class="bg-primary-dark text-white w-14 h-14 flex flex-col items-center justify-center rounded-l-md cursor-pointer relative shadow-lg">
+        <a href="{{ route('compare.index') }}"
+            class="bg-primary-dark text-white w-14 h-14 flex flex-col items-center justify-center rounded-l-md cursor-pointer relative shadow-lg hover:bg-accent-orange transition-colors">
             <div
                 class="absolute top-1 right-1 bg-accent-orange text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
-                0</div>
+                {{ count(session('compare_list', [])) }}</div>
             <i class="fas fa-shuffle text-lg"></i>
             <span class="text-[8px] uppercase font-bold mt-1">Compare</span>
-        </div>
+        </a>
         <a href="{{ url('/cart') }}"
             class="bg-primary-dark text-white w-14 h-14 flex flex-col items-center justify-center rounded-l-md cursor-pointer relative shadow-lg hover:bg-accent-orange transition-colors">
             <div id="cart-count-float"
@@ -749,6 +749,27 @@
                         showToast(data.message, 'success');
                     }
                 });
+        }
+
+        function addToCompare(productId) {
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '{{ route('compare.add') }}';
+            
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = '_token';
+            csrfInput.value = CSRF_TOKEN;
+            
+            const idInput = document.createElement('input');
+            idInput.type = 'hidden';
+            idInput.name = 'product_id';
+            idInput.value = productId;
+            
+            form.appendChild(csrfInput);
+            form.appendChild(idInput);
+            document.body.appendChild(form);
+            form.submit();
         }
 
         function showLoginModal() {
