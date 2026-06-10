@@ -78,9 +78,9 @@ class ProductController extends Controller
             'stock' => 'required|integer|min:0',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'is_featured' => 'nullable|boolean',
-            'meta_title' => 'nullable|string|max:255',
+            'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
-            'meta_keywords' => 'nullable|string|max:255',
+            'meta_keywords' => 'nullable|string',
             'meta_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'video' => 'nullable|mimes:mp4,mov,ogg,qt|max:20480', // Max 20MB
@@ -146,9 +146,9 @@ class ProductController extends Controller
             'stock' => 'required|integer|min:0',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'is_featured' => 'nullable|boolean',
-            'meta_title' => 'nullable|string|max:255',
+            'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
-            'meta_keywords' => 'nullable|string|max:255',
+            'meta_keywords' => 'nullable|string',
             'meta_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'video' => 'nullable|mimes:mp4,mov,ogg,qt|max:20480', // Max 20MB

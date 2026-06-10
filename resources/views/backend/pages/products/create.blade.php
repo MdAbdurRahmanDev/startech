@@ -315,8 +315,8 @@
                     <div class="space-y-6">
                         <div>
                             <label class="block mb-2 text-sm font-medium text-gray-900">Meta Title</label>
-                            <input type="text" name="meta_title" value="{{ old('meta_title') }}"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                            <textarea name="meta_title" rows="2"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">{{ old('meta_title') }}</textarea>
                             @error('meta_title')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -324,9 +324,9 @@
 
                         <div>
                             <label class="block mb-2 text-sm font-medium text-gray-900">Meta Keywords</label>
-                            <input type="text" name="meta_keywords" value="{{ old('meta_keywords') }}"
+                            <textarea name="meta_keywords" rows="3"
                                 placeholder="Comma separated keywords"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">{{ old('meta_keywords') }}</textarea>
                             @error('meta_keywords')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
