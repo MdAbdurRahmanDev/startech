@@ -140,7 +140,7 @@
                                         class="absolute top-3 left-3 bg-blue-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">
                                         Coming Soon
                                     </div>
-                                @elseif ($product->stock <= 0)
+                                @elseif ($product->stock <= 0 || $product->is_out_of_stock)
                                     <div
                                         class="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">
                                         Out of Stock
@@ -220,11 +220,11 @@
                                                 class="w-full bg-primary-dark text-white text-xs md:text-sm font-bold py-2 md:py-2.5 rounded opacity-50 cursor-not-allowed flex items-center justify-center gap-2">
                                                 <i class="fas fa-clock text-[11px]"></i> Coming Soon
                                             </button>
-                                        @elseif ($product->stock <= 0)
-                                            <button disabled
-                                                class="w-full bg-primary-dark text-white text-xs md:text-sm font-bold py-2 md:py-2.5 rounded opacity-50 cursor-not-allowed flex items-center justify-center gap-2">
-                                                <i class="fas fa-times-circle text-[11px]"></i> Out of Stock
-                                            </button>
+                                        @elseif ($product->stock <= 0 || $product->is_out_of_stock)
+                                            <a href="{{ url('product/' . $product->slug) }}?quotation=1"
+                                                class="w-full bg-white border border-gray-200 text-gray-800 text-xs md:text-sm font-bold py-2 md:py-2.5 rounded hover:bg-accent-orange hover:border-accent-orange hover:text-white transition-all flex items-center justify-center gap-2">
+                                                <i class="fas fa-file-invoice-dollar text-[10px] md:text-xs"></i> Quotation
+                                            </a>
                                         @else
                                             <button type="button" onclick="buyNow({{ $product->id }})"
                                                 class="w-full bg-primary-dark text-white text-xs md:text-sm font-bold py-2 md:py-2.5 rounded hover:bg-accent-orange transition-all flex items-center justify-center gap-2 cursor-pointer">

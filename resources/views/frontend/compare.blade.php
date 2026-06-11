@@ -100,8 +100,8 @@
                         @for($i = 0; $i < $slotsToShow; $i++)
                             <td class="p-4 text-sm border-l border-b border-gray-100">
                                 @if(isset($products[$i]))
-                                    <span class="{{ $products[$i]->stock > 0 ? 'text-green-600' : 'text-red-500' }}">
-                                        {{ $products[$i]->stock > 0 ? 'In Stock' : 'Out of Stock' }}
+                                    <span class="{{ ($products[$i]->stock > 0 && !$products[$i]->is_out_of_stock) ? 'text-green-600' : 'text-red-500' }}">
+                                        {{ ($products[$i]->stock > 0 && !$products[$i]->is_out_of_stock) ? 'In Stock' : 'Out of Stock' }}
                                     </span>
                                 @endif
                             </td>

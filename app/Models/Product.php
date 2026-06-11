@@ -30,6 +30,7 @@ class Product extends Model
         'is_coming_soon',
         'is_tba',
         'is_call_for_price',
+        'is_out_of_stock',
     ];
 
     public function categories()

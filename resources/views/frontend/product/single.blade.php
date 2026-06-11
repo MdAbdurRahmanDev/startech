@@ -126,7 +126,7 @@
                         </span>
                         <span class="bg-[#f2f4f8] py-1 px-3.5 rounded-full text-[13px] text-gray-800 inline-block">
                             Status: <strong
-                                class="{{ $product->is_tba ? 'text-purple-500' : ($product->is_coming_soon ? 'text-blue-500' : ($product->stock > 0 ? 'text-green-600' : 'text-red-500')) }}">{{ $product->is_tba ? 'TBA' : ($product->is_coming_soon ? 'Coming Soon' : ($product->stock > 0 ? 'In Stock' : 'Out of Stock')) }}</strong>
+                                class="{{ $product->is_tba ? 'text-purple-500' : ($product->is_coming_soon ? 'text-blue-500' : (($product->stock > 0 && !$product->is_out_of_stock) ? 'text-green-600' : 'text-red-500')) }}">{{ $product->is_tba ? 'TBA' : ($product->is_coming_soon ? 'Coming Soon' : (($product->stock > 0 && !$product->is_out_of_stock) ? 'In Stock' : 'Out of Stock')) }}</strong>
                         </span>
                         <span class="bg-[#f2f4f8] py-1 px-3.5 rounded-full text-[13px] text-gray-800 inline-block">Product
                             Code: <strong>#{{ $product->id }}</strong></span>
@@ -205,7 +205,7 @@
                         <div class="mt-6 p-4 bg-blue-50 rounded-lg text-blue-600 font-bold text-center border border-blue-100">
                             <i class="fas fa-clock mr-1.5"></i> This product is coming soon.
                         </div>
-                    @elseif ($product->stock > 0)
+                    @elseif ($product->stock > 0 && !$product->is_out_of_stock)
                         <div class="mt-6 flex flex-col gap-4">
                             <div class="flex flex-wrap items-center gap-4">
                                 <div class="flex items-center border border-gray-300 rounded overflow-hidden">
@@ -232,8 +232,14 @@
                             </a>
                         </div>
                     @else
-                        <div class="mt-6 p-4 bg-red-50 rounded-lg text-red-600 font-bold text-center border border-red-100">
-                            <i class="fas fa-times-circle mr-1.5"></i> This product is currently out of stock.
+                        <div class="mt-6 flex flex-col gap-4">
+                            <div class="p-4 bg-red-50 rounded-lg text-red-600 font-bold text-center border border-red-100">
+                                <i class="fas fa-times-circle mr-1.5"></i> This product is currently out of stock.
+                            </div>
+                            <a href="#" onclick="toggleQuotationModal(event)"
+                                class="bg-white border-2 border-accent-blue text-accent-blue py-3 px-10 rounded font-bold w-full text-center transition-colors hover:bg-accent-orange hover:border-accent-orange hover:text-white shadow-sm flex items-center justify-center gap-2">
+                                <i class="fas fa-file-invoice-dollar"></i> Request for Quotation
+                            </a>
                         </div>
                     @endif
                 </div>
@@ -902,5 +908,12 @@
                 }
                 document.body.removeChild(textArea);
             }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('quotation') === '1') {
+                    toggleQuotationModal();
+                }
+            });
     </script>
 @endsection

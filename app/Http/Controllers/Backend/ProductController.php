@@ -93,6 +93,7 @@ class ProductController extends Controller
         $data['is_coming_soon'] = $request->has('is_coming_soon');
         $data['is_tba'] = $request->has('is_tba');
         $data['is_call_for_price'] = $request->has('is_call_for_price');
+        $data['is_out_of_stock'] = $request->has('is_out_of_stock');
         $data['status'] = true;
 
         if ($request->hasFile('thumbnail')) {
@@ -163,6 +164,7 @@ class ProductController extends Controller
         $data['is_coming_soon'] = $request->has('is_coming_soon');
         $data['is_tba'] = $request->has('is_tba');
         $data['is_call_for_price'] = $request->has('is_call_for_price');
+        $data['is_out_of_stock'] = $request->has('is_out_of_stock');
 
         if ($request->hasFile('thumbnail')) {
             if ($product->thumbnail) {
