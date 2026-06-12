@@ -129,6 +129,13 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{ route('admin.laptop-purposes.index') }}"
+                                class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.laptop-purposes.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
+                                <i class="fas fa-laptop w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.laptop-purposes.*') ? 'text-fg-brand' : '' }}"></i>
+                                <span class="ms-3">Laptop Purposes</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ route('admin.brands.index') }}"
                                 class="flex items-center px-3 py-1.5 text-xs text-body rounded-lg {{ request()->routeIs('admin.brands.*') ? 'bg-neutral-tertiary text-fg-brand font-bold' : '' }} hover:bg-neutral-tertiary hover:text-fg-brand group transition-all">
                                 <i class="fas fa-tags w-5 text-center text-gray-500 group-hover:text-fg-brand {{ request()->routeIs('admin.brands.*') ? 'text-fg-brand' : '' }}"></i>

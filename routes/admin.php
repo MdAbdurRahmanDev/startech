@@ -164,5 +164,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/blog-comments/{blogComment}/approve', [\App\Http\Controllers\Backend\BlogCommentController::class, 'approve'])->name('admin.blog-comments.approve');
     Route::post('/admin/blog-comments/{blogComment}/reject', [\App\Http\Controllers\Backend\BlogCommentController::class, 'reject'])->name('admin.blog-comments.reject');
     Route::delete('/admin/blog-comments/{blogComment}', [\App\Http\Controllers\Backend\BlogCommentController::class, 'destroy'])->name('admin.blog-comments.destroy');
+
+    // Laptop Purposes
+    Route::resource('/admin/laptop-purposes', \App\Http\Controllers\Backend\LaptopPurposeController::class)->names('admin.laptop-purposes');
 });
 

@@ -31,6 +31,7 @@ class Product extends Model
         'is_tba',
         'is_call_for_price',
         'is_out_of_stock',
+        'laptop_purpose_id',
     ];
 
     public function categories()
@@ -72,5 +73,10 @@ class Product extends Model
     {
         if (!auth()->check()) return false;
         return Wishlist::where('user_id', auth()->id())->where('product_id', $this->id)->exists();
+    }
+
+    public function laptopPurpose()
+    {
+        return $this->belongsTo(LaptopPurpose::class);
     }
 }

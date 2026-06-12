@@ -14,25 +14,28 @@ class ProductController extends Controller
 
         // Sorting
         if ($request->sort == 'price_low') {
-            $query->orderBy('price', 'asc');
+            $query->orderByRaw('IF(discount_price > 0, discount_price, price) asc');
         } elseif ($request->sort == 'price_high') {
-            $query->orderBy('price', 'desc');
+            $query->orderByRaw('IF(discount_price > 0, discount_price, price) desc');
         } else {
             $query->latest();
         }
 
         // Filtering
         if ($request->min_price) {
-            $query->where('price', '>=', $request->min_price);
+            $query->whereRaw('IF(discount_price > 0, discount_price, price) >= ?', [$request->min_price]);
         }
         if ($request->max_price) {
-            $query->where('price', '<=', $request->max_price);
+            $query->whereRaw('IF(discount_price > 0, discount_price, price) <= ?', [$request->max_price]);
         }
         if ($request->availability && in_array('in_stock', $request->availability)) {
             $query->where('stock', '>', 0);
         }
         if ($request->brands) {
             $query->whereIn('brand_id', $request->brands);
+        }
+        if ($request->laptop_purpose_id) {
+            $query->where('laptop_purpose_id', $request->laptop_purpose_id);
         }
 
         $show = $request->show ?? 20;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\LaptopPurpose;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -58,7 +59,8 @@ class ProductController extends Controller
         $categories = Category::all();
         $brands = \App\Models\Brand::where('status', 1)->get();
         $suppliers = \App\Models\Supplier::where('status', 1)->get();
-        return view('backend.pages.products.create', compact('categories', 'brands', 'suppliers'));
+        $laptopPurposes = LaptopPurpose::where('status', 1)->get();
+        return view('backend.pages.products.create', compact('categories', 'brands', 'suppliers', 'laptopPurposes'));
     }
 
     public function store(Request $request)
@@ -69,13 +71,14 @@ class ProductController extends Controller
             'categories.*' => 'exists:categories,id',
             'brand_id' => 'nullable|exists:brands,id',
             'supplier_id' => 'nullable|exists:suppliers,id',
+            'laptop_purpose_id' => 'nullable|exists:laptop_purposes,id',
             'short_description' => 'nullable|string',
             'description' => 'nullable|string',
             'tags' => 'nullable|string',
-            'buy_price' => 'required|numeric|min:0',
-            'price' => 'required|numeric|min:0',
+            'buy_price' => 'nullable|numeric|min:0',
+            'price' => 'nullable|numeric|min:0',
             'discount_price' => 'nullable|numeric|min:0',
-            'stock' => 'required|integer|min:0',
+            'stock' => 'nullable|integer|min:0',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'is_featured' => 'nullable|boolean',
             'meta_title' => 'nullable|string',
@@ -88,6 +91,9 @@ class ProductController extends Controller
         ]);
 
         $data = $request->except(['categories', 'thumbnail', 'meta_image', 'gallery', 'video']);
+        $data['buy_price'] = $request->buy_price ?? 0;
+        $data['price'] = $request->price ?? 0;
+        $data['stock'] = $request->stock ?? 0;
         $data['slug'] = Str::slug($request->name) . '-' . time();
         $data['is_featured'] = $request->has('is_featured');
         $data['is_coming_soon'] = $request->has('is_coming_soon');
@@ -126,8 +132,9 @@ class ProductController extends Controller
         $categories = Category::all();
         $brands = \App\Models\Brand::where('status', 1)->get();
         $suppliers = \App\Models\Supplier::where('status', 1)->get();
+        $laptopPurposes = LaptopPurpose::where('status', 1)->get();
         $productCategories = $product->categories->pluck('id')->toArray();
-        return view('backend.pages.products.edit', compact('product', 'categories', 'productCategories', 'brands', 'suppliers'));
+        return view('backend.pages.products.edit', compact('product', 'categories', 'productCategories', 'brands', 'suppliers', 'laptopPurposes'));
     }
 
     public function update(Request $request, Product $product)
@@ -138,13 +145,14 @@ class ProductController extends Controller
             'categories.*' => 'exists:categories,id',
             'brand_id' => 'nullable|exists:brands,id',
             'supplier_id' => 'nullable|exists:suppliers,id',
+            'laptop_purpose_id' => 'nullable|exists:laptop_purposes,id',
             'short_description' => 'nullable|string',
             'description' => 'nullable|string',
             'tags' => 'nullable|string',
-            'buy_price' => 'required|numeric|min:0',
-            'price' => 'required|numeric|min:0',
+            'buy_price' => 'nullable|numeric|min:0',
+            'price' => 'nullable|numeric|min:0',
             'discount_price' => 'nullable|numeric|min:0',
-            'stock' => 'required|integer|min:0',
+            'stock' => 'nullable|integer|min:0',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'is_featured' => 'nullable|boolean',
             'meta_title' => 'nullable|string',
@@ -157,6 +165,9 @@ class ProductController extends Controller
         ]);
 
         $data = $request->except(['categories', 'thumbnail', 'meta_image', 'gallery', 'video']);
+        $data['buy_price'] = $request->buy_price ?? 0;
+        $data['price'] = $request->price ?? 0;
+        $data['stock'] = $request->stock ?? 0;
         if ($request->name !== $product->name) {
             $data['slug'] = Str::slug($request->name) . '-' . time();
         }

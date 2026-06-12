@@ -42,6 +42,7 @@ Route::get('/clear', function () {
     return 'All cache cleared, storage linked and migration completed successfully!';
 });
 Route::get('/outlets', [OutletController::class, 'index'])->name('outlets.index');
+Route::get('/laptop-finder', [HomeController::class, 'laptopFinder'])->name('laptop-finder');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.single');
 Route::get('/offers', [OfferController::class, 'index'])->name('offers.index');

@@ -15,8 +15,15 @@ class HomeController extends Controller
         $featuredCategories = \App\Models\Category::where('is_featured', 1)->where('status', 1)->orderByRaw('`order` = 0, `order` ASC')->get();
         $featuredProducts = \App\Models\Product::with(['categories', 'specifications'])->where('is_featured', 1)->where('status', 1)->latest()->take(20)->get();
         $outletCount = \App\Models\Outlet::where('status', 1)->count();
+        $laptopPurposes = \App\Models\LaptopPurpose::where('status', 1)->get();
         
-        return view('frontend.home', compact('sliders', 'sideBanners', 'featuredCategories', 'featuredProducts', 'outletCount'));
+        return view('frontend.home', compact('sliders', 'sideBanners', 'featuredCategories', 'featuredProducts', 'outletCount', 'laptopPurposes'));
+    }
+
+    public function laptopFinder()
+    {
+        $laptopPurposes = \App\Models\LaptopPurpose::where('status', 1)->get();
+        return view('frontend.pages.laptop_finder', compact('laptopPurposes'));
     }
 
     public function pcBuilder()

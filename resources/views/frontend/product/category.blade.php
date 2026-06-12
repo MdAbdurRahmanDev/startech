@@ -22,13 +22,20 @@
                 {{ $setting->app_name ?? 'Iosbd' }}.
             </p>
 
-            <div class="flex flex-wrap gap-2.5 mb-4">
-                @foreach ($brands as $brand)
-                    <a href="{{ url()->current() }}?brand={{ $brand->slug }}"
-                        class="bg-white border {{ request('brand') == $brand->slug ? 'border-accent-orange text-accent-orange' : 'border-gray-200 text-gray-700' }} px-4 py-1.5 rounded-full text-[13px] hover:border-accent-orange hover:text-accent-orange transition-colors cursor-pointer shadow-sm font-medium">
-                        {{ $brand->name }}
-                    </a>
-                @endforeach
+            <div class="mb-4">
+                <div id="brands-wrapper" class="flex flex-wrap gap-2.5 overflow-hidden max-h-[36px] transition-all duration-500 ease-in-out">
+                    @foreach ($brands as $brand)
+                        <a href="{{ url()->current() }}?brand={{ $brand->slug }}"
+                            class="bg-white border {{ request('brand') == $brand->slug ? 'border-accent-orange text-accent-orange' : 'border-gray-200 text-gray-700' }} px-4 py-1.5 rounded-full text-[13px] hover:border-accent-orange hover:text-accent-orange transition-colors cursor-pointer shadow-sm font-medium whitespace-nowrap">
+                            {{ $brand->name }}
+                        </a>
+                    @endforeach
+                </div>
+                @if(count($brands) > 10)
+                    <button type="button" onclick="toggleBrands()" id="toggle-brands-btn" class="mt-3 text-accent-orange font-bold text-[13px] flex items-center gap-1 hover:underline">
+                        <span>Show More</span> <i class="fas fa-chevron-down text-[10px]"></i>
+                    </button>
+                @endif
             </div>
         </div>
 
@@ -242,8 +249,11 @@
                         @empty
                             <div class="col-span-full py-16 text-center bg-white rounded-lg border border-gray-100">
                                 <i class="fas fa-box-open text-4xl text-gray-300 mb-3"></i>
-                                <h3 class="text-lg text-gray-600 mb-1">No products found</h3>
-                                <p class="text-sm text-gray-400">Try adjusting your filters or check back later.</p>
+                                <h3 class="text-lg text-gray-600 mb-1 font-bold">No find this product</h3>
+                                <p class="text-sm text-gray-400 mb-6">Try adjusting your filters or click below to see all laptops.</p>
+                                <a href="{{ route('products.index') }}" class="inline-block bg-accent-orange text-white px-6 py-2 rounded font-bold hover:bg-[#d83d1b] transition-colors shadow-sm">
+                                    Show All Products
+                                </a>
                             </div>
                         @endforelse
                     </div>
@@ -267,6 +277,21 @@
     </form>
 
     <script>
+        function toggleBrands() {
+            const wrapper = document.getElementById('brands-wrapper');
+            const btn = document.getElementById('toggle-brands-btn');
+            
+            if (wrapper.classList.contains('max-h-[36px]')) {
+                wrapper.classList.remove('max-h-[36px]');
+                wrapper.classList.add('max-h-[1000px]');
+                btn.innerHTML = '<span>Show Less</span> <i class="fas fa-chevron-up text-[10px]"></i>';
+            } else {
+                wrapper.classList.add('max-h-[36px]');
+                wrapper.classList.remove('max-h-[1000px]');
+                btn.innerHTML = '<span>Show More</span> <i class="fas fa-chevron-down text-[10px]"></i>';
+            }
+        }
+
         function addToBuilder(productId, component) {
             document.getElementById('builder-product-id').value = productId;
             document.getElementById('builder-component').value = component;
