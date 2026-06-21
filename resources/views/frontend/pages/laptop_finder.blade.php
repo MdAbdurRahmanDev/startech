@@ -31,6 +31,7 @@
             <div class="max-w-3xl mx-auto relative mt-4">
                 
                 <form action="{{ route('products.index') }}" method="GET" id="laptopFinderForm">
+                    <input type="hidden" name="is_laptop_finder" value="1">
                     
                     <!-- Step 1: Budget -->
                     <div id="step-1" class="step-container text-center transition-opacity duration-300">

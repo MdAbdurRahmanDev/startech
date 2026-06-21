@@ -38,6 +38,13 @@ class ProductController extends Controller
             $query->where('laptop_purpose_id', $request->laptop_purpose_id);
         }
 
+        if ($request->is_laptop_finder) {
+            $query->whereHas('categories', function ($q) {
+                $q->where('name', 'like', '%laptop%')
+                  ->orWhere('slug', 'like', '%laptop%');
+            });
+        }
+
         $show = $request->show ?? 20;
         $products = $query->paginate($show)->withQueryString();
         $brands = \App\Models\Brand::where('status', 1)->get();
