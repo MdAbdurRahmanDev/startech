@@ -15,6 +15,37 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('styles')
     <style>
+        @keyframes rgbw-gradient-border-anim {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .rgbw-gradient-bg {
+            background: linear-gradient(90deg, #ff0000, #00ff00, #0000ff, #ffffff, #ff0000);
+            background-size: 400% 100%;
+            animation: rgbw-gradient-border-anim 3s linear infinite;
+        }
+
+        .animated-border-transparent {
+            border: 2px solid transparent !important;
+            background-clip: padding-box !important;
+        }
+
+        .animated-border-transparent::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 2px;
+            background: linear-gradient(90deg, #ff0000, #00ff00, #0000ff, #ffffff, #ff0000);
+            background-size: 400% 100%;
+            animation: rgbw-gradient-border-anim 3s linear infinite;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
         /* Custom smooth transitions for dropdowns and sub-dropdowns */
         .nav-dropdown,
         .sub-dropdown {
@@ -161,8 +192,8 @@
                 class="hidden lg:flex flex-grow max-w-[700px] relative mx-8">
                 <input type="text" name="q" value="{{ request('q') }}" placeholder="Search"
                     class="w-full py-2.5 pr-10 pl-4 rounded text-primary-dark focus:outline-none">
-                <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-primary-dark">
-                    <i class="fas fa-search"></i>
+                <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center text-primary-dark animated-border-transparent shadow-sm transition-transform hover:scale-105">
+                    <i class="fas fa-search text-sm"></i>
                 </button>
             </form>
 
@@ -234,14 +265,14 @@
 
                 <!-- AC Calculator Button -->
                 <a href="{{ route('ac-calculator') }}"
-                    class="border-2 border-accent-orange text-accent-orange hover:bg-accent-orange hover:text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all flex items-center gap-2 group shadow-sm hover:shadow-orange-500/10">
+                    class="relative animated-border-transparent text-accent-orange hover:bg-accent-orange hover:text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all flex items-center gap-2 group shadow-sm hover:shadow-orange-500/10">
                     <i class="fas fa-calculator text-accent-orange group-hover:text-white transition-colors"></i>
                     AC Calculator
                 </a>
 
                 <!-- PC Builder Button -->
                 <a href="{{ url('pc-builder') }}"
-                    class="bg-accent-orange text-white px-5 py-2.5 rounded-lg font-bold text-sm hover:bg-[#d83d1b] transition-all shadow-lg shadow-orange-500/20 flex items-center gap-2">
+                    class="relative animated-border-transparent bg-accent-orange text-white px-5 py-2.5 rounded-lg font-bold text-sm hover:bg-[#d83d1b] transition-all shadow-lg shadow-orange-500/20 flex items-center gap-2">
                     <i class="fas fa-tools"></i>
                     PC Builder
                 </a>
@@ -260,8 +291,8 @@
         <form action="{{ url('search') }}" method="GET" class="relative">
             <input type="text" name="q" placeholder="What are you looking for?"
                 class="w-full bg-white/10 border border-white/20 rounded-lg py-4 px-6 text-white focus:outline-none focus:border-accent-orange">
-            <button type="submit" class="absolute right-4 top-1/2 -translate-y-1/2 text-accent-orange text-xl">
-                <i class="fas fa-search"></i>
+            <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center text-accent-orange animated-border-transparent shadow-sm transition-transform hover:scale-105">
+                <i class="fas fa-search text-lg"></i>
             </button>
         </form>
     </div>
@@ -282,7 +313,7 @@
                                 @foreach ($category->children as $sub)
                                     <div class="relative sub-dropdown-trigger group/sub">
                                         <a href="{{ url('category/' . $sub->slug) }}"
-                                            class="flex justify-between items-center px-4 py-2.5 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">
+                                            class="flex justify-between items-center px-4 py-1.5 text-sm text-primary-dark hover:bg-accent-orange hover:text-white transition-colors">
                                             <div class="flex items-center gap-2">
                                                 {{ $sub->name }}
                                             </div>
@@ -291,16 +322,21 @@
                                             @endif
                                         </a>
                                         @if ($sub->children->count() > 0 || $sub->brands->count() > 0)
+                                            @php
+                                                $totalSubItems = $sub->children->count() + $sub->brands->count();
+                                                $rows = min(10, max(1, $totalSubItems));
+                                            @endphp
                                             <div
-                                                class="sub-dropdown absolute top-0 left-full bg-white min-w-[200px] shadow-xl py-2 border-l border-gray-100 hidden group-hover/sub:block">
+                                                class="sub-dropdown absolute top-0 left-full bg-white shadow-xl py-2 border-l border-gray-100 hidden group-hover/sub:grid"
+                                                style="grid-template-rows: repeat({{ $rows }}, auto); grid-auto-flow: column; grid-auto-columns: 200px;">
                                                 @foreach ($sub->children as $subSub)
                                                     <a href="{{ url('category/' . $subSub->slug) }}"
-                                                        class="block px-4 py-2 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">{{ $subSub->name }}</a>
+                                                        class="block px-4 py-1.5 text-sm text-primary-dark hover:bg-accent-orange hover:text-white transition-colors">{{ $subSub->name }}</a>
                                                 @endforeach
                                                 @if ($sub->brands->count() > 0)
                                                     @foreach ($sub->brands as $b)
                                                         <a href="{{ url('category/' . $sub->slug) }}?brand={{ $b->slug }}"
-                                                            class="block px-4 py-2 text-sm text-primary-dark hover:bg-gray-50 hover:text-accent-orange transition-colors">
+                                                            class="block px-4 py-1.5 text-sm text-primary-dark hover:bg-accent-orange hover:text-white transition-colors">
                                                             {{ $b->name }}
                                                         </a>
                                                     @endforeach
