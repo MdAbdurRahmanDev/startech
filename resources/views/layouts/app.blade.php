@@ -85,6 +85,18 @@
             left: 100%;
         }
 
+        /* Adjust last few menu items to open to the left to prevent overflow */
+        .group:nth-last-child(-n+4) .nav-dropdown {
+            left: auto;
+            right: 0;
+        }
+
+        .group:nth-last-child(-n+4) .sub-dropdown {
+            left: auto;
+            right: 100%;
+            transform: translateX(-10px);
+        }
+
         /* Custom scrollbar for sub-dropdowns to maintain premium appearance */
         .sub-dropdown::-webkit-scrollbar {
             width: 5px;
