@@ -65,7 +65,7 @@
         .sub-dropdown-trigger:hover>.sub-dropdown {
             opacity: 1;
             visibility: visible;
-            transform: translateX(0);
+            transform: translateX(0) !important;
         }
 
         .no-scrollbar::-webkit-scrollbar {
@@ -95,6 +95,8 @@
             left: auto;
             right: 100%;
             transform: translateX(-10px);
+            border-left: none !important;
+            border-right: 1px solid #f3f4f6 !important;
         }
 
         /* Custom scrollbar for sub-dropdowns to maintain premium appearance */
@@ -320,8 +322,13 @@
                             {{ $category->name }}
                         </a>
                         @if ($category->children->count() > 0)
+                            @php
+                                $mainChildCount = $category->children->count();
+                                $mainRows = min(15, max(1, $mainChildCount));
+                            @endphp
                             <div
-                                class="nav-dropdown absolute top-full left-0 bg-white min-w-[220px] shadow-xl py-2 z-[60] border-t-2 border-accent-orange">
+                                class="nav-dropdown absolute top-full left-0 bg-white shadow-xl py-2 z-[60] border-t-2 border-accent-orange {{ $mainChildCount > 15 ? 'grid' : 'min-w-[220px]' }}"
+                                @if($mainChildCount > 15) style="grid-template-rows: repeat({{ $mainRows }}, auto); grid-auto-flow: column; grid-auto-columns: minmax(220px, max-content);" @endif>
                                 @foreach ($category->children as $sub)
                                     <div class="relative sub-dropdown-trigger group/sub">
                                         <a href="{{ url('category/' . $sub->slug) }}"
@@ -339,7 +346,7 @@
                                                 $rows = min(10, max(1, $totalSubItems));
                                             @endphp
                                             <div
-                                                class="sub-dropdown absolute top-0 left-full bg-white shadow-xl py-2 border-l border-gray-100 hidden group-hover/sub:grid"
+                                                class="sub-dropdown absolute top-0 left-full bg-white shadow-xl py-2 border-l border-gray-100 grid z-[70]"
                                                 style="grid-template-rows: repeat({{ $rows }}, auto); grid-auto-flow: column; grid-auto-columns: 200px;">
                                                 @foreach ($sub->children as $subSub)
                                                     <a href="{{ url('category/' . $subSub->slug) }}"
