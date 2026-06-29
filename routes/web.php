@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/sitemap.xml', [\App\Http\Controllers\Frontend\SitemapController::class, 'index']);
 
 // Temporary route to clear cache on production
 Route::get('/clear', function () {

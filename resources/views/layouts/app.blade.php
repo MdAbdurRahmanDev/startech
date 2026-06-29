@@ -11,6 +11,8 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . $setting->favicon) }}">
     @endif
 
+    <meta name="google-site-verification" content="VObLL1RgvVWzjs7o7_xbij-VJEyk-fXeCXQXubTAgxc" />
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('styles')
