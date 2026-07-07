@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
+@endsection
+
 @section('title', ($product->meta_title ?? $product->name) . ' | IOS BD')
 
 @section('content')
@@ -47,7 +51,8 @@
                             <img id="main-product-image"
                                 src="{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : 'https://placehold.co/400x400/f9fafb/a3a3a3?text=No+Image' }}"
                                 alt="{{ $product->name }}"
-                                class="max-w-full max-h-[380px] object-contain mx-auto transition-all duration-300">
+                                onclick="openLightbox()"
+                                class="max-w-full max-h-[380px] object-contain mx-auto transition-all duration-300 cursor-pointer">
                         </div>
                         {{-- Video view (hidden until video thumb clicked) --}}
                         @if ($product->video)
@@ -81,13 +86,13 @@
                         @if ($product->thumbnail)
                             <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->name }}"
                                 class="w-[70px] h-[70px] border-2 border-gray-200 p-1 rounded cursor-pointer object-contain transition-colors hover:border-accent-orange [&.active]:border-accent-orange {{ $product->video ? '' : 'active' }}"
-                                onclick="switchImage(this, '{{ asset('storage/' . $product->thumbnail) }}')">
+                                onclick="switchImage(this, '{{ asset('storage/' . $product->thumbnail) }}', 0)">
                         @endif
                         {{-- Gallery images --}}
-                        @foreach ($product->images as $img)
+                        @foreach ($product->images as $index => $img)
                             <img src="{{ asset('storage/' . $img->image) }}" alt="{{ $product->name }}"
                                 class="w-[70px] h-[70px] border-2 border-gray-200 p-1 rounded cursor-pointer object-contain transition-colors hover:border-accent-orange [&.active]:border-accent-orange"
-                                onclick="switchImage(this, '{{ asset('storage/' . $img->image) }}')">
+                                onclick="switchImage(this, '{{ asset('storage/' . $img->image) }}', {{ $product->thumbnail ? $index + 1 : $index }})">
                         @endforeach
                         {{-- Video thumbnail --}}
                         @if ($product->video)
@@ -650,9 +655,25 @@
 @endsection
 
 @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
     <script>
+            // Store all images for lightbox
+            let galleryImages = [
+                @if($product->thumbnail) { src: '{{ asset('storage/' . $product->thumbnail) }}', type: 'image' }, @endif
+                @foreach($product->images as $img) { src: '{{ asset('storage/' . $img->image) }}', type: 'image' }, @endforeach
+            ];
+            let currentImageIndex = 0;
+
+            function openLightbox() {
+                if (galleryImages.length > 0) {
+                    Fancybox.show(galleryImages, {
+                        startIndex: currentImageIndex
+                    });
+                }
+            }
+
             // Image switcher
-            function switchImage(el, src) {
+            function switchImage(el, src, index) {
                 // Hide video, show image
                 const videoView = document.getElementById('video-view');
                 const imageView = document.getElementById('image-view');
@@ -660,6 +681,10 @@
                 if (imageView) imageView.classList.remove('hidden');
 
                 document.getElementById('main-product-image').src = src;
+
+                if (index !== undefined) {
+                    currentImageIndex = index;
+                }
 
                 // Update active thumb
                 document.querySelectorAll('.thumb-images img, #video-thumb').forEach(t => t.classList.remove('active', 'border-accent-orange'));
