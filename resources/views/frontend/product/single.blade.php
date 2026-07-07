@@ -6,12 +6,11 @@
         /* Fancybox custom styling to place arrows next to the image */
         .fancybox__image {
             background-color: #fff;
-            max-width: 800px !important;
-            width: 100% !important;
-            height: 600px !important;
+            max-width: 100vw;
+            max-height: 100vh;
             object-fit: contain;
             border-radius: 8px;
-            padding: 20px;
+            padding: 10px;
         }
 
         @media (min-width: 768px) {
@@ -79,7 +78,7 @@
                             <img id="main-product-image"
                                 src="{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : 'https://placehold.co/400x400/f9fafb/a3a3a3?text=No+Image' }}"
                                 alt="{{ $product->name }}" onclick="openLightbox()"
-                                class="max-w-full max-h-[380px] object-contain mx-auto transition-all duration-300 cursor-pointer">
+                                class="max-w-full max-h-[500px] object-contain mx-auto transition-all duration-300 cursor-pointer">
                         </div>
                         {{-- Video view (hidden until video thumb clicked) --}}
                         @if ($product->video)
@@ -717,7 +716,20 @@
         function openLightbox() {
             if (galleryImages.length > 0) {
                 Fancybox.show(galleryImages, {
-                    startIndex: currentImageIndex
+                    startIndex: currentImageIndex,
+                    wheel: "zoom",
+                    Image: {
+                        zoom: true,
+                    },
+                    Toolbar: {
+                        display: [
+                            "zoom",
+                            "slideShow",
+                            "fullScreen",
+                            "thumbs",
+                            "close"
+                        ]
+                    }
                 });
             }
         }
