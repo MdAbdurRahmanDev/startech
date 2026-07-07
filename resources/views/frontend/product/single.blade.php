@@ -1,28 +1,28 @@
 @extends('layouts.app')
 
 @section('styles')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
-<style>
-    /* Fancybox custom styling to place arrows next to the image */
-    .fancybox__image {
-        background-color: #fff;
-        max-width: 800px !important;
-        width: 100% !important;
-        height: 600px !important;
-        object-fit: contain;
-        border-radius: 8px;
-        padding: 20px;
-    }
-
-    @media (min-width: 768px) {
-        .fancybox__nav {
-            max-width: 920px;
-            margin: 0 auto;
-            left: 0;
-            right: 0;
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
+    <style>
+        /* Fancybox custom styling to place arrows next to the image */
+        .fancybox__image {
+            background-color: #fff;
+            max-width: 800px !important;
+            width: 100% !important;
+            height: 600px !important;
+            object-fit: contain;
+            border-radius: 8px;
+            padding: 20px;
         }
-    }
-</style>
+
+        @media (min-width: 768px) {
+            .fancybox__nav {
+                max-width: 920px;
+                margin: 0 auto;
+                left: 0;
+                right: 0;
+            }
+        }
+    </style>
 @endsection
 
 @section('title', ($product->meta_title ?? $product->name) . ' | IOS BD')
@@ -41,20 +41,26 @@
         </div>
 
         <!-- Action Header Bar -->
-        <div class="bg-white rounded-full shadow-sm border border-gray-100 px-6 py-2.5 mt-4 flex justify-between items-center flex-wrap gap-4">
+        <div
+            class="bg-white rounded-full shadow-sm border border-gray-100 px-6 py-2.5 mt-4 flex justify-between items-center flex-wrap gap-4">
             <div class="flex items-center gap-4">
                 <span class="text-[13px] font-bold text-gray-700">Share:</span>
                 <div class="flex gap-3 text-gray-600">
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank" class="hover:text-accent-blue transition-colors"><i class="fab fa-facebook-messenger text-lg"></i></a>
-                    <a href="https://wa.me/?text={{ urlencode($product->name . ' - ' . url()->current()) }}" target="_blank" class="hover:text-green-500 transition-colors"><i class="fab fa-whatsapp text-lg"></i></a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank"
+                        class="hover:text-accent-blue transition-colors"><i
+                            class="fab fa-facebook-messenger text-lg"></i></a>
+                    <a href="https://wa.me/?text={{ urlencode($product->name . ' - ' . url()->current()) }}" target="_blank"
+                        class="hover:text-green-500 transition-colors"><i class="fab fa-whatsapp text-lg"></i></a>
                 </div>
             </div>
             <div class="flex items-center gap-6">
-                <button type="button" onclick="toggleWishlist({{ $product->id }}, this)" class="flex items-center gap-2 text-[13px] font-bold text-gray-700 hover:text-accent-orange transition-colors group">
+                <button type="button" onclick="toggleWishlist({{ $product->id }}, this)"
+                    class="flex items-center gap-2 text-[13px] font-bold text-gray-700 hover:text-accent-orange transition-colors group">
                     <i class="{{ $product->isWishlisted() ? 'fas' : 'far' }} fa-bookmark text-md"></i>
                     <span>Save</span>
                 </button>
-                <button type="button" onclick="addToCompare({{ $product->id }})" class="flex items-center gap-2 text-[13px] font-bold text-gray-700 hover:text-accent-orange transition-colors group">
+                <button type="button" onclick="addToCompare({{ $product->id }})"
+                    class="flex items-center gap-2 text-[13px] font-bold text-gray-700 hover:text-accent-orange transition-colors group">
                     <i class="fas fa-plus-square text-md"></i>
                     <span>Add to Compare</span>
                 </button>
@@ -66,13 +72,13 @@
                 <!-- Gallery -->
                 <div>
                     {{-- Main viewer: shows image or video --}}
-                    <div id="main-viewer-wrapper" class="p-5 md:p-[30px] border border-[#f2f4f8] rounded-lg mb-[15px] text-center relative">
+                    <div id="main-viewer-wrapper"
+                        class="p-5 md:p-[30px] border border-[#f2f4f8] rounded-lg mb-[15px] text-center relative">
                         {{-- Image view: hidden by default if video exists --}}
                         <div id="image-view" {{ $product->video ? 'class=hidden' : '' }}>
                             <img id="main-product-image"
                                 src="{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : 'https://placehold.co/400x400/f9fafb/a3a3a3?text=No+Image' }}"
-                                alt="{{ $product->name }}"
-                                onclick="openLightbox()"
+                                alt="{{ $product->name }}" onclick="openLightbox()"
                                 class="max-w-full max-h-[380px] object-contain mx-auto transition-all duration-300 cursor-pointer">
                         </div>
                         {{-- Video view (hidden until video thumb clicked) --}}
@@ -81,7 +87,13 @@
                                 @if (Str::contains($product->video, ['youtube.com', 'youtu.be']))
                                     @php
                                         $videoId = '';
-                                        if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $product->video, $match)) {
+                                        if (
+                                            preg_match(
+                                                '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i',
+                                                $product->video,
+                                                $match,
+                                            )
+                                        ) {
                                             $videoId = $match[1];
                                         }
                                     @endphp
@@ -119,12 +131,13 @@
                         @if ($product->video)
                             <div id="video-thumb"
                                 class="w-[70px] h-[70px] border-2 border-accent-orange rounded cursor-pointer transition-colors hover:border-accent-orange flex items-center justify-center bg-gray-900 relative overflow-hidden active"
-                                onclick="switchToVideo(this)"
-                                title="Product Video">
+                                onclick="switchToVideo(this)" title="Product Video">
                                 @if ($product->thumbnail)
-                                    <img src="{{ asset('storage/' . $product->thumbnail) }}" class="absolute inset-0 w-full h-full object-cover opacity-50">
+                                    <img src="{{ asset('storage/' . $product->thumbnail) }}"
+                                        class="absolute inset-0 w-full h-full object-cover opacity-50">
                                 @endif
-                                <div class="relative z-10 w-7 h-7 bg-white/90 rounded-full flex items-center justify-center shadow">
+                                <div
+                                    class="relative z-10 w-7 h-7 bg-white/90 rounded-full flex items-center justify-center shadow">
                                     <i class="fas fa-play text-accent-orange text-xs ml-0.5"></i>
                                 </div>
                             </div>
@@ -152,7 +165,7 @@
                         </span>
                         <span class="bg-[#f2f4f8] py-1 px-3.5 rounded-full text-[13px] text-gray-800 inline-block">
                             Status: <strong
-                                class="{{ $product->is_tba ? 'text-purple-500' : ($product->is_coming_soon ? 'text-blue-500' : (($product->stock > 0 && !$product->is_out_of_stock) ? 'text-green-600' : 'text-red-500')) }}">{{ $product->is_tba ? 'TBA' : ($product->is_coming_soon ? 'Coming Soon' : (($product->stock > 0 && !$product->is_out_of_stock) ? 'In Stock' : 'Out of Stock')) }}</strong>
+                                class="{{ $product->is_tba ? 'text-purple-500' : ($product->is_coming_soon ? 'text-blue-500' : ($product->stock > 0 && !$product->is_out_of_stock ? 'text-green-600' : 'text-red-500')) }}">{{ $product->is_tba ? 'TBA' : ($product->is_coming_soon ? 'Coming Soon' : ($product->stock > 0 && !$product->is_out_of_stock ? 'In Stock' : 'Out of Stock')) }}</strong>
                         </span>
                         <span class="bg-[#f2f4f8] py-1 px-3.5 rounded-full text-[13px] text-gray-800 inline-block">Product
                             Code: <strong>#{{ $product->id }}</strong></span>
@@ -178,7 +191,8 @@
                                 @foreach ($product->specifications->take(5) as $spec)
                                     <li
                                         class="text-[13px] text-gray-600 pl-3.5 relative before:content-['•'] before:absolute before:left-0 before:text-accent-orange">
-                                        <strong>{{ $spec->name }}:</strong> {{ $spec->value }}</li>
+                                        <strong>{{ $spec->name }}:</strong> {{ $spec->value }}
+                                    </li>
                                 @endforeach
                             </ul>
                             @if ($product->specifications->count() > 5)
@@ -194,7 +208,8 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                             <div
                                 class="payment-card active border-2 border-accent-blue bg-[#f0f4f9] p-4 rounded-lg flex items-start gap-3 cursor-pointer transition-colors">
-                                <input type="radio" checked name="payment" id="cash-payment" class="mt-1 accent-accent-blue">
+                                <input type="radio" checked name="payment" id="cash-payment"
+                                    class="mt-1 accent-accent-blue">
                                 <div>
                                     <h4 class="text-[18px] text-gray-800 mb-1 font-bold">
                                         {{ number_format($product->discount_price ?? $product->price, 0) }}৳</h4>
@@ -224,11 +239,13 @@
                             </a>
                         </div>
                     @elseif ($product->is_tba)
-                        <div class="mt-6 p-4 bg-purple-50 rounded-lg text-purple-600 font-bold text-center border border-purple-100">
+                        <div
+                            class="mt-6 p-4 bg-purple-50 rounded-lg text-purple-600 font-bold text-center border border-purple-100">
                             <i class="fas fa-bullhorn mr-1.5"></i> This product will be announced soon.
                         </div>
                     @elseif ($product->is_coming_soon)
-                        <div class="mt-6 p-4 bg-blue-50 rounded-lg text-blue-600 font-bold text-center border border-blue-100">
+                        <div
+                            class="mt-6 p-4 bg-blue-50 rounded-lg text-blue-600 font-bold text-center border border-blue-100">
                             <i class="fas fa-clock mr-1.5"></i> This product is coming soon.
                         </div>
                     @elseif ($product->stock > 0 && !$product->is_out_of_stock)
@@ -333,7 +350,8 @@
                                 </div>
                             @else
                                 <div class="px-6 py-10 text-center">
-                                    <p class="text-gray-400 text-[14px] italic">No specifications available for this product.</p>
+                                    <p class="text-gray-400 text-[14px] italic">No specifications available for this
+                                        product.</p>
                                 </div>
                             @endif
                         </div>
@@ -601,7 +619,8 @@
                                                     {{ number_format($related->price, 0) }}৳
                                                 @endif
                                             </div>
-                                            <a href="#" onclick="event.preventDefault(); addToCompare({{ $related->id }})"
+                                            <a href="#"
+                                                onclick="event.preventDefault(); addToCompare({{ $related->id }})"
                                                 class="text-[12px] text-gray-500 no-underline inline-flex items-center gap-1.5 transition-colors hover:text-accent-orange"><i
                                                     class="fas fa-plus-square"></i> Add to Compare</a>
                                         </div>
@@ -678,288 +697,300 @@
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
     <script>
-            // Store all images for lightbox
-            let galleryImages = [
-                @if($product->thumbnail) { src: '{{ asset('storage/' . $product->thumbnail) }}', type: 'image' }, @endif
-                @foreach($product->images as $img) { src: '{{ asset('storage/' . $img->image) }}', type: 'image' }, @endforeach
-            ];
-            let currentImageIndex = 0;
+        // Store all images for lightbox
+        let galleryImages = [
+            @if ($product->thumbnail)
+                {
+                    src: '{{ asset('storage/' . $product->thumbnail) }}',
+                    type: 'image'
+                },
+            @endif
+            @foreach ($product->images as $img)
+                {
+                    src: '{{ asset('storage/' . $img->image) }}',
+                    type: 'image'
+                },
+            @endforeach
+        ];
+        let currentImageIndex = 0;
 
-            function openLightbox() {
-                if (galleryImages.length > 0) {
-                    Fancybox.show(galleryImages, {
-                        startIndex: currentImageIndex
+        function openLightbox() {
+            if (galleryImages.length > 0) {
+                Fancybox.show(galleryImages, {
+                    startIndex: currentImageIndex
+                });
+            }
+        }
+
+        // Image switcher
+        function switchImage(el, src, index) {
+            // Hide video, show image
+            const videoView = document.getElementById('video-view');
+            const imageView = document.getElementById('image-view');
+            if (videoView) videoView.classList.add('hidden');
+            if (imageView) imageView.classList.remove('hidden');
+
+            document.getElementById('main-product-image').src = src;
+
+            if (index !== undefined) {
+                currentImageIndex = index;
+            }
+
+            // Update active thumb
+            document.querySelectorAll('.thumb-images img, #video-thumb').forEach(t => t.classList.remove('active',
+                'border-accent-orange'));
+            el.classList.add('active', 'border-accent-orange');
+        }
+
+        // Video switcher
+        function switchToVideo(el) {
+            const videoView = document.getElementById('video-view');
+            const imageView = document.getElementById('image-view');
+            if (imageView) imageView.classList.add('hidden');
+            if (videoView) videoView.classList.remove('hidden');
+
+            // Update active thumb
+            document.querySelectorAll('.thumb-images img, #video-thumb').forEach(t => t.classList.remove('active',
+                'border-accent-orange'));
+            el.classList.add('active', 'border-accent-orange');
+        }
+
+        // Qty selector
+        function changeQty(delta) {
+            const input = document.getElementById('qty');
+            const max = parseInt(input.max) || 999;
+            let val = parseInt(input.value) + delta;
+            if (val < 1) val = 1;
+            if (val > max) val = max;
+            input.value = val;
+        }
+
+        // Section Navigation (Scroll-Spy)
+        document.querySelectorAll('.section-nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+
+                if (targetSection) {
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 80, // Adjust for sticky headers if any
+                        behavior: 'smooth'
                     });
                 }
-            }
 
-            // Image switcher
-            function switchImage(el, src, index) {
-                // Hide video, show image
-                const videoView = document.getElementById('video-view');
-                const imageView = document.getElementById('image-view');
-                if (videoView) videoView.classList.add('hidden');
-                if (imageView) imageView.classList.remove('hidden');
-
-                document.getElementById('main-product-image').src = src;
-
-                if (index !== undefined) {
-                    currentImageIndex = index;
-                }
-
-                // Update active thumb
-                document.querySelectorAll('.thumb-images img, #video-thumb').forEach(t => t.classList.remove('active', 'border-accent-orange'));
-                el.classList.add('active', 'border-accent-orange');
-            }
-
-            // Video switcher
-            function switchToVideo(el) {
-                const videoView = document.getElementById('video-view');
-                const imageView = document.getElementById('image-view');
-                if (imageView) imageView.classList.add('hidden');
-                if (videoView) videoView.classList.remove('hidden');
-
-                // Update active thumb
-                document.querySelectorAll('.thumb-images img, #video-thumb').forEach(t => t.classList.remove('active', 'border-accent-orange'));
-                el.classList.add('active', 'border-accent-orange');
-            }
-
-            // Qty selector
-            function changeQty(delta) {
-                const input = document.getElementById('qty');
-                const max = parseInt(input.max) || 999;
-                let val = parseInt(input.value) + delta;
-                if (val < 1) val = 1;
-                if (val > max) val = max;
-                input.value = val;
-            }
-
-            // Section Navigation (Scroll-Spy)
-            document.querySelectorAll('.section-nav a').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    const targetSection = document.getElementById(targetId);
-
-                    if (targetSection) {
-                        window.scrollTo({
-                            top: targetSection.offsetTop - 80, // Adjust for sticky headers if any
-                            behavior: 'smooth'
-                        });
-                    }
-
-                    // Update active class
-                    document.querySelectorAll('.section-nav a').forEach(l => l.classList.remove('active',
-                        'bg-accent-orange', 'text-white'));
-                    this.classList.add('active', 'bg-accent-orange', 'text-white');
-                });
+                // Update active class
+                document.querySelectorAll('.section-nav a').forEach(l => l.classList.remove('active',
+                    'bg-accent-orange', 'text-white'));
+                this.classList.add('active', 'bg-accent-orange', 'text-white');
             });
+        });
 
-            // Simple Scroll-spy observer
-            const sections = document.querySelectorAll('.content-card[id]');
-            window.addEventListener('scroll', () => {
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    if (scrollY >= sectionTop - 150) {
-                        current = section.getAttribute('id');
-                    }
-                });
-
-                if (current) {
-                    document.querySelectorAll('.section-nav a').forEach(a => {
-                        a.classList.remove('active', 'bg-accent-orange', 'text-white');
-                        if (a.getAttribute('href') === '#' + current) {
-                            a.classList.add('active', 'bg-accent-orange', 'text-white');
-                        }
-                    });
+        // Simple Scroll-spy observer
+        const sections = document.querySelectorAll('.content-card[id]');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 150) {
+                    current = section.getAttribute('id');
                 }
             });
 
-            // Payment card selector
-            document.querySelectorAll('.payment-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    document.querySelectorAll('.payment-card').forEach(c => {
-                        c.classList.remove('active', 'border-accent-blue', 'bg-[#f0f4f9]');
-                        c.classList.add('border-gray-200');
-                    });
-                    card.classList.remove('border-gray-200');
-                    card.classList.add('active', 'border-accent-blue', 'bg-[#f0f4f9]');
-                    card.querySelector('input[type=radio]').checked = true;
+            if (current) {
+                document.querySelectorAll('.section-nav a').forEach(a => {
+                    a.classList.remove('active', 'bg-accent-orange', 'text-white');
+                    if (a.getAttribute('href') === '#' + current) {
+                        a.classList.add('active', 'bg-accent-orange', 'text-white');
+                    }
                 });
+            }
+        });
+
+        // Payment card selector
+        document.querySelectorAll('.payment-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.payment-card').forEach(c => {
+                    c.classList.remove('active', 'border-accent-blue', 'bg-[#f0f4f9]');
+                    c.classList.add('border-gray-200');
+                });
+                card.classList.remove('border-gray-200');
+                card.classList.add('active', 'border-accent-blue', 'bg-[#f0f4f9]');
+                card.querySelector('input[type=radio]').checked = true;
             });
+        });
 
-            // Quotation Modal Toggle
-            function toggleQuotationModal(e) {
-                if (e) e.preventDefault();
-                const modal = document.getElementById('quotationModal');
-                if (modal.classList.contains('hidden')) {
-                    modal.classList.remove('hidden');
-                    modal.classList.add('flex');
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    modal.classList.add('hidden');
-                    modal.classList.remove('flex');
-                    document.body.style.overflow = 'auto';
-                }
-            }
-
-            // Question Modal Toggle
-            function toggleQuestionModal() {
-                const modal = document.getElementById('questionModal');
-                if (modal.classList.contains('hidden')) {
-                    modal.classList.remove('hidden');
-                    modal.classList.add('flex');
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    modal.classList.add('hidden');
-                    modal.classList.remove('flex');
-                    document.body.style.overflow = 'auto';
-                }
-            }
-
-            // Review Modal Toggle
-            function toggleReviewModal() {
-                const modal = document.getElementById('reviewModal');
-                if (modal.classList.contains('hidden')) {
-                    modal.classList.remove('hidden');
-                    modal.classList.add('flex');
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    modal.classList.add('hidden');
-                    modal.classList.remove('flex');
-                    document.body.style.overflow = 'auto';
-                }
-            }
-
-            // Star Rating Logic
-            function setRating(rating) {
-                document.getElementById('selectedRating').value = rating;
-                const stars = document.querySelectorAll('.star-rating-btn');
-                stars.forEach((star, index) => {
-                    if (index < rating) {
-                        star.classList.add('text-accent-orange');
-                        star.classList.remove('text-gray-300');
-                    } else {
-                        star.classList.remove('text-accent-orange');
-                        star.classList.add('text-gray-300');
-                    }
-                });
-            }
-        </script>
-
-        <script>
-            // Update all cart counter badges on the page
-            function updateCartCounters(count) {
-                document.querySelectorAll('#cart-count-float, #cart-count-mobile').forEach(el => {
-                    el.textContent = count;
-                });
-            }
-
-            // Core cart fetch function
-            async function cartFetch(productId, quantity) {
-                const response = await fetch('{{ route('cart.add') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': CSRF_TOKEN,
-                        'Accept': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        product_id: productId,
-                        quantity: quantity
-                    }),
-                });
-                return response.json();
-            }
-
-            // Add to cart – shows toast and updates counter
-            async function addToCart(productId) {
-                const qty = parseInt(document.getElementById('qty').value) || 1;
-                try {
-                    const data = await cartFetch(productId, qty);
-                    if (data.success) {
-                        showToast(data.message, 'success');
-                        updateCartCounters(data.cart_count);
-                    } else {
-                        showToast(data.message, 'error');
-                    }
-                } catch (e) {
-                    showToast('Something went wrong. Please try again.', 'error');
-                }
-            }
-
-            // Buy now – adds to cart then redirects directly to checkout
-            function buyNow(productId) {
-                const qty = parseInt(document.getElementById('qty').value) || 1;
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = '{{ route('cart.buy-now') }}';
-
-                const csrfInput = document.createElement('input');
-                csrfInput.type = 'hidden';
-                csrfInput.name = '_token';
-                csrfInput.value = CSRF_TOKEN;
-
-                const idInput = document.createElement('input');
-                idInput.type = 'hidden';
-                idInput.name = 'product_id';
-                idInput.value = productId;
-
-                const qtyInput = document.createElement('input');
-                qtyInput.type = 'hidden';
-                qtyInput.name = 'quantity';
-                qtyInput.value = qty;
-
-                form.appendChild(csrfInput);
-                form.appendChild(idInput);
-                form.appendChild(qtyInput);
-                document.body.appendChild(form);
-                form.submit();
-            }
-
-            function showLinkCopiedModal() {
-                const modal = document.getElementById('link-copied-modal');
+        // Quotation Modal Toggle
+        function toggleQuotationModal(e) {
+            if (e) e.preventDefault();
+            const modal = document.getElementById('quotationModal');
+            if (modal.classList.contains('hidden')) {
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                    modal.classList.remove('flex');
-                }, 2000);
+                document.body.style.overflow = 'hidden';
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = 'auto';
             }
+        }
 
-            function copyToClipboard(text) {
-                if (navigator.clipboard && window.isSecureContext) {
-                    navigator.clipboard.writeText(text).then(() => {
-                        showLinkCopiedModal();
-                    }).catch(err => {
-                        fallbackCopyTextToClipboard(text);
-                    });
+        // Question Modal Toggle
+        function toggleQuestionModal() {
+            const modal = document.getElementById('questionModal');
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Review Modal Toggle
+        function toggleReviewModal() {
+            const modal = document.getElementById('reviewModal');
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Star Rating Logic
+        function setRating(rating) {
+            document.getElementById('selectedRating').value = rating;
+            const stars = document.querySelectorAll('.star-rating-btn');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('text-accent-orange');
+                    star.classList.remove('text-gray-300');
                 } else {
-                    fallbackCopyTextToClipboard(text);
-                }
-            }
-
-            function fallbackCopyTextToClipboard(text) {
-                const textArea = document.createElement("textarea");
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    showLinkCopiedModal();
-                } catch (err) {
-                    showToast('Failed to copy link', 'error');
-                }
-                document.body.removeChild(textArea);
-            }
-
-            document.addEventListener('DOMContentLoaded', function() {
-                const urlParams = new URLSearchParams(window.location.search);
-                if (urlParams.get('quotation') === '1') {
-                    toggleQuotationModal();
+                    star.classList.remove('text-accent-orange');
+                    star.classList.add('text-gray-300');
                 }
             });
+        }
+    </script>
+
+    <script>
+        // Update all cart counter badges on the page
+        function updateCartCounters(count) {
+            document.querySelectorAll('#cart-count-float, #cart-count-mobile').forEach(el => {
+                el.textContent = count;
+            });
+        }
+
+        // Core cart fetch function
+        async function cartFetch(productId, quantity) {
+            const response = await fetch('{{ route('cart.add') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': CSRF_TOKEN,
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    product_id: productId,
+                    quantity: quantity
+                }),
+            });
+            return response.json();
+        }
+
+        // Add to cart – shows toast and updates counter
+        async function addToCart(productId) {
+            const qty = parseInt(document.getElementById('qty').value) || 1;
+            try {
+                const data = await cartFetch(productId, qty);
+                if (data.success) {
+                    showToast(data.message, 'success');
+                    updateCartCounters(data.cart_count);
+                } else {
+                    showToast(data.message, 'error');
+                }
+            } catch (e) {
+                showToast('Something went wrong. Please try again.', 'error');
+            }
+        }
+
+        // Buy now – adds to cart then redirects directly to checkout
+        function buyNow(productId) {
+            const qty = parseInt(document.getElementById('qty').value) || 1;
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '{{ route('cart.buy-now') }}';
+
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = '_token';
+            csrfInput.value = CSRF_TOKEN;
+
+            const idInput = document.createElement('input');
+            idInput.type = 'hidden';
+            idInput.name = 'product_id';
+            idInput.value = productId;
+
+            const qtyInput = document.createElement('input');
+            qtyInput.type = 'hidden';
+            qtyInput.name = 'quantity';
+            qtyInput.value = qty;
+
+            form.appendChild(csrfInput);
+            form.appendChild(idInput);
+            form.appendChild(qtyInput);
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        function showLinkCopiedModal() {
+            const modal = document.getElementById('link-copied-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 2000);
+        }
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showLinkCopiedModal();
+                }).catch(err => {
+                    fallbackCopyTextToClipboard(text);
+                });
+            } else {
+                fallbackCopyTextToClipboard(text);
+            }
+        }
+
+        function fallbackCopyTextToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showLinkCopiedModal();
+            } catch (err) {
+                showToast('Failed to copy link', 'error');
+            }
+            document.body.removeChild(textArea);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('quotation') === '1') {
+                toggleQuotationModal();
+            }
+        });
     </script>
 @endsection
