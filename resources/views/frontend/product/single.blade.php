@@ -2,6 +2,16 @@
 
 @section('styles')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
+<style>
+    @media (min-width: 768px) {
+        .fancybox__nav {
+            max-width: 900px;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+        }
+    }
+</style>
 @endsection
 
 @section('title', ($product->meta_title ?? $product->name) . ' | IOS BD')
