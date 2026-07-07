@@ -3,9 +3,20 @@
 @section('styles')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
 <style>
+    /* Fancybox custom styling to place arrows next to the image */
+    .fancybox__image {
+        background-color: #fff;
+        max-width: 800px !important;
+        width: 100% !important;
+        height: 600px !important;
+        object-fit: contain;
+        border-radius: 8px;
+        padding: 20px;
+    }
+
     @media (min-width: 768px) {
         .fancybox__nav {
-            max-width: 900px;
+            max-width: 920px;
             margin: 0 auto;
             left: 0;
             right: 0;
