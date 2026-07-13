@@ -128,10 +128,26 @@
         .sub-dropdown::-webkit-scrollbar-thumb:hover {
             background: #ef4a23;
         }
+
+        @media (max-width: 768px) {
+            ::-webkit-scrollbar {
+                display: none;
+            }
+            * {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        }
+
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+        }
     </style>
 </head>
 
-<body class="bg-bg-gray text-primary-dark font-sans min-h-screen">
+<body class="bg-bg-gray text-primary-dark font-sans min-h-screen overflow-x-hidden">
 
     <!-- Toast Notifications -->
     <div id="toast-container" class="fixed top-20 right-5 z-[9999] flex flex-col gap-3">
@@ -417,8 +433,8 @@
         </div>
     </main>
 
-    <footer class="bg-primary-dark text-white pt-16 pb-8 mt-12">
-        <div class="max-w-[1320px] mx-auto px-1.5 md:px-2">
+    <footer class="bg-primary-dark text-white pt-16 pb-24 lg:pb-8 mt-12">
+        <div class="max-w-[1320px] mx-auto px-4 lg:px-2">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                 <div>
                     <h3 class="text-base font-bold uppercase mb-6 tracking-wider">Support</h3>
@@ -442,7 +458,7 @@
                 </div>
                 <div>
                     <h3 class="text-base font-bold uppercase mb-6 tracking-wider">About Us</h3>
-                    <ul class="space-y-3">
+                    <ul class="grid grid-cols-2 gap-y-3 gap-x-2 md:block md:space-y-3">
                         @foreach ($footerPages as $fPage)
                             <li><a href="{{ url('info/' . $fPage->slug) }}"
                                     class="text-gray-400 hover:text-accent-orange text-sm transition-colors">{{ $fPage->title }}</a>
@@ -595,7 +611,7 @@
                 <i class="fas fa-times"></i>
             </div>
         </div>
-        <ul class="space-y-4">
+        <ul class="space-y-1">
             @foreach ($headerCategories as $category)
                 <li>
                     @if ($category->children->count() > 0)
