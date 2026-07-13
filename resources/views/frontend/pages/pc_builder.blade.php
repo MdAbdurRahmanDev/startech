@@ -509,7 +509,7 @@
                             'label' => 'RAM',
                             'required' => true,
                             'icon' => 'fas fa-sim-card',
-                            'route' => 'ram',
+                            'route' => 'desktop-ram',
                         ],
                         [
                             'key' => 'storage',
