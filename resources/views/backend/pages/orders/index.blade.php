@@ -23,7 +23,15 @@
                 <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
             </select>
 
-            @if(request()->has('search') || request()->has('status'))
+            <div class="flex items-center gap-2">
+                <input type="date" name="start_date" value="{{ request('start_date') }}" onchange="this.form.submit()" 
+                       class="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white" title="Start Date">
+                <span class="text-gray-500 text-sm">to</span>
+                <input type="date" name="end_date" value="{{ request('end_date') }}" onchange="this.form.submit()" 
+                       class="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white" title="End Date">
+            </div>
+
+            @if(request()->has('search') || request()->has('status') || request()->has('start_date') || request()->has('end_date'))
                 <a href="{{ route('admin.orders.index') }}" class="text-red-500 hover:text-red-700 text-sm font-bold">Clear</a>
             @endif
         </form>

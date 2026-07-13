@@ -334,9 +334,16 @@
 
     <script>
         $(document).ready(function() {
+                    $('.select2').select2({
+                        width: '100%',
+                        allowClear: true
+                    });
+
                     $('#categories').select2({
                         placeholder: "Select categories",
-                        allowClear: true
+                        allowClear: true,
+                        closeOnSelect: false,
+                        width: '100%'
                     });
 
                     ClassicEditor
