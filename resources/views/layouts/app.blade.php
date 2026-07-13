@@ -12,15 +12,23 @@
     @endif
 
     <meta name="google-site-verification" content="VObLL1RgvVWzjs7o7_xbij-VJEyk-fXeCXQXubTAgxc" />
-    
+    <meta name="google-site-verification" content="q0ajb6SHXf3GZXrv-q7B1bxWZ68aV7yc_VShPrKqoQM" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('styles')
     <style>
         @keyframes rgbw-gradient-border-anim {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .rgbw-gradient-bg {
@@ -48,6 +56,7 @@
             mask-composite: exclude;
             pointer-events: none;
         }
+
         /* Custom smooth transitions for dropdowns and sub-dropdowns */
         .nav-dropdown,
         .sub-dropdown {
@@ -105,14 +114,17 @@
         .sub-dropdown::-webkit-scrollbar {
             width: 5px;
         }
+
         .sub-dropdown::-webkit-scrollbar-track {
             background: #f1f1f1;
             border-radius: 4px;
         }
+
         .sub-dropdown::-webkit-scrollbar-thumb {
             background: #d1d5db;
             border-radius: 4px;
         }
+
         .sub-dropdown::-webkit-scrollbar-thumb:hover {
             background: #ef4a23;
         }
@@ -193,7 +205,9 @@
 
             <!-- Logo -->
             <div class="flex-shrink-0">
-                <a href="{{ url('/') }}" class="inline-block bg-white p-1.5 shadow-sm hover:opacity-90 transition-opacity" style="border-radius: 10px;">
+                <a href="{{ url('/') }}"
+                    class="inline-block bg-white p-1.5 shadow-sm hover:opacity-90 transition-opacity"
+                    style="border-radius: 10px;">
                     @if ($setting && $setting->logo)
                         <img src="{{ asset('storage/' . $setting->logo) }}" alt="{{ $setting->app_name }}"
                             class="h-10 lg:h-11 object-contain block" style="border-radius: 8px;">
@@ -208,7 +222,8 @@
                 class="hidden lg:flex flex-grow max-w-[700px] relative mx-8">
                 <input type="text" name="q" value="{{ request('q') }}" placeholder="Search"
                     class="w-full py-2.5 pr-10 pl-4 rounded text-primary-dark focus:outline-none">
-                <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center text-primary-dark animated-border-transparent shadow-sm transition-transform hover:scale-105">
+                <button type="submit"
+                    class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center text-primary-dark animated-border-transparent shadow-sm transition-transform hover:scale-105">
                     <i class="fas fa-search text-sm"></i>
                 </button>
             </form>
@@ -307,7 +322,8 @@
         <form action="{{ url('search') }}" method="GET" class="relative">
             <input type="text" name="q" placeholder="What are you looking for?"
                 class="w-full bg-white/10 border border-white/20 rounded-lg py-4 px-6 text-white focus:outline-none focus:border-accent-orange">
-            <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center text-accent-orange animated-border-transparent shadow-sm transition-transform hover:scale-105">
+            <button type="submit"
+                class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center text-accent-orange animated-border-transparent shadow-sm transition-transform hover:scale-105">
                 <i class="fas fa-search text-lg"></i>
             </button>
         </form>
@@ -328,9 +344,8 @@
                                 $mainChildCount = $category->children->count();
                                 $mainRows = min(15, max(1, $mainChildCount));
                             @endphp
-                            <div
-                                class="nav-dropdown absolute top-full left-0 bg-white shadow-xl py-2 z-[60] border-t-2 border-accent-orange {{ $mainChildCount > 15 ? 'grid' : 'min-w-[220px]' }}"
-                                @if($mainChildCount > 15) style="grid-template-rows: repeat({{ $mainRows }}, auto); grid-auto-flow: column; grid-auto-columns: minmax(220px, max-content);" @endif>
+                            <div class="nav-dropdown absolute top-full left-0 bg-white shadow-xl py-2 z-[60] border-t-2 border-accent-orange {{ $mainChildCount > 15 ? 'grid' : 'min-w-[220px]' }}"
+                                @if ($mainChildCount > 15) style="grid-template-rows: repeat({{ $mainRows }}, auto); grid-auto-flow: column; grid-auto-columns: minmax(220px, max-content);" @endif>
                                 @foreach ($category->children as $sub)
                                     <div class="relative sub-dropdown-trigger group/sub">
                                         <a href="{{ url('category/' . $sub->slug) }}"
@@ -347,8 +362,7 @@
                                                 $totalSubItems = $sub->children->count() + $sub->brands->count();
                                                 $rows = min(10, max(1, $totalSubItems));
                                             @endphp
-                                            <div
-                                                class="sub-dropdown absolute top-0 left-full bg-white shadow-xl py-2 border-l border-gray-100 grid z-[70]"
+                                            <div class="sub-dropdown absolute top-0 left-full bg-white shadow-xl py-2 border-l border-gray-100 grid z-[70]"
                                                 style="grid-template-rows: repeat({{ $rows }}, auto); grid-auto-flow: column; grid-auto-columns: 200px;">
                                                 @foreach ($sub->children as $subSub)
                                                     <a href="{{ url('category/' . $subSub->slug) }}"
@@ -438,7 +452,8 @@
                                 class="text-gray-400 hover:text-accent-orange text-sm transition-colors font-bold">Order
                                 Tracking</a></li>
                         <li><a href="{{ route('blogs.index') }}"
-                                class="text-gray-400 hover:text-accent-orange text-sm transition-colors">Blog & Tips</a></li>
+                                class="text-gray-400 hover:text-accent-orange text-sm transition-colors">Blog &
+                                Tips</a></li>
                         <li><a href="{{ route('contact') }}"
                                 class="text-gray-400 hover:text-accent-orange text-sm transition-colors">Contact Us</a>
                         </li>
@@ -589,11 +604,14 @@
                                 class="text-primary-dark text-base font-bold hover:text-accent-orange transition-colors">
                                 {{ $category->name }}
                             </a>
-                            <button class="mobile-toggle-btn text-gray-500 hover:text-accent-orange p-1 focus:outline-none transition-transform duration-300" data-target="submenu-{{ $category->id }}">
+                            <button
+                                class="mobile-toggle-btn text-gray-500 hover:text-accent-orange p-1 focus:outline-none transition-transform duration-300"
+                                data-target="submenu-{{ $category->id }}">
                                 <i class="fas fa-chevron-down text-sm"></i>
                             </button>
                         </div>
-                        <ul id="submenu-{{ $category->id }}" class="hidden pl-4 mt-2 space-y-3 border-l-2 border-gray-100">
+                        <ul id="submenu-{{ $category->id }}"
+                            class="hidden pl-4 mt-2 space-y-3 border-l-2 border-gray-100">
                             @foreach ($category->children as $sub)
                                 <li>
                                     @if ($sub->children->count() > 0 || $sub->brands->count() > 0)
@@ -602,11 +620,14 @@
                                                 class="text-gray-700 text-sm font-semibold hover:text-accent-orange transition-colors">
                                                 {{ $sub->name }}
                                             </a>
-                                            <button class="mobile-toggle-btn text-gray-400 hover:text-accent-orange p-1 focus:outline-none transition-transform duration-300" data-target="subsubmenu-{{ $sub->id }}">
+                                            <button
+                                                class="mobile-toggle-btn text-gray-400 hover:text-accent-orange p-1 focus:outline-none transition-transform duration-300"
+                                                data-target="subsubmenu-{{ $sub->id }}">
                                                 <i class="fas fa-chevron-down text-xs"></i>
                                             </button>
                                         </div>
-                                        <ul id="subsubmenu-{{ $sub->id }}" class="hidden pl-4 mt-1 space-y-2 border-l border-gray-100">
+                                        <ul id="subsubmenu-{{ $sub->id }}"
+                                            class="hidden pl-4 mt-1 space-y-2 border-l border-gray-100">
                                             @foreach ($sub->children as $subSub)
                                                 <li>
                                                     <a href="{{ url('category/' . $subSub->slug) }}"
@@ -651,7 +672,9 @@
                         class="text-primary-dark text-base font-bold hover:text-accent-orange transition-colors">
                         Software Services
                     </a>
-                    <button class="mobile-toggle-btn text-gray-500 hover:text-accent-orange p-1 focus:outline-none transition-transform duration-300" data-target="submenu-software-services">
+                    <button
+                        class="mobile-toggle-btn text-gray-500 hover:text-accent-orange p-1 focus:outline-none transition-transform duration-300"
+                        data-target="submenu-software-services">
                         <i class="fas fa-chevron-down text-sm"></i>
                     </button>
                 </div>
@@ -729,7 +752,7 @@
                 e.stopPropagation();
                 const targetId = this.getAttribute('data-target');
                 const targetEl = document.getElementById(targetId);
-                
+
                 if (targetEl) {
                     if (targetEl.classList.contains('hidden')) {
                         targetEl.classList.remove('hidden');
@@ -812,17 +835,17 @@
             const form = document.createElement('form');
             form.method = 'POST';
             form.action = '{{ route('compare.add') }}';
-            
+
             const csrfInput = document.createElement('input');
             csrfInput.type = 'hidden';
             csrfInput.name = '_token';
             csrfInput.value = CSRF_TOKEN;
-            
+
             const idInput = document.createElement('input');
             idInput.type = 'hidden';
             idInput.name = 'product_id';
             idInput.value = productId;
-            
+
             form.appendChild(csrfInput);
             form.appendChild(idInput);
             document.body.appendChild(form);
@@ -872,12 +895,15 @@
 
             @if ($setting && $setting->popup_image)
                 @if ($setting->popup_link)
-                    <a href="{{ $setting->popup_link }}" class="block rounded-lg overflow-hidden border border-gray-100 bg-white">
-                        <img src="{{ asset('storage/' . $setting->popup_image) }}" alt="Promotion" class="w-full h-auto object-cover max-h-[85vh]">
+                    <a href="{{ $setting->popup_link }}"
+                        class="block rounded-lg overflow-hidden border border-gray-100 bg-white">
+                        <img src="{{ asset('storage/' . $setting->popup_image) }}" alt="Promotion"
+                            class="w-full h-auto object-cover max-h-[85vh]">
                     </a>
                 @else
                     <div class="rounded-lg overflow-hidden border border-gray-100 bg-white">
-                        <img src="{{ asset('storage/' . $setting->popup_image) }}" alt="Promotion" class="w-full h-auto object-cover max-h-[85vh]">
+                        <img src="{{ asset('storage/' . $setting->popup_image) }}" alt="Promotion"
+                            class="w-full h-auto object-cover max-h-[85vh]">
                     </div>
                 @endif
             @endif
@@ -1055,9 +1081,9 @@
             }
 
             @if ((!isset($setting->popup_enabled) || $setting->popup_enabled) && ($setting && $setting->popup_image))
-            if (!localStorage.getItem('app_popup_shown')) {
-                setTimeout(showAppPopup, 3000);
-            }
+                if (!localStorage.getItem('app_popup_shown')) {
+                    setTimeout(showAppPopup, 3000);
+                }
             @endif
         });
     </script>
@@ -1111,7 +1137,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const subDropdownTriggers = document.querySelectorAll('.sub-dropdown-trigger');
-            
+
             subDropdownTriggers.forEach(trigger => {
                 const submenu = trigger.querySelector('.sub-dropdown');
                 if (!submenu) return;
@@ -1120,10 +1146,10 @@
                 trigger.addEventListener('mouseenter', function() {
                     const triggerRect = trigger.getBoundingClientRect();
                     const viewportHeight = window.innerHeight;
-                    
+
                     // Calculate remaining vertical space from the trigger's top to the bottom of viewport
                     const availableHeight = viewportHeight - triggerRect.top - 15;
-                    
+
                     // Set max-height to the available height and enable scrolling
                     submenu.style.maxHeight = `${availableHeight}px`;
                     submenu.style.overflowY = 'auto';
