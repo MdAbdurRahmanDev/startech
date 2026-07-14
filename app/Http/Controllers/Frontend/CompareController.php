@@ -132,6 +132,11 @@ class CompareController extends Controller
     public function search(Request $request)
     {
         $query = $request->get('q');
+        
+        if ($query) {
+            $query = trim(str_ireplace('iosbd', '', $query));
+        }
+
         if (!$query) {
             return response()->json([]);
         }

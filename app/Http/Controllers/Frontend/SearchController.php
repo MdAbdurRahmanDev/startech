@@ -11,6 +11,10 @@ class SearchController extends Controller
     {
         $q = $request->input('q');
         
+        if ($q) {
+            $q = trim(str_ireplace('iosbd', '', $q));
+        }
+
         $query = \App\Models\Product::with(['specifications'])->where('status', 1);
 
         if ($q) {
