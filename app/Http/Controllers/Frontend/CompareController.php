@@ -134,16 +134,25 @@ class CompareController extends Controller
         $query = $request->get('q');
         
         if ($query) {
-            $query = trim(str_ireplace('iosbd', '', $query));
+            $ignoreWords = ['iosbd', 'startech', 'star tech', 'bd', 'in bangladesh', 'price'];
+            $query = trim(str_ireplace($ignoreWords, '', $query));
+            $query = preg_replace('/\s+/', ' ', $query);
         }
 
         if (!$query) {
             return response()->json([]);
         }
 
-        $products = Product::where('status', 1)
-            ->where('name', 'LIKE', "%{$query}%")
-            ->take(10)
+        $queryModel = Product::where('status', 1);
+
+        $words = array_filter(explode(' ', $query));
+        $queryModel->where(function($qBuilder) use ($words) {
+            foreach ($words as $word) {
+                $qBuilder->where('name', 'LIKE', "%{$word}%");
+            }
+        });
+
+        $products = $queryModel->take(10)
             ->get(['id', 'name', 'thumbnail', 'price', 'discount_price', 'is_call_for_price']);
 
         $results = $products->map(function ($product) {

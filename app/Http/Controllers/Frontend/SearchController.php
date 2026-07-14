@@ -12,16 +12,25 @@ class SearchController extends Controller
         $q = $request->input('q');
         
         if ($q) {
-            $q = trim(str_ireplace('iosbd', '', $q));
+            $ignoreWords = ['iosbd', 'startech', 'star tech', 'bd', 'in bangladesh', 'price'];
+            $q = trim(str_ireplace($ignoreWords, '', $q));
+            // Replace multiple spaces with single space
+            $q = preg_replace('/\s+/', ' ', $q);
         }
 
         $query = \App\Models\Product::with(['specifications'])->where('status', 1);
 
         if ($q) {
-            $query->where(function($query) use ($q) {
-                $query->where('name', 'LIKE', "%{$q}%")
-                      ->orWhere('short_description', 'LIKE', "%{$q}%")
-                      ->orWhere('tags', 'LIKE', "%{$q}%");
+            $words = array_filter(explode(' ', $q));
+            
+            $query->where(function($qBuilder) use ($words) {
+                foreach ($words as $word) {
+                    $qBuilder->where(function($q2) use ($word) {
+                        $q2->where('name', 'LIKE', "%{$word}%")
+                           ->orWhere('short_description', 'LIKE', "%{$word}%")
+                           ->orWhere('tags', 'LIKE', "%{$word}%");
+                    });
+                }
             });
         }
 
