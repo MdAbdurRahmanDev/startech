@@ -296,18 +296,20 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 items-center text-center">
                 @if(isset($badges) && count($badges) > 0)
                     @foreach($badges as $badge)
-                    <div class="brand-logo-card flex flex-col md:flex-row items-center justify-center gap-3 p-3 bg-white rounded-xl shadow-xs border border-gray-100">
-                        <div class="{{ $badge['color'] ?? 'text-[#ef4a23]' }} text-2xl flex items-center justify-center h-10 w-10">
+                    <div class="brand-logo-card flex flex-col md:flex-row items-center justify-center gap-3 p-3 bg-white rounded-xl shadow-xs border border-gray-100 min-h-[80px]">
+                        <div class="{{ $badge['color'] ?? 'text-[#ef4a23]' }} text-4xl flex items-center justify-center h-16 w-24 md:h-20 md:w-32">
                             @if(isset($badge['icon_type']) && $badge['icon_type'] === 'image' && !empty($badge['icon']))
                                 <img src="{{ asset('storage/' . $badge['icon']) }}" alt="{{ $badge['title'] }}" class="max-h-full max-w-full object-contain">
                             @else
                                 <i class="{{ $badge['icon'] ?? '' }}"></i>
                             @endif
                         </div>
+                        @if(!empty($badge['title']) || !empty($badge['subtitle']))
                         <div class="text-left">
-                            <p class="text-xs font-bold text-gray-800">{{ $badge['title'] }}</p>
-                            <p class="text-[10px] text-gray-500 font-medium">{{ $badge['subtitle'] }}</p>
+                            @if(!empty($badge['title']))<p class="text-xs md:text-sm font-bold text-gray-800">{{ $badge['title'] }}</p>@endif
+                            @if(!empty($badge['subtitle']))<p class="text-[10px] md:text-xs text-gray-500 font-medium">{{ $badge['subtitle'] }}</p>@endif
                         </div>
+                        @endif
                     </div>
                     @endforeach
                 @endif
