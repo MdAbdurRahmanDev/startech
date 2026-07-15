@@ -325,21 +325,23 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @if(isset($categories) && count($categories) > 0)
                     @foreach($categories as $category)
-                    <div class="service-type-card bg-white p-8 rounded-2xl border border-gray-100 shadow-sm flex flex-col">
-                        <div class="w-14 h-14 {{ $category['bg'] ?? 'bg-orange-50' }} {{ $category['color'] ?? 'text-[#ef4a23]' }} rounded-xl flex items-center justify-center mb-6 text-2xl flex-shrink-0 shadow-sm overflow-hidden p-2">
+                    <div class="service-type-card bg-white rounded-2xl border border-gray-100 shadow-sm flex flex-col overflow-hidden">
+                        <div class="w-full h-48 sm:h-56 {{ $category['bg'] ?? 'bg-orange-50' }} {{ $category['color'] ?? 'text-[#ef4a23]' }} flex items-center justify-center relative overflow-hidden flex-shrink-0">
                             @if(isset($category['icon_type']) && $category['icon_type'] === 'image' && !empty($category['icon']))
-                                <img src="{{ asset('storage/' . $category['icon']) }}" alt="{{ $category['title'] }}" class="max-h-full max-w-full object-contain">
+                                <img src="{{ asset('storage/' . $category['icon']) }}" alt="{{ $category['title'] }}" class="absolute inset-0 w-full h-full object-cover">
                             @else
-                                <i class="{{ $category['icon'] ?? '' }}"></i>
+                                <i class="{{ $category['icon'] ?? '' }} text-6xl opacity-50"></i>
                             @endif
                         </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">{{ $category['title'] }}</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed mb-6">
-                            {{ $category['description'] }}
-                        </p>
-                        <a href="{{ $category['link'] ?? route('complain') }}" class="mt-auto inline-flex items-center justify-between text-xs font-bold text-[#ef4a23] hover:text-[#d83a15] transition-colors group">
-                            Book Servicing <span class="transform group-hover:translate-x-1 transition-transform">→</span>
-                        </a>
+                        <div class="p-6 md:p-8 flex flex-col flex-grow">
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">{{ $category['title'] }}</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed mb-6 flex-grow">
+                                {{ $category['description'] }}
+                            </p>
+                            <a href="{{ $category['link'] ?? route('complain') }}" class="mt-auto inline-flex items-center justify-between text-xs font-bold text-[#ef4a23] hover:text-[#d83a15] transition-colors group">
+                                Book Servicing <span class="transform group-hover:translate-x-1 transition-transform">→</span>
+                            </a>
+                        </div>
                     </div>
                     @endforeach
                 @endif
