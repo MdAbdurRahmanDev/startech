@@ -14,6 +14,7 @@
     .blog-content blockquote { border-left: 4px solid #ef4a23; padding: 0.75rem 1.25rem; background: #fff7f5; margin: 1.5rem 0; border-radius: 0 0.5rem 0.5rem 0; color: #6b7280; font-style: italic; }
     .blog-content pre { max-width: 100%; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word; }
     .blog-content table { max-width: 100%; overflow-x: auto; display: block; }
+    .blog-content * { max-width: 100% !important; }
     .related-card { transition: all 0.3s ease; }
     .related-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
 </style>
@@ -58,8 +59,8 @@
         @endif
 
         <!-- Content -->
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-10 mb-10">
-            <div class="blog-content prose max-w-4xl mx-auto" style="word-break: break-word;">
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-10 mb-10 overflow-hidden w-full">
+            <div class="blog-content prose max-w-3xl mx-auto w-full" style="word-break: break-word; overflow-wrap: anywhere;">
                 {!! $blog->content !!}
             </div>
         </div>
