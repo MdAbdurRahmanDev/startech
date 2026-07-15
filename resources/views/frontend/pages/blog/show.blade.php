@@ -58,8 +58,8 @@
         @endif
 
         <!-- Content -->
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-10 mb-10 overflow-hidden break-words">
-            <div class="blog-content prose max-w-none break-words">
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-10 mb-10">
+            <div class="blog-content prose max-w-4xl mx-auto" style="word-break: break-word;">
                 {!! $blog->content !!}
             </div>
         </div>
