@@ -10,6 +10,13 @@ class InformationController extends Controller
 {
     public function showPageBySlug($slug)
     {
+        if ($slug === 'service-center') {
+            return redirect()->route('service-center');
+        }
+        if ($slug === 'home-services') {
+            return redirect()->route('home-services');
+        }
+
         $page = Page::where('slug', $slug)->firstOrFail();
         return view('frontend.pages.dynamic_page', [
             'page' => $page,
