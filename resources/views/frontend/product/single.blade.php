@@ -148,6 +148,10 @@
                 <div>
                     <h1 class="text-[22px] text-accent-blue mb-[15px] leading-snug font-bold">{{ $product->name }}</h1>
 
+                    @if ($product->brand)
+                        <div class="mb-3 text-[13px] text-gray-600">Brand: <a href="{{ url('brand/' . $product->brand->slug) }}" class="text-accent-blue font-semibold hover:text-accent-orange transition-colors no-underline">{{ $product->brand->name }}</a></div>
+                    @endif
+
                     <div class="flex flex-wrap gap-2.5 mb-5">
                         <span class="bg-[#f2f4f8] py-1 px-3.5 rounded-full text-[13px] text-gray-800 inline-block">
                             Price:
