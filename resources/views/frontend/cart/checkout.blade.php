@@ -20,7 +20,7 @@
         <!-- Warning Notice -->
         <div class="bg-[#e8f5e9] border border-[#c8e6c9] text-[13px] text-gray-700 px-4 py-3 rounded mb-4 leading-relaxed">
             <i class="fas fa-info-circle text-green-600 mr-1"></i>
-            কারিগরি ত্রুটির কারণে পণ্যের মূল্য অসঙ্গতিপূর্ণ হলে, স্টার টেক কর্তৃপক্ষ অর্ডার বাতিলের অধিকার সংরক্ষণ করে।
+            কারিগরি ত্রুটির কারণে পণ্যের মূল্য অসঙ্গতিপূর্ণ হলে, IOSBD কর্তৃপক্ষ অর্ডার বাতিলের অধিকার সংরক্ষণ করে।
             অনুগ্রহ করে কাস্টমার সাপোর্ট এজেন্টের কনফার্মেশন ব্যতীত কোনো ধরনের পেমেন্ট প্রদান না করার অনুরোধ করা হচ্ছে।
         </div>
 
@@ -126,7 +126,8 @@
                                                 </div>
                                                 <p class="text-[11px] text-gray-500">Number: <span
                                                         class="font-bold text-accent-orange">{{ $method->number }}</span>
-                                                    ({{ ucfirst($method->type) }})</p>
+                                                    ({{ ucfirst($method->type) }})
+                                                </p>
                                                 @if ($method->notes)
                                                     <p class="text-[10px] text-gray-400 mt-1 italic">{{ $method->notes }}
                                                     </p>
@@ -228,12 +229,15 @@
                                 </button>
                             </div>
                             <div class="flex gap-2">
-                                <input type="text" id="coupon-input" placeholder="Promo / Coupon Code" value="{{ $coupon['code'] ?? '' }}" {{ isset($coupon) ? 'readonly' : '' }}
+                                <input type="text" id="coupon-input" placeholder="Promo / Coupon Code"
+                                    value="{{ $coupon['code'] ?? '' }}" {{ isset($coupon) ? 'readonly' : '' }}
                                     class="border border-gray-300 rounded px-3 py-2 text-[12px] flex-1 focus:outline-none focus:border-accent-blue placeholder-gray-400 {{ isset($coupon) ? 'bg-gray-100 text-gray-500' : '' }}">
-                                @if(isset($coupon))
-                                <button type="button" onclick="removeCoupon()" class="text-red-500 text-[12px] font-bold hover:text-red-700 transition-colors px-1">Remove</button>
+                                @if (isset($coupon))
+                                    <button type="button" onclick="removeCoupon()"
+                                        class="text-red-500 text-[12px] font-bold hover:text-red-700 transition-colors px-1">Remove</button>
                                 @else
-                                <button type="button" id="apply-coupon-btn" onclick="applyCoupon()" class="text-accent-blue text-[12px] font-bold hover:text-accent-orange transition-colors px-1">Apply</button>
+                                    <button type="button" id="apply-coupon-btn" onclick="applyCoupon()"
+                                        class="text-accent-blue text-[12px] font-bold hover:text-accent-orange transition-colors px-1">Apply</button>
                                 @endif
                             </div>
                             <p id="coupon-message" class="text-[11px] mt-1 hidden"></p>
@@ -250,9 +254,11 @@
                                 <span id="delivery-charge"
                                     class="font-bold text-gray-800">{{ number_format($shipping_methods->first()->cost ?? 0, 0) }}৳</span>
                             </div>
-                            <div id="discount-row" class="flex justify-between text-green-600 {{ isset($coupon) ? '' : 'hidden' }}">
+                            <div id="discount-row"
+                                class="flex justify-between text-green-600 {{ isset($coupon) ? '' : 'hidden' }}">
                                 <span>Discount (<span id="discount-code">{{ $coupon['code'] ?? '' }}</span>):</span>
-                                <span id="discount-amount" class="font-bold">-{{ number_format($coupon['discount'] ?? 0, 0) }}৳</span>
+                                <span id="discount-amount"
+                                    class="font-bold">-{{ number_format($coupon['discount'] ?? 0, 0) }}৳</span>
                             </div>
                             <div
                                 class="border-t border-gray-100 pt-2.5 flex justify-between text-[14px] font-bold text-gray-800">
@@ -306,9 +312,9 @@
         function calculateGrandTotal() {
             let charge = 0;
             const checkedRadio = document.querySelector('input[name="delivery_method"]:checked');
-            if(checkedRadio) charge = parseFloat(checkedRadio.getAttribute('data-charge')) || 0;
+            if (checkedRadio) charge = parseFloat(checkedRadio.getAttribute('data-charge')) || 0;
             let final = subtotal + charge - currentDiscount;
-            if(final < 0) final = 0;
+            if (final < 0) final = 0;
             document.getElementById('grand-total').textContent = final.toLocaleString('en-BD') + '৳';
         }
 
@@ -330,7 +336,7 @@
             const msg = document.getElementById('coupon-message');
             const btn = document.getElementById('apply-coupon-btn');
 
-            if(!code) {
+            if (!code) {
                 msg.textContent = 'Please enter a code.';
                 msg.className = 'text-[11px] mt-1 text-red-500 block';
                 return;
@@ -340,46 +346,48 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
             fetch('{{ route('coupon.apply') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ code: code })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data.success) {
-                    window.location.reload(); // Reload to show applied state nicely
-                } else {
-                    msg.textContent = data.message;
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        code: code
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.reload(); // Reload to show applied state nicely
+                    } else {
+                        msg.textContent = data.message;
+                        msg.className = 'text-[11px] mt-1 text-red-500 block';
+                        btn.disabled = false;
+                        btn.innerHTML = 'Apply';
+                    }
+                })
+                .catch(() => {
+                    msg.textContent = 'Something went wrong.';
                     msg.className = 'text-[11px] mt-1 text-red-500 block';
                     btn.disabled = false;
                     btn.innerHTML = 'Apply';
-                }
-            })
-            .catch(() => {
-                msg.textContent = 'Something went wrong.';
-                msg.className = 'text-[11px] mt-1 text-red-500 block';
-                btn.disabled = false;
-                btn.innerHTML = 'Apply';
-            });
+                });
         }
 
         function removeCoupon() {
             fetch('{{ route('coupon.remove') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data.success) {
-                    window.location.reload();
-                }
-            });
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.reload();
+                    }
+                });
         }
 
         // Toggle Transaction ID Field
