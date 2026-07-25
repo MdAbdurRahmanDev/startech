@@ -146,7 +146,8 @@
 
         .component-info {
             flex: 1;
-            min-width: 0; /* Prevents overflow */
+            min-width: 0;
+            /* Prevents overflow */
         }
 
         .component-name {
@@ -309,7 +310,7 @@
                 padding: 15px;
             }
 
-            .builder-title-bar > div {
+            .builder-title-bar>div {
                 text-align: center;
             }
 
@@ -326,7 +327,8 @@
                 gap: 8px 12px;
             }
 
-            .component-icon, .component-thumbnail {
+            .component-icon,
+            .component-thumbnail {
                 grid-column: 1;
                 grid-row: 1;
                 margin-right: 0;
@@ -368,7 +370,8 @@
                 gap: 15px 20px;
             }
 
-            .wattage-box, .price-box {
+            .wattage-box,
+            .price-box {
                 flex: 1;
                 min-width: 0;
                 padding: 10px 15px;
@@ -380,12 +383,14 @@
 @section('content')
     <div class="pc-builder-container">
         <div class="max-w-[1100px] mx-auto pt-8 px-4">
-            
+
             <!-- Top Actions -->
             <div class="builder-card builder-header">
-                <div class="logo bg-white p-1.5 shadow-sm border border-gray-100 flex items-center justify-center" style="border-radius: 10px;">
+                <div class="logo bg-white p-1.5 shadow-sm border border-gray-100 flex items-center justify-center"
+                    style="border-radius: 10px;">
                     <!-- Brand Logo -->
-                    <img src="{{ $setting && $setting->logo ? asset('storage/' . $setting->logo) : asset('frontend/images/logo.png') }}" class="h-9 object-contain" style="border-radius: 8px;">
+                    <img src="{{ $setting && $setting->logo ? asset('storage/' . $setting->logo) : asset('frontend/images/logo.png') }}"
+                        class="h-9 object-contain" style="border-radius: 8px;">
                 </div>
                 <div class="builder-actions">
                     <form action="{{ route('pc-builder.add-to-cart') }}" method="POST" class="inline">
@@ -406,7 +411,8 @@
                         <i class="fas fa-print"></i>
                         <span>Print</span>
                     </button>
-                    <div class="action-item" onclick="alert('Screenshot functionality is ready. Press Ctrl+P or print to save as PDF.')">
+                    <div class="action-item"
+                        onclick="alert('Screenshot functionality is ready. Press Ctrl+P or print to save as PDF.')">
                         <i class="fas fa-images"></i>
                         <span>Screenshot</span>
                     </div>
@@ -417,11 +423,11 @@
                 $totalPrice = 0;
                 $totalWattage = 0;
                 $itemCount = count($selectedProducts);
-                
+
                 // Smart Wattage Extractor helper
-                $getWattage = function($product, $componentKey) {
+                $getWattage = function ($product, $componentKey) {
                     $name = strtolower($product->name);
-                    
+
                     // Fallback baseline wattages
                     $fallbacks = [
                         'cpu' => 65,
@@ -435,13 +441,13 @@
                         'monitor' => 25,
                         'casing-cooler' => 3,
                         'keyboard' => 2,
-                        'mouse' => 2
+                        'mouse' => 2,
                     ];
                     $baseWatt = $fallbacks[$componentKey] ?? 10;
-                    
+
                     // Try extracting from product name (e.g. 35W, 65W)
                     if (preg_match('/(\d+)\s*(W|w)(att)?\b/', $name, $matches)) {
-                        $val = (int)$matches[1];
+                        $val = (int) $matches[1];
                         if ($val > 0 && $val < 1500) {
                             return $val;
                         }
@@ -449,8 +455,11 @@
                     return $baseWatt;
                 };
 
-                foreach($selectedProducts as $key => $prod) {
-                    $totalPrice += ($prod->discount_price && $prod->discount_price < $prod->price) ? $prod->discount_price : $prod->price;
+                foreach ($selectedProducts as $key => $prod) {
+                    $totalPrice +=
+                        $prod->discount_price && $prod->discount_price < $prod->price
+                            ? $prod->discount_price
+                            : $prod->price;
                     $totalWattage += $getWattage($prod, $key);
                 }
             @endphp
@@ -458,10 +467,12 @@
             <!-- Title and Stats -->
             <div class="builder-card builder-title-bar">
                 <div>
-                    <h1 class="text-[#3749bb] font-extrabold text-[16px] md:text-[18px]">PC Builder - Build Your Own Computer - IOS BD</h1>
+                    <h1 class="text-[#3749bb] font-extrabold text-[16px] md:text-[18px]">PC Builder - Build Your Own
+                        Computer - IOS BD</h1>
                     <div class="custom-checkbox">
                         <input type="checkbox" id="hide-unconfigured">
-                        <label for="hide-unconfigured" class="cursor-pointer font-medium select-none">Hide Unconfigured Components</label>
+                        <label for="hide-unconfigured" class="cursor-pointer font-medium select-none">Hide Unconfigured
+                            Components</label>
                     </div>
                 </div>
                 <div class="flex gap-4">
@@ -472,7 +483,8 @@
                     </div>
                     <div class="price-box flex flex-col justify-center">
                         <div class="text-[18px] font-extrabold">{{ number_format($totalPrice, 0) }}৳</div>
-                        <div class="text-[9px] uppercase font-bold tracking-wider">{{ $itemCount }} {{ $itemCount == 1 ? 'Item' : 'Items' }}</div>
+                        <div class="text-[9px] uppercase font-bold tracking-wider">{{ $itemCount }}
+                            {{ $itemCount == 1 ? 'Item' : 'Items' }}</div>
                     </div>
                 </div>
             </div>
@@ -480,7 +492,7 @@
             <!-- Core Components -->
             <div class="builder-card overflow-hidden">
                 <div class="component-group-title uppercase">Core Components</div>
-                
+
                 @php
                     $components = [
                         [
@@ -542,15 +554,16 @@
                     ];
                 @endphp
 
-                @foreach($components as $comp)
+                @foreach ($components as $comp)
                     @php
                         $isSelected = isset($selectedProducts[$comp['key']]);
                         $product = $isSelected ? $selectedProducts[$comp['key']] : null;
                     @endphp
                     <div class="component-row" data-component="{{ $comp['key'] }}">
-                        @if($isSelected)
+                        @if ($isSelected)
                             <div class="component-thumbnail">
-                                <img src="{{ asset('storage/' . $product->thumbnail) }}" class="h-full w-full object-contain">
+                                <img src="{{ asset('storage/' . $product->thumbnail) }}"
+                                    class="h-full w-full object-contain">
                             </div>
                         @else
                             <div class="component-icon">
@@ -561,12 +574,12 @@
                         <div class="component-info">
                             <div class="component-name {{ $isSelected ? 'selected' : '' }}">
                                 {{ $comp['label'] }}
-                                @if($comp['required'])
+                                @if ($comp['required'])
                                     <span class="required-tag">Required</span>
                                 @endif
                             </div>
-                            
-                            @if($isSelected)
+
+                            @if ($isSelected)
                                 <div class="product-title font-semibold">{{ $product->name }}</div>
                                 <div class="wattage-spec">
                                     <i class="fas fa-bolt"></i>
@@ -578,13 +591,13 @@
                         </div>
 
                         <div class="component-price">
-                            @if($isSelected)
-                                {{ number_format(($product->discount_price && $product->discount_price < $product->price) ? $product->discount_price : $product->price, 0) }}৳
+                            @if ($isSelected)
+                                {{ number_format($product->discount_price && $product->discount_price < $product->price ? $product->discount_price : $product->price, 0) }}৳
                             @endif
                         </div>
 
                         <div class="action-buttons-cell">
-                            @if($isSelected)
+                            @if ($isSelected)
                                 <form action="{{ route('pc-builder.remove') }}" method="POST" class="inline">
                                     @csrf
                                     <input type="hidden" name="component" value="{{ $comp['key'] }}">
@@ -592,11 +605,13 @@
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </form>
-                                <a href="{{ url('category/' . ($categories[$comp['route']] ?? str_replace(' ', '-', $comp['route']))) }}?builder={{ $comp['key'] }}" class="btn-swap-item" title="Change Component">
+                                <a href="{{ url('category/' . ($categories[$comp['route']] ?? str_replace(' ', '-', $comp['route']))) }}?builder={{ $comp['key'] }}"
+                                    class="btn-swap-item" title="Change Component">
                                     <i class="fas fa-sync-alt"></i>
                                 </a>
                             @else
-                                <a href="{{ url('category/' . ($categories[$comp['route']] ?? str_replace(' ', '-', $comp['route']))) }}?builder={{ $comp['key'] }}" class="btn-choose">
+                                <a href="{{ url('category/' . ($categories[$comp['route']] ?? str_replace(' ', '-', $comp['route']))) }}?builder={{ $comp['key'] }}"
+                                    class="btn-choose">
                                     Choose
                                 </a>
                             @endif
@@ -608,7 +623,7 @@
             <!-- Peripherals & Others -->
             <div class="builder-card overflow-hidden">
                 <div class="component-group-title uppercase">Peripherals & Others</div>
-                
+
                 @php
                     $peripherals = [
                         [
@@ -642,15 +657,16 @@
                     ];
                 @endphp
 
-                @foreach($peripherals as $comp)
+                @foreach ($peripherals as $comp)
                     @php
                         $isSelected = isset($selectedProducts[$comp['key']]);
                         $product = $isSelected ? $selectedProducts[$comp['key']] : null;
                     @endphp
                     <div class="component-row" data-component="{{ $comp['key'] }}">
-                        @if($isSelected)
+                        @if ($isSelected)
                             <div class="component-thumbnail">
-                                <img src="{{ asset('storage/' . $product->thumbnail) }}" class="h-full w-full object-contain">
+                                <img src="{{ asset('storage/' . $product->thumbnail) }}"
+                                    class="h-full w-full object-contain">
                             </div>
                         @else
                             <div class="component-icon">
@@ -661,12 +677,12 @@
                         <div class="component-info">
                             <div class="component-name {{ $isSelected ? 'selected' : '' }}">
                                 {{ $comp['label'] }}
-                                @if($comp['required'])
+                                @if ($comp['required'])
                                     <span class="required-tag">Required</span>
                                 @endif
                             </div>
-                            
-                            @if($isSelected)
+
+                            @if ($isSelected)
                                 <div class="product-title font-semibold">{{ $product->name }}</div>
                                 <div class="wattage-spec">
                                     <i class="fas fa-bolt"></i>
@@ -678,13 +694,13 @@
                         </div>
 
                         <div class="component-price">
-                            @if($isSelected)
-                                {{ number_format(($product->discount_price && $product->discount_price < $product->price) ? $product->discount_price : $product->price, 0) }}৳
+                            @if ($isSelected)
+                                {{ number_format($product->discount_price && $product->discount_price < $product->price ? $product->discount_price : $product->price, 0) }}৳
                             @endif
                         </div>
 
                         <div class="action-buttons-cell">
-                            @if($isSelected)
+                            @if ($isSelected)
                                 <form action="{{ route('pc-builder.remove') }}" method="POST" class="inline">
                                     @csrf
                                     <input type="hidden" name="component" value="{{ $comp['key'] }}">
@@ -692,11 +708,13 @@
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </form>
-                                <a href="{{ url('category/' . ($categories[$comp['route']] ?? str_replace(' ', '-', $comp['route']))) }}?builder={{ $comp['key'] }}" class="btn-swap-item" title="Change Component">
+                                <a href="{{ url('category/' . ($categories[$comp['route']] ?? str_replace(' ', '-', $comp['route']))) }}?builder={{ $comp['key'] }}"
+                                    class="btn-swap-item" title="Change Component">
                                     <i class="fas fa-sync-alt"></i>
                                 </a>
                             @else
-                                <a href="{{ url('category/' . ($categories[$comp['route']] ?? str_replace(' ', '-', $comp['route']))) }}?builder={{ $comp['key'] }}" class="btn-choose">
+                                <a href="{{ url('category/' . ($categories[$comp['route']] ?? str_replace(' ', '-', $comp['route']))) }}?builder={{ $comp['key'] }}"
+                                    class="btn-choose">
                                     Choose
                                 </a>
                             @endif
@@ -705,33 +723,30 @@
                 @endforeach
             </div>
 
-            <!-- Bottom Banner -->
-            <div class="bottom-banner shadow-sm">
-                <img src="https://www.startech.com.bd/image/cache/catalog/home/banner/monitor/benq/benq-monitor-pc-builder-982x181.png" alt="Bottom Banner">
-            </div>
+
 
         </div>
     </div>
 @endsection
 
 @section('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const hideUnconfiguredCheckbox = document.getElementById('hide-unconfigured');
-        
-        hideUnconfiguredCheckbox.addEventListener('change', function() {
-            const rows = document.querySelectorAll('.component-row');
-            rows.forEach(row => {
-                const isSelected = row.querySelector('.component-thumbnail') !== null;
-                if (this.checked) {
-                    if (!isSelected) {
-                        row.style.display = 'none';
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hideUnconfiguredCheckbox = document.getElementById('hide-unconfigured');
+
+            hideUnconfiguredCheckbox.addEventListener('change', function() {
+                const rows = document.querySelectorAll('.component-row');
+                rows.forEach(row => {
+                    const isSelected = row.querySelector('.component-thumbnail') !== null;
+                    if (this.checked) {
+                        if (!isSelected) {
+                            row.style.display = 'none';
+                        }
+                    } else {
+                        row.style.display = 'flex';
                     }
-                } else {
-                    row.style.display = 'flex';
-                }
+                });
             });
         });
-    });
-</script>
+    </script>
 @endsection

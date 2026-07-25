@@ -11,34 +11,34 @@ class CompareController extends Controller
     public function index()
     {
         $compareList = session()->get('compare_list', []);
-        
+
         $products = [];
         $specKeys = [];
 
-        if (!empty($compareList)) {
+        if (! empty($compareList)) {
             $products = Product::with(['categories', 'specifications', 'brand', 'reviews'])->whereIn('id', $compareList)->get();
-            
+
             // Re-order based on session array order (optional, but good for UX)
-            $products = $products->sortBy(function($model) use ($compareList) {
+            $products = $products->sortBy(function ($model) use ($compareList) {
                 return array_search($model->id, $compareList);
             })->values();
 
             foreach ($products as $product) {
                 $parsed = $this->parseHtmlTable($product->specifications_text);
-                
+
                 // Add actual relation specifications
                 foreach ($product->specifications as $spec) {
                     $parsed['General'][$spec->name] = $spec->value;
                 }
-                
+
                 $product->parsed_specs = $parsed;
 
                 foreach ($parsed as $category => $items) {
-                    if (!isset($specKeys[$category])) {
+                    if (! isset($specKeys[$category])) {
                         $specKeys[$category] = [];
                     }
                     foreach ($items as $key => $val) {
-                        if (!in_array($key, $specKeys[$category])) {
+                        if (! in_array($key, $specKeys[$category])) {
                             $specKeys[$category][] = $key;
                         }
                     }
@@ -51,21 +51,23 @@ class CompareController extends Controller
 
     private function parseHtmlTable($html)
     {
-        if (empty($html)) return [];
-        
+        if (empty($html)) {
+            return [];
+        }
+
         $specs = [];
-        $dom = new \DOMDocument();
+        $dom = new \DOMDocument;
         @$dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        
+
         $currentCategory = 'General';
         $rows = $dom->getElementsByTagName('tr');
-        
+
         foreach ($rows as $row) {
             $cells = $row->getElementsByTagName('td');
             if ($cells->length == 0) {
                 $cells = $row->getElementsByTagName('th');
             }
-            
+
             if ($cells->length == 1) {
                 $currentCategory = trim($cells->item(0)->textContent);
                 if (empty($currentCategory)) {
@@ -78,13 +80,13 @@ class CompareController extends Controller
                     $value .= $dom->saveHTML($child);
                 }
                 $value = trim($value);
-                
+
                 if ($key && $value) {
                     $specs[$currentCategory][$key] = $value;
                 }
             }
         }
-        
+
         return $specs;
     }
 
@@ -97,7 +99,7 @@ class CompareController extends Controller
         $productId = $request->product_id;
         $compareList = session()->get('compare_list', []);
 
-        if (!in_array($productId, $compareList)) {
+        if (! in_array($productId, $compareList)) {
             if (count($compareList) >= 4) {
                 return response()->json(['success' => false, 'message' => 'You can add a maximum of 4 products to compare.'], 400);
             }
@@ -132,21 +134,21 @@ class CompareController extends Controller
     public function search(Request $request)
     {
         $query = $request->get('q');
-        
+
         if ($query) {
-            $ignoreWords = ['iosbd', 'startech', 'star tech', 'bd', 'in bangladesh', 'price'];
+            $ignoreWords = ['iosbd',  'bd', 'in bangladesh', 'price'];
             $query = trim(str_ireplace($ignoreWords, '', $query));
             $query = preg_replace('/\s+/', ' ', $query);
         }
 
-        if (!$query) {
+        if (! $query) {
             return response()->json([]);
         }
 
         $queryModel = Product::where('status', 1);
 
         $words = array_filter(explode(' ', $query));
-        $queryModel->where(function($qBuilder) use ($words) {
+        $queryModel->where(function ($qBuilder) use ($words) {
             foreach ($words as $word) {
                 $qBuilder->where('name', 'LIKE', "%{$word}%");
             }
@@ -159,7 +161,7 @@ class CompareController extends Controller
             return [
                 'id' => $product->id,
                 'name' => $product->name,
-                'thumbnail' => $product->thumbnail ? asset('storage/' . $product->thumbnail) : 'https://placehold.co/100x100/f9fafb/a3a3a3?text=No+Image',
+                'thumbnail' => $product->thumbnail ? asset('storage/'.$product->thumbnail) : 'https://placehold.co/100x100/f9fafb/a3a3a3?text=No+Image',
                 'price' => $product->discount_price && $product->discount_price < $product->price ? number_format($product->discount_price, 0) : number_format($product->price, 0),
             ];
         });

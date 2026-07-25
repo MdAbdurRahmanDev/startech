@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -10,25 +13,25 @@ class SearchController extends Controller
     public function index(Request $request)
     {
         $q = $request->input('q');
-        
+
         if ($q) {
-            $ignoreWords = ['iosbd', 'startech', 'star tech', 'bd', 'in bangladesh', 'price'];
+            $ignoreWords = ['iosbd',  'bd', 'in bangladesh', 'price'];
             $q = trim(str_ireplace($ignoreWords, '', $q));
             // Replace multiple spaces with single space
             $q = preg_replace('/\s+/', ' ', $q);
         }
 
-        $query = \App\Models\Product::with(['specifications'])->where('status', 1);
+        $query = Product::with(['specifications'])->where('status', 1);
 
         if ($q) {
             $words = array_filter(explode(' ', $q));
-            
-            $query->where(function($qBuilder) use ($words) {
+
+            $query->where(function ($qBuilder) use ($words) {
                 foreach ($words as $word) {
-                    $qBuilder->where(function($q2) use ($word) {
+                    $qBuilder->where(function ($q2) use ($word) {
                         $q2->where('name', 'LIKE', "%{$word}%")
-                           ->orWhere('short_description', 'LIKE', "%{$word}%")
-                           ->orWhere('tags', 'LIKE', "%{$word}%");
+                            ->orWhere('short_description', 'LIKE', "%{$word}%")
+                            ->orWhere('tags', 'LIKE', "%{$word}%");
                     });
                 }
             });
@@ -59,12 +62,12 @@ class SearchController extends Controller
 
         $show = $request->show ?? 20;
         $products = $query->paginate($show)->withQueryString();
-        $brands = \App\Models\Brand::where('status', 1)->get();
+        $brands = Brand::where('status', 1)->get();
 
         // Get suggested categories based on search term
         $suggestedCategories = [];
         if ($q) {
-            $suggestedCategories = \App\Models\Category::where('name', 'LIKE', "%{$q}%")
+            $suggestedCategories = Category::where('name', 'LIKE', "%{$q}%")
                 ->where('status', 1)
                 ->whereNotNull('parent_id') // Focus on subcategories
                 ->take(10)
@@ -72,9 +75,9 @@ class SearchController extends Controller
         }
 
         // Pass a dummy category for the view to work
-        $category = (object)[
-            'name' => 'Search - ' . ($q ?? 'All'),
-            'slug' => 'search'
+        $category = (object) [
+            'name' => 'Search - '.($q ?? 'All'),
+            'slug' => 'search',
         ];
 
         return view('frontend.product.search', compact('products', 'brands', 'category', 'q', 'suggestedCategories'));

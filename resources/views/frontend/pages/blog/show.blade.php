@@ -1,218 +1,311 @@
 @extends('layouts.app')
 
-@section('title', $blog->title . ' | StarTech Blog')
+@section('title', $blog->title . ' | Iosbd Blog')
 
 @section('styles')
-<style>
-    .blog-content img { max-width: 100%; border-radius: 0.75rem; margin: 1.5rem 0; }
-    .blog-content h2 { font-size: 1.5rem; font-weight: 800; color: #1a202c; margin: 2rem 0 1rem; }
-    .blog-content h3 { font-size: 1.2rem; font-weight: 700; color: #2d3748; margin: 1.5rem 0 0.75rem; }
-    .blog-content p { color: #4a5568; line-height: 1.85; margin-bottom: 1rem; }
-    .blog-content ul, .blog-content ol { margin: 1rem 0 1rem 1.5rem; color: #4a5568; }
-    .blog-content li { margin-bottom: 0.4rem; }
-    .blog-content a { color: #ef4a23; text-decoration: underline; }
-    .blog-content blockquote { border-left: 4px solid #ef4a23; padding: 0.75rem 1.25rem; background: #fff7f5; margin: 1.5rem 0; border-radius: 0 0.5rem 0.5rem 0; color: #6b7280; font-style: italic; }
-    .blog-content pre { max-width: 100%; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word; }
-    .blog-content table { max-width: 100%; overflow-x: auto; display: block; }
-    .blog-content * { max-width: 100% !important; }
-    .related-card { transition: all 0.3s ease; }
-    .related-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
-</style>
+    <style>
+        .blog-content img {
+            max-width: 100%;
+            border-radius: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .blog-content h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #1a202c;
+            margin: 2rem 0 1rem;
+        }
+
+        .blog-content h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        .blog-content p {
+            color: #4a5568;
+            line-height: 1.85;
+            margin-bottom: 1rem;
+        }
+
+        .blog-content ul,
+        .blog-content ol {
+            margin: 1rem 0 1rem 1.5rem;
+            color: #4a5568;
+        }
+
+        .blog-content li {
+            margin-bottom: 0.4rem;
+        }
+
+        .blog-content a {
+            color: #ef4a23;
+            text-decoration: underline;
+        }
+
+        .blog-content blockquote {
+            border-left: 4px solid #ef4a23;
+            padding: 0.75rem 1.25rem;
+            background: #fff7f5;
+            margin: 1.5rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        .blog-content pre {
+            max-width: 100%;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .blog-content table {
+            max-width: 100%;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .blog-content * {
+            max-width: 100% !important;
+        }
+
+        .related-card {
+            transition: all 0.3s ease;
+        }
+
+        .related-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+    </style>
 @endsection
 
 @section('content')
-<div class="container mx-auto px-4 py-8 mb-12">
-    <div class="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_340px] gap-10 mx-auto max-w-screen-xl">
-        <div>
-            <!-- Breadcrumb -->
-            <div class="flex items-center gap-2 text-xs text-gray-400 mb-6">
-                <a href="{{ route('blogs.index') }}" class="hover:text-[#ef4a23] transition-colors">Blog</a>
-                <i class="fas fa-chevron-right text-[8px]"></i>
-                @if($blog->category)
-                <a href="{{ route('blogs.category', $blog->category->slug) }}" class="hover:text-[#ef4a23] transition-colors">{{ $blog->category->name }}</a>
-                <i class="fas fa-chevron-right text-[8px]"></i>
+    <div class="container mx-auto px-4 py-8 mb-12">
+        <div class="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_340px] gap-10 mx-auto max-w-screen-xl">
+            <div>
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-xs text-gray-400 mb-6">
+                    <a href="{{ route('blogs.index') }}" class="hover:text-[#ef4a23] transition-colors">Blog</a>
+                    <i class="fas fa-chevron-right text-[8px]"></i>
+                    @if ($blog->category)
+                        <a href="{{ route('blogs.category', $blog->category->slug) }}"
+                            class="hover:text-[#ef4a23] transition-colors">{{ $blog->category->name }}</a>
+                        <i class="fas fa-chevron-right text-[8px]"></i>
+                    @endif
+                    <span class="text-gray-600 font-semibold">{{ Str::limit($blog->title, 40) }}</span>
+                </div>
+
+                <!-- Post Header -->
+                <div class="mb-8">
+                    @if ($blog->category)
+                        <span
+                            class="text-xs font-bold text-[#ef4a23] uppercase tracking-wider bg-orange-50 px-3 py-1 rounded-full">{{ $blog->category->name }}</span>
+                    @endif
+                    <h1 class="text-2xl md:text-4xl font-extrabold text-gray-900 mt-4 mb-4 leading-tight">
+                        {{ $blog->title }}</h1>
+                    <div class="flex items-center gap-4 text-xs text-gray-400">
+                        <span class="flex items-center gap-1"><i class="fas fa-user"></i> {{ $blog->author }}</span>
+                        <span class="flex items-center gap-1"><i class="fas fa-calendar"></i>
+                            {{ $blog->published_at?->format('d M, Y') }}</span>
+                        <span class="flex items-center gap-1"><i class="fas fa-clock"></i> {{ $blog->read_time }}</span>
+                    </div>
+                    @if ($blog->excerpt)
+                        <p
+                            class="mt-4 text-base text-gray-600 font-medium bg-gray-50 p-4 rounded-xl border-l-4 border-[#ef4a23]">
+                            {{ $blog->excerpt }}</p>
+                    @endif
+                </div>
+
+                <!-- Thumbnail -->
+                @if ($blog->thumbnail)
+                    <div class="mb-8 rounded-2xl overflow-hidden shadow-md border border-gray-100">
+                        <img src="{{ $blog->thumbnail_url }}" class="w-full object-cover max-h-96"
+                            alt="{{ $blog->title }}">
+                    </div>
                 @endif
-                <span class="text-gray-600 font-semibold">{{ Str::limit($blog->title, 40) }}</span>
-            </div>
 
-        <!-- Post Header -->
-        <div class="mb-8">
-            @if($blog->category)
-            <span class="text-xs font-bold text-[#ef4a23] uppercase tracking-wider bg-orange-50 px-3 py-1 rounded-full">{{ $blog->category->name }}</span>
-            @endif
-            <h1 class="text-2xl md:text-4xl font-extrabold text-gray-900 mt-4 mb-4 leading-tight">{{ $blog->title }}</h1>
-            <div class="flex items-center gap-4 text-xs text-gray-400">
-                <span class="flex items-center gap-1"><i class="fas fa-user"></i> {{ $blog->author }}</span>
-                <span class="flex items-center gap-1"><i class="fas fa-calendar"></i> {{ $blog->published_at?->format('d M, Y') }}</span>
-                <span class="flex items-center gap-1"><i class="fas fa-clock"></i> {{ $blog->read_time }}</span>
-            </div>
-            @if($blog->excerpt)
-            <p class="mt-4 text-base text-gray-600 font-medium bg-gray-50 p-4 rounded-xl border-l-4 border-[#ef4a23]">{{ $blog->excerpt }}</p>
-            @endif
-        </div>
-
-        <!-- Thumbnail -->
-        @if($blog->thumbnail)
-        <div class="mb-8 rounded-2xl overflow-hidden shadow-md border border-gray-100">
-            <img src="{{ $blog->thumbnail_url }}" class="w-full object-cover max-h-96" alt="{{ $blog->title }}">
-        </div>
-        @endif
-
-        <!-- Content -->
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-10 mb-10 overflow-hidden w-full">
-            <div class="blog-content prose max-w-3xl mx-auto w-full" style="word-break: break-word; overflow-wrap: anywhere;">
-                {!! $blog->content !!}
-            </div>
-        </div>
-
-        <!-- Tags / Category -->
-        <div class="flex items-center gap-3 mb-10">
-            <span class="text-xs text-gray-400 font-bold uppercase">Category:</span>
-            @if($blog->category)
-            <a href="{{ route('blogs.category', $blog->category->slug) }}" class="bg-orange-50 text-[#ef4a23] text-xs font-bold px-3 py-1 rounded-full hover:bg-orange-100 transition-colors">
-                {{ $blog->category->name }}
-            </a>
-            @endif
-        </div>
-
-        <!-- Comments -->
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-10 mb-10">
-            <h2 class="text-xl font-extrabold text-gray-900 mb-6">Comments</h2>
-
-            @if(session('success'))
-                <div class="mb-4 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg text-sm font-bold">{{ session('success') }}</div>
-            @endif
-            @if($errors->any())
-                <div class="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm font-bold">
-                    <ul class="list-disc list-inside">
-                        @foreach($errors->all() as $err)
-                            <li>{{ $err }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            <form action="{{ route('blogs.comment.store', $blog->slug) }}" method="POST" class="space-y-4">
-                @csrf
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="">
-                        <label class="block text-xs font-bold text-gray-600 mb-1">Your Name</label>
-                        <input type="text" name="name" value="{{ old('name', auth()->check() ? (auth()->user()->name ?? auth()->user()->first_name ?? '') : '') }}" required
-                               class="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#ef4a23] text-sm">
-                    </div>
-                    <div class="flex items-end">
-                        <p class="text-[11px] text-gray-500 font-semibold">
-                            Submissions go to admin approval.
-                        </p>
+                <!-- Content -->
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-10 mb-10 overflow-hidden w-full">
+                    <div class="blog-content prose max-w-3xl mx-auto w-full"
+                        style="word-break: break-word; overflow-wrap: anywhere;">
+                        {!! $blog->content !!}
                     </div>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-gray-600 mb-1">Comment</label>
-                    <textarea name="comment" rows="4" required
-                              class="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#ef4a23] text-sm">{{ old('comment') }}</textarea>
+                <!-- Tags / Category -->
+                <div class="flex items-center gap-3 mb-10">
+                    <span class="text-xs text-gray-400 font-bold uppercase">Category:</span>
+                    @if ($blog->category)
+                        <a href="{{ route('blogs.category', $blog->category->slug) }}"
+                            class="bg-orange-50 text-[#ef4a23] text-xs font-bold px-3 py-1 rounded-full hover:bg-orange-100 transition-colors">
+                            {{ $blog->category->name }}
+                        </a>
+                    @endif
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <button type="submit" class="bg-[#ef4a23] hover:bg-[#d93c19] text-white font-extrabold py-2.5 px-5 rounded-xl transition-colors">
-                        Submit Comment
-                    </button>
-                </div>
-            </form>
+                <!-- Comments -->
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-10 mb-10">
+                    <h2 class="text-xl font-extrabold text-gray-900 mb-6">Comments</h2>
 
-            <div class="mt-10">
-                <h3 class="text-lg font-extrabold text-gray-900 mb-4">Approved Comments</h3>
+                    @if (session('success'))
+                        <div
+                            class="mb-4 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg text-sm font-bold">
+                            {{ session('success') }}</div>
+                    @endif
+                    @if ($errors->any())
+                        <div
+                            class="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm font-bold">
+                            <ul class="list-disc list-inside">
+                                @foreach ($errors->all() as $err)
+                                    <li>{{ $err }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
-                @if($comments->count() > 0)
-                    <div class="space-y-4">
-                        @foreach($comments as $c)
-                            <div class="border border-gray-100 rounded-xl p-4 bg-gray-50">
-                                <div class="flex items-start justify-between gap-4">
-                                    <div>
-                                        <div class="text-sm font-extrabold text-gray-900">{{ $c->user->name ?? $c->name }}</div>
-                                        <div class="text-[11px] text-gray-500 mt-0.5">{{ $c->created_at->format('d M Y') }}</div>
-                                    </div>
-                                </div>
-                                <div class="mt-3 text-sm text-gray-700 leading-relaxed">{{ $c->comment }}</div>
+                    <form action="{{ route('blogs.comment.store', $blog->slug) }}" method="POST" class="space-y-4">
+                        @csrf
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="">
+                                <label class="block text-xs font-bold text-gray-600 mb-1">Your Name</label>
+                                <input type="text" name="name"
+                                    value="{{ old('name', auth()->check() ? auth()->user()->name ?? (auth()->user()->first_name ?? '') : '') }}"
+                                    required
+                                    class="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#ef4a23] text-sm">
                             </div>
-                        @endforeach
-                    </div>
-                @else
-                    <div class="text-sm font-bold text-gray-500">No approved comments yet.</div>
-                @endif
-            </div>
-        </div>
+                            <div class="flex items-end">
+                                <p class="text-[11px] text-gray-500 font-semibold">
+                                    Submissions go to admin approval.
+                                </p>
+                            </div>
+                        </div>
 
-        <!-- Related Posts -->
-        @if($related->count() > 0)
+                        <div>
+                            <label class="block text-xs font-bold text-gray-600 mb-1">Comment</label>
+                            <textarea name="comment" rows="4" required
+                                class="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#ef4a23] text-sm">{{ old('comment') }}</textarea>
+                        </div>
 
-        <div>
-            <h2 class="text-xl font-extrabold text-gray-900 mb-5">Related Posts</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                @foreach($related as $rel)
-                <a href="{{ route('blogs.show', $rel->slug) }}" class="related-card bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
-                    <div class="h-36 overflow-hidden bg-gradient-to-br from-blue-900 to-indigo-700">
-                        @if($rel->thumbnail)
-                        <img src="{{ $rel->thumbnail_url }}" class="w-full h-full object-cover" alt="{{ $rel->title }}">
+                        <div class="flex items-center gap-3">
+                            <button type="submit"
+                                class="bg-[#ef4a23] hover:bg-[#d93c19] text-white font-extrabold py-2.5 px-5 rounded-xl transition-colors">
+                                Submit Comment
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="mt-10">
+                        <h3 class="text-lg font-extrabold text-gray-900 mb-4">Approved Comments</h3>
+
+                        @if ($comments->count() > 0)
+                            <div class="space-y-4">
+                                @foreach ($comments as $c)
+                                    <div class="border border-gray-100 rounded-xl p-4 bg-gray-50">
+                                        <div class="flex items-start justify-between gap-4">
+                                            <div>
+                                                <div class="text-sm font-extrabold text-gray-900">
+                                                    {{ $c->user->name ?? $c->name }}</div>
+                                                <div class="text-[11px] text-gray-500 mt-0.5">
+                                                    {{ $c->created_at->format('d M Y') }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 text-sm text-gray-700 leading-relaxed">{{ $c->comment }}</div>
+                                    </div>
+                                @endforeach
+                            </div>
                         @else
-                        <div class="w-full h-full flex items-center justify-center"><i class="fas fa-file-alt text-white/20 text-3xl"></i></div>
+                            <div class="text-sm font-bold text-gray-500">No approved comments yet.</div>
                         @endif
                     </div>
-                    <div class="p-4">
-                        <h3 class="text-sm font-bold text-gray-800 leading-snug line-clamp-2 mb-2">{{ $rel->title }}</h3>
-                        <div class="text-[10px] text-gray-400 flex items-center gap-2">
-                            <span><i class="fas fa-clock mr-1"></i>{{ $rel->read_time }}</span>
-                            <span><i class="fas fa-calendar mr-1"></i>{{ $rel->published_at?->format('d M Y') }}</span>
+                </div>
+
+                <!-- Related Posts -->
+                @if ($related->count() > 0)
+
+                    <div>
+                        <h2 class="text-xl font-extrabold text-gray-900 mb-5">Related Posts</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                            @foreach ($related as $rel)
+                                <a href="{{ route('blogs.show', $rel->slug) }}"
+                                    class="related-card bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
+                                    <div class="h-36 overflow-hidden bg-gradient-to-br from-blue-900 to-indigo-700">
+                                        @if ($rel->thumbnail)
+                                            <img src="{{ $rel->thumbnail_url }}" class="w-full h-full object-cover"
+                                                alt="{{ $rel->title }}">
+                                        @else
+                                            <div class="w-full h-full flex items-center justify-center"><i
+                                                    class="fas fa-file-alt text-white/20 text-3xl"></i></div>
+                                        @endif
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="text-sm font-bold text-gray-800 leading-snug line-clamp-2 mb-2">
+                                            {{ $rel->title }}</h3>
+                                        <div class="text-[10px] text-gray-400 flex items-center gap-2">
+                                            <span><i class="fas fa-clock mr-1"></i>{{ $rel->read_time }}</span>
+                                            <span><i
+                                                    class="fas fa-calendar mr-1"></i>{{ $rel->published_at?->format('d M Y') }}</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            @endforeach
                         </div>
                     </div>
-                </a>
-                @endforeach
-            </div>
-        </div>
-        @endif
+                @endif
 
-        <!-- Back Link -->
-        <div class="mt-10 text-center">
-            <a href="{{ route('blogs.index') }}" class="inline-flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-[#ef4a23] transition-colors">
-                <i class="fas fa-arrow-left text-xs"></i> Back to All Posts
-            </a>
-        </div>
-        </div>
-
-        <aside class="space-y-6">
-            <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6">
-                <h2 class="text-xl font-extrabold text-gray-900 mb-4">Latest Articles</h2>
-                <div class="space-y-4">
-                    @foreach($latestArticles as $latest)
-                    <a href="{{ route('blogs.show', $latest->slug) }}" class="block transition hover:bg-gray-50 rounded-lg p-3">
-                        <div class="text-xs uppercase tracking-[0.2em] font-bold text-[#ef4a23] mb-1">{{ $latest->category->name ?? 'Article' }}</div>
-                        <h3 class="text-sm font-semibold text-gray-900 leading-tight line-clamp-2">{{ $latest->title }}</h3>
-                        <p class="text-[11px] text-gray-500 mt-2">{{ $latest->published_at?->format('d M Y') }}</p>
+                <!-- Back Link -->
+                <div class="mt-10 text-center">
+                    <a href="{{ route('blogs.index') }}"
+                        class="inline-flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-[#ef4a23] transition-colors">
+                        <i class="fas fa-arrow-left text-xs"></i> Back to All Posts
                     </a>
-                    @endforeach
                 </div>
             </div>
-            <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6">
-                <h3 class="text-lg font-bold text-gray-900 mb-3">Related Posts</h3>
-                <div class="space-y-3">
-                    @foreach($related as $rel)
-                    <a href="{{ route('blogs.show', $rel->slug) }}" class="flex items-start gap-3 p-3 rounded-lg border border-gray-100 hover:border-[#ef4a23] transition-colors">
-                        <div class="w-16 h-16 rounded-xl overflow-hidden bg-gray-100">
-                            @if($rel->thumbnail)
-                            <img src="{{ $rel->thumbnail_url }}" class="w-full h-full object-cover" alt="{{ $rel->title }}">
-                            @else
-                            <div class="w-full h-full flex items-center justify-center text-gray-400"><i class="fas fa-file-alt"></i></div>
-                            @endif
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="text-sm font-semibold text-gray-900 line-clamp-2">{{ $rel->title }}</h4>
-                            <p class="text-[11px] text-gray-400 mt-1">{{ $rel->published_at?->format('d M Y') }}</p>
-                        </div>
-                    </a>
-                    @endforeach
+
+            <aside class="space-y-6">
+                <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6">
+                    <h2 class="text-xl font-extrabold text-gray-900 mb-4">Latest Articles</h2>
+                    <div class="space-y-4">
+                        @foreach ($latestArticles as $latest)
+                            <a href="{{ route('blogs.show', $latest->slug) }}"
+                                class="block transition hover:bg-gray-50 rounded-lg p-3">
+                                <div class="text-xs uppercase tracking-[0.2em] font-bold text-[#ef4a23] mb-1">
+                                    {{ $latest->category->name ?? 'Article' }}</div>
+                                <h3 class="text-sm font-semibold text-gray-900 leading-tight line-clamp-2">
+                                    {{ $latest->title }}</h3>
+                                <p class="text-[11px] text-gray-500 mt-2">{{ $latest->published_at?->format('d M Y') }}</p>
+                            </a>
+                        @endforeach
+                    </div>
                 </div>
-            </div>
-        </aside>
+                <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-3">Related Posts</h3>
+                    <div class="space-y-3">
+                        @foreach ($related as $rel)
+                            <a href="{{ route('blogs.show', $rel->slug) }}"
+                                class="flex items-start gap-3 p-3 rounded-lg border border-gray-100 hover:border-[#ef4a23] transition-colors">
+                                <div class="w-16 h-16 rounded-xl overflow-hidden bg-gray-100">
+                                    @if ($rel->thumbnail)
+                                        <img src="{{ $rel->thumbnail_url }}" class="w-full h-full object-cover"
+                                            alt="{{ $rel->title }}">
+                                    @else
+                                        <div class="w-full h-full flex items-center justify-center text-gray-400"><i
+                                                class="fas fa-file-alt"></i></div>
+                                    @endif
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-sm font-semibold text-gray-900 line-clamp-2">{{ $rel->title }}</h4>
+                                    <p class="text-[11px] text-gray-400 mt-1">{{ $rel->published_at?->format('d M Y') }}
+                                    </p>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            </aside>
+        </div>
     </div>
-</div>
 @endsection
